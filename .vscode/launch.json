@@ -9,10 +9,10 @@
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run",
       "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dexamplemod -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
-      "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 19 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir .",
+      "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.21.4"
+        "MCP_MAPPINGS": "official_1.20.6"
       },
       "preLaunchTask": "prepareRunClientCompile"
     },
@@ -24,10 +24,10 @@
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run-data",
       "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Djava.net.preferIPv6Addresses\u003dsystem",
-      "args": "--launchTarget forge_userdev_data --assetIndex 19 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir . --mod examplemod --all --output /home/trez/Programming/grug-toys/src/generated/resources --existing /home/trez/Programming/grug-toys/src/main/resources",
+      "args": "--launchTarget forge_userdev_data --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir . --mod examplemod --all --output /home/trez/Programming/grug-toys/src/generated/resources --existing /home/trez/Programming/grug-toys/src/main/resources",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.21.4"
+        "MCP_MAPPINGS": "official_1.20.6"
       },
       "preLaunchTask": "prepareRunDataCompile"
     },
@@ -42,7 +42,7 @@
       "args": "--launchTarget forge_userdev_server_gametest --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.21.4"
+        "MCP_MAPPINGS": "official_1.20.6"
       },
       "preLaunchTask": "prepareRunGameTestServerCompile"
     },
@@ -57,7 +57,7 @@
       "args": "--launchTarget forge_userdev_server --gameDir . --nogui",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.21.4"
+        "MCP_MAPPINGS": "official_1.20.6"
       },
       "preLaunchTask": "prepareRunServerCompile"
     }
