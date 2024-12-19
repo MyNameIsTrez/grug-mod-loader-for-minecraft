@@ -3,13 +3,13 @@ package com.example.examplemod;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,12 +40,16 @@ public class ExampleMod
     public static final String MODID = "examplemod";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
+
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+
+    public static final RegistryObject<FooBlock> FOO_BLOCK = BLOCKS.register("foo_block", () -> new FooBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEEHIVE).mapColor(MapColor.WARPED_STEM).strength(2.0f, 8f)));
+    public static final RegistryObject<BlockEntityType<FooBlockEntity>> FOO_BLOCK_ENTITY = BLOCK_ENTITIES.register("foo_block", () -> BlockEntityType.Builder.of(FooBlockEntity::new, FOO_BLOCK.get()).build(null));
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     // public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
@@ -65,13 +69,17 @@ public class ExampleMod
     {
         LOGGER.info("HELLO FROM CONSTRUCTOR");
 
-        String[] blocks = {"foo_block", "bar_block"};
+        // RegistryObject<Block> foo_block = BLOCKS.register("foo_block", () -> new FooBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+        // RegistryObject<BlockEntityType<FooBlockEntity>> foo_block_entity = BLOCK_ENTITIES.register("foo_block_entity", () -> BlockEntityType.Builder.of(FooBlockEntity::new, foo_block).build(null));
+        RegistryObject<Item> foo_block_item = ITEMS.register("foo_block", () -> new BlockItem(FOO_BLOCK.get(), new Item.Properties()));
+        block_items.add(foo_block_item);
 
-        for (String name : blocks) {
-            RegistryObject<Block> block = BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
-            RegistryObject<Item> block_item = ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
-            block_items.add(block_item);
-        }
+        // String[] blocks = {"foo_block", "bar_block"};
+        // for (String name : blocks) {
+        //     RegistryObject<Block> block = BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+        //     RegistryObject<Item> block_item = ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        //     block_items.add(block_item);
+        // }
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -80,6 +88,7 @@ public class ExampleMod
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
+        BLOCK_ENTITIES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
