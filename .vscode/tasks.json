@@ -72,7 +72,7 @@
       "args": [
         "global_library_loader.c",
         "-o",
-        "libglobal_library_loader.so",
+        "src/main/resources/natives/libglobal_library_loader.so",
         "-shared",
         "-fPIC",
         "-Wall",
