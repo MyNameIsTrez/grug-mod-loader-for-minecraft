@@ -37,7 +37,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,6 +47,8 @@ public class ExampleMod
     public static final String MODID = "examplemod";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    private static final Grug grug = new Grug();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
@@ -118,12 +119,7 @@ public class ExampleMod
     {
         LOGGER.info("HELLO FROM COMMON SETUP");
 
-        try {
-            extractAndLoadNativeLibrary("libglobal_library_loader.so");
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to load native library.", e);
-        }
+        grug.init();
 
         if (Config.logDirtBlock)
             LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
@@ -171,36 +167,5 @@ public class ExampleMod
         }
 
         System.out.println("onTick()");
-    }
-
-    private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
-        // Get the native library file from the JAR's resources
-        String libraryPathInJar = "/natives/" + libraryName;
-        InputStream libraryInputStream = getClass().getResourceAsStream(libraryPathInJar);
-
-        if (libraryInputStream == null) {
-            throw new IOException("Native library not found in the JAR: " + libraryName);
-        }
-
-        // Create a temporary file
-        String baseName = libraryName.substring(0, libraryName.lastIndexOf('.'));
-        String extension = libraryName.substring(libraryName.lastIndexOf('.'));
-        Path tempLibraryPath = Files.createTempFile(baseName, extension);
-
-        // Extract the library to the temporary file
-        try (OutputStream out = new FileOutputStream(tempLibraryPath.toFile())) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = libraryInputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
-            }
-        }
-
-        // Make sure the extracted file is executable (for Linux/Mac)
-        tempLibraryPath.toFile().setExecutable(true);
-
-        // Load the library from the temporary file
-        System.load(tempLibraryPath.toAbsolutePath().toString());
-        System.out.println("Native library loaded from: " + tempLibraryPath);
     }
 }

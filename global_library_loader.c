@@ -3,16 +3,16 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 
-JNIEXPORT void JNICALL Java_game_Game_loadGlobalLibraries(JNIEnv *javaEnv, jobject javaObject) {
+JNIEXPORT void JNICALL Java_com_example_examplemod_Grug_loadGlobalLibraries(JNIEnv *javaEnv, jobject javaObject) {
     (void)javaEnv;
     (void)javaObject;
 
-    if (!dlopen("./grug/libgrug.so", RTLD_NOW | RTLD_GLOBAL)) {
+    if (!dlopen("../src/main/resources/natives/libgrug.so", RTLD_NOW | RTLD_GLOBAL)) {
         fprintf(stderr, "dlopen: %s\n", dlerror());
         exit(EXIT_FAILURE);
     }
 
-    if (!dlopen("./libadapter.so", RTLD_NOW | RTLD_GLOBAL)) {
+    if (!dlopen("../src/main/resources/natives/libadapter.so", RTLD_NOW | RTLD_GLOBAL)) {
         fprintf(stderr, "dlopen: %s\n", dlerror());
         exit(EXIT_FAILURE);
     }

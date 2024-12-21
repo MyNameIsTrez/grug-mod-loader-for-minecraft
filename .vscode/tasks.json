@@ -51,7 +51,7 @@
       "args": [
         "grug/grug.c",
         "-o",
-        "grug/libgrug.so",
+        "src/main/resources/natives/libgrug.so",
         "-shared",
         "-fPIC",
         "-Wall",
@@ -105,7 +105,7 @@
       "args": [
         "adapter.c",
         "-o",
-        "libadapter.so",
+        "src/main/resources/natives/libadapter.so",
         "-shared",
         "-fPIC",
         "-Wall",
