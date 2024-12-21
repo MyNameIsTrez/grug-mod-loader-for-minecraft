@@ -25,3 +25,7 @@ run
 forge*changelog.txt
 
 run-data
+
+mod_dlls
+libadapter.so
+libglobal_library_loader.so

@@ -16,15 +16,17 @@ public class FooBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        if (++this.ticks % 10 == 0) {
-            this.ticks = 0;
-
-            System.out.println("Spawning diamond");
-
-            Vec3 spawnPos = worldPosition.above(2).getCenter();
-            ItemEntity diamond = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(Items.DIAMOND));
-            diamond.setDeltaMovement(Vec3.ZERO);
-            level.addFreshEntity(diamond);
+        this.ticks++;
+        if (ticks % 10 != 0) {
+            return;
         }
+        this.ticks = 0;
+
+        System.out.println("Spawning diamond");
+
+        Vec3 spawnPos = worldPosition.above(2).getCenter();
+        ItemEntity diamond = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(Items.DIAMOND));
+        diamond.setDeltaMovement(Vec3.ZERO);
+        level.addFreshEntity(diamond);
     }
 }

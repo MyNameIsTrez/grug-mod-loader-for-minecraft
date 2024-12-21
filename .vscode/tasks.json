@@ -32,6 +32,93 @@
       "options": {
         "cwd": "${workspaceFolder}"
       }
+    },
+    {
+      "label": "Recompile",
+      "dependsOn": [
+        "Compile libgrug.so",
+        "Compile libglobal_library_loader.so",
+        "Regenerate adapter.c",
+        "Compile libadapter.so"
+      ],
+      "dependsOrder": "sequence",
+      "group": "build"
+    },
+    {
+      "label": "Compile libgrug.so",
+      "command": "gcc",
+      "type": "shell",
+      "args": [
+        "grug/grug.c",
+        "-o",
+        "grug/libgrug.so",
+        "-shared",
+        "-fPIC",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wfatal-errors",
+        "-g",
+        "-rdynamic"
+      ],
+      "hide": true
+    },
+    {
+      "label": "Compile libglobal_library_loader.so",
+      "command": "gcc",
+      "type": "shell",
+      "args": [
+        "global_library_loader.c",
+        "-o",
+        "libglobal_library_loader.so",
+        "-shared",
+        "-fPIC",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wfatal-errors",
+        "-g",
+        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
+        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
+      ],
+      "hide": true
+    },
+    {
+      "label": "Regenerate adapter.c",
+      "command": "python3",
+      "args": [
+        "grug-adapter-for-java/generate.py",
+        "mod_api.json",
+        "adapter.c"
+      ],
+      "problemMatcher": [],
+      "hide": true
+    },
+    {
+      "label": "Compile libadapter.so",
+      "command": "gcc",
+      "type": "shell",
+      "args": [
+        "adapter.c",
+        "-o",
+        "libadapter.so",
+        "-shared",
+        "-fPIC",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wpedantic",
+        "-Wshadow",
+        "-Wfatal-errors",
+        "-g",
+        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
+        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
+      ],
+      "hide": true
     }
   ]
 }

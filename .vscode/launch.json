@@ -60,6 +60,18 @@
         "MCP_MAPPINGS": "official_1.20.6"
       },
       "preLaunchTask": "prepareRunServerCompile"
+    },
+    {
+        "name": "Run generate.py",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${workspaceRoot}/src/main/java/com/example/examplemod/grug-adapter-for-java/generate.py",
+        "args": [
+            "mod_api.json",
+            "generated_adapter.c"
+        ],
+        "console": "integratedTerminal",
+        "justMyCode": false
     }
   ]
 }
