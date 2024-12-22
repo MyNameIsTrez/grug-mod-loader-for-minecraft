@@ -29,12 +29,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -119,8 +113,6 @@ public class ExampleMod
     {
         LOGGER.info("HELLO FROM COMMON SETUP");
 
-        grug.init();
-
         if (Config.logDirtBlock)
             LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
@@ -166,6 +158,6 @@ public class ExampleMod
             return;
         }
 
-        System.out.println("onTick()");
+        grug.onTick();
     }
 }

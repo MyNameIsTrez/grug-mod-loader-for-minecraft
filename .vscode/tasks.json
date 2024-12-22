@@ -93,7 +93,9 @@
       "args": [
         "grug-adapter-for-java/generate.py",
         "mod_api.json",
-        "adapter.c"
+        "adapter.c",
+        "com/example/examplemod",
+        "Grug"
       ],
       "problemMatcher": [],
       "hide": true

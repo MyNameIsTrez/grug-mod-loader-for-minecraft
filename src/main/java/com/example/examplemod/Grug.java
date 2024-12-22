@@ -10,7 +10,19 @@ import java.nio.file.Path;
 public class Grug {
     private native void loadGlobalLibraries();
 
-    public void init() {
+    private native void initGrugAdapter();
+
+    private native boolean grugInit(String modApiJsonPath, String modsDirPath);
+
+    private native boolean grugRegenerateModifiedMods();
+
+    private native boolean errorHasChanged();
+    private native boolean loadingErrorInGrugFile();
+    private native String errorMsg();
+    private native String errorPath();
+    private native int errorGrugCLineNumber();
+
+    public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
         } catch (IOException e) {
@@ -25,6 +37,12 @@ public class Grug {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load native library.", e);
+        }
+
+        initGrugAdapter();
+
+        if (grugInit("../mod_api.json", "mods")) {
+            throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
         }
     }
 
@@ -57,5 +75,33 @@ public class Grug {
         // Load the library from the temporary file
         System.load(tempLibraryPath.toAbsolutePath().toString());
         System.out.println("Native library loaded from: " + tempLibraryPath);
+    }
+
+    public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
+        System.err.println("grug runtime error in " + on_fn_name + "(): " + reason + ", in " + on_fn_path);
+    }
+
+    public void onTick() {
+        System.out.println("onTick()");
+
+        if (grugRegenerateModifiedMods()) {
+            // if (errorHasChanged()) {
+            if (loadingErrorInGrugFile()) {
+                System.err.println("grug loading error: " + errorMsg() + ", in " + errorPath() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+            } else {
+                System.err.println("grug loading error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+            }
+            // }
+
+            return;
+        }
+
+        System.out.println("No errors! :)");
+
+        // reloadModifiedEntities();
+
+        // reloadModifiedResources();
+
+        // update();
     }
 }

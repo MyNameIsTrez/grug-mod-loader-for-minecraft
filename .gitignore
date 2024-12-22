@@ -26,6 +26,7 @@ forge*changelog.txt
 
 run-data
 mod_dlls
+adapter.c
 libadapter.so
 libglobal_library_loader.so
 libgrug.so
