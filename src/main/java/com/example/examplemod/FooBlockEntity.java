@@ -16,17 +16,27 @@ public class FooBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        this.ticks++;
-        if (ticks % 10 != 0) {
+        System.out.println("In FooBlockEntity its tick()");
+
+        if (!Grug.blockEntity_has_onTick(Grug.tempFooBlockEntity.onFns)) {
             return;
         }
-        this.ticks = 0;
 
-        System.out.println("Spawning diamond");
+        Grug.blockEntity_onTick(Grug.tempFooBlockEntity.onFns, Grug.tempFooBlockEntityGlobals);
 
-        Vec3 spawnPos = worldPosition.above(2).getCenter();
-        ItemEntity diamond = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(Items.DIAMOND));
-        diamond.setDeltaMovement(Vec3.ZERO);
-        level.addFreshEntity(diamond);
+        // TODO: Call tick() from the shared object!
+
+        // this.ticks++;
+        // if (ticks % 10 != 0) {
+        //     return;
+        // }
+        // this.ticks = 0;
+
+        // System.out.println("Spawning diamond");
+
+        // Vec3 spawnPos = worldPosition.above(2).getCenter();
+        // ItemEntity diamond = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(Items.DIAMOND));
+        // diamond.setDeltaMovement(Vec3.ZERO);
+        // level.addFreshEntity(diamond);
     }
 }

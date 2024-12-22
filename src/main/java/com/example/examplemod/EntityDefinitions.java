@@ -2,7 +2,7 @@ package com.example.examplemod;
 
 class EntityDefinitions {
     public static Block block = new Block();
-    public static BlockEntity block_entity = new BlockEntity();
+    public static BlockEntity blockEntity = new BlockEntity();
 }
 
 class Block {
@@ -14,9 +14,12 @@ class Block {
 }
 
 class BlockEntity {
+    public long onFns = 0;
+
     public BlockEntity() {
     }
 
     public BlockEntity(BlockEntity other) {
+        this.onFns = other.onFns;
     }
 }

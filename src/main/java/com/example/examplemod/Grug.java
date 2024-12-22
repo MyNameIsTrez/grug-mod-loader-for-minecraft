@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class Grug {
     private native void loadGlobalLibraries();
@@ -21,6 +22,22 @@ public class Grug {
     private native String errorMsg();
     private native String errorPath();
     private native int errorGrugCLineNumber();
+
+    private native void fillRootGrugDir(GrugDir root);
+    private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
+    private native void fillGrugFile(GrugFile file, long parentDirAddress, int fileIndex);
+
+    private native void callDefineFn(long defineFn);
+    private native void callInitGlobals(long initGlobalsFn, byte[] globals, int id);
+
+    public static native boolean blockEntity_has_onTick(long onFns);
+    public static native void blockEntity_onTick(long onFns, byte[] globals);
+
+    // TODO: Get rid of this temporary stuff!
+    public static BlockEntity tempFooBlockEntity;
+    public static long tempFooBlockEntityDll;
+    public static byte[] tempFooBlockEntityGlobals;
+    static boolean tempFooBlockEntityInitialized = false;
 
     public Grug() {
         try {
@@ -100,6 +117,69 @@ public class Grug {
 
         // reloadModifiedResources();
 
-        // update();
+        if (!tempFooBlockEntityInitialized) {
+            initTempFooBlockEntity();
+            tempFooBlockEntityInitialized = true;
+        }
     }
+
+    // TODO: Get rid of this temporary function!
+    public void initTempFooBlockEntity() {
+        System.out.println("Initializing tempFooBlockEntity");
+
+        ArrayList<GrugFile> blockEntityFiles = new ArrayList<GrugFile>();
+
+        GrugDir root = new GrugDir();
+        fillRootGrugDir(root);
+
+        getTypeFilesImpl(root, "block_entity", blockEntityFiles);
+
+        // printBlockEntities(blockEntityFiles);
+
+        GrugFile file = blockEntityFiles.get(0);
+
+        callDefineFn(file.defineFn);
+        tempFooBlockEntity = new BlockEntity(EntityDefinitions.blockEntity);
+
+        tempFooBlockEntity.onFns = file.onFns;
+
+        tempFooBlockEntityDll = file.dll;
+
+        tempFooBlockEntityGlobals = new byte[file.globalsSize];
+        callInitGlobals(file.initGlobalsFn, tempFooBlockEntityGlobals, 0);
+    }
+
+    private void getTypeFilesImpl(GrugDir dir, String defineType, ArrayList<GrugFile> typeFiles) {
+        for (int i = 0; i < dir.dirsSize; i++) {
+            GrugDir subdir = new GrugDir();
+            fillGrugDir(subdir, dir.address, i);
+
+            getTypeFilesImpl(subdir, defineType, typeFiles);
+        }
+
+        for (int i = 0; i < dir.filesSize; i++) {
+            GrugFile file = new GrugFile();
+            fillGrugFile(file, dir.address, i);
+
+            if (file.defineType.equals(defineType)) {
+                typeFiles.add(file);
+            }
+        }
+    }
+
+    // private void printBlockEntities(ArrayList<GrugFile> blockEntityFiles) {
+    //     for (int i = 0; i < blockEntityFiles.size(); i++) {
+    //         GrugFile file = blockEntityFiles.get(i);
+
+    //         callDefineFn(file.defineFn);
+
+    //         BlockEntity blockEntity = EntityDefinitions.blockEntity;
+
+    //         // TODO: Right now the blockEntity doesn't have any fields,
+    //         // TODO: but print them here when it does
+    //         // System.out.println((i + 1) + ". " + tool.name + ", costing " + tool.buyGoldValue + " gold");
+    //     }
+
+    //     System.out.println();
+    // }
 }
