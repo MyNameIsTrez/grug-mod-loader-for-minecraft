@@ -41,7 +41,7 @@ public class Grug {
 
         initGrugAdapter();
 
-        if (grugInit("../mod_api.json", "mods")) {
+        if (grugInit("../mod_api.json", "../mods")) {
             throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
         }
     }
@@ -82,8 +82,6 @@ public class Grug {
     }
 
     public void onTick() {
-        System.out.println("onTick()");
-
         if (grugRegenerateModifiedMods()) {
             // if (errorHasChanged()) {
             if (loadingErrorInGrugFile()) {
@@ -96,7 +94,7 @@ public class Grug {
             return;
         }
 
-        System.out.println("No errors! :)");
+        System.out.println("onTick() had no errors! :)");
 
         // reloadModifiedEntities();
 
