@@ -45,7 +45,7 @@ public class Grug {
     private ReloadData reloadData = new ReloadData();
 
     // TODO: Get rid of this temporary stuff!
-    public static BlockEntity tempFooBlockEntity;
+    public static BlockEntity tempFooBlockEntity = new BlockEntity();
     public static long tempFooBlockEntityDll;
     public static byte[] tempFooBlockEntityGlobals;
     static boolean tempFooBlockEntityInitialized = false;
@@ -145,6 +145,8 @@ public class Grug {
 
                 tempFooBlockEntityGlobals = new byte[file.globalsSize];
                 callInitGlobals(file.initGlobalsFn, tempFooBlockEntityGlobals, 0);
+
+                tempFooBlockEntity.onFns = file.onFns;
             }
         }
     }
