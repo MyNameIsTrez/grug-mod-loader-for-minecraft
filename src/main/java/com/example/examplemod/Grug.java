@@ -45,7 +45,7 @@ public class Grug {
     private ReloadData reloadData = new ReloadData();
 
     // TODO: Get rid of this temporary stuff!
-    public static BlockEntity tempFooBlockEntity = new BlockEntity();
+    public static GrugBlockEntity tempFooBlockEntity = new GrugBlockEntity();
     public static long tempFooBlockEntityDll;
     public static byte[] tempFooBlockEntityGlobals;
     static boolean tempFooBlockEntityInitialized = false;
@@ -167,7 +167,7 @@ public class Grug {
         GrugFile file = blockEntityFiles.get(0);
 
         callDefineFn(file.defineFn);
-        tempFooBlockEntity = new BlockEntity(EntityDefinitions.blockEntity);
+        tempFooBlockEntity = new GrugBlockEntity(EntityDefinitions.blockEntity);
 
         tempFooBlockEntity.onFns = file.onFns;
 
@@ -226,5 +226,13 @@ public class Grug {
                 player.sendSystemMessage(message);
             }
         }
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private int gameFn_getWorldPosition(int blockEntityId) {
+        // TODO: 1. Consider letting generate.py output `long`, instead of `int`,
+        // TODO: as the type for IDs
+        // TODO: 2. Figure out how to look up the world position of *any* block entity
+        return blockEntityId;
     }
 }

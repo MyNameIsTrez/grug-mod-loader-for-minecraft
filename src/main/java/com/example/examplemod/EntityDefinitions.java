@@ -1,25 +1,25 @@
 package com.example.examplemod;
 
 class EntityDefinitions {
-    public static Block block = new Block();
-    public static BlockEntity blockEntity = new BlockEntity();
+    public static GrugBlock block = new GrugBlock();
+    public static GrugBlockEntity blockEntity = new GrugBlockEntity();
 }
 
-class Block {
-    public Block() {
+class GrugBlock {
+    public GrugBlock() {
     }
 
-    public Block(Block other) {
+    public GrugBlock(GrugBlock other) {
     }
 }
 
-class BlockEntity {
+class GrugBlockEntity {
     public long onFns = 0;
 
-    public BlockEntity() {
+    public GrugBlockEntity() {
     }
 
-    public BlockEntity(BlockEntity other) {
+    public GrugBlockEntity(GrugBlockEntity other) {
         this.onFns = other.onFns;
     }
 }

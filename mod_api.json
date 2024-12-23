@@ -23,6 +23,16 @@
 					"type": "string"
 				}
 			]
+		},
+		"get_world_position": {
+			"description": "Gets the world position of a block_entity.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_entity_id",
+					"type": "id"
+				}
+			]
 		}
 	}
 }
