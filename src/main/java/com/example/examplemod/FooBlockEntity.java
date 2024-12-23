@@ -16,15 +16,11 @@ public class FooBlockEntity extends BlockEntity {
     }
 
     public void tick() {
-        System.out.println("In FooBlockEntity its tick()");
-
         if (!ExampleMod.grug.blockEntity_has_onTick(Grug.tempFooBlockEntity.onFns)) {
             return;
         }
 
         ExampleMod.grug.blockEntity_onTick(Grug.tempFooBlockEntity.onFns, Grug.tempFooBlockEntityGlobals);
-
-        // TODO: Call tick() from the shared object!
 
         // this.ticks++;
         // if (ticks % 10 != 0) {

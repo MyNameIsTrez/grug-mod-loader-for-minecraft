@@ -29,6 +29,9 @@ public class Grug {
     private native String errorPath();
     private native int errorGrugCLineNumber();
 
+    private native int getGrugReloadsSize();
+    private native void fillReloadData(ReloadData reloadData, int i);
+
     private native void fillRootGrugDir(GrugDir root);
     private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
     private native void fillGrugFile(GrugFile file, long parentDirAddress, int fileIndex);
@@ -38,6 +41,8 @@ public class Grug {
 
     public native boolean blockEntity_has_onTick(long onFns);
     public native void blockEntity_onTick(long onFns, byte[] globals);
+
+    private ReloadData reloadData = new ReloadData();
 
     // TODO: Get rid of this temporary stuff!
     public static BlockEntity tempFooBlockEntity;
@@ -117,15 +122,30 @@ public class Grug {
             return;
         }
 
-        System.out.println("onTick() had no errors! :)");
-
-        // reloadModifiedEntities();
+        reloadModifiedEntities();
 
         // reloadModifiedResources();
 
         if (!tempFooBlockEntityInitialized) {
             initTempFooBlockEntity();
             tempFooBlockEntityInitialized = true;
+        }
+    }
+
+    public void reloadModifiedEntities() {
+        int reloadsSize = getGrugReloadsSize();
+
+        for (int reloadIndex = 0; reloadIndex < reloadsSize; reloadIndex++) {
+            fillReloadData(reloadData, reloadIndex);
+
+            GrugFile file = reloadData.file;
+
+            if (reloadData.oldDll == tempFooBlockEntityDll) {
+                tempFooBlockEntityDll = file.dll;
+
+                tempFooBlockEntityGlobals = new byte[file.globalsSize];
+                callInitGlobals(file.initGlobalsFn, tempFooBlockEntityGlobals, 0);
+            }
         }
     }
 
@@ -197,7 +217,7 @@ public class Grug {
             return;
         }
 
-        Component message = Component.literal("Hello, chat");
+        Component message = Component.literal(str);
 
         for (ServerLevel level : server.getAllLevels()) {
             for (ServerPlayer player : level.players()) {
