@@ -7,6 +7,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public class FooBlockEntity extends BlockEntity {
     public FooBlockEntity(BlockPos pos, BlockState state) {
         super(ExampleMod.FOO_BLOCK_ENTITY.get(), pos, state);
+
+        // TODO: Update the id stored in the globals ptr to the address of `this`,
+        // TODO: so that Grug.gameFn_getWorldPosition() can use that
+        // TODO: to access this.worldPosition
     }
 
     public void tick() {

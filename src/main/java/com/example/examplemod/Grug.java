@@ -212,6 +212,32 @@ public class Grug {
     // }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private long gameFn_getWorldPosition(long blockEntityId) {
+        // TODO: Figure out how to look up the world position of *any* block entity
+        //
+        // TODO: Return the address of the world position class instance, somehow:
+        // TODO: maybe I need to add a special `long getAddr(void *);` fn to adapter.c
+        return blockEntityId;
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private void gameFn_printId(long id) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+        if (server == null) {
+            return;
+        }
+
+        Component message = Component.literal(Long.toString(id));
+
+        for (ServerLevel level : server.getAllLevels()) {
+            for (ServerPlayer player : level.players()) {
+                player.sendSystemMessage(message);
+            }
+        }
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private void gameFn_printString(String str) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
@@ -226,14 +252,5 @@ public class Grug {
                 player.sendSystemMessage(message);
             }
         }
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private long gameFn_getWorldPosition(long blockEntityId) {
-        // TODO: Figure out how to look up the world position of *any* block entity
-        //
-        // TODO: Return the address of the world position class instance, somehow:
-        // TODO: maybe I need to add a special `long getAddr(void *);` fn to adapter.c
-        return blockEntityId;
     }
 }

@@ -15,15 +15,6 @@
 		}
 	},
 	"game_functions": {
-		"print_string": {
-			"description": "Prints a string to the chat.",
-			"arguments": [
-				{
-					"name": "str",
-					"type": "string"
-				}
-			]
-		},
 		"get_world_position": {
 			"description": "Gets the world position of a block_entity.",
 			"return_type": "id",
@@ -31,6 +22,24 @@
 				{
 					"name": "block_entity_id",
 					"type": "id"
+				}
+			]
+		},
+		"print_id": {
+			"description": "Prints an ID to the chat.",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"print_string": {
+			"description": "Prints a string to the chat.",
+			"arguments": [
+				{
+					"name": "str",
+					"type": "string"
 				}
 			]
 		}

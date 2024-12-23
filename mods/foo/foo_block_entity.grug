@@ -3,16 +3,22 @@ define() block_entity {
     }
 }
 
-ticks: i32 = 0
+# ticks: i32 = 0
 
 on_tick() {
-    ticks = ticks + 1
-    if (ticks < 20) {
-        return
-    }
-    ticks = 0
+    # ticks = ticks + 1
+    # if (ticks < 20) {
+    #     return
+    # }
+    # ticks = 0
+
+    print_string("me:")
+    print_id(me)
 
     spawn_pos: id = get_world_position(me)
 
-    print_string("Spawned diamond")
+    print_string("spawn_pos:")
+    print_id(spawn_pos)
+
+    # print_string("Spawned diamond")
 }
