@@ -229,10 +229,11 @@ public class Grug {
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private int gameFn_getWorldPosition(int blockEntityId) {
-        // TODO: 1. Consider letting generate.py output `long`, instead of `int`,
-        // TODO: as the type for IDs
-        // TODO: 2. Figure out how to look up the world position of *any* block entity
+    private long gameFn_getWorldPosition(long blockEntityId) {
+        // TODO: Figure out how to look up the world position of *any* block entity
+        //
+        // TODO: Return the address of the world position class instance, somehow:
+        // TODO: maybe I need to add a special `long getAddr(void *);` fn to adapter.c
         return blockEntityId;
     }
 }
