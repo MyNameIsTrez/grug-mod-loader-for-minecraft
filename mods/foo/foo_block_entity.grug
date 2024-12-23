@@ -3,14 +3,16 @@ define() block_entity {
     }
 }
 
-ticks: i32 = 0
+# ticks: i32 = 0
 
 on_tick() {
-    ticks = ticks + 1
-    if (ticks % 10 != 0) {
-        return
-    }
-    ticks = 0
+    # ticks = ticks + 1
+    # if (ticks % 10 != 0) {
+    #     return
+    # }
+    # ticks = 0
+
+    print_string("hello, guy")
 
     # print_string("Spawning diamond")
 

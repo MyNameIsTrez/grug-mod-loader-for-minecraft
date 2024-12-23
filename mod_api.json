@@ -15,5 +15,14 @@
 		}
 	},
 	"game_functions": {
+		"print_string": {
+			"description": "Prints a string to the chat.",
+			"arguments": [
+				{
+					"name": "str",
+					"type": "string"
+				}
+			]
+		}
 	}
 }

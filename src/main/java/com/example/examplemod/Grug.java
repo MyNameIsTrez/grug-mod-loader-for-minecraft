@@ -8,6 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.server.ServerLifecycleHooks;
+
 public class Grug {
     private native void loadGlobalLibraries();
 
@@ -30,8 +36,8 @@ public class Grug {
     private native void callDefineFn(long defineFn);
     private native void callInitGlobals(long initGlobalsFn, byte[] globals, int id);
 
-    public static native boolean blockEntity_has_onTick(long onFns);
-    public static native void blockEntity_onTick(long onFns, byte[] globals);
+    public native boolean blockEntity_has_onTick(long onFns);
+    public native void blockEntity_onTick(long onFns, byte[] globals);
 
     // TODO: Get rid of this temporary stuff!
     public static BlockEntity tempFooBlockEntity;
@@ -182,4 +188,21 @@ public class Grug {
 
     //     System.out.println();
     // }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private void gameFn_printString(String str) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+        if (server == null) {
+            return;
+        }
+
+        Component message = Component.literal("Hello, chat");
+
+        for (ServerLevel level : server.getAllLevels()) {
+            for (ServerPlayer player : level.players()) {
+                player.sendSystemMessage(message);
+            }
+        }
+    }
 }
