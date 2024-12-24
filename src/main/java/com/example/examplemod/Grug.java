@@ -106,10 +106,9 @@ public class Grug {
     }
 
     public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
-        // TODO: Use `#C3E88D` instead of .GREEN
         sendMessageToEveryone(
             Component.literal("grug runtime error in ").withColor(ChatFormatting.RED.getColor())
-            .append(Component.literal(on_fn_name + "()").withColor(ChatFormatting.GREEN.getColor()))
+            .append(Component.literal(on_fn_name + "()").withColor(0xc3e88d))
             .append(Component.literal(": ").withColor(ChatFormatting.RED.getColor()))
             .append(Component.literal(reason).withColor(ChatFormatting.WHITE.getColor()))
             .append("\nDetected in ")
