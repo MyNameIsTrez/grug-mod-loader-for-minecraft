@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -102,20 +103,39 @@ public class Grug {
 
         // Load the library from the temporary file
         System.load(tempLibraryPath.toAbsolutePath().toString());
-        System.out.println("Native library loaded from: " + tempLibraryPath);
     }
 
     public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
-        System.err.println("grug runtime error in " + on_fn_name + "(): " + reason + ", in " + on_fn_path);
+        // TODO: Use `#C3E88D` instead of .GREEN
+        sendMessageToEveryone(
+            Component.literal("grug runtime error in ").withColor(ChatFormatting.RED.getColor())
+            .append(Component.literal(on_fn_name + "()").withColor(ChatFormatting.GREEN.getColor()))
+            .append(Component.literal(": ").withColor(ChatFormatting.RED.getColor()))
+            .append(Component.literal(reason).withColor(ChatFormatting.WHITE.getColor()))
+            .append("\nDetected in ")
+            .append(Component.literal(on_fn_path).withColor(ChatFormatting.DARK_AQUA.getColor()))
+        );
     }
 
     public void onTick() {
         if (grugRegenerateModifiedMods()) {
             // if (errorHasChanged()) {
             if (loadingErrorInGrugFile()) {
-                System.err.println("grug loading error: " + errorMsg() + ", in " + errorPath() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+                sendMessageToEveryone(
+                    Component.literal("grug loading error: ").withColor(ChatFormatting.RED.getColor())
+                    .append(Component.literal(errorMsg()).withColor(ChatFormatting.WHITE.getColor()))
+                    .append(Component.literal("\nDetected in ").withColor(ChatFormatting.RED.getColor()))
+                    .append(Component.literal(errorPath()).withColor(ChatFormatting.DARK_AQUA.getColor()))
+                    .append(Component.literal(" by "))
+                    .append(Component.literal("grug.c:" + errorGrugCLineNumber()).withColor(ChatFormatting.DARK_AQUA.getColor()))
+                );
             } else {
-                System.err.println("grug loading error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+                sendMessageToEveryone(
+                    Component.literal("grug loading error: ").withColor(ChatFormatting.RED.getColor())
+                    .append(Component.literal(errorMsg()).withColor(ChatFormatting.WHITE.getColor()))
+                    .append(Component.literal("\nDetected by "))
+                    .append(Component.literal("grug.c:" + errorGrugCLineNumber()).withColor(ChatFormatting.DARK_AQUA.getColor()))
+                );
             }
             // }
 
@@ -153,8 +173,6 @@ public class Grug {
 
     // TODO: Get rid of this temporary function!
     public void initTempFooBlockEntity() {
-        System.out.println("Initializing tempFooBlockEntity");
-
         ArrayList<GrugFile> blockEntityFiles = new ArrayList<GrugFile>();
 
         GrugDir root = new GrugDir();
@@ -195,6 +213,20 @@ public class Grug {
         }
     }
 
+    private void sendMessageToEveryone(Component message) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+        if (server == null) {
+            return;
+        }
+
+        for (ServerLevel level : server.getAllLevels()) {
+            for (ServerPlayer player : level.players()) {
+                player.sendSystemMessage(message);
+            }
+        }
+    }
+
     // private void printBlockEntities(ArrayList<GrugFile> blockEntityFiles) {
     //     for (int i = 0; i < blockEntityFiles.size(); i++) {
     //         GrugFile file = blockEntityFiles.get(i);
@@ -222,35 +254,11 @@ public class Grug {
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private void gameFn_printId(long id) {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-
-        if (server == null) {
-            return;
-        }
-
-        Component message = Component.literal(Long.toString(id));
-
-        for (ServerLevel level : server.getAllLevels()) {
-            for (ServerPlayer player : level.players()) {
-                player.sendSystemMessage(message);
-            }
-        }
+        sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private void gameFn_printString(String str) {
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-
-        if (server == null) {
-            return;
-        }
-
-        Component message = Component.literal(str);
-
-        for (ServerLevel level : server.getAllLevels()) {
-            for (ServerPlayer player : level.players()) {
-                player.sendSystemMessage(message);
-            }
-        }
+        sendMessageToEveryone(Component.literal(str));
     }
 }
