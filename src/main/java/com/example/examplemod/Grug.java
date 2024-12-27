@@ -40,6 +40,8 @@ public class Grug {
     private native void callDefineFn(long defineFn);
     private native void callInitGlobals(long initGlobalsFn, byte[] globals, int id);
 
+    public native void getEntityFile(String entityName, GrugFile file);
+
     public native boolean blockEntity_has_onTick(long onFns);
     public native void blockEntity_onTick(long onFns, byte[] globals);
 
@@ -55,8 +57,7 @@ public class Grug {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to load native library.", e);
+            throw new RuntimeException(e);
         }
 
         loadGlobalLibraries();
@@ -64,14 +65,23 @@ public class Grug {
         try {
             extractAndLoadNativeLibrary("libadapter.so");
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to load native library.", e);
+            throw new RuntimeException(e);
         }
 
         initGrugAdapter();
 
         if (grugInit("../mod_api.json", "../mods")) {
             throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+        }
+
+        // We need to regenerate the mods before the first modded entities are instantiated,
+        // since they call getEntityFile() in their constructors
+        if (grugRegenerateModifiedMods()) {
+            if (loadingErrorInGrugFile()) {
+                throw new RuntimeException("grug loading error: " + errorMsg() + "\nDetected in " + errorPath() + " by grug.c:" + errorGrugCLineNumber());
+            } else {
+                throw new RuntimeException("grug loading error: " + errorMsg() + "\nDetected by grug.c:" + errorGrugCLineNumber());
+            }
         }
     }
 

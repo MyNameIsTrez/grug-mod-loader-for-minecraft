@@ -4,10 +4,10 @@ define() block_entity {
 }
 
 # ticks: i32 = 0
-
+asd
 on_tick() {
     # ticks = ticks + 1
-    # if (ticks < 20) {
+    # if (ticks < 100) {
     #     return
     # }
     # ticks = 0
@@ -15,13 +15,19 @@ on_tick() {
     # while true {
     # }
 
+    # helper_foo()
+
     print_string("me:")
     print_id(me)
 
-    spawn_pos: id = get_world_position(me)
+    # spawn_pos: id = get_world_position(me)
 
-    print_string("spawn_pos:")
-    print_id(spawn_pos)
+    # print_string("spawn_pos:")
+    # print_id(spawn_pos)
 
-    # print_string("Spawned diamond")
+    print_string("Spawned diamond")
 }
+
+# helper_foo() {
+#     helper_foo()
+# }

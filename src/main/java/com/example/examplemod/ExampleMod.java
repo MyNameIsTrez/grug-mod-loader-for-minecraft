@@ -42,7 +42,7 @@ public class ExampleMod
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final Grug grug = new Grug();
+    public static Grug grug;
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
@@ -71,6 +71,10 @@ public class ExampleMod
     public ExampleMod()
     {
         LOGGER.info("HELLO FROM CONSTRUCTOR");
+
+        // This line is deliberately put here, as opposed to the `public static Grug grug;` line,
+        // since Forge doesn't display proper grug mod error messages otherwise during game startup
+        grug = new Grug();
 
         // RegistryObject<Block> foo_block = BLOCKS.register("foo_block", () -> new FooBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
         // RegistryObject<BlockEntityType<FooBlockEntity>> foo_block_entity = BLOCK_ENTITIES.register("foo_block_entity", () -> BlockEntityType.Builder.of(FooBlockEntity::new, foo_block).build(null));
