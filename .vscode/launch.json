@@ -12,7 +12,8 @@
       "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.20.6"
+        "MCP_MAPPINGS": "official_1.20.6",
+        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunClientCompile"
     },
@@ -27,7 +28,8 @@
       "args": "--launchTarget forge_userdev_data --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir . --mod examplemod --all --output /home/trez/Programming/grug-toys/src/generated/resources --existing /home/trez/Programming/grug-toys/src/main/resources",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.20.6"
+        "MCP_MAPPINGS": "official_1.20.6",
+        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunDataCompile"
     },
@@ -42,7 +44,8 @@
       "args": "--launchTarget forge_userdev_server_gametest --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.20.6"
+        "MCP_MAPPINGS": "official_1.20.6",
+        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunGameTestServerCompile"
     },
@@ -57,7 +60,8 @@
       "args": "--launchTarget forge_userdev_server --gameDir . --nogui",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
-        "MCP_MAPPINGS": "official_1.20.6"
+        "MCP_MAPPINGS": "official_1.20.6",
+        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunServerCompile"
     },
