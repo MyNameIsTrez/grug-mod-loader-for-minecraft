@@ -17,11 +17,12 @@ public class FooBlockEntity extends BlockEntity {
         ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
         // System.out.println("file: " + file);
 
-        List<GrugEntity> grugEntities = Grug.entities.get(file.entity);
+        List<GrugEntity> grugEntities = Grug.entities.get("foo:foo_block_entity");
         if (grugEntities == null) {
             grugEntities = new ArrayList<GrugEntity>();
-            Grug.entities.put(file.entity, grugEntities);
+            Grug.entities.put("foo:foo_block_entity", grugEntities);
         }
+        grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
         // TODO: Let the generator only call callDefineFn() when the entity has fields
@@ -38,6 +39,26 @@ public class FooBlockEntity extends BlockEntity {
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
         grugEntity.onFns = file.onFns;
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+
+        // Swap-remove itself from Grug.entities
+        System.out.println("Removing block entity");
+        List<GrugEntity> grugEntities = Grug.entities.get("foo:foo_block_entity");
+        assert grugEntities != null;
+
+        GrugEntity lastEntity = grugEntities.removeLast();
+
+        // This check prevents the .set() right below it from throwing
+        // when grugEntity.entitiesIndex == grugEntities.size()
+        if (grugEntity.entitiesIndex < grugEntities.size()) {
+            grugEntities.set(grugEntity.entitiesIndex, lastEntity);
+
+            lastEntity.entitiesIndex = grugEntity.entitiesIndex;
+        }
     }
 
     public void tick() {

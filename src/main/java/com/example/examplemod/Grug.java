@@ -171,10 +171,6 @@ public class Grug {
                 continue;
             }
 
-            /* TODO:
-             * When an entity instance despawns we can swap-remove it from the ArrayList,
-             * if all entity instances store their index in the ArrayList
-             */
             for (GrugEntity grugEntity : grugEntities) {
                 grugEntity.globals = new byte[file.globalsSize];
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
