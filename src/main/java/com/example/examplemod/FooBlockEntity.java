@@ -1,40 +1,50 @@
 package com.example.examplemod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FooBlockEntity extends BlockEntity {
-    boolean initialized = true;
+    public GrugEntity grugEntity = new GrugEntity();
 
     public FooBlockEntity(BlockPos pos, BlockState state) {
         super(ExampleMod.FOO_BLOCK_ENTITY.get(), pos, state);
 
         GrugFile file = new GrugFile();
-        ExampleMod.grug.getEntityFile("foo:foo_block", file);
-        System.out.println("file: " + file);
+        ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
+        // System.out.println("file: " + file);
 
-        /* TODO:
-         * Create onFns, tempFooBlockEntityDll, tempFooBlockEntityGlobals here,
-         * instead of in Grug.java, which'll allow the globals its ID
-         * to be the address of `this`
-         *
-         * This'll allow Grug.gameFn_getWorldPosition() to access this.worldPosition
-         *
-         * This constructor will also probably need to add itself (`this`) to an ArrayList
-         * of the Grug class, so that Grug can update the onFns in reloadModifiedEntities()
-         */
+        List<GrugEntity> grugEntities = Grug.entities.get(file.entity);
+        if (grugEntities == null) {
+            grugEntities = new ArrayList<GrugEntity>();
+            Grug.entities.put(file.entity, grugEntities);
+        }
+        grugEntities.add(grugEntity);
+
+        // TODO: Let the generator only call callDefineFn() when the entity has fields
+        // ExampleMod.grug.callDefineFn(file.defineFn);
+        // EntityDefinitions.blockEntity.xyz;
+
+        // TODO: getWorldPosition() needs this put in a map `id_to_entity`, where entity is any Object
+        // TODO: Is there some way to constrain it to something more specific than Object, maybe w/ a new type?
+        // TODO: How can getWorldPosition() throw when the Object's type is not BlockEntity?
+        grugEntity.id = Grug.getNextEntityID();
+
+        grugEntity.globals = new byte[file.globalsSize];
+
+        ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
+
+        grugEntity.onFns = file.onFns;
     }
 
     public void tick() {
-        if (!initialized) {
+        if (!ExampleMod.grug.blockEntity_has_onTick(grugEntity.onFns)) {
             return;
         }
 
-        if (!ExampleMod.grug.blockEntity_has_onTick(Grug.tempFooBlockEntity.onFns)) {
-            return;
-        }
-
-        ExampleMod.grug.blockEntity_onTick(Grug.tempFooBlockEntity.onFns, Grug.tempFooBlockEntityGlobals);
+        ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
     }
 }

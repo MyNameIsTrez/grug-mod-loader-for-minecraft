@@ -15,10 +15,17 @@ import net.minecraft.world.level.block.state.BlockState;
 public class FooBlock extends Block implements EntityBlock {
     public FooBlock(Properties properties) {
         super(properties);
+        // System.out.println("In FooBlock its constructor");
     }
 
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // This gets printed twice; printing the stack trace shows it's once for the client, and once for the server:
+        // https://docs.minecraftforge.net/en/latest/concepts/sides/
+        // System.out.println("Calling FooBlockEntity its constructor");
+        // for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+        //     System.out.println(ste);
+        // }
         return new FooBlockEntity(pos, state);
         // return ExampleMod.FOO_BLOCK_ENTITY.get().create(pos, state);
     }

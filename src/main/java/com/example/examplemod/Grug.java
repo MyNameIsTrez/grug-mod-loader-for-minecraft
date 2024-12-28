@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -37,21 +39,21 @@ public class Grug {
     private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
     private native void fillGrugFile(GrugFile file, long parentDirAddress, int fileIndex);
 
-    private native void callDefineFn(long defineFn);
-    private native void callInitGlobals(long initGlobalsFn, byte[] globals, int id);
+    public native void callDefineFn(long defineFn);
+    public native void callInitGlobals(long initGlobalsFn, byte[] globals, long id);
 
-    public native void getEntityFile(String entityName, GrugFile file);
+    public native void getEntityFile(String entity, GrugFile file);
+
+    // TODO: This does not recycle indices of despawned entities,
+    // TODO: which means this will eventually wrap around back to 0
+    private static long nextEntityID = 0;
 
     public native boolean blockEntity_has_onTick(long onFns);
     public native void blockEntity_onTick(long onFns, byte[] globals);
 
     private ReloadData reloadData = new ReloadData();
 
-    // TODO: Get rid of this temporary stuff!
-    public static GrugBlockEntity tempFooBlockEntity = new GrugBlockEntity();
-    public static long tempFooBlockEntityDll;
-    public static byte[] tempFooBlockEntityGlobals;
-    static boolean tempFooBlockEntityInitialized = false;
+    public static Map<String, List<GrugEntity>> entities = new HashMap<String, List<GrugEntity>>();
 
     public Grug() {
         try {
@@ -154,11 +156,6 @@ public class Grug {
         reloadModifiedEntities();
 
         // reloadModifiedResources();
-
-        if (!tempFooBlockEntityInitialized) {
-            initTempFooBlockEntity();
-            tempFooBlockEntityInitialized = true;
-        }
     }
 
     public void reloadModifiedEntities() {
@@ -169,55 +166,20 @@ public class Grug {
 
             GrugFile file = reloadData.file;
 
-            if (reloadData.oldDll == tempFooBlockEntityDll) {
-                tempFooBlockEntityDll = file.dll;
-
-                tempFooBlockEntityGlobals = new byte[file.globalsSize];
-                callInitGlobals(file.initGlobalsFn, tempFooBlockEntityGlobals, 0);
-
-                tempFooBlockEntity.onFns = file.onFns;
+            List<GrugEntity> grugEntities = entities.get(file.entity);
+            if (grugEntities == null) {
+                continue;
             }
-        }
-    }
 
-    // TODO: Get rid of this temporary function!
-    public void initTempFooBlockEntity() {
-        ArrayList<GrugFile> blockEntityFiles = new ArrayList<GrugFile>();
+            /* TODO:
+             * When an entity instance despawns we can swap-remove it from the ArrayList,
+             * if all entity instances store their index in the ArrayList
+             */
+            for (GrugEntity grugEntity : grugEntities) {
+                grugEntity.globals = new byte[file.globalsSize];
+                callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
-        GrugDir root = new GrugDir();
-        fillRootGrugDir(root);
-
-        getTypeFilesImpl(root, "block_entity", blockEntityFiles);
-
-        // printBlockEntities(blockEntityFiles);
-
-        GrugFile file = blockEntityFiles.get(0);
-
-        callDefineFn(file.defineFn);
-        tempFooBlockEntity = new GrugBlockEntity(EntityDefinitions.blockEntity);
-
-        tempFooBlockEntity.onFns = file.onFns;
-
-        tempFooBlockEntityDll = file.dll;
-
-        tempFooBlockEntityGlobals = new byte[file.globalsSize];
-        callInitGlobals(file.initGlobalsFn, tempFooBlockEntityGlobals, 0);
-    }
-
-    private void getTypeFilesImpl(GrugDir dir, String defineType, ArrayList<GrugFile> typeFiles) {
-        for (int i = 0; i < dir.dirsSize; i++) {
-            GrugDir subdir = new GrugDir();
-            fillGrugDir(subdir, dir.address, i);
-
-            getTypeFilesImpl(subdir, defineType, typeFiles);
-        }
-
-        for (int i = 0; i < dir.filesSize; i++) {
-            GrugFile file = new GrugFile();
-            fillGrugFile(file, dir.address, i);
-
-            if (file.defineType.equals(defineType)) {
-                typeFiles.add(file);
+                grugEntity.onFns = file.onFns;
             }
         }
     }
@@ -236,21 +198,9 @@ public class Grug {
         }
     }
 
-    // private void printBlockEntities(ArrayList<GrugFile> blockEntityFiles) {
-    //     for (int i = 0; i < blockEntityFiles.size(); i++) {
-    //         GrugFile file = blockEntityFiles.get(i);
-
-    //         callDefineFn(file.defineFn);
-
-    //         BlockEntity blockEntity = EntityDefinitions.blockEntity;
-
-    //         // TODO: Right now the blockEntity doesn't have any fields,
-    //         // TODO: but print them here when it does
-    //         // System.out.println((i + 1) + ". " + tool.name + ", costing " + tool.buyGoldValue + " gold");
-    //     }
-
-    //     System.out.println();
-    // }
+    public static long getNextEntityID() {
+        return nextEntityID++;
+    }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private long gameFn_getWorldPosition(long blockEntityId) {

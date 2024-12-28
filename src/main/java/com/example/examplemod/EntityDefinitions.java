@@ -14,12 +14,9 @@ class GrugBlock {
 }
 
 class GrugBlockEntity {
-    public long onFns = 0;
-
     public GrugBlockEntity() {
     }
 
     public GrugBlockEntity(GrugBlockEntity other) {
-        this.onFns = other.onFns;
     }
 }
