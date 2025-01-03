@@ -15,6 +15,15 @@ on_tick() {
     # while true {
     # }
 
+    # if ticks == 2 {
+    #     ticks = 0
+    #     foo: i32 = 42 / 0
+    # } else {
+    #     helper_foo()
+    # }
+
+    # foo: i32 = 42 / 0
+
     # helper_foo()
 
     print_string("me:")
@@ -28,6 +37,6 @@ on_tick() {
     # print_string("Spawned diamond")
 }
 
-# helper_foo() {
-#     helper_foo()
-# }
+helper_foo() {
+    helper_foo()
+}

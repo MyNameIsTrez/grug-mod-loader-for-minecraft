@@ -13,7 +13,6 @@
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
         "MCP_MAPPINGS": "official_1.20.6",
-        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunClientCompile"
     },
@@ -29,7 +28,6 @@
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
         "MCP_MAPPINGS": "official_1.20.6",
-        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunDataCompile"
     },
@@ -45,7 +43,6 @@
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
         "MCP_MAPPINGS": "official_1.20.6",
-        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunGameTestServerCompile"
     },
@@ -61,7 +58,6 @@
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
         "MCP_MAPPINGS": "official_1.20.6",
-        "LD_PRELOAD": "/usr/lib/jvm/jdk-23.0.1-oracle-x64/lib/server/libjsig.so"
       },
       "preLaunchTask": "prepareRunServerCompile"
     },
