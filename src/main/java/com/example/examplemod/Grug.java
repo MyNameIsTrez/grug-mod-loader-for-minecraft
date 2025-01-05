@@ -199,12 +199,26 @@ public class Grug {
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private long gameFn_getWorldPosition(long blockEntityId) {
+    private long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
         // TODO: Figure out how to look up the world position of *any* block entity
-        //
-        // TODO: Return the address of the world position class instance, somehow:
-        // TODO: maybe I need to add a special `long getAddr(void *);` fn to adapter.c
-        return blockEntityId;
+
+        /* TODO:
+        Good ideas:
+        1. Reserve the upper 16 bits of the 64-bit ID for the entity type
+           When can then shift this back out, to use it as a HashMap key
+           The HashMap's values are TODO: ? (look at the entities HashMap for inspiration)
+           TODO: Maybe the upper-middle 24 bits need to be reserved for the parent entity ID?
+
+        Bad ideas:
+        1. Returning the memory address o the world_position instance
+            - The JVM is free to shuffle the instance around in its memory
+        2. Returning the passed blockEntityId
+            - This makes it impossible for game fns to assert the ID type,
+              which is bad because it means calling getWorldPositionOfBlockEntity() becomes optional,
+              which is bad because it makes code confusing and prone to break across updates
+        */
+
+        return blockEntityId * 4;
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
@@ -215,5 +229,10 @@ public class Grug {
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private void gameFn_printString(String str) {
         sendMessageToEveryone(Component.literal(str));
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private void gameFn_printI32(int n) {
+        sendMessageToEveryone(Component.literal(Integer.toString(n)));
     }
 }

@@ -29,9 +29,9 @@ public class FooBlockEntity extends BlockEntity {
         // ExampleMod.grug.callDefineFn(file.defineFn);
         // EntityDefinitions.blockEntity.xyz;
 
-        // TODO: getWorldPosition() needs this put in a map `id_to_entity`, where entity is any Object
+        // TODO: getWorldPositionOfBlockEntity() needs this put in a map `id_to_entity`, where entity is any Object
         // TODO: Is there some way to constrain it to something more specific than Object, maybe w/ a new type?
-        // TODO: How can getWorldPosition() throw when the Object's type is not BlockEntity?
+        // TODO: How can getWorldPositionOfBlockEntity() throw when the Object's type is not BlockEntity?
         grugEntity.id = Grug.getNextEntityID();
 
         grugEntity.globals = new byte[file.globalsSize];

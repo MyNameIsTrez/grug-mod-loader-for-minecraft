@@ -15,7 +15,7 @@
 		}
 	},
 	"game_functions": {
-		"get_world_position": {
+		"get_world_position_of_block_entity": {
 			"description": "Gets the world position of a block_entity.",
 			"return_type": "id",
 			"arguments": [
@@ -40,6 +40,15 @@
 				{
 					"name": "str",
 					"type": "string"
+				}
+			]
+		},
+		"print_i32": {
+			"description": "Prints an i32 to the chat.",
+			"arguments": [
+				{
+					"name": "n",
+					"type": "i32"
 				}
 			]
 		}
