@@ -49,7 +49,7 @@ public class Grug {
     private static long nextEntityID = 0;
 
     public native boolean blockEntity_has_onTick(long onFns);
-    public native void blockEntity_onTick(long onFns, byte[] globals);
+    public static native void blockEntity_onTick(long onFns, byte[] globals);
 
     private ReloadData reloadData = new ReloadData();
 
@@ -117,7 +117,7 @@ public class Grug {
         System.load(tempLibraryPath.toAbsolutePath().toString());
     }
 
-    public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
+    public static void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
         sendMessageToEveryone(
             Component.literal("grug runtime error in ").withColor(ChatFormatting.RED.getColor())
             .append(Component.literal(on_fn_name + "()").withColor(0xc3e88d))
@@ -180,7 +180,7 @@ public class Grug {
         }
     }
 
-    private void sendMessageToEveryone(Component message) {
+    private static void sendMessageToEveryone(Component message) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
         if (server == null) {
@@ -199,7 +199,7 @@ public class Grug {
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
+    private static long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
         // TODO: Figure out how to look up the world position of *any* block entity
 
         /* TODO:
@@ -222,17 +222,20 @@ public class Grug {
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printId(long id) {
+    private static void gameFn_printId(long id) {
         sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printString(String str) {
+    private static void gameFn_printString(String str) {
+        System.err.println("gameFn_printString() called!\n"); // TODO: REMOVE!
         sendMessageToEveryone(Component.literal(str));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printI32(int n) {
+    private static void gameFn_printI32(int n) {
+        // System.err.println("n: " + n); // TODO: REMOVE!
+        // TODO: Put this back
         sendMessageToEveryone(Component.literal(Integer.toString(n)));
     }
 }

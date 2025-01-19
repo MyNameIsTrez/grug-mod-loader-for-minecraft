@@ -3,23 +3,13 @@ define() block_entity {
     }
 }
 
-# ticks: i32 = 0
-
 on_tick() {
-    print_string("hi")
-
-    # print_string("ticks:")
-    # print_i32(ticks)
-    # ticks = ticks + 1
-
-    # while true {
-    # }
-
-    # foo: i32 = 42 / 0
-
+    while true {
+        print_i32(7)
+    }
     # helper_foo()
 }
 
-helper_foo() {
-    helper_foo()
-}
+# helper_foo() {
+#     helper_foo()
+# }
