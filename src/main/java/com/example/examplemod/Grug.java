@@ -130,7 +130,6 @@ public class Grug {
 
     public void onTick() {
         if (grugRegenerateModifiedMods()) {
-            // if (errorHasChanged()) {
             if (loadingErrorInGrugFile()) {
                 sendMessageToEveryone(
                     Component.literal("grug loading error: ").withColor(ChatFormatting.RED.getColor())
@@ -208,6 +207,7 @@ public class Grug {
            When can then shift this back out, to use it as a HashMap key
            The HashMap's values are TODO: ? (look at the entities HashMap for inspiration)
            TODO: Maybe the upper-middle 24 bits need to be reserved for the parent entity ID?
+        2. Port this C++ Slot Map code to Java, since it is what I described in good idea #1: https://github.com/SergeyMakeev/slot_map
 
         Bad ideas:
         1. Returning the memory address o the world_position instance
@@ -228,14 +228,12 @@ public class Grug {
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private static void gameFn_printString(String str) {
-        System.err.println("gameFn_printString() called!\n"); // TODO: REMOVE!
         sendMessageToEveryone(Component.literal(str));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private static void gameFn_printI32(int n) {
-        // System.err.println("n: " + n); // TODO: REMOVE!
-        // TODO: Put this back
         sendMessageToEveryone(Component.literal(Integer.toString(n)));
+        // System.out.println("n: " + n);
     }
 }

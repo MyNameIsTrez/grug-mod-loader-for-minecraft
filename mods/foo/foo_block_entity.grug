@@ -4,12 +4,13 @@ define() block_entity {
 }
 
 on_tick() {
+    print_i32(7)
     while true {
-        print_i32(7)
     }
-    # helper_foo()
+    i: i32 = 42 / 0
+    helper_foo()
 }
 
-# helper_foo() {
-#     helper_foo()
-# }
+helper_foo() {
+    helper_foo()
+}
