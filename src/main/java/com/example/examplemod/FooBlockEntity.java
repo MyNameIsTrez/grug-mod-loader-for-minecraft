@@ -17,10 +17,10 @@ public class FooBlockEntity extends BlockEntity {
         ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
         // System.out.println("file: " + file);
 
-        List<GrugEntity> grugEntities = Grug.entities.get("foo:foo_block_entity");
+        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
         if (grugEntities == null) {
             grugEntities = new ArrayList<GrugEntity>();
-            Grug.entities.put("foo:foo_block_entity", grugEntities);
+            Grug.grugEntitiesMap.put("foo:foo_block_entity", grugEntities);
         }
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
@@ -29,10 +29,8 @@ public class FooBlockEntity extends BlockEntity {
         // ExampleMod.grug.callDefineFn(file.defineFn);
         // EntityDefinitions.blockEntity.xyz;
 
-        // TODO: getWorldPositionOfBlockEntity() needs this put in a map `id_to_entity`, where entity is any Object
-        // TODO: Is there some way to constrain it to something more specific than Object, maybe w/ a new type?
-        // TODO: How can getWorldPositionOfBlockEntity() throw when the Object's type is not BlockEntity?
-        grugEntity.id = Grug.getNextEntityID();
+        int entityType = 7; // TODO: Unhardcode
+        grugEntity.id = Grug.addEntity(entityType, this);
 
         grugEntity.globals = new byte[file.globalsSize];
 
@@ -45,9 +43,12 @@ public class FooBlockEntity extends BlockEntity {
     public void setRemoved() {
         super.setRemoved();
 
-        // Swap-remove itself from Grug.entities
         System.out.println("Removing block entity");
-        List<GrugEntity> grugEntities = Grug.entities.get("foo:foo_block_entity");
+
+        Grug.removeEntity(grugEntity.id);
+
+        // Swap-remove itself from Grug.entities
+        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
         assert grugEntities != null;
 
         GrugEntity lastEntity = grugEntities.removeLast();

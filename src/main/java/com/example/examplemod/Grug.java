@@ -46,14 +46,15 @@ public class Grug {
 
     // TODO: This does not recycle indices of despawned entities,
     // TODO: which means this will eventually wrap around back to 0
-    private static long nextEntityID = 0;
+    private static Map<Integer, Integer> nextEntityIndices = new HashMap<>();
+    private static Map<Integer, Map<Integer, Object>> entityData = new HashMap<>();
 
     public native boolean blockEntity_has_onTick(long onFns);
     public static native void blockEntity_onTick(long onFns, byte[] globals);
 
     private ReloadData reloadData = new ReloadData();
 
-    public static Map<String, List<GrugEntity>> entities = new HashMap<String, List<GrugEntity>>();
+    public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
     public Grug() {
         try {
@@ -85,6 +86,11 @@ public class Grug {
                 throw new RuntimeException("grug loading error: " + errorMsg() + "\nDetected by grug.c:" + errorGrugCLineNumber());
             }
         }
+
+        // TODO: Unhardcode
+        int entityType = 7;
+        nextEntityIndices.put(entityType, 0);
+        entityData.put(entityType, new HashMap<>());
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -165,7 +171,7 @@ public class Grug {
 
             GrugFile file = reloadData.file;
 
-            List<GrugEntity> grugEntities = entities.get(file.entity);
+            List<GrugEntity> grugEntities = grugEntitiesMap.get(file.entity);
             if (grugEntities == null) {
                 continue;
             }
@@ -193,31 +199,54 @@ public class Grug {
         }
     }
 
-    public static long getNextEntityID() {
-        return nextEntityID++;
+    public static long addEntity(int entityType, Object entityInstance) {
+        System.out.println("nextEntityIndices: " + nextEntityIndices);
+        System.out.println("entityData: " + entityData);
+        System.out.println("entityInstance: " + entityInstance);
+
+        int entityIndex = nextEntityIndices.get(entityType);
+
+        nextEntityIndices.put(entityType, entityIndex + 1);
+
+        entityData.get(entityType).put(entityIndex, entityInstance);
+
+        System.out.println("entityType: " + entityType);
+        System.out.println("entityIndex: " + entityIndex);
+        long id = getEntityID(entityType, entityIndex);
+        System.out.println("returned id: " + id);
+
+        return id;
+    }
+
+    public static void removeEntity(long id) {
+        System.out.println("id: " + id);
+        System.out.println("getEntityType(id): " + getEntityType(id));
+        System.out.println("getEntityIndex(id): " + getEntityIndex(id));
+
+        entityData.get(getEntityType(id)).remove(getEntityIndex(id));
+
+        // TODO: REMOVE!
+        // Map<Integer, Object> entitiesData = entityData.get(getEntityType(id));
+        // if (entitiesData != null) {
+        //     entitiesData.remove(getEntityIndex(id));
+        // }
+    }
+
+    private static long getEntityID(int entityType, int entityIndex) {
+        return (long)entityType << 32 | entityIndex;
+    }
+
+    private static int getEntityType(long id) {
+        return (int)(id >> 32);
+    }
+
+    private static int getEntityIndex(long id) {
+        return (int)(id & 0xffffffff);
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private static long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
-        // TODO: Figure out how to look up the world position of *any* block entity
-
-        /* TODO:
-        Good ideas:
-        1. Reserve the upper 16 bits of the 64-bit ID for the entity type
-           When can then shift this back out, to use it as a HashMap key
-           The HashMap's values are TODO: ? (look at the entities HashMap for inspiration)
-           TODO: Maybe the upper-middle 24 bits need to be reserved for the parent entity ID?
-        2. Port this C++ Slot Map code to Java, since it is what I described in good idea #1: https://github.com/SergeyMakeev/slot_map
-
-        Bad ideas:
-        1. Returning the memory address o the world_position instance
-            - The JVM is free to shuffle the instance around in its memory
-        2. Returning the passed blockEntityId
-            - This makes it impossible for game fns to assert the ID type,
-              which is bad because it means calling getWorldPositionOfBlockEntity() becomes optional,
-              which is bad because it makes code confusing and prone to break across updates
-        */
-
+        // TODO: Change
         return blockEntityId * 4;
     }
 
