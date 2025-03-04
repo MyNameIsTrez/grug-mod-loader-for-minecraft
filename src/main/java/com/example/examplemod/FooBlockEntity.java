@@ -7,9 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FooBlockEntity extends BlockEntity {
-    public GrugEntity grugEntity = new GrugEntity();
-
+public class FooBlockEntity extends GrugBlockEntity {
     public FooBlockEntity(BlockPos pos, BlockState state) {
         super(ExampleMod.FOO_BLOCK_ENTITY.get(), pos, state);
 
@@ -29,8 +27,13 @@ public class FooBlockEntity extends BlockEntity {
         // ExampleMod.grug.callDefineFn(file.defineFn);
         // EntityDefinitions.blockEntity.xyz;
 
-        int entityType = 7; // TODO: Unhardcode
+        // TODO: Unhardcode
+        int entityType = 7;
         grugEntity.id = Grug.addEntity(entityType, this);
+
+        // TODO: Unhardcode
+        entityType = 42;
+        worldPositionId = Grug.addEntity(entityType, worldPosition);
 
         grugEntity.globals = new byte[file.globalsSize];
 
@@ -46,6 +49,7 @@ public class FooBlockEntity extends BlockEntity {
         System.out.println("Removing block entity");
 
         Grug.removeEntity(grugEntity.id);
+        Grug.removeEntity(worldPositionId);
 
         // Swap-remove itself from Grug.entities
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
@@ -67,6 +71,6 @@ public class FooBlockEntity extends BlockEntity {
             return;
         }
 
-        ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
+        Grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -47,7 +48,7 @@ public class Grug {
     // TODO: This does not recycle indices of despawned entities,
     // TODO: which means this will eventually wrap around back to 0
     private static Map<Integer, Integer> nextEntityIndices = new HashMap<>();
-    private static Map<Integer, Map<Integer, Object>> entityData = new HashMap<>();
+    private static Map<Long, Object> entityData = new HashMap<>();
 
     public native boolean blockEntity_has_onTick(long onFns);
     public static native void blockEntity_onTick(long onFns, byte[] globals);
@@ -90,7 +91,10 @@ public class Grug {
         // TODO: Unhardcode
         int entityType = 7;
         nextEntityIndices.put(entityType, 0);
-        entityData.put(entityType, new HashMap<>());
+
+        // TODO: Unhardcode
+        entityType = 42;
+        nextEntityIndices.put(entityType, 0);
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -208,11 +212,12 @@ public class Grug {
 
         nextEntityIndices.put(entityType, entityIndex + 1);
 
-        entityData.get(entityType).put(entityIndex, entityInstance);
+        long id = getEntityID(entityType, entityIndex);
+
+        entityData.put(id, entityInstance);
 
         System.out.println("entityType: " + entityType);
         System.out.println("entityIndex: " + entityIndex);
-        long id = getEntityID(entityType, entityIndex);
         System.out.println("returned id: " + id);
 
         return id;
@@ -220,16 +225,10 @@ public class Grug {
 
     public static void removeEntity(long id) {
         System.out.println("id: " + id);
-        System.out.println("getEntityType(id): " + getEntityType(id));
-        System.out.println("getEntityIndex(id): " + getEntityIndex(id));
+        // System.out.println("getEntityType(id): " + getEntityType(id));
+        // System.out.println("getEntityIndex(id): " + getEntityIndex(id));
 
-        entityData.get(getEntityType(id)).remove(getEntityIndex(id));
-
-        // TODO: REMOVE!
-        // Map<Integer, Object> entitiesData = entityData.get(getEntityType(id));
-        // if (entitiesData != null) {
-        //     entitiesData.remove(getEntityIndex(id));
-        // }
+        entityData.remove(id);
     }
 
     private static long getEntityID(int entityType, int entityIndex) {
@@ -240,14 +239,47 @@ public class Grug {
         return (int)(id >> 32);
     }
 
-    private static int getEntityIndex(long id) {
-        return (int)(id & 0xffffffff);
+    // TODO: Remove?
+    // private static int getEntityIndex(long id) {
+    //     return (int)(id & 0xffffffff);
+    // }
+
+    private static GrugBlockEntity getGrugBlockEntity(long id) {
+        int entityType = getEntityType(id);
+
+        // TODO: Print a nice error message, instead of crashing
+        assert entityType == 7;
+
+        return (GrugBlockEntity)entityData.get(id);
+    }
+
+    private static BlockPos getBlockPos(long id) {
+        int entityType = getEntityType(id);
+
+        // TODO: Print a nice error message, instead of crashing
+        assert entityType == 42;
+
+        return (BlockPos)entityData.get(id);
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private static long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
-        // TODO: Change
-        return blockEntityId * 4;
+        return getGrugBlockEntity(blockEntityId).worldPositionId;
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private static int gameFn_getBlockPosX(long id) {
+        return getBlockPos(id).getX();
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private static int gameFn_getBlockPosY(long id) {
+        return getBlockPos(id).getY();
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private static int gameFn_getBlockPosZ(long id) {
+        return getBlockPos(id).getZ();
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name

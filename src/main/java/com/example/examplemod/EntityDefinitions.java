@@ -1,22 +1,22 @@
 package com.example.examplemod;
 
 class EntityDefinitions {
-    public static GrugBlock block = new GrugBlock();
-    public static GrugBlockEntity blockEntity = new GrugBlockEntity();
+    public static BlockDefinition block = new BlockDefinition();
+    public static BlockEntityDefinition blockEntity = new BlockEntityDefinition();
 }
 
-class GrugBlock {
-    public GrugBlock() {
+class BlockDefinition {
+    public BlockDefinition() {
     }
 
-    public GrugBlock(GrugBlock other) {
+    public BlockDefinition(BlockDefinition other) {
     }
 }
 
-class GrugBlockEntity {
-    public GrugBlockEntity() {
+class BlockEntityDefinition {
+    public BlockEntityDefinition() {
     }
 
-    public GrugBlockEntity(GrugBlockEntity other) {
+    public BlockEntityDefinition(BlockEntityDefinition other) {
     }
 }

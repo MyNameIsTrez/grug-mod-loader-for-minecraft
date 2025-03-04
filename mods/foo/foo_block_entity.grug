@@ -4,5 +4,20 @@ define() block_entity {
 }
 
 on_tick() {
+    print_string("me:")
     print_id(me)
+
+    pos: id = get_world_position_of_block_entity(me)
+
+    print_string("pos:")
+    print_id(pos)
+
+    print_string("x:")
+    print_i32(get_block_pos_x(pos))
+
+    print_string("y:")
+    print_i32(get_block_pos_y(pos))
+
+    print_string("z:")
+    print_i32(get_block_pos_z(pos))
 }
