@@ -40,7 +40,6 @@ public class Grug {
     private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
     private native void fillGrugFile(GrugFile file, long parentDirAddress, int fileIndex);
 
-    public native void callDefineFn(long defineFn);
     public native void callInitGlobals(long initGlobalsFn, byte[] globals, long id);
 
     public native void getEntityFile(String entity, GrugFile file);

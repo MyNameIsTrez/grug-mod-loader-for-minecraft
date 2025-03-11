@@ -1,0 +1,39 @@
+on_tick() {
+    # print_string("me:")
+    # print_id(me)
+
+    pos: id = get_world_position_of_block_entity(me)
+
+    # print_string("pos:")
+    # print_id(pos)
+
+    # print_string("x:")
+    # print_i32(get_block_pos_x(pos))
+
+    # print_string("y:")
+    print_i32(get_block_pos_y(pos))
+
+    # print_string("z:")
+    # print_i32(get_block_pos_z(pos))
+
+    # TODO: Update grug.c using my pinned Discord ideas on how to handle memory ownership
+    # pos = get_above(pos, 2)
+
+    # pos = get_center(pos)
+
+    # pos: id = get_center(get_above(get_world_position(me), 2))
+
+    # level: id = get_level(me)
+
+    # diamond: id = new_item_entity(
+    #     level,
+    #     get_vec3_x(pos),
+    #     get_vec3_y(pos),
+    #     get_vec3_z(pos),
+    #     new_item_stack("diamond")
+    # )
+
+    # set_delta_movement(diamond, vec3_zero())
+
+    # add_fresh_entity(level, diamond)
+}

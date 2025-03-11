@@ -23,10 +23,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        // TODO: Let the generator only call callDefineFn() when the entity has fields
-        // ExampleMod.grug.callDefineFn(file.defineFn);
-        // EntityDefinitions.blockEntity.xyz;
-
         // TODO: Unhardcode
         int entityType = 7;
         grugEntity.id = Grug.addEntity(entityType, this);

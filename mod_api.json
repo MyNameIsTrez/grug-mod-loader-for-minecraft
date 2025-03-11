@@ -1,12 +1,10 @@
 {
 	"entities": {
 		"block": {
-			"description": "A block.",
-			"fields": []
+			"description": "A block."
 		},
 		"block_entity": {
 			"description": "A block entity.",
-			"fields": [],
             "on_functions": {
                 "on_tick": {
                     "description": "Called every game tick, so every 0.05 seconds."
