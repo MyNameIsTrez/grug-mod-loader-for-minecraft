@@ -61,8 +61,7 @@
         "-Wshadow",
         "-Wfatal-errors",
         "-g",
-        "-rdynamic",
-        "-DCHECK_JVM_THREADS"
+        "-rdynamic"
       ],
       "hide": true
     },

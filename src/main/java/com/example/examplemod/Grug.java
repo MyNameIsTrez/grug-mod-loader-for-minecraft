@@ -74,7 +74,7 @@ public class Grug {
         initGrugAdapter();
 
         if (grugInit("../mod_api.json", "../mods")) {
-            throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected in grug.c:" + errorGrugCLineNumber() + ")");
+            throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected by grug.c:" + errorGrugCLineNumber() + ")");
         }
 
         // We need to regenerate the mods before the first modded entities are instantiated,
