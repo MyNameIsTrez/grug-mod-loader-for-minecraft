@@ -11,7 +11,8 @@ The mod is written for [Minecraft Forge - MC 1.20.6](https://files.minecraftforg
 Make sure to be on Linux, and to use VS Code.
 
 1. Run `git submodule update --init` to clone the subrepositories.
-2. Run `./gradlew runClient` to initialize the `run/` directory.
-3. Press `F5` to boot the game.
+2. Press `Ctrl+Shift+B` to open the task menu, and select `Recompile`.
+3. Run `./gradlew runClient` to initialize the `run/` directory.
+4. From now on you can use `F5` to boot the game.
 
 - See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
