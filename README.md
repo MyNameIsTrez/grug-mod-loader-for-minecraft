@@ -15,4 +15,4 @@ Make sure to be on Linux, and to use VS Code.
 3. Run `./gradlew runClient` to initialize the `run/` directory, and launch the game.
 4. From now on you can use `F5` to launch the game.
 
-- See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
+See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
