@@ -10,7 +10,11 @@ The mod is written for [Minecraft Forge - MC 1.20.6](https://files.minecraftforg
 
 Make sure to be on Linux, and to use VS Code.
 
-- Run `git submodule update --init` to clone the subrepositories.
+1. Run `git submodule update --init` to clone the subrepositories.
+2. Hit `Ctrl+Shift+B` to open the tasks menu, and select `Recompile`.
+3. Press `F5` to boot the game.
+
+### Other commands
 
 - Run `./gradlew genVSCodeRuns` to generate `launch.json` and `tasks.json`, which allow you to test the mod by launching the game.
   - TODO: Figure out if there's a way to get around needing to revert the changes it makes to `launch.json` and `tasks.json`.
