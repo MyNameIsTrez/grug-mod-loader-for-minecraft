@@ -66,6 +66,6 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        Grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
+        ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
     }
 }

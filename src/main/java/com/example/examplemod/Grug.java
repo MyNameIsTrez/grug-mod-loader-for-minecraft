@@ -50,7 +50,7 @@ public class Grug {
     private static Map<Long, Object> entityData = new HashMap<>();
 
     public native boolean blockEntity_has_onTick(long onFns);
-    public static native void blockEntity_onTick(long onFns, byte[] globals);
+    public native void blockEntity_onTick(long onFns, byte[] globals);
 
     private ReloadData reloadData = new ReloadData();
 
@@ -126,7 +126,7 @@ public class Grug {
         System.load(tempLibraryPath.toAbsolutePath().toString());
     }
 
-    public static void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
+    public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
         sendMessageToEveryone(
             Component.literal("grug runtime error in ").withColor(ChatFormatting.RED.getColor())
             .append(Component.literal(on_fn_name + "()").withColor(0xc3e88d))
@@ -239,11 +239,11 @@ public class Grug {
     }
 
     // TODO: Remove?
-    // private static int getEntityIndex(long id) {
+    // private int getEntityIndex(long id) {
     //     return (int)(id & 0xffffffff);
     // }
 
-    private static GrugBlockEntity getGrugBlockEntity(long id) {
+    private GrugBlockEntity getGrugBlockEntity(long id) {
         int entityType = getEntityType(id);
 
         // TODO: Print a nice error message, instead of crashing
@@ -252,7 +252,7 @@ public class Grug {
         return (GrugBlockEntity)entityData.get(id);
     }
 
-    private static BlockPos getBlockPos(long id) {
+    private BlockPos getBlockPos(long id) {
         int entityType = getEntityType(id);
 
         // TODO: Print a nice error message, instead of crashing
@@ -262,37 +262,37 @@ public class Grug {
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
+    private long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
         return getGrugBlockEntity(blockEntityId).worldPositionId;
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static int gameFn_getBlockPosX(long id) {
+    private int gameFn_getBlockPosX(long id) {
         return getBlockPos(id).getX();
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static int gameFn_getBlockPosY(long id) {
+    private int gameFn_getBlockPosY(long id) {
         return getBlockPos(id).getY();
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static int gameFn_getBlockPosZ(long id) {
+    private int gameFn_getBlockPosZ(long id) {
         return getBlockPos(id).getZ();
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static void gameFn_printId(long id) {
+    private void gameFn_printId(long id) {
         sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static void gameFn_printString(String str) {
+    private void gameFn_printString(String str) {
         sendMessageToEveryone(Component.literal(str));
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private static void gameFn_printI32(int n) {
+    private void gameFn_printI32(int n) {
         sendMessageToEveryone(Component.literal(Integer.toString(n)));
         // System.out.println("n: " + n);
     }

@@ -10,7 +10,12 @@ The mod is written for [Minecraft Forge - MC 1.20.6](https://files.minecraftforg
 
 Make sure to be on Linux, and to use VS Code.
 
+- Run `git submodule update --init` to clone the subrepositories.
+
 - Run `./gradlew genVSCodeRuns` to generate `launch.json` and `tasks.json`, which allow you to test the mod by launching the game.
+  - TODO: Figure out if there's a way to get around needing to revert the changes it makes to `launch.json` and `tasks.json`.
+
+- You may also need to run `./gradlew build` and `./gradlew runClient`.
 
 - Select the `runClient` launch config in the `Run and Debug` tab, and press `F5` to boot the game.
 
