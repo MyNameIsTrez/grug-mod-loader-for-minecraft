@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,13 +57,13 @@ public class Grug {
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
-    // The List this constructs is never actually used.
+    // This is deliberately not assigned a new List.
     // This variable gets assigned an entity's list of child IDs before init_globals() is called,
     // and it gets assigned the below onFnEntities before an on_ fn is called.
     public static List<Long> fnEntities;
 
     // Cleared at the end of every on_ fn call.
-    public static List<Long> onFnEntities;
+    public static List<Long> onFnEntities = new ArrayList<>();
 
     public Grug() {
         try {
@@ -189,7 +190,11 @@ public class Grug {
 
             for (GrugEntity grugEntity : grugEntities) {
                 grugEntity.globals = new byte[file.globalsSize];
+
+                grugEntity.childEntities.clear();
+                Grug.fnEntities = grugEntity.childEntities;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
+                Grug.fnEntities = Grug.onFnEntities;
 
                 grugEntity.onFns = file.onFns;
             }

@@ -10,10 +10,6 @@ public class FooBlockEntity extends GrugBlockEntity {
     public FooBlockEntity(BlockPos pos, BlockState state) {
         super(ExampleMod.FOO_BLOCK_ENTITY.get(), pos, state);
 
-        GrugFile file = new GrugFile();
-        ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
-        // System.out.println("file: " + file);
-
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
         if (grugEntities == null) {
             grugEntities = new ArrayList<GrugEntity>();
@@ -30,9 +26,13 @@ public class FooBlockEntity extends GrugBlockEntity {
         entityType = 42;
         worldPositionId = Grug.addEntity(entityType, worldPosition);
 
+        GrugFile file = new GrugFile();
+        ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
+        // System.out.println("file: " + file);
+
         grugEntity.globals = new byte[file.globalsSize];
 
-        Grug.fnEntities = childEntities;
+        Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
         Grug.fnEntities = Grug.onFnEntities;
 
@@ -47,7 +47,7 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         Grug.removeEntity(grugEntity.id);
         Grug.removeEntity(worldPositionId);
-        Grug.removeEntities(childEntities);
+        Grug.removeEntities(grugEntity.childEntities);
 
         // Swap-remove itself from Grug.entities
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
