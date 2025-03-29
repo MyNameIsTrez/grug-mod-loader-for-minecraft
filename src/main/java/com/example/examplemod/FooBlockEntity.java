@@ -32,7 +32,9 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         grugEntity.globals = new byte[file.globalsSize];
 
+        Grug.fnEntities = childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
+        Grug.fnEntities = Grug.onFnEntities;
 
         grugEntity.onFns = file.onFns;
     }
@@ -45,6 +47,7 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         Grug.removeEntity(grugEntity.id);
         Grug.removeEntity(worldPositionId);
+        Grug.removeEntities(childEntities);
 
         // Swap-remove itself from Grug.entities
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
@@ -67,5 +70,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         }
 
         ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
+        Grug.removeEntities(Grug.onFnEntities);
+        Grug.onFnEntities.clear();
     }
 }

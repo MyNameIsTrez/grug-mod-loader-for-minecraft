@@ -56,6 +56,14 @@ public class Grug {
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
+    // The List this constructs is never actually used.
+    // This variable gets assigned an entity's list of child IDs before init_globals() is called,
+    // and it gets assigned the below onFnEntities before an on_ fn is called.
+    public static List<Long> fnEntities;
+
+    // Cleared at the end of every on_ fn call.
+    public static List<Long> onFnEntities;
+
     public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
@@ -230,6 +238,12 @@ public class Grug {
         entityData.remove(id);
     }
 
+    public static void removeEntities(List<Long> entities) {
+        for (long entity : entities) {
+            removeEntity(entity);
+        }
+    }
+
     private static long getEntityID(int entityType, int entityIndex) {
         return (long)entityType << 32 | entityIndex;
     }
@@ -264,6 +278,18 @@ public class Grug {
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
     private long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
         return getGrugBlockEntity(blockEntityId).worldPositionId;
+    }
+
+    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
+    private long gameFn_getBlockPosAbove(long blockPosId) {
+        // The .above() call allocates a new BlockPos
+        BlockPos above = getBlockPos(blockPosId).above();
+
+        int entityType = 42;
+        long aboveId = Grug.addEntity(entityType, above);
+        fnEntities.add(aboveId);
+
+        return aboveId;
     }
 
     // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name

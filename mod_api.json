@@ -23,6 +23,16 @@
 				}
 			]
 		},
+		"get_block_pos_above": {
+			"description": "Gets the block position one block up.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_pos_id",
+					"type": "id"
+				}
+			]
+		},
 		"get_block_pos_x": {
 			"description": "Gets the X coordinate of a block_pos.",
 			"return_type": "i32",
