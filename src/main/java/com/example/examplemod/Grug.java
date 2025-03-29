@@ -201,7 +201,7 @@ public class Grug {
         }
     }
 
-    private static void sendMessageToEveryone(Component message) {
+    public static void sendMessageToEveryone(Component message) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
         if (server == null) {
@@ -257,12 +257,11 @@ public class Grug {
         return (int)(id >> 32);
     }
 
-    // TODO: Remove?
     // private int getEntityIndex(long id) {
     //     return (int)(id & 0xffffffff);
     // }
 
-    private GrugBlockEntity getGrugBlockEntity(long id) {
+    public GrugBlockEntity getGrugBlockEntity(long id) {
         int entityType = getEntityType(id);
 
         // TODO: Print a nice error message, instead of crashing
@@ -271,60 +270,12 @@ public class Grug {
         return (GrugBlockEntity)entityData.get(id);
     }
 
-    private BlockPos getBlockPos(long id) {
+    public BlockPos getBlockPos(long id) {
         int entityType = getEntityType(id);
 
         // TODO: Print a nice error message, instead of crashing
         assert entityType == 42;
 
         return (BlockPos)entityData.get(id);
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private long gameFn_getWorldPositionOfBlockEntity(long blockEntityId) {
-        return getGrugBlockEntity(blockEntityId).worldPositionId;
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private long gameFn_getBlockPosAbove(long blockPosId) {
-        // The .above() call allocates a new BlockPos
-        BlockPos above = getBlockPos(blockPosId).above();
-
-        int entityType = 42;
-        long aboveId = Grug.addEntity(entityType, above);
-        fnEntities.add(aboveId);
-
-        return aboveId;
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private int gameFn_getBlockPosX(long id) {
-        return getBlockPos(id).getX();
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private int gameFn_getBlockPosY(long id) {
-        return getBlockPos(id).getY();
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private int gameFn_getBlockPosZ(long id) {
-        return getBlockPos(id).getZ();
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printId(long id) {
-        sendMessageToEveryone(Component.literal(Long.toString(id)));
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printString(String str) {
-        sendMessageToEveryone(Component.literal(str));
-    }
-
-    // TODO: Move this method to GameFunctions.java, and remove the `gameFn_` prefix from the method's name
-    private void gameFn_printI32(int n) {
-        sendMessageToEveryone(Component.literal(Integer.toString(n)));
-        // System.out.println("n: " + n);
     }
 }
