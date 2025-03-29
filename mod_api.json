@@ -33,6 +33,30 @@
 				}
 			]
 		},
+		"get_block_pos_above_n": {
+			"description": "Gets the block position N blocks up.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_pos_id",
+					"type": "id"
+				},
+				{
+					"name": "n",
+					"type": "i32"
+				}
+			]
+		},
+		"get_block_pos_center": {
+			"description": "Gets the center of a block position.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_pos_id",
+					"type": "id"
+				}
+			]
+		},
 		"get_block_pos_x": {
 			"description": "Gets the X coordinate of a block_pos.",
 			"return_type": "i32",
@@ -63,6 +87,36 @@
 				}
 			]
 		},
+		"get_vec3_x": {
+			"description": "Gets the X coordinate of a vec3.",
+			"return_type": "f32",
+			"arguments": [
+				{
+					"name": "vec3_id",
+					"type": "id"
+				}
+			]
+		},
+		"get_vec3_y": {
+			"description": "Gets the Y coordinate of a vec3.",
+			"return_type": "f32",
+			"arguments": [
+				{
+					"name": "vec3_id",
+					"type": "id"
+				}
+			]
+		},
+		"get_vec3_z": {
+			"description": "Gets the Z coordinate of a vec3.",
+			"return_type": "f32",
+			"arguments": [
+				{
+					"name": "vec3_id",
+					"type": "id"
+				}
+			]
+		},
 		"print_id": {
 			"description": "Prints an ID to the chat.",
 			"arguments": [
@@ -87,6 +141,15 @@
 				{
 					"name": "n",
 					"type": "i32"
+				}
+			]
+		},
+		"print_f32": {
+			"description": "Prints an f32 to the chat.",
+			"arguments": [
+				{
+					"name": "f",
+					"type": "f32"
 				}
 			]
 		}

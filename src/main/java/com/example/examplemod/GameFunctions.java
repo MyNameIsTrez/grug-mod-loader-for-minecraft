@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.phys.Vec3;
 
 class GameFunctions {
     private static long getWorldPositionOfBlockEntity(long blockEntityId) {
@@ -19,6 +20,28 @@ class GameFunctions {
         return aboveId;
     }
 
+    private static long getBlockPosAboveN(long blockPosId, int n) {
+        // The .above() call allocates a new BlockPos
+        BlockPos above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
+
+        int entityType = 42;
+        long aboveId = Grug.addEntity(entityType, above);
+        Grug.fnEntities.add(aboveId);
+
+        return aboveId;
+    }
+
+    private static long getBlockPosCenter(long blockPosId) {
+        // The .getCenter() call allocates a new Vec3
+        Vec3 center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
+
+        int entityType = 123;
+        long centerId = Grug.addEntity(entityType, center);
+        Grug.fnEntities.add(centerId);
+
+        return centerId;
+    }
+
     private static int getBlockPosX(long id) {
         return ExampleMod.grug.getBlockPos(id).getX();
     }
@@ -31,6 +54,18 @@ class GameFunctions {
         return ExampleMod.grug.getBlockPos(id).getZ();
     }
 
+    private static float getVec3X(long id) {
+        return (float)ExampleMod.grug.getVec3(id).x();
+    }
+
+    private static float getVec3Y(long id) {
+        return (float)ExampleMod.grug.getVec3(id).y();
+    }
+
+    private static float getVec3Z(long id) {
+        return (float)ExampleMod.grug.getVec3(id).z();
+    }
+
     private static void printId(long id) {
         Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
@@ -41,6 +76,9 @@ class GameFunctions {
 
     private static void printI32(int n) {
         Grug.sendMessageToEveryone(Component.literal(Integer.toString(n)));
-        // System.out.println("n: " + n);
+    }
+
+    private static void printF32(float f) {
+        Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
     }
 }

@@ -1,31 +1,15 @@
-above: id = get_block_pos_above(get_block_pos_above(get_world_position_of_block_entity(me)))
-
 on_tick() {
-    # print_string("me:")
-    # print_id(me)
-
     pos: id = get_world_position_of_block_entity(me)
-    print_i32(get_block_pos_y(pos))
+    print_string("my pos:")
+    helper_print_pos(pos)
 
-    # above: id = get_block_pos_above(pos)
-    print_i32(get_block_pos_y(above))
+    pos = get_block_pos_above_n(pos, 2)
+    print_string("above pos:")
+    helper_print_pos(pos)
 
-    # print_string("pos:")
-    # print_id(pos)
-
-    # print_string("x:")
-    # print_i32(get_block_pos_x(pos))
-
-    # print_string("y:")
-    # print_i32(get_block_pos_y(pos))
-
-    # print_string("z:")
-    # print_i32(get_block_pos_z(pos))
-
-    # TODO: Update grug.c using my pinned Discord ideas on how to handle memory ownership
-    # pos = get_above(pos, 2)
-
-    # pos = get_center(pos)
+    center: id = get_block_pos_center(pos)
+    print_string("center:")
+    helper_print_vec3(center)
 
     # pos: id = get_center(get_above(get_world_position(me), 2))
 
@@ -42,4 +26,26 @@ on_tick() {
     # set_delta_movement(diamond, vec3_zero())
 
     # add_fresh_entity(level, diamond)
+}
+
+helper_print_pos(pos: id) {
+    print_string("x:")
+    print_i32(get_block_pos_x(pos))
+
+    print_string("y:")
+    print_i32(get_block_pos_y(pos))
+
+    print_string("z:")
+    print_i32(get_block_pos_z(pos))
+}
+
+helper_print_vec3(vec3: id) {
+    print_string("x:")
+    print_f32(get_vec3_x(vec3))
+
+    print_string("y:")
+    print_f32(get_vec3_y(vec3))
+
+    print_string("z:")
+    print_f32(get_vec3_z(vec3))
 }
