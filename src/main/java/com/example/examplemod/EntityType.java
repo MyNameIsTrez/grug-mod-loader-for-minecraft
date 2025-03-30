@@ -4,6 +4,7 @@ public enum EntityType {
     BlockEntity,
     BlockPos,
     Item,
+    ItemEntity,
     ItemStack,
     Level,
     ResourceLocation,

@@ -1,11 +1,11 @@
 package com.example.examplemod;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -13,8 +13,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
     private static long getBlockEntityLevel(long blockEntityId) {
-        // This does not allocate a new Level
-        Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
+        Level level;
+        try {
+            // This does not allocate a new Level
+            level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_entity_level(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long levelId = Grug.addEntity(EntityType.Level, level);
         Grug.fnEntities.add(levelId);
@@ -23,8 +29,14 @@ class GameFunctions {
     }
 
     private static long getBlockPosAbove(long blockPosId) {
-        // The .above() call allocates a new BlockPos
-        BlockPos above = ExampleMod.grug.getBlockPos(blockPosId).above();
+        BlockPos above;
+        try {
+            // The .above() call allocates a new BlockPos
+            above = ExampleMod.grug.getBlockPos(blockPosId).above();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_above(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long aboveId = Grug.addEntity(EntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
@@ -33,8 +45,14 @@ class GameFunctions {
     }
 
     private static long getBlockPosAboveN(long blockPosId, int n) {
-        // The .above() call allocates a new BlockPos
-        BlockPos above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
+        BlockPos above;
+        try {
+            // The .above() call allocates a new BlockPos
+            above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_above_n(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long aboveId = Grug.addEntity(EntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
@@ -43,8 +61,14 @@ class GameFunctions {
     }
 
     private static long getBlockPosCenter(long blockPosId) {
-        // The .getCenter() call allocates a new Vec3
-        Vec3 center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
+        Vec3 center;
+        try {
+            // The .getCenter() call allocates a new Vec3
+            center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_center(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long centerId = Grug.addEntity(EntityType.Vec3, center);
         Grug.fnEntities.add(centerId);
@@ -53,25 +77,61 @@ class GameFunctions {
     }
 
     private static int getBlockPosX(long id) {
-        return ExampleMod.grug.getBlockPos(id).getX();
+        try {
+            return ExampleMod.grug.getBlockPos(id).getX();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_x(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static int getBlockPosY(long id) {
-        return ExampleMod.grug.getBlockPos(id).getY();
+        try {
+            return ExampleMod.grug.getBlockPos(id).getY();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_y(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static int getBlockPosZ(long id) {
-        return ExampleMod.grug.getBlockPos(id).getZ();
+        try {
+            return ExampleMod.grug.getBlockPos(id).getZ();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_block_pos_z(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static String getItemName(long id) {
-        Item item = ExampleMod.grug.getItem(id);
+        Item item;
+        try {
+            item = ExampleMod.grug.getItem(id);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_item_name(): " + assertEntityTypeException.getMessage());
+            return "";
+        }
 
         return item.getName(new ItemStack(item)).getString();
     }
 
+    private static String getItemEntityName(long id) {
+        try {
+            return ExampleMod.grug.getItemEntity(id).getName().getString();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_item_entity_name(): " + assertEntityTypeException.getMessage());
+            return "";
+        }
+    }
+
     private static String getItemStackName(long id) {
-        ItemStack itemStack = ExampleMod.grug.getItemStack(id);
+        ItemStack itemStack;
+        try {
+            itemStack = ExampleMod.grug.getItemStack(id);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_item_stack_name(): " + assertEntityTypeException.getMessage());
+            return "";
+        }
 
         return itemStack.getItem().getName(itemStack).getString(); // Returns "Diamond"
         // return itemStack.toString(); // Returns "1 diamond"
@@ -80,7 +140,13 @@ class GameFunctions {
     }
 
     private static String getLevelName(long id) {
-        Level level = ExampleMod.grug.getLevel(id);
+        Level level;
+        try {
+            level = ExampleMod.grug.getLevel(id);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_level_name(): " + assertEntityTypeException.getMessage());
+            return "";
+        }
         return level.dimensionTypeRegistration().getRegisteredName();
     }
 
@@ -123,12 +189,23 @@ class GameFunctions {
     }
 
     private static long getWorldPositionOfBlockEntity(long blockEntityId) {
-        return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
+        try {
+            return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_world_position_of_block_entity(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static long item(long resourceLocation) {
-        // Translates "minecraft:diamond" to Items.DIAMOND
-        Item item = ForgeRegistries.ITEMS.getValue(ExampleMod.grug.getResourceLocation(resourceLocation));
+        Item item;
+        try {
+            // Translates "minecraft:diamond" to Items.DIAMOND
+            item = ForgeRegistries.ITEMS.getValue(ExampleMod.grug.getResourceLocation(resourceLocation));
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("item(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long itemId = Grug.addEntity(EntityType.Item, item);
         Grug.fnEntities.add(itemId);
@@ -136,8 +213,29 @@ class GameFunctions {
         return itemId;
     }
 
+    private static long itemEntity(long level, float x, float y, float z, long itemStack) {
+        ItemEntity itemEntity;
+        try {
+            itemEntity = new ItemEntity(ExampleMod.grug.getLevel(level), x, y, z, ExampleMod.grug.getItemStack(itemStack));
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("item_entity(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
+
+        long itemEntityId = Grug.addEntity(EntityType.ItemEntity, itemEntity);
+        Grug.fnEntities.add(itemEntityId);
+
+        return itemEntityId;
+    }
+
     private static long itemStack(long item) {
-        ItemStack itemStack = new ItemStack(ExampleMod.grug.getItem(item));
+        ItemStack itemStack;
+        try {
+            itemStack = new ItemStack(ExampleMod.grug.getItem(item));
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("item_stack(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
 
         long itemStackId = Grug.addEntity(EntityType.ItemStack, itemStack);
         Grug.fnEntities.add(itemStackId);
@@ -162,9 +260,9 @@ class GameFunctions {
     }
 
     private static long resourceLocation(String resourceLocationString) {
-        // Allocates a new ResourceLocation
         ResourceLocation resourceLocation;
         try {
+            // Allocates a new ResourceLocation
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
             Grug.sendErrorMessageToEveryone("get_resource_location(\"" + resourceLocationString + "\") has an invalid resource_location_string argument");

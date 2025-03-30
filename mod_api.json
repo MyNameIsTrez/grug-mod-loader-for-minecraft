@@ -97,6 +97,16 @@
 				}
 			]
 		},
+		"get_item_entity_name": {
+			"description": "Gets the name of an item_entity.",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
 		"get_item_stack_name": {
 			"description": "Gets the name of an item_stack.",
 			"return_type": "string",
@@ -168,7 +178,7 @@
 			]
 		},
 		"item": {
-			"description": "Creates a new item from a resource_location.",
+			"description": "Creates a new item.",
 			"return_type": "id",
 			"arguments": [
 				{
@@ -177,8 +187,34 @@
 				}
 			]
 		},
+		"item_entity": {
+			"description": "Creates a new item_entity.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "level",
+					"type": "id"
+				},
+				{
+					"name": "x",
+					"type": "f32"
+				},
+				{
+					"name": "y",
+					"type": "f32"
+				},
+				{
+					"name": "z",
+					"type": "f32"
+				},
+				{
+					"name": "item_stack",
+					"type": "id"
+				}
+			]
+		},
 		"item_stack": {
-			"description": "Creates a new item_stack from an item.",
+			"description": "Creates a new item_stack.",
 			"return_type": "id",
 			"arguments": [
 				{

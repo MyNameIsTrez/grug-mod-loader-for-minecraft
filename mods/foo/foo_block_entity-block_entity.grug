@@ -26,8 +26,9 @@ on_tick() {
     x: f32 = get_vec3_x(center)
     y: f32 = get_vec3_y(center)
     z: f32 = get_vec3_z(center)
-    # item_entity: id = item_entity(level, x, y, z, item_stack)
-    # print_item_entity_name(item_entity)
+
+    item_entity: id = item_entity(level, x, y, z, item_stack)
+    print_string(get_item_entity_name(item_entity))
 
     # set_delta_movement(item_entity, vec3_zero())
 
