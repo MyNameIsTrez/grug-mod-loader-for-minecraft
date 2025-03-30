@@ -1,19 +1,18 @@
 on_tick() {
     pos: id = get_world_position_of_block_entity(me)
-    print_string("my pos:")
-    helper_print_pos(pos)
+    # print_string("my pos:")
+    # helper_print_pos(pos)
 
     pos = get_block_pos_above_n(pos, 2)
-    print_string("above pos:")
-    helper_print_pos(pos)
+    # print_string("above pos:")
+    # helper_print_pos(pos)
 
     center: id = get_block_pos_center(pos)
-    print_string("center:")
-    helper_print_vec3(center)
+    # print_string("center:")
+    # helper_print_vec3(center)
 
-    # pos: id = get_center(get_above(get_world_position(me), 2))
-
-    # level: id = get_level(me)
+    level: id = get_block_entity_level(me)
+    print_level_name(level)
 
     # diamond: id = new_item_entity(
     #     level,
@@ -28,24 +27,24 @@ on_tick() {
     # add_fresh_entity(level, diamond)
 }
 
-helper_print_pos(pos: id) {
-    print_string("x:")
-    print_i32(get_block_pos_x(pos))
+# helper_print_pos(pos: id) {
+#     print_string("x:")
+#     print_i32(get_block_pos_x(pos))
 
-    print_string("y:")
-    print_i32(get_block_pos_y(pos))
+#     print_string("y:")
+#     print_i32(get_block_pos_y(pos))
 
-    print_string("z:")
-    print_i32(get_block_pos_z(pos))
-}
+#     print_string("z:")
+#     print_i32(get_block_pos_z(pos))
+# }
 
-helper_print_vec3(vec3: id) {
-    print_string("x:")
-    print_f32(get_vec3_x(vec3))
+# helper_print_vec3(vec3: id) {
+#     print_string("x:")
+#     print_f32(get_vec3_x(vec3))
 
-    print_string("y:")
-    print_f32(get_vec3_y(vec3))
+#     print_string("y:")
+#     print_f32(get_vec3_y(vec3))
 
-    print_string("z:")
-    print_f32(get_vec3_z(vec3))
-}
+#     print_string("z:")
+#     print_f32(get_vec3_z(vec3))
+# }

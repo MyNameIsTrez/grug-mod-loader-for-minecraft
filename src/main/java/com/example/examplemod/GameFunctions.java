@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 class GameFunctions {
@@ -80,5 +81,21 @@ class GameFunctions {
 
     private static void printF32(float f) {
         Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
+    }
+
+    private static long getBlockEntityLevel(long blockEntityId) {
+        Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
+
+        int entityType = 77;
+        long levelId = Grug.addEntity(entityType, level);
+        Grug.fnEntities.add(levelId);
+
+        return levelId;
+    }
+
+    private static void printLevelName(long levelId) {
+        Level level = ExampleMod.grug.getLevel(levelId);
+
+        Grug.sendMessageToEveryone(Component.literal(level.dimensionTypeRegistration().getRegisteredName()));
     }
 }

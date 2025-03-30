@@ -152,6 +152,25 @@
 					"type": "f32"
 				}
 			]
+		},
+		"get_block_entity_level": {
+			"description": "Gets the level (dimension) a block entity is in.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_entity_id",
+					"type": "id"
+				}
+			]
+		},
+		"print_level_name": {
+			"description": "Prints the name of a level (dimension) to the chat.",
+			"arguments": [
+				{
+					"name": "level",
+					"type": "id"
+				}
+			]
 		}
 	}
 }

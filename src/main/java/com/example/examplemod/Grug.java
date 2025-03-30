@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -107,6 +108,10 @@ public class Grug {
 
         // TODO: Unhardcode
         entityType = 123;
+        nextEntityIndices.put(entityType, 0);
+
+        // TODO: Unhardcode
+        entityType = 77;
         nextEntityIndices.put(entityType, 0);
     }
 
@@ -291,5 +296,14 @@ public class Grug {
         assert entityType == 123;
 
         return (Vec3)entityData.get(id);
+    }
+
+    public Level getLevel(long id) {
+        int entityType = getEntityType(id);
+
+        // TODO: Print a nice error message, instead of crashing
+        assert entityType == 77;
+
+        return (Level)entityData.get(id);
     }
 }
