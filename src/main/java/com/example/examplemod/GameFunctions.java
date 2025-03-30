@@ -201,8 +201,14 @@ class GameFunctions {
     private static long item(long resourceLocation) {
         Item item;
         try {
-            // Translates "minecraft:diamond" to Items.DIAMOND
-            item = ForgeRegistries.ITEMS.getValue(ExampleMod.grug.getResourceLocation(resourceLocation));
+            ResourceLocation resourceLocationInstance = ExampleMod.grug.getResourceLocation(resourceLocation);
+
+            if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
+                Grug.sendErrorMessageToEveryone("item(\"" + resourceLocationInstance.toString() + "\") has an invalid resource_location argument");
+                return 0;
+            }
+
+            item = ForgeRegistries.ITEMS.getValue(resourceLocationInstance);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendErrorMessageToEveryone("item(): " + assertEntityTypeException.getMessage());
             return 0;
@@ -263,7 +269,6 @@ class GameFunctions {
     private static long resourceLocation(String resourceLocationString) {
         ResourceLocation resourceLocation;
         try {
-            // Allocates a new ResourceLocation
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
             Grug.sendErrorMessageToEveryone("get_resource_location(\"" + resourceLocationString + "\") has an invalid resource_location_string argument");
