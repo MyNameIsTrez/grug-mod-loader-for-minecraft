@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -273,5 +274,39 @@ class GameFunctions {
         Grug.fnEntities.add(resourceLocationId);
 
         return resourceLocationId;
+    }
+
+    private static void setEntityDeltaMovement(long entity, long vec3) {
+        Entity entityInstance;
+        Vec3 vec3Instance;
+        try {
+            entityInstance = ExampleMod.grug.getEntity(entity);
+            vec3Instance = ExampleMod.grug.getVec3(vec3);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("set_item_entity_delta_movement(): " + assertEntityTypeException.getMessage());
+            return;
+        }
+
+        entityInstance.setDeltaMovement(vec3Instance);
+    }
+
+    private static void spawnEntity(long entity, long level) {
+        Entity entityInstance;
+        Level levelInstance;
+        try {
+            entityInstance = ExampleMod.grug.getEntity(entity);
+            levelInstance = ExampleMod.grug.getLevel(level);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("spawn_entity(): " + assertEntityTypeException.getMessage());
+            return;
+        }
+
+        levelInstance.addFreshEntity(entityInstance);
+    }
+
+    private static long vec3Zero() {
+        long vec3ZeroId = Grug.addEntity(EntityType.Vec3, Vec3.ZERO);
+        Grug.fnEntities.add(vec3ZeroId);
+        return vec3ZeroId;
     }
 }

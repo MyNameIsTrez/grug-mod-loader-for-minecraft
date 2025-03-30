@@ -3,7 +3,7 @@ on_tick() {
     # print_string("my pos:")
     # helper_print_pos(pos)
 
-    pos = get_block_pos_above_n(pos, 2)
+    pos = get_block_pos_above_n(pos, 20)
     # print_string("above pos:")
     # helper_print_pos(pos)
 
@@ -30,9 +30,9 @@ on_tick() {
     item_entity: id = item_entity(level, x, y, z, item_stack)
     print_string(get_item_entity_name(item_entity))
 
-    # set_delta_movement(item_entity, vec3_zero())
+    set_entity_delta_movement(item_entity, vec3_zero())
 
-    # add_fresh_entity(level, item_entity)
+    spawn_entity(item_entity, level)
 }
 
 # helper_print_pos(pos: id) {

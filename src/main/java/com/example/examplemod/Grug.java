@@ -19,6 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -266,10 +267,21 @@ public class Grug {
     //     return (int)(id & 0xffffffff);
     // }
 
+    // TODO: I'm sure this can be done cleaner
+    private boolean isEntityTypeInstanceOf(EntityType derived, EntityType base) {
+        if (derived == base) {
+            return true;
+        }
+        if (derived == EntityType.ItemEntity && base == EntityType.Entity) {
+            return true;
+        }
+        return false;
+    }
+
     private void assertEntityType(long id, EntityType expectedEntityType) {
         EntityType entityType = getEntityType(id);
 
-        if (entityType != expectedEntityType) {
+        if (!isEntityTypeInstanceOf(entityType, expectedEntityType)) {
             throw new AssertEntityTypeException(entityType, expectedEntityType);
         }
     }
@@ -282,6 +294,11 @@ public class Grug {
     public BlockPos getBlockPos(long id) {
         assertEntityType(id, EntityType.BlockPos);
         return (BlockPos)entityData.get(id);
+    }
+
+    public Entity getEntity(long id) {
+        assertEntityType(id, EntityType.Entity);
+        return (Entity)entityData.get(id);
     }
 
     public Item getItem(long id) {
