@@ -6,8 +6,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 class GameFunctions {
-    private static long getWorldPositionOfBlockEntity(long blockEntityId) {
-        return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
+    private static long getBlockEntityLevel(long blockEntityId) {
+        Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
+
+        int entityType = 77;
+        long levelId = Grug.addEntity(entityType, level);
+        Grug.fnEntities.add(levelId);
+
+        return levelId;
     }
 
     private static long getBlockPosAbove(long blockPosId) {
@@ -67,35 +73,29 @@ class GameFunctions {
         return (float)ExampleMod.grug.getVec3(id).z();
     }
 
-    private static void printId(long id) {
-        Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
-    }
-
-    private static void printString(String str) {
-        Grug.sendMessageToEveryone(Component.literal(str));
-    }
-
-    private static void printI32(int n) {
-        Grug.sendMessageToEveryone(Component.literal(Integer.toString(n)));
+    private static long getWorldPositionOfBlockEntity(long blockEntityId) {
+        return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
     }
 
     private static void printF32(float f) {
         Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
     }
 
-    private static long getBlockEntityLevel(long blockEntityId) {
-        Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
+    private static void printI32(int n) {
+        Grug.sendMessageToEveryone(Component.literal(Integer.toString(n)));
+    }
 
-        int entityType = 77;
-        long levelId = Grug.addEntity(entityType, level);
-        Grug.fnEntities.add(levelId);
-
-        return levelId;
+    private static void printId(long id) {
+        Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
     private static void printLevelName(long levelId) {
         Level level = ExampleMod.grug.getLevel(levelId);
 
         Grug.sendMessageToEveryone(Component.literal(level.dimensionTypeRegistration().getRegisteredName()));
+    }
+
+    private static void printString(String str) {
+        Grug.sendMessageToEveryone(Component.literal(str));
     }
 }

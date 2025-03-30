@@ -13,8 +13,8 @@
 		}
 	},
 	"game_functions": {
-		"get_world_position_of_block_entity": {
-			"description": "Gets the world position of a block_entity.",
+		"get_block_entity_level": {
+			"description": "Gets the level (dimension) a block entity is in.",
 			"return_type": "id",
 			"arguments": [
 				{
@@ -117,30 +117,13 @@
 				}
 			]
 		},
-		"print_id": {
-			"description": "Prints an ID to the chat.",
+		"get_world_position_of_block_entity": {
+			"description": "Gets the world position of a block_entity.",
+			"return_type": "id",
 			"arguments": [
 				{
-					"name": "id",
+					"name": "block_entity_id",
 					"type": "id"
-				}
-			]
-		},
-		"print_string": {
-			"description": "Prints a string to the chat.",
-			"arguments": [
-				{
-					"name": "str",
-					"type": "string"
-				}
-			]
-		},
-		"print_i32": {
-			"description": "Prints an i32 to the chat.",
-			"arguments": [
-				{
-					"name": "n",
-					"type": "i32"
 				}
 			]
 		},
@@ -153,12 +136,20 @@
 				}
 			]
 		},
-		"get_block_entity_level": {
-			"description": "Gets the level (dimension) a block entity is in.",
-			"return_type": "id",
+		"print_i32": {
+			"description": "Prints an i32 to the chat.",
 			"arguments": [
 				{
-					"name": "block_entity_id",
+					"name": "n",
+					"type": "i32"
+				}
+			]
+		},
+		"print_id": {
+			"description": "Prints an ID to the chat.",
+			"arguments": [
+				{
+					"name": "id",
 					"type": "id"
 				}
 			]
@@ -169,6 +160,15 @@
 				{
 					"name": "level",
 					"type": "id"
+				}
+			]
+		},
+		"print_string": {
+			"description": "Prints a string to the chat.",
+			"arguments": [
+				{
+					"name": "str",
+					"type": "string"
 				}
 			]
 		}
