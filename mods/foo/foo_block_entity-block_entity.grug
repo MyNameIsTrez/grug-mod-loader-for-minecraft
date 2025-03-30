@@ -1,3 +1,4 @@
+# How often on_tick() has been called
 tick: i32 = 0
 
 on_tick() {
@@ -8,27 +9,34 @@ on_tick() {
     }
     tick = 0
 
+    # Spawn the diamond 2 blocks above this block
     pos: id = get_world_position_of_block_entity(me)
-
     pos = get_block_pos_above_n(pos, 2)
-
     center: id = get_block_pos_center(pos)
 
+    # The dimension, so overworld/nether/end
     level: id = get_block_entity_level(me)
 
+    # Gets the full name, so "minecraft:diamond"
     resource_location: id = resource_location("diamond")
 
+    # Create a diamond item
     item: id = item(resource_location)
 
+    # Create a diamond item stack
     item_stack: id = item_stack(item)
 
+    # The coordinates where the diamond is spawned
     x: f32 = get_vec3_x(center)
     y: f32 = get_vec3_y(center)
     z: f32 = get_vec3_z(center)
 
+    # Create a diamond item entity
     item_entity: id = item_entity(level, x, y, z, item_stack)
 
+    # Remove the random velocity that spawned items are given
     set_entity_delta_movement(item_entity, vec3_zero())
 
+    # Spawn the diamond
     spawn_entity(item_entity, level)
 }
