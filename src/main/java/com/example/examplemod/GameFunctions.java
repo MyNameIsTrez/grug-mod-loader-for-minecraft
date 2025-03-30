@@ -9,8 +9,7 @@ class GameFunctions {
     private static long getBlockEntityLevel(long blockEntityId) {
         Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
 
-        int entityType = 77;
-        long levelId = Grug.addEntity(entityType, level);
+        long levelId = Grug.addEntity(EntityType.Level, level);
         Grug.fnEntities.add(levelId);
 
         return levelId;
@@ -20,8 +19,7 @@ class GameFunctions {
         // The .above() call allocates a new BlockPos
         BlockPos above = ExampleMod.grug.getBlockPos(blockPosId).above();
 
-        int entityType = 42;
-        long aboveId = Grug.addEntity(entityType, above);
+        long aboveId = Grug.addEntity(EntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
 
         return aboveId;
@@ -31,8 +29,7 @@ class GameFunctions {
         // The .above() call allocates a new BlockPos
         BlockPos above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
 
-        int entityType = 42;
-        long aboveId = Grug.addEntity(entityType, above);
+        long aboveId = Grug.addEntity(EntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
 
         return aboveId;
@@ -42,8 +39,7 @@ class GameFunctions {
         // The .getCenter() call allocates a new Vec3
         Vec3 center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
 
-        int entityType = 123;
-        long centerId = Grug.addEntity(entityType, center);
+        long centerId = Grug.addEntity(EntityType.Vec3, center);
         Grug.fnEntities.add(centerId);
 
         return centerId;

@@ -18,17 +18,12 @@ public class FooBlockEntity extends GrugBlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        // TODO: Unhardcode
-        int entityType = 7;
-        grugEntity.id = Grug.addEntity(entityType, this);
+        grugEntity.id = Grug.addEntity(EntityType.BlockEntity, this);
 
-        // TODO: Unhardcode
-        entityType = 42;
-        worldPositionId = Grug.addEntity(entityType, worldPosition);
+        worldPositionId = Grug.addEntity(EntityType.BlockPos, worldPosition);
 
         GrugFile file = new GrugFile();
         ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
-        // System.out.println("file: " + file);
 
         grugEntity.globals = new byte[file.globalsSize];
 

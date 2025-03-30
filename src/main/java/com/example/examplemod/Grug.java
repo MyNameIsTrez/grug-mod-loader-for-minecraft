@@ -49,7 +49,7 @@ public class Grug {
 
     // TODO: This does not recycle indices of despawned entities,
     // TODO: which means this will eventually wrap around back to 0
-    private static Map<Integer, Integer> nextEntityIndices = new HashMap<>();
+    private static Map<EntityType, Integer> nextEntityIndices = new HashMap<>();
     private static Map<Long, Object> entityData = new HashMap<>();
 
     public native boolean blockEntity_has_onTick(long onFns);
@@ -98,21 +98,9 @@ public class Grug {
             }
         }
 
-        // TODO: Unhardcode
-        int entityType = 7;
-        nextEntityIndices.put(entityType, 0);
-
-        // TODO: Unhardcode
-        entityType = 42;
-        nextEntityIndices.put(entityType, 0);
-
-        // TODO: Unhardcode
-        entityType = 123;
-        nextEntityIndices.put(entityType, 0);
-
-        // TODO: Unhardcode
-        entityType = 77;
-        nextEntityIndices.put(entityType, 0);
+        for (EntityType entityType : EntityType.values()) {
+            nextEntityIndices.put(entityType, 0);
+        }
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -175,7 +163,6 @@ public class Grug {
                     .append(Component.literal("grug.c:" + errorGrugCLineNumber()).withColor(ChatFormatting.DARK_AQUA.getColor()))
                 );
             }
-            // }
 
             return;
         }
@@ -225,7 +212,7 @@ public class Grug {
         }
     }
 
-    public static long addEntity(int entityType, Object entityInstance) {
+    public static long addEntity(EntityType entityType, Object entityInstance) {
         System.out.println("nextEntityIndices: " + nextEntityIndices);
         System.out.println("entityData: " + entityData);
         System.out.println("entityInstance: " + entityInstance);
@@ -259,51 +246,42 @@ public class Grug {
         }
     }
 
-    private static long getEntityID(int entityType, int entityIndex) {
-        return (long)entityType << 32 | entityIndex;
+    private static long getEntityID(EntityType entityType, int entityIndex) {
+        return (long)entityType.ordinal() << 32 | entityIndex;
     }
 
-    private static int getEntityType(long id) {
-        return (int)(id >> 32);
+    private static EntityType getEntityType(long id) {
+        return EntityType.get((int)(id >> 32));
     }
 
     // private int getEntityIndex(long id) {
     //     return (int)(id & 0xffffffff);
     // }
 
-    public GrugBlockEntity getGrugBlockEntity(long id) {
-        int entityType = getEntityType(id);
+    private void assertEntityType(long id, EntityType expectedEntityType) {
+        EntityType entityType = getEntityType(id);
 
         // TODO: Print a nice error message, instead of crashing
-        assert entityType == 7;
+        assert entityType == expectedEntityType;
+    }
 
+    public GrugBlockEntity getGrugBlockEntity(long id) {
+        assertEntityType(id, EntityType.BlockEntity);
         return (GrugBlockEntity)entityData.get(id);
     }
 
     public BlockPos getBlockPos(long id) {
-        int entityType = getEntityType(id);
-
-        // TODO: Print a nice error message, instead of crashing
-        assert entityType == 42;
-
+        assertEntityType(id, EntityType.BlockPos);
         return (BlockPos)entityData.get(id);
     }
 
     public Vec3 getVec3(long id) {
-        int entityType = getEntityType(id);
-
-        // TODO: Print a nice error message, instead of crashing
-        assert entityType == 123;
-
+        assertEntityType(id, EntityType.Vec3);
         return (Vec3)entityData.get(id);
     }
 
     public Level getLevel(long id) {
-        int entityType = getEntityType(id);
-
-        // TODO: Print a nice error message, instead of crashing
-        assert entityType == 77;
-
+        assertEntityType(id, EntityType.Level);
         return (Level)entityData.get(id);
     }
 }
