@@ -14,10 +14,12 @@ import java.util.Map;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -213,6 +215,10 @@ public class Grug {
         }
     }
 
+    public static void sendErrorMessageToEveryone(String message) {
+        sendMessageToEveryone(Component.literal(message).withColor(ChatFormatting.RED.getColor()));
+    }
+
     public static long addEntity(EntityType entityType, Object entityInstance) {
         // System.out.println("nextEntityIndices: " + nextEntityIndices);
         // System.out.println("entityData: " + entityData);
@@ -262,8 +268,9 @@ public class Grug {
     private void assertEntityType(long id, EntityType expectedEntityType) {
         EntityType entityType = getEntityType(id);
 
-        // TODO: Print a nice error message, instead of crashing
-        assert entityType == expectedEntityType;
+        if (entityType != expectedEntityType) {
+            throw new AssertEntityTypeException(entityType, expectedEntityType);
+        }
     }
 
     public GrugBlockEntity getGrugBlockEntity(long id) {
@@ -276,6 +283,11 @@ public class Grug {
         return (BlockPos)entityData.get(id);
     }
 
+    public Item getItem(long id) {
+        assertEntityType(id, EntityType.Item);
+        return (Item)entityData.get(id);
+    }
+
     public ItemStack getItemStack(long id) {
         assertEntityType(id, EntityType.ItemStack);
         return (ItemStack)entityData.get(id);
@@ -284,6 +296,11 @@ public class Grug {
     public Level getLevel(long id) {
         assertEntityType(id, EntityType.Level);
         return (Level)entityData.get(id);
+    }
+
+    public ResourceLocation getResourceLocation(long id) {
+        assertEntityType(id, EntityType.ResourceLocation);
+        return (ResourceLocation)entityData.get(id);
     }
 
     public Vec3 getVec3(long id) {

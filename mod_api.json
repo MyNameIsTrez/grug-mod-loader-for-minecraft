@@ -87,6 +87,16 @@
 				}
 			]
 		},
+		"get_item_name": {
+			"description": "Gets the name of an item.",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
 		"get_item_stack_name": {
 			"description": "Gets the name of an item_stack.",
 			"return_type": "string",
@@ -103,6 +113,16 @@
 			"arguments": [
 				{
 					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"get_resource_location_string": {
+			"description": "Gets a resource_location as a string.",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "resource_location",
 					"type": "id"
 				}
 			]
@@ -147,13 +167,23 @@
 				}
 			]
 		},
-		"new_item_stack": {
-			"description": "Creates a new item_stack.",
+		"item": {
+			"description": "Creates a new item from a resource_location.",
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "registry_name",
-					"type": "string"
+					"name": "resource_location",
+					"type": "id"
+				}
+			]
+		},
+		"item_stack": {
+			"description": "Creates a new item_stack from an item.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "item",
+					"type": "id"
 				}
 			]
 		},
@@ -189,6 +219,16 @@
 			"arguments": [
 				{
 					"name": "str",
+					"type": "string"
+				}
+			]
+		},
+		"resource_location": {
+			"description": "Creates a new resource_location.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "resource_location_string",
 					"type": "string"
 				}
 			]

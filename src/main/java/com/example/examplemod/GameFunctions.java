@@ -1,5 +1,7 @@
 package com.example.examplemod;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
     private static long getBlockEntityLevel(long blockEntityId) {
+        // This does not allocate a new Level
         Level level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
 
         long levelId = Grug.addEntity(EntityType.Level, level);
@@ -61,13 +64,19 @@ class GameFunctions {
         return ExampleMod.grug.getBlockPos(id).getZ();
     }
 
+    private static String getItemName(long id) {
+        Item item = ExampleMod.grug.getItem(id);
+
+        return item.getName(new ItemStack(item)).getString();
+    }
+
     private static String getItemStackName(long id) {
         ItemStack itemStack = ExampleMod.grug.getItemStack(id);
 
-        return itemStack.getItem().getName(itemStack).getString(); // "Diamond"
-        // return itemStack.toString(); // "1 diamond"
-        // return itemStack.getHoverName().getString(); // "Diamond"
-        // return itemStack.getDisplayName().getString(); // "[Diamond]"
+        return itemStack.getItem().getName(itemStack).getString(); // Returns "Diamond"
+        // return itemStack.toString(); // Returns "1 diamond"
+        // return itemStack.getHoverName().getString(); // Returns "Diamond"
+        // return itemStack.getDisplayName().getString(); // Returns "[Diamond]"
     }
 
     private static String getLevelName(long id) {
@@ -75,34 +84,60 @@ class GameFunctions {
         return level.dimensionTypeRegistration().getRegisteredName();
     }
 
+    private static String getResourceLocationString(long id) {
+        ResourceLocation resourceLocation;
+        try {
+            resourceLocation = ExampleMod.grug.getResourceLocation(id);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_resource_location_string(): " + assertEntityTypeException.getMessage());
+            return "";
+        }
+        return resourceLocation.toString();
+    }
+
     private static float getVec3X(long id) {
-        return (float)ExampleMod.grug.getVec3(id).x();
+        try {
+            return (float)ExampleMod.grug.getVec3(id).x();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_vec3_x(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static float getVec3Y(long id) {
-        return (float)ExampleMod.grug.getVec3(id).y();
+        try {
+            return (float)ExampleMod.grug.getVec3(id).y();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_vec3_y(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static float getVec3Z(long id) {
-        return (float)ExampleMod.grug.getVec3(id).z();
+        try {
+            return (float)ExampleMod.grug.getVec3(id).z();
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendErrorMessageToEveryone("get_vec3_z(): " + assertEntityTypeException.getMessage());
+            return 0;
+        }
     }
 
     private static long getWorldPositionOfBlockEntity(long blockEntityId) {
         return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
     }
 
-    // private static long newItemStack(String idName) {
-    private static long newItemStack(String registryName) {
-        // Splits "minecraft:diamond" to "minecraft" and "diamond"
-        // String[] split = idName.split(":");
-        // String modId = split[0];
-        // String name = split[1];
+    private static long item(long resourceLocation) {
+        // Translates "minecraft:diamond" to Items.DIAMOND
+        Item item = ForgeRegistries.ITEMS.getValue(ExampleMod.grug.getResourceLocation(resourceLocation));
 
-        // Translates "minecraft" + "diamond" to Items.DIAMOND
-        // Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(modId, name));
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(registryName));
+        long itemId = Grug.addEntity(EntityType.Item, item);
+        Grug.fnEntities.add(itemId);
 
-        ItemStack itemStack = new ItemStack(item);
+        return itemId;
+    }
+
+    private static long itemStack(long item) {
+        ItemStack itemStack = new ItemStack(ExampleMod.grug.getItem(item));
 
         long itemStackId = Grug.addEntity(EntityType.ItemStack, itemStack);
         Grug.fnEntities.add(itemStackId);
@@ -124,5 +159,21 @@ class GameFunctions {
 
     private static void printString(String str) {
         Grug.sendMessageToEveryone(Component.literal(str));
+    }
+
+    private static long resourceLocation(String resourceLocationString) {
+        // Allocates a new ResourceLocation
+        ResourceLocation resourceLocation;
+        try {
+            resourceLocation = new ResourceLocation(resourceLocationString);
+        } catch (ResourceLocationException resourceLocationException) {
+            Grug.sendErrorMessageToEveryone("get_resource_location(\"" + resourceLocationString + "\") has an invalid resource_location_string argument");
+            return 0;
+        }
+
+        long resourceLocationId = Grug.addEntity(EntityType.ResourceLocation, resourceLocation);
+        Grug.fnEntities.add(resourceLocationId);
+
+        return resourceLocationId;
     }
 }

@@ -14,16 +14,19 @@ on_tick() {
     level: id = get_block_entity_level(me)
     # print_string(get_level_name(level))
 
-    item_stack: id = new_item_stack("diamond")
-    print_string(get_item_stack_name(item_stack))
+    resource_location: id = resource_location("diamond")
+    # print_string(get_resource_location_string(resource_location))
 
-    # item_entity: id = new_item_entity(
-    #     level,
-    #     get_vec3_x(pos),
-    #     get_vec3_y(pos),
-    #     get_vec3_z(pos),
-    #     new_item_stack("diamond")
-    # )
+    item: id = item(resource_location)
+    # print_string(get_item_name(item))
+
+    item_stack: id = item_stack(item)
+    # print_string(get_item_stack_name(item_stack))
+
+    x: f32 = get_vec3_x(center)
+    y: f32 = get_vec3_y(center)
+    z: f32 = get_vec3_z(center)
+    # item_entity: id = item_entity(level, x, y, z, item_stack)
     # print_item_entity_name(item_entity)
 
     # set_delta_movement(item_entity, vec3_zero())

@@ -3,8 +3,10 @@ package com.example.examplemod;
 public enum EntityType {
     BlockEntity,
     BlockPos,
+    Item,
     ItemStack,
     Level,
+    ResourceLocation,
     Vec3;
 
     // EntityType.values()[i] is expensive, so we cache .values().
