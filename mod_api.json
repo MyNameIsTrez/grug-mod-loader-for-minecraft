@@ -87,6 +87,26 @@
 				}
 			]
 		},
+		"get_item_stack_name": {
+			"description": "Gets the name of an item_stack.",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"get_level_name": {
+			"description": "Gets the name of a level (dimension).",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
 		"get_vec3_x": {
 			"description": "Gets the X coordinate of a vec3.",
 			"return_type": "f32",
@@ -127,6 +147,16 @@
 				}
 			]
 		},
+		"new_item_stack": {
+			"description": "Creates a new item_stack.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "registry_name",
+					"type": "string"
+				}
+			]
+		},
 		"print_f32": {
 			"description": "Prints an f32 to the chat.",
 			"arguments": [
@@ -150,15 +180,6 @@
 			"arguments": [
 				{
 					"name": "id",
-					"type": "id"
-				}
-			]
-		},
-		"print_level_name": {
-			"description": "Prints the name of a level (dimension) to the chat.",
-			"arguments": [
-				{
-					"name": "level",
 					"type": "id"
 				}
 			]

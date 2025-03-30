@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -213,9 +214,9 @@ public class Grug {
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {
-        System.out.println("nextEntityIndices: " + nextEntityIndices);
-        System.out.println("entityData: " + entityData);
-        System.out.println("entityInstance: " + entityInstance);
+        // System.out.println("nextEntityIndices: " + nextEntityIndices);
+        // System.out.println("entityData: " + entityData);
+        // System.out.println("entityInstance: " + entityInstance);
 
         int entityIndex = nextEntityIndices.get(entityType);
 
@@ -225,15 +226,15 @@ public class Grug {
 
         entityData.put(id, entityInstance);
 
-        System.out.println("entityType: " + entityType);
-        System.out.println("entityIndex: " + entityIndex);
-        System.out.println("returned id: " + id);
+        // System.out.println("entityType: " + entityType);
+        // System.out.println("entityIndex: " + entityIndex);
+        // System.out.println("returned id: " + id);
 
         return id;
     }
 
     public static void removeEntity(long id) {
-        System.out.println("id: " + id);
+        // System.out.println("id: " + id);
         // System.out.println("getEntityType(id): " + getEntityType(id));
         // System.out.println("getEntityIndex(id): " + getEntityIndex(id));
 
@@ -275,13 +276,18 @@ public class Grug {
         return (BlockPos)entityData.get(id);
     }
 
-    public Vec3 getVec3(long id) {
-        assertEntityType(id, EntityType.Vec3);
-        return (Vec3)entityData.get(id);
+    public ItemStack getItemStack(long id) {
+        assertEntityType(id, EntityType.ItemStack);
+        return (ItemStack)entityData.get(id);
     }
 
     public Level getLevel(long id) {
         assertEntityType(id, EntityType.Level);
         return (Level)entityData.get(id);
+    }
+
+    public Vec3 getVec3(long id) {
+        assertEntityType(id, EntityType.Vec3);
+        return (Vec3)entityData.get(id);
     }
 }

@@ -3,6 +3,7 @@ package com.example.examplemod;
 public enum EntityType {
     BlockEntity,
     BlockPos,
+    ItemStack,
     Level,
     Vec3;
 

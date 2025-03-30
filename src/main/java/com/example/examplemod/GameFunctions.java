@@ -2,8 +2,12 @@ package com.example.examplemod;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
     private static long getBlockEntityLevel(long blockEntityId) {
@@ -57,6 +61,20 @@ class GameFunctions {
         return ExampleMod.grug.getBlockPos(id).getZ();
     }
 
+    private static String getItemStackName(long id) {
+        ItemStack itemStack = ExampleMod.grug.getItemStack(id);
+
+        return itemStack.getItem().getName(itemStack).getString(); // "Diamond"
+        // return itemStack.toString(); // "1 diamond"
+        // return itemStack.getHoverName().getString(); // "Diamond"
+        // return itemStack.getDisplayName().getString(); // "[Diamond]"
+    }
+
+    private static String getLevelName(long id) {
+        Level level = ExampleMod.grug.getLevel(id);
+        return level.dimensionTypeRegistration().getRegisteredName();
+    }
+
     private static float getVec3X(long id) {
         return (float)ExampleMod.grug.getVec3(id).x();
     }
@@ -73,6 +91,25 @@ class GameFunctions {
         return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
     }
 
+    // private static long newItemStack(String idName) {
+    private static long newItemStack(String registryName) {
+        // Splits "minecraft:diamond" to "minecraft" and "diamond"
+        // String[] split = idName.split(":");
+        // String modId = split[0];
+        // String name = split[1];
+
+        // Translates "minecraft" + "diamond" to Items.DIAMOND
+        // Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(modId, name));
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(registryName));
+
+        ItemStack itemStack = new ItemStack(item);
+
+        long itemStackId = Grug.addEntity(EntityType.ItemStack, itemStack);
+        Grug.fnEntities.add(itemStackId);
+
+        return itemStackId;
+    }
+
     private static void printF32(float f) {
         Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
     }
@@ -83,12 +120,6 @@ class GameFunctions {
 
     private static void printId(long id) {
         Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
-    }
-
-    private static void printLevelName(long levelId) {
-        Level level = ExampleMod.grug.getLevel(levelId);
-
-        Grug.sendMessageToEveryone(Component.literal(level.dimensionTypeRegistration().getRegisteredName()));
     }
 
     private static void printString(String str) {
