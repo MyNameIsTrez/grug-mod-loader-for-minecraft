@@ -138,14 +138,14 @@ public class Grug {
         System.load(tempLibraryPath.toAbsolutePath().toString());
     }
 
-    public void runtimeErrorHandler(String reason, int type, String on_fn_name, String on_fn_path) {
+    public void runtimeErrorHandler(String reason, int type, String onFnName, String onFnPath) {
         sendMessageToEveryone(
             Component.literal("grug runtime error in ").withColor(ChatFormatting.RED.getColor())
-            .append(Component.literal(on_fn_name + "()").withColor(0xc3e88d))
+            .append(Component.literal(onFnName + "()").withColor(0xc3e88d))
             .append(Component.literal(": ").withColor(ChatFormatting.RED.getColor()))
             .append(Component.literal(reason).withColor(ChatFormatting.WHITE.getColor()))
             .append("\nDetected in ")
-            .append(Component.literal(on_fn_path).withColor(ChatFormatting.DARK_AQUA.getColor()))
+            .append(Component.literal(onFnPath).withColor(ChatFormatting.DARK_AQUA.getColor()))
         );
     }
 
@@ -217,8 +217,13 @@ public class Grug {
         }
     }
 
-    public static void sendErrorMessageToEveryone(String message) {
-        sendMessageToEveryone(Component.literal(message).withColor(ChatFormatting.RED.getColor()));
+    public static void sendGameFunctionErrorToEveryone(String gameFunctionName, String message) {
+        sendMessageToEveryone(
+            Component.literal("grug game function error in ").withColor(ChatFormatting.RED.getColor())
+            .append(Component.literal(gameFunctionName + "()").withColor(0xc792ea))
+            .append(Component.literal(": ").withColor(ChatFormatting.RED.getColor()))
+            .append(Component.literal(message).withColor(ChatFormatting.WHITE.getColor()))
+        );
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {

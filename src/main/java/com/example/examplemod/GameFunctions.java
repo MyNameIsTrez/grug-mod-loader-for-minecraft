@@ -19,7 +19,7 @@ class GameFunctions {
             // This does not allocate a new Level
             level = ExampleMod.grug.getGrugBlockEntity(blockEntityId).getLevel();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_entity_level(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_entity_level", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -35,7 +35,7 @@ class GameFunctions {
             // The .above() call allocates a new BlockPos
             above = ExampleMod.grug.getBlockPos(blockPosId).above();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_above(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_above", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -51,7 +51,7 @@ class GameFunctions {
             // The .above() call allocates a new BlockPos
             above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_above_n(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_above_n", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -67,7 +67,7 @@ class GameFunctions {
             // The .getCenter() call allocates a new Vec3
             center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_center(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_center", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -81,7 +81,7 @@ class GameFunctions {
         try {
             return ExampleMod.grug.getBlockPos(id).getX();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_x(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_x", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -90,7 +90,7 @@ class GameFunctions {
         try {
             return ExampleMod.grug.getBlockPos(id).getY();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_y(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_y", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -99,7 +99,7 @@ class GameFunctions {
         try {
             return ExampleMod.grug.getBlockPos(id).getZ();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_block_pos_z(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_block_pos_z", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -109,7 +109,7 @@ class GameFunctions {
         try {
             item = ExampleMod.grug.getItem(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_item_name(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_item_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -120,7 +120,7 @@ class GameFunctions {
         try {
             return ExampleMod.grug.getItemEntity(id).getName().getString();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_item_entity_name(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_item_entity_name", assertEntityTypeException.getMessage());
             return "";
         }
     }
@@ -130,7 +130,7 @@ class GameFunctions {
         try {
             itemStack = ExampleMod.grug.getItemStack(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_item_stack_name(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_item_stack_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -145,7 +145,7 @@ class GameFunctions {
         try {
             level = ExampleMod.grug.getLevel(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_level_name(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_level_name", assertEntityTypeException.getMessage());
             return "";
         }
         return level.dimensionTypeRegistration().getRegisteredName();
@@ -156,7 +156,7 @@ class GameFunctions {
         try {
             resourceLocation = ExampleMod.grug.getResourceLocation(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_resource_location_string(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_resource_location_string", assertEntityTypeException.getMessage());
             return "";
         }
         return resourceLocation.toString();
@@ -166,7 +166,7 @@ class GameFunctions {
         try {
             return (float)ExampleMod.grug.getVec3(id).x();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_vec3_x(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_vec3_x", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -175,7 +175,7 @@ class GameFunctions {
         try {
             return (float)ExampleMod.grug.getVec3(id).y();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_vec3_y(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_vec3_y", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -184,7 +184,7 @@ class GameFunctions {
         try {
             return (float)ExampleMod.grug.getVec3(id).z();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_vec3_z(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_vec3_z", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -193,7 +193,7 @@ class GameFunctions {
         try {
             return ExampleMod.grug.getGrugBlockEntity(blockEntityId).worldPositionId;
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("get_world_position_of_block_entity(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_world_position_of_block_entity", assertEntityTypeException.getMessage());
             return 0;
         }
     }
@@ -204,13 +204,13 @@ class GameFunctions {
             ResourceLocation resourceLocationInstance = ExampleMod.grug.getResourceLocation(resourceLocation);
 
             if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
-                Grug.sendErrorMessageToEveryone("item(\"" + resourceLocationInstance.toString() + "\") has an invalid resource_location argument");
+                Grug.sendGameFunctionErrorToEveryone("item", "invalid resource_location argument");
                 return 0;
             }
 
             item = ForgeRegistries.ITEMS.getValue(resourceLocationInstance);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("item(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("item", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -225,7 +225,7 @@ class GameFunctions {
         try {
             itemEntity = new ItemEntity(ExampleMod.grug.getLevel(level), x, y, z, ExampleMod.grug.getItemStack(itemStack));
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("item_entity(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("item_entity", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -240,7 +240,7 @@ class GameFunctions {
         try {
             itemStack = new ItemStack(ExampleMod.grug.getItem(item));
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("item_stack(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("item_stack", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -271,7 +271,7 @@ class GameFunctions {
         try {
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
-            Grug.sendErrorMessageToEveryone("get_resource_location(\"" + resourceLocationString + "\") has an invalid resource_location_string argument");
+            Grug.sendGameFunctionErrorToEveryone("get_resource_location", "invalid resource_location_string argument");
             return 0;
         }
 
@@ -288,7 +288,7 @@ class GameFunctions {
             entityInstance = ExampleMod.grug.getEntity(entity);
             vec3Instance = ExampleMod.grug.getVec3(vec3);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("set_item_entity_delta_movement(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("set_item_entity_delta_movement", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -302,7 +302,7 @@ class GameFunctions {
             entityInstance = ExampleMod.grug.getEntity(entity);
             levelInstance = ExampleMod.grug.getLevel(level);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendErrorMessageToEveryone("spawn_entity(): " + assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("spawn_entity", assertEntityTypeException.getMessage());
             return;
         }
 
