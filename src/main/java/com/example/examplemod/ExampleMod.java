@@ -53,6 +53,9 @@ public class ExampleMod
     public static final RegistryObject<FooBlock> FOO_BLOCK = BLOCKS.register("foo_block", () -> new FooBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEEHIVE).mapColor(MapColor.WARPED_STEM).strength(2.0f, 8f)));
     public static final RegistryObject<BlockEntityType<FooBlockEntity>> FOO_BLOCK_ENTITY = BLOCK_ENTITIES.register("foo_block", () -> BlockEntityType.Builder.of(FooBlockEntity::new, FOO_BLOCK.get()).build(null));
 
+    public static final RegistryObject<GameOfLifeBlock> GAME_OF_LIFE_BLOCK = BLOCKS.register("game_of_life_block", () -> new GameOfLifeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEEHIVE).mapColor(MapColor.WARPED_STEM).strength(2.0f, 8f)));
+    public static final RegistryObject<BlockEntityType<GameOfLifeBlockEntity>> GAME_OF_LIFE_BLOCK_ENTITY = BLOCK_ENTITIES.register("game_of_life_block", () -> BlockEntityType.Builder.of(GameOfLifeBlockEntity::new, GAME_OF_LIFE_BLOCK.get()).build(null));
+
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
     // public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
     //         .alwaysEdible().nutrition(1).saturationModifier(2f).build())));
@@ -79,6 +82,8 @@ public class ExampleMod
         // RegistryObject<BlockEntityType<FooBlockEntity>> foo_block_entity = BLOCK_ENTITIES.register("foo_block_entity", () -> BlockEntityType.Builder.of(FooBlockEntity::new, foo_block).build(null));
         RegistryObject<Item> foo_block_item = ITEMS.register("foo_block", () -> new BlockItem(FOO_BLOCK.get(), new Item.Properties()));
         block_items.add(foo_block_item);
+        RegistryObject<Item> game_of_life_block_item = ITEMS.register("game_of_life_block", () -> new BlockItem(GAME_OF_LIFE_BLOCK.get(), new Item.Properties()));
+        block_items.add(game_of_life_block_item);
 
         // String[] blocks = {"foo_block", "bar_block"};
         // for (String name : blocks) {

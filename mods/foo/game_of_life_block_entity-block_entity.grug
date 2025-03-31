@@ -1,0 +1,3 @@
+on_tick() {
+    print_string("Hello, Game of Life!")
+}

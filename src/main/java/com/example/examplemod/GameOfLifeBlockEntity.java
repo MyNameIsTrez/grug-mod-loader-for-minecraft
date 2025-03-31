@@ -6,14 +6,14 @@ import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FooBlockEntity extends GrugBlockEntity {
-    public FooBlockEntity(BlockPos pos, BlockState state) {
-        super(ExampleMod.FOO_BLOCK_ENTITY.get(), pos, state);
+public class GameOfLifeBlockEntity extends GrugBlockEntity {
+    public GameOfLifeBlockEntity(BlockPos pos, BlockState state) {
+        super(ExampleMod.GAME_OF_LIFE_BLOCK_ENTITY.get(), pos, state);
 
-        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
+        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:game_of_life_block_entity");
         if (grugEntities == null) {
             grugEntities = new ArrayList<GrugEntity>();
-            Grug.grugEntitiesMap.put("foo:foo_block_entity", grugEntities);
+            Grug.grugEntitiesMap.put("foo:game_of_life_block_entity", grugEntities);
         }
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
@@ -23,7 +23,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         worldPositionId = Grug.addEntity(EntityType.BlockPos, worldPosition);
 
         GrugFile file = new GrugFile();
-        ExampleMod.grug.getEntityFile("foo:foo_block_entity", file);
+        ExampleMod.grug.getEntityFile("foo:game_of_life_block_entity", file);
 
         grugEntity.globals = new byte[file.globalsSize];
 
@@ -46,7 +46,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.removeEntities(grugEntity.childEntities);
 
         // Swap-remove itself from Grug.entities
-        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
+        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:game_of_life_block_entity");
 
         // assert grugEntities != null; // I haven't been able to figure out how to enable asserts
         if (grugEntities == null) {
