@@ -28,6 +28,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         grugEntity.globals = new byte[file.globalsSize];
 
         Grug.fnEntities = grugEntity.childEntities;
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
         Grug.fnEntities = Grug.onFnEntities;
 
@@ -68,6 +69,7 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
         Grug.removeEntities(Grug.onFnEntities);
         Grug.onFnEntities.clear();

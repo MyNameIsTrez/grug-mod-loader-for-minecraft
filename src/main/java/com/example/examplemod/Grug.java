@@ -72,6 +72,8 @@ public class Grug {
     // Cleared at the end of every on_ fn call.
     public static List<Long> onFnEntities = new ArrayList<>();
 
+    public static boolean gameFunctionErrorHappened = false;
+
     public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
@@ -195,6 +197,7 @@ public class Grug {
 
                 grugEntity.childEntities.clear();
                 Grug.fnEntities = grugEntity.childEntities;
+                Grug.gameFunctionErrorHappened = false;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
                 Grug.fnEntities = Grug.onFnEntities;
 
