@@ -65,12 +65,12 @@ public class FooBlockEntity extends GrugBlockEntity {
     }
 
     public void tick() {
-        if (!ExampleMod.grug.blockEntity_has_onTick(grugEntity.onFns)) {
+        if (!ExampleMod.grug.block_entity_has_on_tick(grugEntity.onFns)) {
             return;
         }
 
         Grug.gameFunctionErrorHappened = false;
-        ExampleMod.grug.blockEntity_onTick(grugEntity.onFns, grugEntity.globals);
+        ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
         Grug.removeEntities(Grug.onFnEntities);
         Grug.onFnEntities.clear();
     }

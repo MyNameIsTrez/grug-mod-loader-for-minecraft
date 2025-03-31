@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
-    private static long getBlockEntityLevel(long blockEntityId) {
+    private static long get_block_entity_level(long blockEntityId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -34,7 +34,7 @@ class GameFunctions {
         return levelId;
     }
 
-    private static long getBlockPosAbove(long blockPosId) {
+    private static long get_block_pos_above(long blockPosId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -55,7 +55,7 @@ class GameFunctions {
         return aboveId;
     }
 
-    private static long getBlockPosAboveN(long blockPosId, int n) {
+    private static long get_block_pos_above_n(long blockPosId, int n) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -76,7 +76,7 @@ class GameFunctions {
         return aboveId;
     }
 
-    private static long getBlockPosCenter(long blockPosId) {
+    private static long get_block_pos_center(long blockPosId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -97,7 +97,7 @@ class GameFunctions {
         return centerId;
     }
 
-    private static int getBlockPosX(long id) {
+    private static int get_block_pos_x(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -111,7 +111,7 @@ class GameFunctions {
         }
     }
 
-    private static int getBlockPosY(long id) {
+    private static int get_block_pos_y(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -125,7 +125,7 @@ class GameFunctions {
         }
     }
 
-    private static int getBlockPosZ(long id) {
+    private static int get_block_pos_z(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -139,7 +139,7 @@ class GameFunctions {
         }
     }
 
-    private static String getItemName(long id) {
+    private static String get_item_name(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -156,7 +156,7 @@ class GameFunctions {
         return item.getName(new ItemStack(item)).getString();
     }
 
-    private static String getItemEntityName(long id) {
+    private static String get_item_entity_name(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -170,7 +170,7 @@ class GameFunctions {
         }
     }
 
-    private static String getItemStackName(long id) {
+    private static String get_item_stack_name(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -190,7 +190,7 @@ class GameFunctions {
         // return itemStack.getDisplayName().getString(); // Returns "[Diamond]"
     }
 
-    private static String getLevelName(long id) {
+    private static String get_level_name(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -206,7 +206,7 @@ class GameFunctions {
         return level.dimensionTypeRegistration().getRegisteredName();
     }
 
-    private static String getResourceLocationString(long id) {
+    private static String get_resource_location_string(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -222,7 +222,7 @@ class GameFunctions {
         return resourceLocation.toString();
     }
 
-    private static float getVec3X(long id) {
+    private static float get_vec3_x(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -236,7 +236,7 @@ class GameFunctions {
         }
     }
 
-    private static float getVec3Y(long id) {
+    private static float get_vec3_y(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -250,7 +250,7 @@ class GameFunctions {
         }
     }
 
-    private static float getVec3Z(long id) {
+    private static float get_vec3_z(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -264,7 +264,7 @@ class GameFunctions {
         }
     }
 
-    private static long getWorldPositionOfBlockEntity(long blockEntityId) {
+    private static long get_world_position_of_block_entity(long blockEntityId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -306,7 +306,7 @@ class GameFunctions {
         return itemId;
     }
 
-    private static long itemEntity(long level, float x, float y, float z, long itemStack) {
+    private static long item_entity(long level, float x, float y, float z, long itemStack) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -326,7 +326,7 @@ class GameFunctions {
         return itemEntityId;
     }
 
-    private static long itemStack(long item) {
+    private static long item_stack(long item) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -346,7 +346,7 @@ class GameFunctions {
         return itemStackId;
     }
 
-    private static void printF32(float f) {
+    private static void print_f32(float f) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -354,7 +354,7 @@ class GameFunctions {
         Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
     }
 
-    private static void printI32(int n) {
+    private static void print_i32(int n) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -362,7 +362,7 @@ class GameFunctions {
         Grug.sendMessageToEveryone(Component.literal(Integer.toString(n)));
     }
 
-    private static void printId(long id) {
+    private static void print_id(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -370,7 +370,7 @@ class GameFunctions {
         Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
-    private static void printString(String str) {
+    private static void print_string(String str) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -378,7 +378,7 @@ class GameFunctions {
         Grug.sendMessageToEveryone(Component.literal(str));
     }
 
-    private static long resourceLocation(String resourceLocationString) {
+    private static long resource_location(String resourceLocationString) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -398,7 +398,7 @@ class GameFunctions {
         return resourceLocationId;
     }
 
-    private static void setEntityDeltaMovement(long entity, long vec3) {
+    private static void set_entity_delta_movement(long entity, long vec3) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -417,7 +417,7 @@ class GameFunctions {
         entityInstance.setDeltaMovement(vec3Instance);
     }
 
-    private static void spawnEntity(long entity, long level) {
+    private static void spawn_entity(long entity, long level) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -436,7 +436,7 @@ class GameFunctions {
         levelInstance.addFreshEntity(entityInstance);
     }
 
-    private static long vec3Zero() {
+    private static long vec3_zero() {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
