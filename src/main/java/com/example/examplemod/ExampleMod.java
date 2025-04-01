@@ -2,6 +2,8 @@ package com.example.examplemod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -57,16 +59,17 @@ public class ExampleMod
     public static final RegistryObject<BlockEntityType<GameOfLifeBlockEntity>> GAME_OF_LIFE_BLOCK_ENTITY = BLOCK_ENTITIES.register("game_of_life_block", () -> BlockEntityType.Builder.of(GameOfLifeBlockEntity::new, GAME_OF_LIFE_BLOCK.get()).build(null));
 
     // Creates a new food item with the id "examplemod:example_id", nutrition 1 and saturation 2
-    // public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
-    //         .alwaysEdible().nutrition(1).saturationModifier(2f).build())));
+    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder()
+            .alwaysEdible().nutrition(1).saturationModifier(2f).build())));
 
-    // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
-    // public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-    //         .withTabsBefore(CreativeModeTabs.COMBAT)
-    //         .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
-    //         .displayItems((parameters, output) -> {
-    //             output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-    //         }).build());
+    // Creates a creative tab with the id "examplemod:grug_tab" for the example item, that is placed after the combat tab
+    public static final RegistryObject<CreativeModeTab> GRUG_TAB = CREATIVE_MODE_TABS.register("grug_tab", () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .title(Component.literal("grug"))
+            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+            }).build());
 
     ArrayList<RegistryObject<Item>> block_items = new ArrayList<RegistryObject<Item>>();
 
@@ -132,7 +135,7 @@ public class ExampleMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        if (event.getTabKey() == GRUG_TAB.getKey()) {
             for (RegistryObject<Item> block_item : block_items) {
                 event.accept(block_item);
             }
