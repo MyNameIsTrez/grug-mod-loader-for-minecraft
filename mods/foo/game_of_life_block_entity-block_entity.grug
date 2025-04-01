@@ -1,3 +1,104 @@
+start_pos: id = get_world_position_of_block_entity(me)
+start_center: id = get_block_pos_center(start_pos)
+start_x: f32 = get_vec3_x(start_center)
+start_y: f32 = get_vec3_y(start_center)
+start_z: f32 = get_vec3_z(start_center)
+
+level: id = get_block_entity_level(me)
+
+current: id = hash_set_of_id()
+next: id = hash_set_of_id()
+
+# TODO: The game doesn't call this right now
+on_spawn() {
+    # Spawns a Glider pattern of blocks:
+    #  @
+    #   @
+    # @@@
+    helper_place_offset_block(0, -1)
+    helper_place_offset_block(1, 0)
+    helper_place_offset_block(1, 1)
+    helper_place_offset_block(0, 1)
+    helper_place_offset_block(-1, 1)
+}
+
 on_tick() {
     print_string("Hello, Game of Life!")
+
+    iter: id = iterator(current)
+    while iterating(iter) {
+        pos: id = iteration(iter)
+
+        neighbors: i32 = helper_count_neighbors(pos)
+
+        if neighbors < 2 or neighbors > 3 {
+            helper_remove_block(pos)
+        } else if neighbors == 3 and helper_is_air(pos) {
+            helper_place_block(pos)
+        }
+    }
+
+    hash_set_copy(next, current)
+}
+
+helper_place_offset_block(x: i32, z: i32) {
+    pos: id = helper_get_pos(x, z)
+    helper_place_block(pos)
+}
+
+helper_count_neighbors(pos: id) i32 {
+    neighbors: i32 = 0
+
+    if helper_has_neighbor(pos, 0, -1) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, 1, -1) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, 1, 0) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, 1, 1) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, 0, 1) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, -1, 1) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, -1, 0) {
+        neighbors = neighbors + 1
+    }
+    if helper_has_neighbor(pos, -1, -1) {
+        neighbors = neighbors + 1
+    }
+
+    return neighbors
+}
+
+helper_has_neighbor(pos: id, x: i32, z: i32) bool {
+    return hash_set_has(current, helper_get_pos(pos, x, z))
+}
+
+helper_remove_block(pos: id) {
+    remove_block(pos)
+    hash_set_remove(next, pos)
+}
+
+helper_is_air(pos: id) bool {
+    return is_air(get_block_state(level, pos))
+}
+
+helper_place_block(pos: id) {
+    place_block(pos)
+    hash_set_add(next, pos)
+}
+
+helper_get_initial_pos(x: i32, z: i32) id {
+    return block_pos(start_x + x, start_y, start_z + z)
+}
+
+helper_get_pos(pos: id, x: i32, z: i32) id {
+    return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
 }
