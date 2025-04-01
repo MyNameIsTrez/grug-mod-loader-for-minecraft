@@ -1,8 +1,7 @@
 start_pos: id = get_world_position_of_block_entity(me)
-start_center: id = get_block_pos_center(start_pos)
-start_x: f32 = get_vec3_x(start_center)
-start_y: f32 = get_vec3_y(start_center)
-start_z: f32 = get_vec3_z(start_center)
+start_x: f32 = get_block_pos_x(start_pos)
+start_y: f32 = get_block_pos_y(start_pos)
+start_z: f32 = get_block_pos_z(start_pos)
 
 level: id = get_block_entity_level(me)
 
