@@ -6,6 +6,9 @@
 		"block_entity": {
 			"description": "A block entity.",
             "on_functions": {
+                "on_spawn": {
+                    "description": "Called when the block gets placed."
+                },
                 "on_tick": {
                     "description": "Called every game tick, so every 0.05 seconds."
                 }
@@ -13,6 +16,34 @@
 		}
 	},
 	"game_functions": {
+		"block": {
+			"description": "Creates a new block.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "resource_location",
+					"type": "id"
+				}
+			]
+		},
+		"block_pos": {
+			"description": "Creates a new block_pos.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "x",
+					"type": "i32"
+				},
+				{
+					"name": "y",
+					"type": "i32"
+				},
+				{
+					"name": "z",
+					"type": "i32"
+				}
+			]
+		},
 		"get_block_entity_level": {
 			"description": "Gets the level (dimension) a block entity is in.",
 			"return_type": "id",
@@ -83,6 +114,30 @@
 			"arguments": [
 				{
 					"name": "block_pos_id",
+					"type": "id"
+				}
+			]
+		},
+		"get_block_state": {
+			"description": "Gets a block_pos its state.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_pos",
+					"type": "id"
+				},
+				{
+					"name": "level",
+					"type": "id"
+				}
+			]
+		},
+		"get_default_block_state": {
+			"description": "Gets the default block_state of a block.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block",
 					"type": "id"
 				}
 			]
@@ -177,6 +232,82 @@
 				}
 			]
 		},
+		"hash_set": {
+			"description": "Creates a new hash_set of ids.",
+			"return_type": "id"
+		},
+		"hash_set_add": {
+			"description": "Adds an id to a hash_set, if the id is not already in there.",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "id"
+				},
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"hash_set_clear": {
+			"description": "Clears the hash_set.",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "id"
+				}
+			]
+		},
+		"hash_set_copy": {
+			"description": "Copies the contents of one hash_set to another.",
+			"arguments": [
+				{
+					"name": "hash_set_from",
+					"type": "id"
+				},
+				{
+					"name": "hash_set_to",
+					"type": "id"
+				}
+			]
+		},
+		"hash_set_has": {
+			"description": "Returns whether the hash_set contains a specific id.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "id"
+				},
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"hash_set_remove": {
+			"description": "Removes an id from a hash_set, if the id is in there.",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "id"
+				},
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"is_air": {
+			"description": "Returns whether the block_state is air.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "block_state",
+					"type": "id"
+				}
+			]
+		},
 		"item": {
 			"description": "Creates a new item.",
 			"return_type": "id",
@@ -223,6 +354,49 @@
 				}
 			]
 		},
+		"iterating": {
+			"description": "Returns whether the iterator has more elements to iterate over. So for an array_list of block_pos, whether every block_pos has been looped over.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "iterator",
+					"type": "id"
+				}
+			]
+		},
+		"iteration": {
+			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "iterator",
+					"type": "id"
+				}
+			]
+		},
+		"iterator": {
+			"description": "Creates a new iterator. Used to loop over something that is iterable, like an array_list, or a hash_set.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "iterable",
+					"type": "id"
+				}
+			]
+		},
+		"place_block": {
+			"description": "Places a block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
+				},
+				{
+					"name": "block_state",
+					"type": "id"
+				}
+			]
+		},
 		"print_f32": {
 			"description": "Prints an f32 to the chat.",
 			"arguments": [
@@ -256,6 +430,15 @@
 				{
 					"name": "str",
 					"type": "string"
+				}
+			]
+		},
+		"remove_block": {
+			"description": "Removes a block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
 				}
 			]
 		},

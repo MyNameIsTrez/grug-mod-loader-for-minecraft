@@ -33,6 +33,8 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Grug.fnEntities = Grug.onFnEntities;
 
         grugEntity.onFns = file.onFns;
+
+        spawn();
     }
 
     @Override
@@ -62,6 +64,17 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
 
             lastEntity.entitiesIndex = grugEntity.entitiesIndex;
         }
+    }
+
+    public void spawn() {
+        if (!ExampleMod.grug.block_entity_has_on_spawn(grugEntity.onFns)) {
+            return;
+        }
+
+        Grug.gameFunctionErrorHappened = false;
+        ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
+        Grug.removeEntities(Grug.onFnEntities);
+        Grug.onFnEntities.clear();
     }
 
     public void tick() {

@@ -9,10 +9,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
+    private static long block(long resourceLocation) {
+        return 0;
+    }
+
+    private static long block_pos(int x, int y, int z) {
+        return 0;
+    }
+
     private static long get_block_entity_level(long blockEntityId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
@@ -137,6 +146,14 @@ class GameFunctions {
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
+    }
+
+    private static long get_block_state(long blockPos, long level) {
+        return 0;
+    }
+
+    private static long get_default_block_state(long block) {
+        return 0;
     }
 
     private static String get_item_name(long id) {
@@ -278,6 +295,30 @@ class GameFunctions {
         }
     }
 
+    private static long hash_set() {
+        return 0;
+    }
+
+    private static void hash_set_add(long hashSet, long id) {
+    }
+
+    private static void hash_set_clear(long hashSet) {
+    }
+
+    private static void hash_set_copy(long hashSetFrom, long hashSetTo) {
+    }
+
+    private static boolean hash_set_has(long hashSet, long id) {
+        return false;
+    }
+
+    private static void hash_set_remove(long hashSet, long id) {
+    }
+
+    private static boolean is_air(long blockState) {
+        return false;
+    }
+
     private static long item(long resourceLocation) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
@@ -346,6 +387,21 @@ class GameFunctions {
         return itemStackId;
     }
 
+    private static boolean iterating(long iterator) {
+        return false;
+    }
+
+    private static long iteration(long iterator) {
+        return 0;
+    }
+
+    private static long iterator(long iterable) {
+        return 0;
+    }
+
+    private static void place_block(long pos, long blockState) {
+    }
+
     private static void print_f32(float f) {
         if (Grug.gameFunctionErrorHappened) {
             return;
@@ -376,6 +432,9 @@ class GameFunctions {
         }
 
         Grug.sendMessageToEveryone(Component.literal(str));
+    }
+
+    private static void remove_block(long pos) {
     }
 
     private static long resource_location(String resourceLocationString) {

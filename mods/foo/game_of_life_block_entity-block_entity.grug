@@ -1,14 +1,14 @@
 start_pos: id = get_world_position_of_block_entity(me)
-start_x: f32 = get_block_pos_x(start_pos)
-start_y: f32 = get_block_pos_y(start_pos)
-start_z: f32 = get_block_pos_z(start_pos)
+start_x: i32 = get_block_pos_x(start_pos)
+start_y: i32 = get_block_pos_y(start_pos)
+start_z: i32 = get_block_pos_z(start_pos)
 
 level: id = get_block_entity_level(me)
 
-current: id = hash_set_of_id()
-next: id = hash_set_of_id()
+current: id = hash_set()
+neighbors: id = hash_set()
+next: id = hash_set()
 
-# TODO: The game doesn't call this right now
 on_spawn() {
     # Spawns a Glider pattern of blocks:
     #  @
@@ -22,74 +22,87 @@ on_spawn() {
 }
 
 on_tick() {
-    print_string("Hello, Game of Life!")
-
-    iter: id = iterator(current)
-    while iterating(iter) {
-        pos: id = iteration(iter)
-
-        neighbors: i32 = helper_count_neighbors(pos)
-
-        if neighbors < 2 or neighbors > 3 {
-            helper_remove_block(pos)
-        } else if neighbors == 3 and is_air(get_block_state(level, pos)) {
-            helper_place_block(pos)
-        }
-    }
-
-    hash_set_copy(next, current)
+    helper_update_neighbors()
+    # helper_update_next()
+    # hash_set_copy(next, current)
 }
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
     helper_place_block(pos)
-}
-
-helper_count_neighbors(pos: id) i32 {
-    neighbors: i32 = 0
-
-    if helper_has_neighbor(pos, 0, -1) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, 1, -1) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, 1, 0) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, 1, 1) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, 0, 1) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, -1, 1) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, -1, 0) {
-        neighbors = neighbors + 1
-    }
-    if helper_has_neighbor(pos, -1, -1) {
-        neighbors = neighbors + 1
-    }
-
-    return neighbors
-}
-
-helper_has_neighbor(pos: id, x: i32, z: i32) bool {
-    return hash_set_has(current, helper_get_pos(pos, x, z))
-}
-
-helper_get_pos(pos: id, x: i32, z: i32) id {
-    return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
-}
-
-helper_remove_block(pos: id) {
-    remove_block(pos)
-    hash_set_remove(next, pos)
+    hash_set_add(current, pos)
 }
 
 helper_place_block(pos: id) {
-    place_block(pos)
-    hash_set_add(next, pos)
+    place_block(pos, get_default_block_state(block(resource_location("white_concrete"))))
 }
+
+helper_update_neighbors() {
+    hash_set_clear(neighbors)
+
+    iter: id = iterator(current)
+    print_string("a")
+    while iterating(iter) {
+        print_string("b")
+    }
+    print_string("c")
+    #     pos: id = iteration(iter)
+    #     helper_add_neighbors(pos)
+}
+
+# helper_add_neighbors(pos: id) {
+#     x: i32 = -1
+#     while x <= 1 {
+#         z: i32 = -1
+#         while z <= 1 {
+#             hash_set_add(neighbors, helper_get_pos(pos, x, z))
+#             z = z + 1
+#         }
+#         x = x + 1
+#     }
+# }
+
+# helper_update_next() {
+#     iter: id = iterator(neighbors)
+#     while iterating(iter) {
+#         pos: id = iteration(iter)
+
+#         count: i32 = helper_count_neighbors(pos)
+
+#         if count < 2 or count > 3 {
+#             remove_block(pos)
+#             hash_set_remove(next, pos)
+#         } else if count == 3 and is_air(get_block_state(pos, level)) {
+#             helper_place_block(pos)
+#             hash_set_add(next, pos)
+#         }
+#     }
+# }
+
+# helper_count_neighbors(pos: id) i32 {
+#     count: i32 = 0
+
+#     x: i32 = -1
+#     while x <= 1 {
+#         z: i32 = -1
+#         while z <= 1 {
+#             if not (x == 0 and z == 0) {
+#                 if helper_has_neighbor(pos, x, z) {
+#                     count = count + 1
+#                 }
+#             }
+#             z = z + 1
+#         }
+#         x = x + 1
+#     }
+
+#     return count
+# }
+
+# helper_has_neighbor(pos: id, x: i32, z: i32) bool {
+#     return hash_set_has(neighbors, helper_get_pos(pos, x, z))
+# }
+
+# helper_get_pos(pos: id, x: i32, z: i32) id {
+#     return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
+# }

@@ -57,6 +57,9 @@ public class Grug {
     private static Map<EntityType, Integer> nextEntityIndices = new HashMap<>();
     private static Map<Long, Object> entityData = new HashMap<>();
 
+    public native boolean block_entity_has_on_spawn(long onFns);
+    public native void block_entity_on_spawn(long onFns, byte[] globals);
+
     public native boolean block_entity_has_on_tick(long onFns);
     public native void block_entity_on_tick(long onFns, byte[] globals);
 
