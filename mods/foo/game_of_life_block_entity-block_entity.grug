@@ -1,6 +1,6 @@
 start_pos: id = get_world_position_of_block_entity(me)
 start_x: i32 = get_block_pos_x(start_pos)
-start_y: i32 = get_block_pos_y(start_pos)
+start_y: i32 = get_block_pos_y(start_pos) + 3
 start_z: i32 = get_block_pos_z(start_pos)
 
 level: id = get_block_entity_level(me)
@@ -34,7 +34,7 @@ helper_place_offset_block(x: i32, z: i32) {
 }
 
 helper_place_block(pos: id) {
-    place_block(pos, get_default_block_state(block(resource_location("white_concrete"))))
+    place_block(get_default_block_state(block(resource_location("white_concrete"))), pos, level)
 }
 
 helper_update_neighbors() {
@@ -67,7 +67,7 @@ helper_update_next() {
         count: i32 = helper_count_neighbors(pos)
 
         if count < 2 or count > 3 {
-            remove_block(pos)
+            remove_block(pos, level)
             hash_set_remove(next, pos)
         } else if count == 3 and is_air(get_block_state(pos, level)) {
             helper_place_block(pos)

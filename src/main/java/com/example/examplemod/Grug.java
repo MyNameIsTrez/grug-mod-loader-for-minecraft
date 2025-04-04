@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -272,7 +276,7 @@ public class Grug {
         return (long)entityType.ordinal() << 32 | entityIndex;
     }
 
-    private static EntityType getEntityType(long id) {
+    public static EntityType getEntityType(long id) {
         return EntityType.get((int)(id >> 32));
     }
 
@@ -281,7 +285,7 @@ public class Grug {
     // }
 
     // TODO: I'm sure this can be done cleaner
-    private boolean isEntityTypeInstanceOf(EntityType derived, EntityType base) {
+    public static boolean isEntityTypeInstanceOf(EntityType derived, EntityType base) {
         if (derived == base) {
             return true;
         }
@@ -291,15 +295,19 @@ public class Grug {
         return false;
     }
 
-    private void assertEntityType(long id, EntityType expectedEntityType) {
+    private static void assertEntityType(long id, EntityType expectedEntityType) {
         EntityType entityType = getEntityType(id);
-
         if (!isEntityTypeInstanceOf(entityType, expectedEntityType)) {
             throw new AssertEntityTypeException(entityType, expectedEntityType);
         }
     }
 
-    public GrugBlockEntity getGrugBlockEntity(long id) {
+    public Block getBlock(long id) {
+        assertEntityType(id, EntityType.Block);
+        return (Block)entityData.get(id);
+    }
+
+    public GrugBlockEntity getBlockEntity(long id) {
         assertEntityType(id, EntityType.BlockEntity);
         return (GrugBlockEntity)entityData.get(id);
     }
@@ -309,9 +317,20 @@ public class Grug {
         return (BlockPos)entityData.get(id);
     }
 
+    public BlockState getBlockState(long id) {
+        assertEntityType(id, EntityType.BlockState);
+        return (BlockState)entityData.get(id);
+    }
+
     public Entity getEntity(long id) {
         assertEntityType(id, EntityType.Entity);
         return (Entity)entityData.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashSet<Long> getHashSet(long id) {
+        assertEntityType(id, EntityType.HashSet);
+        return (HashSet<Long>)entityData.get(id);
     }
 
     public Item getItem(long id) {
@@ -327,6 +346,12 @@ public class Grug {
     public ItemStack getItemStack(long id) {
         assertEntityType(id, EntityType.ItemStack);
         return (ItemStack)entityData.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Iterator<Long> getIterator(long id) {
+        assertEntityType(id, EntityType.Iterator);
+        return (Iterator<Long>)entityData.get(id);
     }
 
     public Level getLevel(long id) {

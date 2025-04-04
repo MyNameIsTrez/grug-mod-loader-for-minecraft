@@ -1,12 +1,16 @@
 package com.example.examplemod;
 
 public enum EntityType {
+    Block,
     BlockEntity,
     BlockPos,
+    BlockState,
     Entity,
+    HashSet,
     Item,
     ItemEntity,
     ItemStack,
+    Iterator,
     Level,
     ResourceLocation,
     Vec3;

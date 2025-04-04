@@ -388,11 +388,15 @@
 			"description": "Places a block.",
 			"arguments": [
 				{
+					"name": "block_state",
+					"type": "id"
+				},
+				{
 					"name": "pos",
 					"type": "id"
 				},
 				{
-					"name": "block_state",
+					"name": "level",
 					"type": "id"
 				}
 			]
@@ -447,6 +451,10 @@
 			"arguments": [
 				{
 					"name": "pos",
+					"type": "id"
+				},
+				{
+					"name": "level",
 					"type": "id"
 				}
 			]
