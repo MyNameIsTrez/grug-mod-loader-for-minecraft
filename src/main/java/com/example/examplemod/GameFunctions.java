@@ -230,6 +230,23 @@ class GameFunctions {
         return blockStateId;
     }
 
+    private static String get_hash_set_string(long hashSetId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return "";
+        }
+
+        HashSet<Long> hashSet;
+        try {
+            hashSet = ExampleMod.grug.getHashSet(hashSetId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return "";
+        }
+
+        return hashSet.toString();
+    }
+
     private static String get_item_name(long id) {
         if (Grug.gameFunctionErrorHappened) {
             return "";
@@ -470,6 +487,23 @@ class GameFunctions {
         }
 
         hashSet.remove(id);
+    }
+
+    private static int hash_set_size(long hashSetId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        HashSet<Long> hashSet;
+        try {
+            hashSet = ExampleMod.grug.getHashSet(hashSetId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return 0;
+        }
+
+        return hashSet.size();
     }
 
     private static boolean is_air(long blockStateId) {

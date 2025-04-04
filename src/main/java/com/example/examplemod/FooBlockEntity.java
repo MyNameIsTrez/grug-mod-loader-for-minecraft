@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FooBlockEntity extends GrugBlockEntity {
@@ -13,8 +12,8 @@ public class FooBlockEntity extends GrugBlockEntity {
     }
 
     @Override
-    public void setLevel(Level level) {
-        super.setLevel(level);
+    public void onLoad() {
+        super.onLoad();
 
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
         if (grugEntities == null) {
