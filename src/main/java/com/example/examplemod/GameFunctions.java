@@ -402,6 +402,14 @@ class GameFunctions {
     private static void place_block(long pos, long blockState) {
     }
 
+    private static void print_bool(boolean b) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
+
+        Grug.sendMessageToEveryone(Component.literal(Boolean.toString(b)));
+    }
+
     private static void print_f32(float f) {
         if (Grug.gameFunctionErrorHappened) {
             return;

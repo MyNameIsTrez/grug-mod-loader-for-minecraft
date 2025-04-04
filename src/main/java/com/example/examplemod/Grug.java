@@ -33,6 +33,8 @@ public class Grug {
 
     private native boolean grugInit(String modApiJsonPath, String modsDirPath);
 
+    private native void setOnFnsToFastMode();
+
     private native boolean grugRegenerateModifiedMods();
 
     private native boolean errorHasChanged();

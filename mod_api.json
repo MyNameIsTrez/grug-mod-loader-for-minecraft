@@ -397,6 +397,15 @@
 				}
 			]
 		},
+		"print_bool": {
+			"description": "Prints a bool to the chat.",
+			"arguments": [
+				{
+					"name": "b",
+					"type": "bool"
+				}
+			]
+		},
 		"print_f32": {
 			"description": "Prints an f32 to the chat.",
 			"arguments": [

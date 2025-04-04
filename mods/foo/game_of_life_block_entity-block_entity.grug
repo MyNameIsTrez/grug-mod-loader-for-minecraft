@@ -23,8 +23,8 @@ on_spawn() {
 
 on_tick() {
     helper_update_neighbors()
-    # helper_update_next()
-    # hash_set_copy(next, current)
+    helper_update_next()
+    hash_set_copy(next, current)
 }
 
 helper_place_offset_block(x: i32, z: i32) {
@@ -41,68 +41,65 @@ helper_update_neighbors() {
     hash_set_clear(neighbors)
 
     iter: id = iterator(current)
-    print_string("a")
     while iterating(iter) {
-        print_string("b")
+        pos: id = iteration(iter)
+        helper_add_neighbors(pos)
     }
-    print_string("c")
-    #     pos: id = iteration(iter)
-    #     helper_add_neighbors(pos)
 }
 
-# helper_add_neighbors(pos: id) {
-#     x: i32 = -1
-#     while x <= 1 {
-#         z: i32 = -1
-#         while z <= 1 {
-#             hash_set_add(neighbors, helper_get_pos(pos, x, z))
-#             z = z + 1
-#         }
-#         x = x + 1
-#     }
-# }
+helper_add_neighbors(pos: id) {
+    x: i32 = -1
+    while x <= 1 {
+        z: i32 = -1
+        while z <= 1 {
+            hash_set_add(neighbors, helper_get_pos(pos, x, z))
+            z = z + 1
+        }
+        x = x + 1
+    }
+}
 
-# helper_update_next() {
-#     iter: id = iterator(neighbors)
-#     while iterating(iter) {
-#         pos: id = iteration(iter)
+helper_update_next() {
+    iter: id = iterator(neighbors)
+    while iterating(iter) {
+        pos: id = iteration(iter)
 
-#         count: i32 = helper_count_neighbors(pos)
+        count: i32 = helper_count_neighbors(pos)
 
-#         if count < 2 or count > 3 {
-#             remove_block(pos)
-#             hash_set_remove(next, pos)
-#         } else if count == 3 and is_air(get_block_state(pos, level)) {
-#             helper_place_block(pos)
-#             hash_set_add(next, pos)
-#         }
-#     }
-# }
+        if count < 2 or count > 3 {
+            remove_block(pos)
+            hash_set_remove(next, pos)
+        } else if count == 3 and is_air(get_block_state(pos, level)) {
+            helper_place_block(pos)
+            hash_set_add(next, pos)
+        }
+    }
+}
 
-# helper_count_neighbors(pos: id) i32 {
-#     count: i32 = 0
+helper_count_neighbors(pos: id) i32 {
+    count: i32 = 0
 
-#     x: i32 = -1
-#     while x <= 1 {
-#         z: i32 = -1
-#         while z <= 1 {
-#             if not (x == 0 and z == 0) {
-#                 if helper_has_neighbor(pos, x, z) {
-#                     count = count + 1
-#                 }
-#             }
-#             z = z + 1
-#         }
-#         x = x + 1
-#     }
+    x: i32 = -1
+    while x <= 1 {
+        z: i32 = -1
+        while z <= 1 {
+            if not (x == 0 and z == 0) {
+                if helper_has_neighbor(pos, x, z) {
+                    count = count + 1
+                }
+            }
+            z = z + 1
+        }
+        x = x + 1
+    }
 
-#     return count
-# }
+    return count
+}
 
-# helper_has_neighbor(pos: id, x: i32, z: i32) bool {
-#     return hash_set_has(neighbors, helper_get_pos(pos, x, z))
-# }
+helper_has_neighbor(pos: id, x: i32, z: i32) bool {
+    return hash_set_has(neighbors, helper_get_pos(pos, x, z))
+}
 
-# helper_get_pos(pos: id, x: i32, z: i32) id {
-#     return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
-# }
+helper_get_pos(pos: id, x: i32, z: i32) id {
+    return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
+}
