@@ -32,8 +32,9 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         grugEntity.globals = new byte[file.globalsSize];
 
-        Grug.fnEntities = grugEntity.childEntities;
         Grug.gameFunctionErrorHappened = false;
+        Grug.globalEntities = grugEntity.childEntities;
+        Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
         Grug.fnEntities = Grug.onFnEntities;
 
@@ -62,7 +63,7 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         GrugEntity lastEntity = grugEntities.removeLast();
 
-        // This check prevents the .set() right below it from throwing
+        // This check prevents the .set() from throwing
         // when grugEntity.entitiesIndex == grugEntities.size()
         if (grugEntity.entitiesIndex < grugEntities.size()) {
             grugEntities.set(grugEntity.entitiesIndex, lastEntity);
@@ -77,6 +78,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         }
 
         Grug.gameFunctionErrorHappened = false;
+        Grug.globalEntities = grugEntity.childEntities;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
         Grug.removeEntities(Grug.onFnEntities);
         Grug.onFnEntities.clear();
@@ -88,6 +90,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         }
 
         Grug.gameFunctionErrorHappened = false;
+        Grug.globalEntities = grugEntity.childEntities;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
         Grug.removeEntities(Grug.onFnEntities);
         Grug.onFnEntities.clear();

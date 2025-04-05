@@ -75,8 +75,13 @@ public class Grug {
 
     // This is deliberately not assigned a new List.
     // This variable gets assigned an entity's list of child IDs before init_globals() is called,
-    // and it gets assigned the below onFnEntities before an on_ fn is called.
+    // and it gets assigned the below onFnEntities before an on_ function is called.
     public static List<Long> fnEntities;
+
+    // This is deliberately not assigned a new List.
+    // This variable gets assigned an entity's list of child IDs before on_ functions are called.
+    // This allows on_ functions to add copies of entities to global data structures, like HashSets.
+    public static List<Long> globalEntities;
 
     // Cleared at the end of every on_ fn call.
     public static List<Long> onFnEntities = new ArrayList<>();
@@ -216,6 +221,8 @@ public class Grug {
     }
 
     public static void sendMessageToEveryone(Component message) {
+        // System.err.println(message);
+
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
         if (server == null) {
@@ -266,7 +273,7 @@ public class Grug {
         entityData.remove(id);
     }
 
-    public static void removeEntities(List<Long> entities) {
+    public static void removeEntities(Iterable<Long> entities) {
         for (long entity : entities) {
             removeEntity(entity);
         }
@@ -300,6 +307,21 @@ public class Grug {
         if (!isEntityTypeInstanceOf(entityType, expectedEntityType)) {
             throw new AssertEntityTypeException(entityType, expectedEntityType);
         }
+    }
+
+    public static long entityCopyForDataStructure(long id, Object object, long dataStructureToId) {
+        // We even add a new entity to local hash sets,
+        // as it would be annoying if hash_set_clear() and hash_set_copy()
+        // would need to check for every entity whether it is in Grug.globalEntities
+        long newId = Grug.addEntity(Grug.getEntityType(id), object);
+
+        if (Grug.globalEntities.contains(dataStructureToId)) {
+            Grug.globalEntities.add(newId);
+        } else {
+            Grug.fnEntities.add(newId);
+        }
+
+        return newId;
     }
 
     public Block getBlock(long id) {
@@ -357,6 +379,10 @@ public class Grug {
     public Level getLevel(long id) {
         assertEntityType(id, EntityType.Level);
         return (Level)entityData.get(id);
+    }
+
+    public Object getObject(long id) {
+        return entityData.get(id);
     }
 
     public ResourceLocation getResourceLocation(long id) {

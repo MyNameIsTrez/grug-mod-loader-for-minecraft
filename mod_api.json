@@ -328,6 +328,16 @@
 				}
 			]
 		},
+		"is_client_side": {
+			"description": "Returns whether the code is being ran on the client-side.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "level",
+					"type": "id"
+				}
+			]
+		},
 		"item": {
 			"description": "Creates a new item.",
 			"return_type": "id",

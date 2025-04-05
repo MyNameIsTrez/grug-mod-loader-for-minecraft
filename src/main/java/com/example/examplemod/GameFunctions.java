@@ -424,15 +424,17 @@ class GameFunctions {
         }
 
         HashSet<Long> hashSet;
+        Object object;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
+            object = ExampleMod.grug.getObject(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("hash_set_add", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return;
         }
 
-        hashSet.add(id);
+        hashSet.add(Grug.entityCopyForDataStructure(id, object, hashSetId));
     }
 
     private static void hash_set_clear(long hashSetId) {
@@ -449,6 +451,7 @@ class GameFunctions {
             return;
         }
 
+        Grug.removeEntities(hashSet);
         hashSet.clear();
     }
 
@@ -468,8 +471,13 @@ class GameFunctions {
             return;
         }
 
+        Grug.removeEntities(hashSetTo);
         hashSetTo.clear();
-        hashSetTo.addAll(hashSetFrom);
+
+        for (Long id : hashSetFrom) {
+            Object object = ExampleMod.grug.getObject(id);
+            hashSetTo.add(Grug.entityCopyForDataStructure(id, object, hashSetToId));
+        }
     }
 
     private static boolean hash_set_has(long hashSetId, long id) {
@@ -521,6 +529,23 @@ class GameFunctions {
         }
 
         return blockState.isAir();
+    }
+
+    private static boolean is_client_side(long levelId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return false;
+        }
+
+        Level level;
+        try {
+            level = ExampleMod.grug.getLevel(levelId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("is_client_side", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return false;
+        }
+
+        return level.isClientSide();
     }
 
     private static long item(long resourceLocation) {
