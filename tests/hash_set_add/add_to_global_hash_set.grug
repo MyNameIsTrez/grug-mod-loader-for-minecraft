@@ -1,0 +1,11 @@
+current: id = hash_set()
+
+on_tick() {
+    hash_set_add(current, block_pos(0, 0, 0))
+
+    iter: id = iterator(current)
+    while iterating(iter) {
+        pos: id = iteration(iter)
+        print_i32(get_block_pos_z(pos))
+    }
+}

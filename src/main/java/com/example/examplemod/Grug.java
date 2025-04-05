@@ -88,6 +88,8 @@ public class Grug {
 
     public static boolean gameFunctionErrorHappened = false;
 
+    private static HashMap<Long, HashSet<Object>> allHashSetObjects = new HashMap<>();
+
     public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
@@ -322,6 +324,14 @@ public class Grug {
         }
 
         return newId;
+    }
+
+    public static void newHashSetObjects(long hashSetId) {
+        allHashSetObjects.put(hashSetId, new HashSet<>());
+    }
+
+    public static HashSet<Object> getHashSetObjects(long hashSetId) {
+        return allHashSetObjects.get(hashSetId);
     }
 
     public Block getBlock(long id) {

@@ -415,6 +415,8 @@ class GameFunctions {
         long hashSetId = Grug.addEntity(EntityType.HashSet, hashSet);
         Grug.fnEntities.add(hashSetId);
 
+        Grug.newHashSetObjects(hashSetId);
+
         return hashSetId;
     }
 
@@ -434,7 +436,13 @@ class GameFunctions {
             return;
         }
 
-        hashSet.add(Grug.entityCopyForDataStructure(id, object, hashSetId));
+        HashSet<Object> hashSetObjects = Grug.getHashSetObjects(hashSetId);
+
+        if (!hashSetObjects.contains(object)) {
+            hashSetObjects.add(object);
+
+            hashSet.add(Grug.entityCopyForDataStructure(id, object, hashSetId));
+        }
     }
 
     private static void hash_set_clear(long hashSetId) {
@@ -453,6 +461,7 @@ class GameFunctions {
 
         Grug.removeEntities(hashSet);
         hashSet.clear();
+        Grug.getHashSetObjects(hashSetId).clear();
     }
 
     private static void hash_set_copy(long hashSetFromId, long hashSetToId) {
@@ -474,9 +483,13 @@ class GameFunctions {
         Grug.removeEntities(hashSetTo);
         hashSetTo.clear();
 
+        HashSet<Object> hashSetToObjects = Grug.getHashSetObjects(hashSetToId);
+        hashSetToObjects.clear();
+
         for (Long id : hashSetFrom) {
             Object object = ExampleMod.grug.getObject(id);
             hashSetTo.add(Grug.entityCopyForDataStructure(id, object, hashSetToId));
+            hashSetToObjects.add(object);
         }
     }
 
@@ -485,16 +498,16 @@ class GameFunctions {
             return false;
         }
 
-        HashSet<Long> hashSet;
+        Object object;
         try {
-            hashSet = ExampleMod.grug.getHashSet(hashSetId);
+            object = ExampleMod.grug.getObject(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("hash_set_has", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return false;
         }
 
-        return hashSet.contains(id);
+        return Grug.getHashSetObjects(hashSetId).contains(object);
     }
 
     private static void hash_set_remove(long hashSetId, long id) {
@@ -503,8 +516,10 @@ class GameFunctions {
         }
 
         HashSet<Long> hashSet;
+        Object object;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
+            object = ExampleMod.grug.getObject(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
@@ -512,6 +527,7 @@ class GameFunctions {
         }
 
         hashSet.remove(id);
+        Grug.getHashSetObjects(hashSetId).remove(object);
     }
 
     private static boolean is_air(long blockStateId) {
