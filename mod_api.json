@@ -142,6 +142,16 @@
 				}
 			]
 		},
+		"get_hash_set_size": {
+			"description": "Returns the number of ids in the hash_set.",
+			"return_type": "i32",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "id"
+				}
+			]
+		},
 		"get_hash_set_string": {
 			"description": "Returns the string representation of the hash_set.",
 			"return_type": "string",
@@ -304,16 +314,6 @@
 				},
 				{
 					"name": "id",
-					"type": "id"
-				}
-			]
-		},
-		"hash_set_size": {
-			"description": "Returns the number of ids in the hash_set.",
-			"return_type": "i32",
-			"arguments": [
-				{
-					"name": "hash_set",
 					"type": "id"
 				}
 			]

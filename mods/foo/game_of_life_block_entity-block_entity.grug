@@ -21,43 +21,44 @@ on_spawn() {
     helper_place_offset_block(-1, 1)
 }
 
-# on_tick() {
-#     helper_update_neighbors()
-#     helper_update_next()
-#     hash_set_copy(next, current)
-# }
+on_tick() {
+    helper_update_neighbors()
+    # helper_update_next()
+    # hash_set_copy(next, current)
+}
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
     helper_place_block(pos)
-    # hash_set_add(current, pos)
+    hash_set_add(current, pos)
 }
 
 helper_place_block(pos: id) {
     place_block(get_default_block_state(block(resource_location("white_concrete"))), pos, level)
 }
 
-# helper_update_neighbors() {
-#     hash_set_clear(neighbors)
+helper_update_neighbors() {
+    hash_set_clear(neighbors)
 
-#     iter: id = iterator(current)
-#     while iterating(iter) {
-#         pos: id = iteration(iter)
-#         helper_add_neighbors(pos)
-#     }
-# }
+    iter: id = iterator(current)
+    while iterating(iter) {
+        pos: id = iteration(iter)
+        helper_add_neighbors(pos)
+    }
+    print_i32(get_hash_set_size(neighbors))
+}
 
-# helper_add_neighbors(pos: id) {
-#     x: i32 = -1
-#     while x <= 1 {
-#         z: i32 = -1
-#         while z <= 1 {
-#             hash_set_add(neighbors, helper_get_pos(pos, x, z))
-#             z = z + 1
-#         }
-#         x = x + 1
-#     }
-# }
+helper_add_neighbors(pos: id) {
+    x: i32 = -1
+    while x <= 1 {
+        z: i32 = -1
+        while z <= 1 {
+            hash_set_add(neighbors, helper_get_pos(pos, x, z))
+            z = z + 1
+        }
+        x = x + 1
+    }
+}
 
 # helper_update_next() {
 #     iter: id = iterator(neighbors)
@@ -100,6 +101,6 @@ helper_place_block(pos: id) {
 #     return hash_set_has(neighbors, helper_get_pos(pos, x, z))
 # }
 
-# helper_get_pos(pos: id, x: i32, z: i32) id {
-#     return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
-# }
+helper_get_pos(pos: id, x: i32, z: i32) id {
+    return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
+}
