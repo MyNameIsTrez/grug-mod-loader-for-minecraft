@@ -681,6 +681,7 @@ class GameFunctions {
 
         Iterator<Long> iterator;
         try {
+            System.err.println("iterating() iteratorId: " + iteratorId); // TODO: REMOVE!
             iterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterating", assertEntityTypeException.getMessage());
@@ -731,6 +732,7 @@ class GameFunctions {
         }
 
         long iteratorId = Grug.addEntity(EntityType.Iterator, iterator);
+        System.err.println("iterator() iteratorId: " + iteratorId); // TODO: REMOVE!
         Grug.fnEntities.add(iteratorId);
 
         return iteratorId;

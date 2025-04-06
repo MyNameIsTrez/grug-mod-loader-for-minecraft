@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GameOfLifeBlockEntity extends GrugBlockEntity {
@@ -36,7 +38,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = grugEntity.childEntities;
         Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
-        Grug.fnEntities = Grug.onFnEntities;
 
         grugEntity.onFns = file.onFns;
 
@@ -46,8 +47,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-
-        // System.out.println("Removing block entity");
 
         Grug.removeEntity(grugEntity.id);
         Grug.removeEntity(worldPositionId);
@@ -77,11 +76,17 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        Grug.gameFunctionErrorHappened = false;
+        List<Long> oldGlobalEntities = Grug.globalEntities;
         Grug.globalEntities = grugEntity.childEntities;
+        List<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<Long>();
+
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
-        Grug.removeEntities(Grug.onFnEntities);
-        Grug.onFnEntities.clear();
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = oldFnEntities;
     }
 
     public void tick() {
@@ -89,10 +94,49 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        Grug.gameFunctionErrorHappened = false;
+        List<Long> oldGlobalEntities = Grug.globalEntities;
         Grug.globalEntities = grugEntity.childEntities;
+        List<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<Long>();
+
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
-        Grug.removeEntities(Grug.onFnEntities);
-        Grug.onFnEntities.clear();
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = oldFnEntities;
+    }
+
+    protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block blockIn, BlockPos fromBlockPos, boolean isMoving) {
+        if (!ExampleMod.grug.block_entity_has_on_neighbor_changed(grugEntity.onFns)) {
+            return;
+        }
+
+        List<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        List<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<Long>();
+
+        long blockStateId = Grug.addEntity(EntityType.BlockState, blockState);
+        Grug.fnEntities.add(blockStateId);
+
+        long levelId = Grug.addEntity(EntityType.Level, level);
+        Grug.fnEntities.add(levelId);
+
+        long blockPosId = Grug.addEntity(EntityType.BlockPos, blockPos);
+        Grug.fnEntities.add(blockPosId);
+
+        long blockInId = Grug.addEntity(EntityType.Block, blockIn);
+        Grug.fnEntities.add(blockInId);
+
+        long fromBlockPosId = Grug.addEntity(EntityType.BlockPos, fromBlockPos);
+        Grug.fnEntities.add(fromBlockPosId);
+
+        Grug.gameFunctionErrorHappened = false;
+        ExampleMod.grug.block_entity_on_neighbor_changed(grugEntity.onFns, grugEntity.globals, blockStateId, levelId, blockPosId, blockInId, fromBlockPosId, isMoving);
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = oldFnEntities;
     }
 }

@@ -69,22 +69,22 @@ public class Grug {
     public native boolean block_entity_has_on_tick(long onFns);
     public native void block_entity_on_tick(long onFns, byte[] globals);
 
+    public native boolean block_entity_has_on_neighbor_changed(long onFns);
+    public native void block_entity_on_neighbor_changed(long onFns, byte[] globals, long state, long level, long pos, long blockIn, long fromPos, boolean isMoving);
+
     private ReloadData reloadData = new ReloadData();
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
     // This is deliberately not assigned a new List.
     // This variable gets assigned an entity's list of child IDs before init_globals() is called,
-    // and it gets assigned the below onFnEntities before an on_ function is called.
+    // and it gets assigned a new ArrayList<long> of on_ fn entities, before an on_ function is called.
     public static List<Long> fnEntities;
 
     // This is deliberately not assigned a new List.
     // This variable gets assigned an entity's list of child IDs before on_ functions are called.
     // This allows on_ functions to add copies of entities to global data structures, like HashSets.
     public static List<Long> globalEntities;
-
-    // Cleared at the end of every on_ fn call.
-    public static List<Long> onFnEntities = new ArrayList<>();
 
     public static boolean gameFunctionErrorHappened = false;
 
@@ -209,31 +209,39 @@ public class Grug {
             }
 
             for (GrugEntity grugEntity : grugEntities) {
+                removeEntities(grugEntity.childEntities);
+                grugEntity.childEntities.clear();
+
                 grugEntity.globals = new byte[file.globalsSize];
 
-                grugEntity.childEntities.clear();
-                Grug.fnEntities = grugEntity.childEntities;
-                Grug.gameFunctionErrorHappened = false;
+                gameFunctionErrorHappened = false;
+                globalEntities = grugEntity.childEntities;
+                fnEntities = grugEntity.childEntities;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
-                Grug.fnEntities = Grug.onFnEntities;
 
                 grugEntity.onFns = file.onFns;
 
                 if (!block_entity_has_on_spawn(grugEntity.onFns)) {
                     continue;
                 }
-        
+
+                List<Long> oldGlobalEntities = Grug.globalEntities;
+                Grug.globalEntities = grugEntity.childEntities;
+                List<Long> oldFnEntities = Grug.fnEntities;
+                Grug.fnEntities = new ArrayList<Long>();
+
                 gameFunctionErrorHappened = false;
-                globalEntities = grugEntity.childEntities;
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
-                removeEntities(onFnEntities);
-                onFnEntities.clear();
+
+                Grug.globalEntities = oldGlobalEntities;
+                Grug.removeEntities(Grug.fnEntities);
+                Grug.fnEntities = oldFnEntities;
             }
         }
     }
 
     public static void sendMessageToEveryone(Component message) {
-        // System.err.println(message);
+        System.err.println(message);
 
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
@@ -322,7 +330,7 @@ public class Grug {
     }
 
     public static long entityCopyForDataStructure(long id, Object object, long dataStructureToId) {
-        // We even add a new entity to local hash sets,
+        // We even create a copy of the entity when adding to local hash sets,
         // as it would be annoying if hash_set_clear() and hash_set_copy()
         // would need to check for every entity whether it is in Grug.globalEntities
         long newId = Grug.addEntity(Grug.getEntityType(id), object);

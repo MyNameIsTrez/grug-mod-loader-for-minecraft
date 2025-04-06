@@ -28,4 +28,15 @@ public class GameOfLifeBlock extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null : (level0, pos0, state0, blockEntity) -> ((GameOfLifeBlockEntity)blockEntity).tick();
     }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof GameOfLifeBlockEntity)) {
+            throw new RuntimeException("neighborChanged of GameOfLifeBlock expected its blockEntity to be GameOfLifeBlockEntity");
+        }
+        GameOfLifeBlockEntity gameOfLifeBlockEntity = (GameOfLifeBlockEntity)blockEntity;
+        gameOfLifeBlockEntity.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+    }
 }

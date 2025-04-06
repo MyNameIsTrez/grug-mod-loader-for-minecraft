@@ -11,6 +11,35 @@
                 },
                 "on_tick": {
                     "description": "Called every game tick, so every 0.05 seconds."
+                },
+                "on_neighbor_changed": {
+                    "description": "Called when a neighboring block changed. An example is when a neighboring lever is toggled between the on and off state.",
+					"arguments": [
+						{
+							"name": "block_state",
+							"type": "id"
+						},
+						{
+							"name": "level",
+							"type": "id"
+						},
+						{
+							"name": "block_pos",
+							"type": "id"
+						},
+						{
+							"name": "block_in",
+							"type": "id"
+						},
+						{
+							"name": "from_block_pos",
+							"type": "id"
+						},
+						{
+							"name": "is_moving",
+							"type": "bool"
+						}
+					]
                 }
             }
 		}

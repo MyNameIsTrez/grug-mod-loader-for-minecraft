@@ -36,7 +36,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = grugEntity.childEntities;
         Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
-        Grug.fnEntities = Grug.onFnEntities;
 
         grugEntity.onFns = file.onFns;
 
@@ -46,8 +45,6 @@ public class FooBlockEntity extends GrugBlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-
-        // System.out.println("Removing block entity");
 
         Grug.removeEntity(grugEntity.id);
         Grug.removeEntity(worldPositionId);
@@ -77,11 +74,17 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        Grug.gameFunctionErrorHappened = false;
+        List<Long> oldGlobalEntities = Grug.globalEntities;
         Grug.globalEntities = grugEntity.childEntities;
+        List<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<Long>();
+
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
-        Grug.removeEntities(Grug.onFnEntities);
-        Grug.onFnEntities.clear();
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = oldFnEntities;
     }
 
     public void tick() {
@@ -89,10 +92,16 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        Grug.gameFunctionErrorHappened = false;
+        List<Long> oldGlobalEntities = Grug.globalEntities;
         Grug.globalEntities = grugEntity.childEntities;
+        List<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<Long>();
+
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
-        Grug.removeEntities(Grug.onFnEntities);
-        Grug.onFnEntities.clear();
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = oldFnEntities;
     }
 }
