@@ -16,7 +16,8 @@ running: bool = true
 ticks: i32 = 0
 
 on_spawn() {
-    helper_spawn_glider()
+    # helper_spawn_glider()
+    helper_spawn_r_pentomino()
 }
 
 on_tick() {
@@ -24,19 +25,22 @@ on_tick() {
         return
     }
 
-    ticks = ticks + 1
-    if ticks > 1000 {
-        return
-    }
-    if ticks % 20 != 0 {
-        return
+    # ticks = ticks + 1
+    # if ticks > 1000 {
+    #     return
+    # }
+    # if ticks % 20 != 0 {
+    #     return
+    # }
+
+    update: i32 = 0
+    while update < 1 {
+        helper_update()
+        update = update + 1
     }
 
-    helper_scan()
-    helper_update_next()
-    helper_remove_current_blocks()
-    helper_place_next_blocks()
-    hash_set_copy(next, current)
+    # helper_cleanup()
+    # running = false
 }
 
 on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, from_block_pos: id, is_moving: bool) {
@@ -44,26 +48,47 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
     if running {
         helper_remove_current_blocks()
         hash_set_clear(current)
-        helper_spawn_glider()
+        # helper_spawn_glider()
+        helper_spawn_r_pentomino()
     }
 }
 
-# Spawns a Glider pattern of blocks:
+# Spawns the glider pattern of blocks:
 #  @
 #   @
 # @@@
-helper_spawn_glider() {
+# helper_spawn_glider() {
+#     helper_place_offset_block(0, -1)
+#     helper_place_offset_block(1, 0)
+#     helper_place_offset_block(1, 1)
+#     helper_place_offset_block(0, 1)
+#     helper_place_offset_block(-1, 1)
+# }
+
+# Spawns the R-pentonimo pattern of blocks:
+#  @@
+# @@
+#  @
+helper_spawn_r_pentomino() {
     helper_place_offset_block(0, -1)
-    helper_place_offset_block(1, 0)
-    helper_place_offset_block(1, 1)
+    helper_place_offset_block(1, -1)
+    helper_place_offset_block(-1, 0)
+    helper_place_offset_block(0, 0)
     helper_place_offset_block(0, 1)
-    helper_place_offset_block(-1, 1)
 }
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
     place_block(white_concrete, pos, flag, g_level)
     hash_set_add(current, pos)
+}
+
+helper_update() {
+    helper_scan()
+    helper_update_next()
+    helper_remove_current_blocks()
+    helper_place_next_blocks()
+    hash_set_copy(next, current)
 }
 
 helper_scan() {
@@ -146,3 +171,16 @@ helper_place_next_blocks() {
 helper_get_pos(pos: id, x: i32, z: i32) id {
     return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
 }
+
+# helper_cleanup() {
+#     x: i32 = -50
+#     while x <= 50 {
+#         z: i32 = -50
+#         while z <= 50 {
+#             pos: id = block_pos(start_x + x, start_y, start_z + z)
+#             remove_block(pos, g_level)
+#             z = z + 1
+#         }
+#         x = x + 1
+#     }
+# }
