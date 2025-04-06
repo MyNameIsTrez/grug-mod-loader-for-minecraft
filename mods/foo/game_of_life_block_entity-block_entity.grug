@@ -25,10 +25,10 @@ on_spawn() {
 
 on_tick() {
     ticks = ticks + 1
-    if ticks > 200 {
+    if ticks > 1000 {
         return
     }
-    if ticks % 40 != 0 {
+    if ticks % 20 != 0 {
         return
     }
 
@@ -114,7 +114,7 @@ helper_remove_current_blocks() {
     iter: id = iterator(current)
     while iterating(iter) {
         pos: id = iteration(iter)
-        remove_block(pos, level)
+        destroy_block(pos, false, level)
     }
 }
 

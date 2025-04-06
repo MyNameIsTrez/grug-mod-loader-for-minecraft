@@ -44,6 +44,23 @@
 				}
 			]
 		},
+		"destroy_block": {
+			"description": "Removes a block. Spawns particles of the removed block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
+				},
+				{
+					"name": "drop_block",
+					"type": "bool"
+				},
+				{
+					"name": "level",
+					"type": "id"
+				}
+			]
+		},
 		"get_block_entity_level": {
 			"description": "Gets the level (dimension) a block entity is in.",
 			"return_type": "id",
@@ -473,19 +490,6 @@
 				{
 					"name": "str",
 					"type": "string"
-				}
-			]
-		},
-		"remove_block": {
-			"description": "Removes a block. Spawns particles of the removed block.",
-			"arguments": [
-				{
-					"name": "pos",
-					"type": "id"
-				},
-				{
-					"name": "level",
-					"type": "id"
 				}
 			]
 		},
