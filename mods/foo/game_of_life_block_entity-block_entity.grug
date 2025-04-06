@@ -1,6 +1,6 @@
 start_pos: id = get_world_position_of_block_entity(me)
 start_x: i32 = get_block_pos_x(start_pos)
-start_y: i32 = get_block_pos_y(start_pos) - 1
+start_y: i32 = get_block_pos_y(start_pos) - 2
 start_z: i32 = get_block_pos_z(start_pos)
 
 g_level: id = get_block_entity_level(me)
@@ -40,7 +40,6 @@ on_tick() {
 }
 
 on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, from_block_pos: id, is_moving: bool) {
-    print_string("neighbor changed")
     running = not running
     if running {
         helper_remove_current_blocks()
@@ -68,16 +67,13 @@ helper_place_offset_block(x: i32, z: i32) {
 }
 
 helper_scan() {
-    print_string("start of helper_scan()")
     hash_set_clear(scanned)
 
     iter: id = iterator(current)
     while iterating(iter) {
-        print_string("a")
         pos: id = iteration(iter)
         helper_add_scanned(pos)
     }
-    print_string("end of helper_scan()")
 }
 
 helper_add_scanned(pos: id) {
@@ -93,12 +89,10 @@ helper_add_scanned(pos: id) {
 }
 
 helper_update_next() {
-    print_string("start of helper_update_next()")
     hash_set_clear(next)
 
     iter: id = iterator(scanned)
     while iterating(iter) {
-        print_string("a")
         pos: id = iteration(iter)
 
         count: i32 = helper_count_neighbors(pos)
@@ -107,7 +101,6 @@ helper_update_next() {
             hash_set_add(next, pos)
         }
     }
-    print_string("end of helper_update_next()")
 }
 
 helper_count_neighbors(pos: id) i32 {
@@ -135,27 +128,19 @@ helper_has_neighbor(pos: id, x: i32, z: i32) bool {
 }
 
 helper_remove_current_blocks() {
-    print_string("start of helper_remove_current_blocks()")
     iter: id = iterator(current)
     while iterating(iter) {
-        print_string("a")
         pos: id = iteration(iter)
         remove_block(pos, g_level)
     }
-    print_string("end of helper_remove_current_blocks()")
 }
 
 helper_place_next_blocks() {
-    print_string("start of helper_place_next_blocks()")
     iter: id = iterator(next)
     while iterating(iter) {
-        print_string("a")
         pos: id = iteration(iter)
-        print_string("b")
         place_block(white_concrete, pos, flag, g_level)
-        print_string("c")
     }
-    print_string("end of helper_place_next_blocks()")
 }
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
