@@ -59,7 +59,11 @@ class GameFunctions {
         return blockPosId;
     }
 
-    private static void destroy_block(long blockPosId, boolean dropBlock, long levelId) {
+    private static int block_flag_update_all() {
+        return Block.UPDATE_ALL;
+    }
+
+    private static void destroy_block(long blockPosId, long levelId) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -75,7 +79,26 @@ class GameFunctions {
             return;
         }
 
-        level.destroyBlock(blockPos, dropBlock);
+        level.destroyBlock(blockPos, false);
+    }
+
+    private static void destroy_and_drop_block(long blockPosId, long levelId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
+
+        BlockPos blockPos;
+        Level level;
+        try {
+            blockPos = ExampleMod.grug.getBlockPos(blockPosId);
+            level = ExampleMod.grug.getLevel(levelId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("destroy_and_drop_block", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
+
+        level.destroyBlock(blockPos, true);
     }
 
     private static long get_block_entity_level(long blockEntityId) {
@@ -713,7 +736,7 @@ class GameFunctions {
         return iteratorId;
     }
 
-    private static void place_block(long blockStateId, long blockPosId, long levelId) {
+    private static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -731,7 +754,7 @@ class GameFunctions {
             return;
         }
 
-        level.setBlock(blockPos, blockState, Block.UPDATE_ALL);
+        level.setBlock(blockPos, blockState, flags);
     }
 
     private static void print_bool(boolean b) {
@@ -772,6 +795,44 @@ class GameFunctions {
         }
 
         Grug.sendMessageToEveryone(Component.literal(str));
+    }
+
+    private static void remove_block(long blockPosId, long levelId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
+
+        BlockPos blockPos;
+        Level level;
+        try {
+            blockPos = ExampleMod.grug.getBlockPos(blockPosId);
+            level = ExampleMod.grug.getLevel(levelId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("remove_block", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
+
+        level.removeBlock(blockPos, false);
+    }
+
+    private static void remove_moving_block(long blockPosId, long levelId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
+
+        BlockPos blockPos;
+        Level level;
+        try {
+            blockPos = ExampleMod.grug.getBlockPos(blockPosId);
+            level = ExampleMod.grug.getLevel(levelId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("remove_moving_block", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
+
+        level.removeBlock(blockPos, true);
     }
 
     private static long resource_location(String resourceLocationString) {

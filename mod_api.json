@@ -44,6 +44,10 @@
 				}
 			]
 		},
+		"block_flag_update_all": {
+			"description": "Passed to game functions like place_block(), to notify all neighboring blocks. Consider using one of the other flags that isn't as slow.",
+			"return_type": "i32"
+		},
 		"destroy_block": {
 			"description": "Removes a block. Spawns particles of the removed block.",
 			"arguments": [
@@ -52,8 +56,17 @@
 					"type": "id"
 				},
 				{
-					"name": "drop_block",
-					"type": "bool"
+					"name": "level",
+					"type": "id"
+				}
+			]
+		},
+		"destroy_and_drop_block": {
+			"description": "Removes a block. Spawns particles of the removed block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
 				},
 				{
 					"name": "level",
@@ -443,6 +456,10 @@
 					"type": "id"
 				},
 				{
+					"name": "flags",
+					"type": "i32"
+				},
+				{
 					"name": "level",
 					"type": "id"
 				}
@@ -490,6 +507,32 @@
 				{
 					"name": "str",
 					"type": "string"
+				}
+			]
+		},
+		"remove_block": {
+			"description": "Removes a block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
+				},
+				{
+					"name": "level",
+					"type": "id"
+				}
+			]
+		},
+		"remove_moving_block": {
+			"description": "Removes a block.",
+			"arguments": [
+				{
+					"name": "pos",
+					"type": "id"
+				},
+				{
+					"name": "level",
+					"type": "id"
 				}
 			]
 		},

@@ -5,6 +5,9 @@ start_z: i32 = get_block_pos_z(start_pos)
 
 level: id = get_block_entity_level(me)
 
+white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
+flag: i32 = block_flag_update_all()
+
 current: id = hash_set()
 scanned: id = hash_set()
 next: id = hash_set()
@@ -41,12 +44,8 @@ on_tick() {
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
-    helper_place_block(pos)
+    place_block(white_concrete, pos, flag, level)
     hash_set_add(current, pos)
-}
-
-helper_place_block(pos: id) {
-    place_block(get_default_block_state(block(resource_location("white_concrete"))), pos, level)
 }
 
 helper_scan() {
@@ -114,7 +113,7 @@ helper_remove_current_blocks() {
     iter: id = iterator(current)
     while iterating(iter) {
         pos: id = iteration(iter)
-        destroy_block(pos, false, level)
+        remove_block(pos, level)
     }
 }
 
@@ -122,7 +121,7 @@ helper_place_next_blocks() {
     iter: id = iterator(next)
     while iterating(iter) {
         pos: id = iteration(iter)
-        helper_place_block(pos)
+        place_block(white_concrete, pos, flag, level)
     }
 }
 
