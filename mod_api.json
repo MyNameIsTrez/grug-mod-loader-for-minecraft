@@ -477,7 +477,7 @@
 			]
 		},
 		"remove_block": {
-			"description": "Removes a block.",
+			"description": "Removes a block. Spawns particles of the removed block.",
 			"arguments": [
 				{
 					"name": "pos",

@@ -9,7 +9,6 @@ current: id = hash_set()
 scanned: id = hash_set()
 next: id = hash_set()
 
-# TODO: REMOVE!
 ticks: i32 = 0
 
 on_spawn() {
@@ -35,7 +34,8 @@ on_tick() {
 
     helper_scan()
     helper_update_next()
-    print_i32(get_hash_set_size(next))
+    helper_remove_current_blocks()
+    helper_place_next_blocks()
     hash_set_copy(next, current)
 }
 
@@ -72,17 +72,15 @@ helper_add_scanned(pos: id) {
 }
 
 helper_update_next() {
+    hash_set_clear(next)
+
     iter: id = iterator(scanned)
     while iterating(iter) {
         pos: id = iteration(iter)
 
         count: i32 = helper_count_neighbors(pos)
 
-        if count < 2 or count > 3 {
-            remove_block(pos, level)
-            hash_set_remove(next, pos)
-        } else if count == 3 and is_air(get_block_state(pos, level)) {
-            helper_place_block(pos)
+        if count == 3 or (count == 2 and hash_set_has(current, pos)) {
             hash_set_add(next, pos)
         }
     }
@@ -110,6 +108,22 @@ helper_count_neighbors(pos: id) i32 {
 
 helper_has_neighbor(pos: id, x: i32, z: i32) bool {
     return hash_set_has(current, helper_get_pos(pos, x, z))
+}
+
+helper_remove_current_blocks() {
+    iter: id = iterator(current)
+    while iterating(iter) {
+        pos: id = iteration(iter)
+        remove_block(pos, level)
+    }
+}
+
+helper_place_next_blocks() {
+    iter: id = iterator(next)
+    while iterating(iter) {
+        pos: id = iteration(iter)
+        helper_place_block(pos)
+    }
 }
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
