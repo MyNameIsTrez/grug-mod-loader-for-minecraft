@@ -218,6 +218,16 @@ public class Grug {
                 Grug.fnEntities = Grug.onFnEntities;
 
                 grugEntity.onFns = file.onFns;
+
+                if (!block_entity_has_on_spawn(grugEntity.onFns)) {
+                    continue;
+                }
+        
+                gameFunctionErrorHappened = false;
+                globalEntities = grugEntity.childEntities;
+                block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
+                removeEntities(onFnEntities);
+                onFnEntities.clear();
             }
         }
     }
