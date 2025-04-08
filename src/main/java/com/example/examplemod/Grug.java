@@ -241,7 +241,7 @@ public class Grug {
     }
 
     public static void sendMessageToEveryone(Component message) {
-        System.err.println(message);
+        // System.err.println(message);
 
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 

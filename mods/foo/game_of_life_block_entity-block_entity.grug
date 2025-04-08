@@ -8,6 +8,12 @@ g_level: id = get_block_entity_level(me)
 white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
 flag: i32 = block_flag_update_all()
 
+radius: i32 = 5
+min_x: i32 = start_x - radius
+max_x: i32 = start_x + radius
+min_z: i32 = start_z - radius
+max_z: i32 = start_z + radius
+
 current: id = hash_set()
 scanned: id = hash_set()
 next: id = hash_set()
@@ -16,8 +22,8 @@ running: bool = true
 ticks: i32 = 0
 
 on_spawn() {
-    # helper_spawn_glider()
-    helper_spawn_r_pentomino()
+    helper_spawn_glider()
+    # helper_spawn_r_pentomino()
 }
 
 on_tick() {
@@ -48,8 +54,8 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
     if running {
         helper_remove_current_blocks()
         hash_set_clear(current)
-        # helper_spawn_glider()
-        helper_spawn_r_pentomino()
+        helper_spawn_glider()
+        # helper_spawn_r_pentomino()
     }
 }
 
@@ -57,25 +63,25 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
 #  @
 #   @
 # @@@
-# helper_spawn_glider() {
-#     helper_place_offset_block(0, -1)
-#     helper_place_offset_block(1, 0)
-#     helper_place_offset_block(1, 1)
-#     helper_place_offset_block(0, 1)
-#     helper_place_offset_block(-1, 1)
-# }
+helper_spawn_glider() {
+    helper_place_offset_block(0, -1)
+    helper_place_offset_block(1, 0)
+    helper_place_offset_block(1, 1)
+    helper_place_offset_block(0, 1)
+    helper_place_offset_block(-1, 1)
+}
 
 # Spawns the R-pentonimo pattern of blocks:
 #  @@
 # @@
 #  @
-helper_spawn_r_pentomino() {
-    helper_place_offset_block(0, -1)
-    helper_place_offset_block(1, -1)
-    helper_place_offset_block(-1, 0)
-    helper_place_offset_block(0, 0)
-    helper_place_offset_block(0, 1)
-}
+# helper_spawn_r_pentomino() {
+#     helper_place_offset_block(0, -1)
+#     helper_place_offset_block(1, -1)
+#     helper_place_offset_block(-1, 0)
+#     helper_place_offset_block(0, 0)
+#     helper_place_offset_block(0, 1)
+# }
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
@@ -169,7 +175,22 @@ helper_place_next_blocks() {
 }
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
-    return block_pos(get_block_pos_x(pos) + x, start_y, get_block_pos_z(pos) + z)
+    x = get_block_pos_x(pos) + x
+    z = get_block_pos_z(pos) + z
+
+    if (x < min_x) {
+        x = max_x
+    } else if (x > max_x) {
+        x = min_x
+    }
+
+    if (z < min_z) {
+        z = max_z
+    } else if (z > max_z) {
+        z = min_z
+    }
+
+    return block_pos(x, start_y, z)
 }
 
 # helper_cleanup() {
