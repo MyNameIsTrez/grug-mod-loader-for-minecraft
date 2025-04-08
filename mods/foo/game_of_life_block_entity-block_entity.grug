@@ -14,9 +14,9 @@ max_x: i32 = start_x + radius
 min_z: i32 = start_z - radius
 max_z: i32 = start_z + radius
 
-current: id = hash_set()
-scanned: id = hash_set()
-next: id = hash_set()
+current: id = hash_map()
+scanned: id = hash_map()
+next: id = hash_map()
 
 running: bool = true
 ticks: i32 = 0
@@ -53,7 +53,7 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
     running = not running
     if running {
         helper_remove_current_blocks()
-        hash_set_clear(current)
+        hash_map_clear(current)
         helper_spawn_glider()
         # helper_spawn_r_pentomino()
     }
@@ -86,7 +86,7 @@ helper_spawn_glider() {
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
     place_block(white_concrete, pos, flag, g_level)
-    hash_set_add(current, pos)
+    hash_map_put(current, pos, box_i32(0))
 }
 
 helper_update() {
@@ -94,16 +94,24 @@ helper_update() {
     helper_update_next()
     helper_remove_current_blocks()
     helper_place_next_blocks()
-    hash_set_copy(next, current)
+    hash_map_copy(next, current)
 }
 
 helper_scan() {
-    hash_set_clear(scanned)
+    hash_map_clear(scanned)
 
     iter: id = iterator(current)
     while iterating(iter) {
-        pos: id = iteration(iter)
-        helper_add_scanned(pos)
+        result: id = iteration(iter)
+        pos: id = iteration_key(result)
+        age: id = iteration_value(result)
+
+        if age > 2 {
+            continue
+        } else if age == 0 {
+            helper_add_scanned(pos)
+        }
+        hash_map_put(scanned, pos, age + 1)
     }
 }
 
@@ -112,7 +120,9 @@ helper_add_scanned(pos: id) {
     while x <= 1 {
         z: i32 = -1
         while z <= 1 {
-            hash_set_add(scanned, helper_get_pos(pos, x, z))
+            if not (x == 0 and z == 0) {
+                hash_map_put(scanned, helper_get_pos(pos, x, z), box_i32(0))
+            }
             z = z + 1
         }
         x = x + 1
@@ -120,16 +130,23 @@ helper_add_scanned(pos: id) {
 }
 
 helper_update_next() {
-    hash_set_clear(next)
+    hash_map_clear(next)
 
     iter: id = iterator(scanned)
     while iterating(iter) {
-        pos: id = iteration(iter)
+        result: id = iteration(iter)
+        age: id = iteration_value(result)
+        pos: id = iteration_key(result)
+
+        if age > 0 {
+            hash_map_put(next, pos, age)
+            continue
+        }
 
         count: i32 = helper_count_neighbors(pos)
 
-        if count == 3 or (count == 2 and hash_set_has(current, pos)) {
-            hash_set_add(next, pos)
+        if count == 3 or (count == 2 and hash_map_has_key(current, pos)) {
+            hash_map_put(next, pos, box_i32(0))
         }
     }
 }
@@ -155,13 +172,15 @@ helper_count_neighbors(pos: id) i32 {
 }
 
 helper_has_neighbor(pos: id, x: i32, z: i32) bool {
-    return hash_set_has(current, helper_get_pos(pos, x, z))
+    age: id = hash_map_get(current, helper_get_pos(pos, x, z))
+    return unbox_i32(age) == 0
 }
 
 helper_remove_current_blocks() {
     iter: id = iterator(current)
     while iterating(iter) {
-        pos: id = iteration(iter)
+        result: id = iteration(iter)
+        pos: id = iteration_key(result)
         remove_block(pos, g_level)
     }
 }
@@ -169,8 +188,17 @@ helper_remove_current_blocks() {
 helper_place_next_blocks() {
     iter: id = iterator(next)
     while iterating(iter) {
-        pos: id = iteration(iter)
-        place_block(white_concrete, pos, flag, g_level)
+        result: id = iteration(iter)
+        age: id = iteration_value(result)
+        pos: id = iteration_key(result)
+
+        block: id = white_concrete
+        if (age == 1) {
+            block = orange_concrete
+        } else if (age == 2) {
+            block = red_concrete
+        }
+        place_block(block, pos, flag, g_level)
     }
 }
 
