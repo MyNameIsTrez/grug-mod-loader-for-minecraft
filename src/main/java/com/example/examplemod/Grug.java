@@ -88,6 +88,7 @@ public class Grug {
 
     public static boolean gameFunctionErrorHappened = false;
 
+    private static HashMap<Long, HashSet<Object>> allHashMapKeyObjects = new HashMap<>();
     private static HashMap<Long, HashSet<Object>> allHashSetObjects = new HashMap<>();
 
     public Grug() {
@@ -329,13 +330,17 @@ public class Grug {
         }
     }
 
-    public static long entityCopyForDataStructure(long id, Object object, long dataStructureToId) {
-        // We even create a copy of the entity when adding to local hash sets,
+    public static long entityCopyForHashSet(long id, Object object, long hashSetId) {
+        // We give the Object a new ID, rather than reusing its existing ID.
+        // It ensures that even if the Object is already in a local HashSet,
+        // that when the local HashSet gets freed, the same Object in a global HashSet won't get freed.
+        //
+        // We even create a copy of the entity when adding to local HashSets,
         // as it would be annoying if hash_set_clear() and hash_set_copy()
         // would need to check for every entity whether it is in Grug.globalEntities
         long newId = Grug.addEntity(Grug.getEntityType(id), object);
 
-        if (Grug.globalEntities.contains(dataStructureToId)) {
+        if (Grug.globalEntities.contains(hashSetId)) {
             Grug.globalEntities.add(newId);
         } else {
             Grug.fnEntities.add(newId);
@@ -344,8 +349,16 @@ public class Grug {
         return newId;
     }
 
+    public static void newHashMapKeyObjects(long hashMapId) {
+        allHashMapKeyObjects.put(hashMapId, new HashSet<>());
+    }
+
     public static void newHashSetObjects(long hashSetId) {
         allHashSetObjects.put(hashSetId, new HashSet<>());
+    }
+
+    public static HashSet<Object> getHashMapKeyObjects(long hashMapId) {
+        return allHashMapKeyObjects.get(hashMapId);
     }
 
     public static HashSet<Object> getHashSetObjects(long hashSetId) {
@@ -375,6 +388,12 @@ public class Grug {
     public Entity getEntity(long id) {
         assertEntityType(id, EntityType.Entity);
         return (Entity)entityData.get(id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<Long, Long> getHashMap(long id) {
+        assertEntityType(id, EntityType.HashMap);
+        return (HashMap<Long, Long>)entityData.get(id);
     }
 
     @SuppressWarnings("unchecked")

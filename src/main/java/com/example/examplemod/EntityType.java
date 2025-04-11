@@ -6,6 +6,7 @@ public enum EntityType {
     BlockPos,
     BlockState,
     Entity,
+    HashMap,
     HashSet,
     Item,
     ItemEntity,

@@ -201,6 +201,26 @@
 				}
 			]
 		},
+		"get_hash_map_size": {
+			"description": "Returns the number of ids in the hash_map.",
+			"return_type": "i32",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				}
+			]
+		},
+		"get_hash_map_string": {
+			"description": "Returns the string representation of the hash_map.",
+			"return_type": "string",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				}
+			]
+		},
 		"get_hash_set_size": {
 			"description": "Returns the number of ids in the hash_set.",
 			"return_type": "i32",
@@ -311,19 +331,89 @@
 				}
 			]
 		},
+		"hash_map": {
+			"description": "Creates a new hash_map, containing id keys and id values.",
+			"return_type": "id"
+		},
+		"hash_map_clear": {
+			"description": "Clears the hash_map.",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				}
+			]
+		},
+		"hash_map_copy": {
+			"description": "Copies the contents of one hash_map to another.",
+			"arguments": [
+				{
+					"name": "hash_map_from",
+					"type": "id"
+				},
+				{
+					"name": "hash_map_to",
+					"type": "id"
+				}
+			]
+		},
+		"hash_map_has_key": {
+			"description": "Returns whether the hash_map contains a specific key.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				},
+				{
+					"name": "key",
+					"type": "id"
+				}
+			]
+		},
+		"hash_map_put": {
+			"description": "Assigns a value to a key in the hash_map.",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				},
+				{
+					"name": "key",
+					"type": "id"
+				},
+				{
+					"name": "value",
+					"type": "id"
+				}
+			]
+		},
+		"hash_map_remove_key": {
+			"description": "Removes a key from the hash_map, if the id is in there.",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				},
+				{
+					"name": "key",
+					"type": "id"
+				}
+			]
+		},
 		"hash_set": {
 			"description": "Creates a new hash_set of ids.",
 			"return_type": "id"
 		},
 		"hash_set_add": {
-			"description": "Adds an id to a hash_set, if the id is not already in there.",
+			"description": "Adds an id to the hash_set, if the id is not already in there.",
 			"arguments": [
 				{
 					"name": "hash_set",
 					"type": "id"
 				},
 				{
-					"name": "id",
+					"name": "value",
 					"type": "id"
 				}
 			]
@@ -359,20 +449,20 @@
 					"type": "id"
 				},
 				{
-					"name": "id",
+					"name": "value",
 					"type": "id"
 				}
 			]
 		},
 		"hash_set_remove": {
-			"description": "Removes an id from a hash_set, if the id is in there.",
+			"description": "Removes an id from the hash_set, if the id is in there.",
 			"arguments": [
 				{
 					"name": "hash_set",
 					"type": "id"
 				},
 				{
-					"name": "id",
+					"name": "value",
 					"type": "id"
 				}
 			]
