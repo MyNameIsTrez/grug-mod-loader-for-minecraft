@@ -3,6 +3,7 @@ package com.example.examplemod;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
@@ -62,6 +63,19 @@ class GameFunctions {
 
     private static int block_flag_update_all() {
         return Block.UPDATE_ALL;
+    }
+
+    private static long box_i32(int i32) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        Integer boxedI32 = i32;
+
+        long boxId = Grug.addEntity(EntityType.BoxedI32, boxedI32);
+        Grug.fnEntities.add(boxId);
+
+        return boxId;
     }
 
     private static void destroy_block(long blockPosId, long levelId) {
@@ -273,16 +287,50 @@ class GameFunctions {
         return blockStateId;
     }
 
+    private static int get_hash_map_size(long hashMapId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        HashMap<Object, Object> hashMap;
+        try {
+            hashMap = ExampleMod.grug.getHashMap(hashMapId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("get_hash_map_size", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return 0;
+        }
+
+        return hashMap.size();
+    }
+
+    private static String get_hash_map_string(long hashMapId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return "";
+        }
+
+        HashMap<Object, Object> hashMap;
+        try {
+            hashMap = ExampleMod.grug.getHashMap(hashMapId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("get_hash_map_string", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return "";
+        }
+
+        return hashMap.toString();
+    }
+
     private static int get_hash_set_size(long hashSetId) {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
 
-        HashSet<Long> hashSet;
+        HashSet<Object> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_hash_set_size", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
@@ -295,11 +343,11 @@ class GameFunctions {
             return "";
         }
 
-        HashSet<Long> hashSet;
+        HashSet<Object> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("get_hash_set_string", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return "";
         }
@@ -453,87 +501,76 @@ class GameFunctions {
             return 0;
         }
 
-        HashMap<Long, Long> hashMap = new HashMap<>();
+        HashMap<Object, Object> hashMap = new HashMap<>();
 
         long hashMapId = Grug.addEntity(EntityType.HashMap, hashMap);
         Grug.fnEntities.add(hashMapId);
 
-        Grug.newHashMapKeyObjects(hashMapId);
-
         return hashMapId;
     }
 
-    // private static void hash_set_clear(long hashSetId) {
-    //     if (Grug.gameFunctionErrorHappened) {
-    //         return;
-    //     }
+    private static void hash_map_clear(long hashMapId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
 
-    //     HashSet<Long> hashSet;
-    //     try {
-    //         hashSet = ExampleMod.grug.getHashSet(hashSetId);
-    //     } catch (AssertEntityTypeException assertEntityTypeException) {
-    //         Grug.sendGameFunctionErrorToEveryone("hash_set_clear", assertEntityTypeException.getMessage());
-    //         Grug.gameFunctionErrorHappened = true;
-    //         return;
-    //     }
+        HashMap<Object, Object> hashMap;
+        try {
+            hashMap = ExampleMod.grug.getHashMap(hashMapId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_clear", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
 
-    //     Grug.removeEntities(hashSet);
-    //     hashSet.clear();
-    //     Grug.getHashSetObjects(hashSetId).clear();
-    // }
+        hashMap.clear();
+    }
 
-    // private static void hash_set_copy(long hashSetFromId, long hashSetToId) {
-    //     if (Grug.gameFunctionErrorHappened) {
-    //         return;
-    //     }
+    private static void hash_map_copy(long hashMapFromId, long hashMapToId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
 
-    //     HashSet<Long> hashSetFrom;
-    //     HashSet<Long> hashSetTo;
-    //     try {
-    //         hashSetFrom = ExampleMod.grug.getHashSet(hashSetFromId);
-    //         hashSetTo = ExampleMod.grug.getHashSet(hashSetToId);
-    //     } catch (AssertEntityTypeException assertEntityTypeException) {
-    //         Grug.sendGameFunctionErrorToEveryone("hash_set_copy", assertEntityTypeException.getMessage());
-    //         Grug.gameFunctionErrorHappened = true;
-    //         return;
-    //     }
+        HashMap<Object, Object> hashMapFrom;
+        HashMap<Object, Object> hashMapTo;
+        try {
+            hashMapFrom = ExampleMod.grug.getHashMap(hashMapFromId);
+            hashMapTo = ExampleMod.grug.getHashMap(hashMapToId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_copy", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
 
-    //     Grug.removeEntities(hashSetTo);
-    //     hashSetTo.clear();
+        hashMapTo.clear();
+        hashMapTo.putAll(hashMapFrom);
+    }
 
-    //     HashSet<Object> hashSetToObjects = Grug.getHashSetObjects(hashSetToId);
-    //     hashSetToObjects.clear();
+    private static boolean hash_map_has_key(long hashMapId, long key) {
+        if (Grug.gameFunctionErrorHappened) {
+            return false;
+        }
 
-    //     for (Long id : hashSetFrom) {
-    //         Object object = ExampleMod.grug.getObject(id);
-    //         hashSetTo.add(Grug.entityCopyForDataStructure(id, object, hashSetToId));
-    //         hashSetToObjects.add(object);
-    //     }
-    // }
+        HashMap<Object, Object> hashMap;
+        Object object;
+        try {
+            hashMap = ExampleMod.grug.getHashMap(hashMapId);
+            object = ExampleMod.grug.getObject(key);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_has_key", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return false;
+        }
 
-    // private static boolean hash_set_has(long hashSetId, long value) {
-    //     if (Grug.gameFunctionErrorHappened) {
-    //         return false;
-    //     }
-
-    //     Object object;
-    //     try {
-    //         object = ExampleMod.grug.getObject(value);
-    //     } catch (AssertEntityTypeException assertEntityTypeException) {
-    //         Grug.sendGameFunctionErrorToEveryone("hash_set_has", assertEntityTypeException.getMessage());
-    //         Grug.gameFunctionErrorHappened = true;
-    //         return false;
-    //     }
-
-    //     return Grug.getHashSetObjects(hashSetId).contains(object);
-    // }
+        return hashMap.containsKey(object);
+    }
 
     private static void hash_map_put(long hashMapId, long keyId, long valueId) {
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
 
-        HashMap<Long, Long> hashMap;
+        HashMap<Object, Object> hashMap;
         Object keyObject;
         Object valueObject;
         try {
@@ -546,87 +583,37 @@ class GameFunctions {
             return;
         }
 
-        HashMap<Object, Long> hashMapKeyObjectToKeyId = Grug.getHashMapKeyObjectToKeyId(hashMapId);
-
-        Long oldKeyId = hashMapKeyObjectToKeyId.get(keyObject);
-
-        if (oldKeyId != null) {
-            // TODO:
-            // 1. Make sure that the existing keyId still gets used, rather than the new one
-            //   a. Is there a way to keep hashMapKeyObjects as HashSet<Object>,
-            //      rather than turning it into HashMap<Object, long>? (which finds the existing keyId)
-            //
-            // 2. Make sure that calling hash_map_put() with the same key multiple times
-            //    always calls Grug.removeEntity() on the old value.
-            //
-            // 3. It is acceptable if the old key also gets Grug.removeEntity() called on it.
-            //
-            // 4. It seems that using an Object as the key of a HashMap or HashSet
-            //    might be a bad idea, as mutating it makes the lookup fail:
-            //    https://stackoverflow.com/q/26959545/13279557
-            //    https://stackoverflow.com/a/2265637/13279557
-            //   a. But on the other hand, maybe all grug entities should be treated as immutable,
-            //      meaning that something like diamond.setY(42) would return a new diamond object.
-            //
-            // 5. The reason that it's not possible to just store HashMap<Object, Object>,
-            //    is because if .get() would return a new grug entity ID every time it gets called,
-            //    then .get() would also need to add that ID to entityData every call.
-            //    This would be a memory leak, as the user *should* be allowed to call .get() as many times as they like.
-            ?
-        } else {
-            hashMapKeyObjects.add(keyObject);
-
-            // Grug.entityCopyForHashMap(keyId, keyObject, valueId, valueObject, hashMapId, hashMap);
-
-            // We even create a copy of the entity when adding to local hash maps,
-            // as it would be annoying if hash_map_clear() and hash_map_copy()
-            // would need to check for every entity whether it is in Grug.globalEntities
-            long newKeyId = Grug.addEntity(Grug.getEntityType(keyId), keyObject);
-            long newValueId = Grug.addEntity(Grug.getEntityType(valueId), valueObject);
-
-            if (Grug.globalEntities.contains(hashMapId)) {
-                Grug.globalEntities.add(newKeyId);
-                Grug.globalEntities.add(newValueId);
-            } else {
-                Grug.fnEntities.add(newKeyId);
-                Grug.fnEntities.add(newValueId);
-            }
-
-            hashMap.put(newKeyId, newValueId);
-        }
+        hashMap.put(keyObject, valueObject);
     }
 
-    // private static void hash_set_remove(long hashSetId, long value) {
-    //     if (Grug.gameFunctionErrorHappened) {
-    //         return;
-    //     }
+    private static void hash_map_remove_key(long hashMapId, long value) {
+        if (Grug.gameFunctionErrorHappened) {
+            return;
+        }
 
-    //     HashSet<Long> hashSet;
-    //     Object object;
-    //     try {
-    //         hashSet = ExampleMod.grug.getHashSet(hashSetId);
-    //         object = ExampleMod.grug.getObject(value);
-    //     } catch (AssertEntityTypeException assertEntityTypeException) {
-    //         Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
-    //         Grug.gameFunctionErrorHappened = true;
-    //         return;
-    //     }
+        HashMap<Object, Object> hashMap;
+        Object object;
+        try {
+            hashMap = ExampleMod.grug.getHashMap(hashMapId);
+            object = ExampleMod.grug.getObject(value);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
 
-    //     hashSet.remove(value);
-    //     Grug.getHashSetObjects(hashSetId).remove(object);
-    // }
+        hashMap.remove(object);
+    }
 
     private static long hash_set() {
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
 
-        HashSet<Long> hashSet = new HashSet<>();
+        HashSet<Object> hashSet = new HashSet<>();
 
         long hashSetId = Grug.addEntity(EntityType.HashSet, hashSet);
         Grug.fnEntities.add(hashSetId);
-
-        Grug.newHashSetObjects(hashSetId);
 
         return hashSetId;
     }
@@ -636,7 +623,7 @@ class GameFunctions {
             return;
         }
 
-        HashSet<Long> hashSet;
+        HashSet<Object> hashSet;
         Object object;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
@@ -647,13 +634,7 @@ class GameFunctions {
             return;
         }
 
-        HashSet<Object> hashSetObjects = Grug.getHashSetObjects(hashSetId);
-
-        if (!hashSetObjects.contains(object)) {
-            hashSetObjects.add(object);
-
-            hashSet.add(Grug.entityCopyForHashSet(value, object, hashSetId));
-        }
+        hashSet.add(object);
     }
 
     private static void hash_set_clear(long hashSetId) {
@@ -661,7 +642,7 @@ class GameFunctions {
             return;
         }
 
-        HashSet<Long> hashSet;
+        HashSet<Object> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
@@ -670,9 +651,7 @@ class GameFunctions {
             return;
         }
 
-        Grug.removeEntities(hashSet);
         hashSet.clear();
-        Grug.getHashSetObjects(hashSetId).clear();
     }
 
     private static void hash_set_copy(long hashSetFromId, long hashSetToId) {
@@ -680,8 +659,8 @@ class GameFunctions {
             return;
         }
 
-        HashSet<Long> hashSetFrom;
-        HashSet<Long> hashSetTo;
+        HashSet<Object> hashSetFrom;
+        HashSet<Object> hashSetTo;
         try {
             hashSetFrom = ExampleMod.grug.getHashSet(hashSetFromId);
             hashSetTo = ExampleMod.grug.getHashSet(hashSetToId);
@@ -691,17 +670,8 @@ class GameFunctions {
             return;
         }
 
-        Grug.removeEntities(hashSetTo);
         hashSetTo.clear();
-
-        HashSet<Object> hashSetToObjects = Grug.getHashSetObjects(hashSetToId);
-        hashSetToObjects.clear();
-
-        for (Long id : hashSetFrom) {
-            Object object = ExampleMod.grug.getObject(id);
-            hashSetTo.add(Grug.entityCopyForHashSet(id, object, hashSetToId));
-            hashSetToObjects.add(object);
-        }
+        hashSetTo.addAll(hashSetFrom);
     }
 
     private static boolean hash_set_has(long hashSetId, long value) {
@@ -709,8 +679,10 @@ class GameFunctions {
             return false;
         }
 
+        HashSet<Object> hashSet;
         Object object;
         try {
+            hashSet = ExampleMod.grug.getHashSet(hashSetId);
             object = ExampleMod.grug.getObject(value);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("hash_set_has", assertEntityTypeException.getMessage());
@@ -718,7 +690,7 @@ class GameFunctions {
             return false;
         }
 
-        return Grug.getHashSetObjects(hashSetId).contains(object);
+        return hashSet.contains(object);
     }
 
     private static void hash_set_remove(long hashSetId, long value) {
@@ -726,7 +698,7 @@ class GameFunctions {
             return;
         }
 
-        HashSet<Long> hashSet;
+        HashSet<Object> hashSet;
         Object object;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
@@ -737,8 +709,7 @@ class GameFunctions {
             return;
         }
 
-        hashSet.remove(value);
-        Grug.getHashSetObjects(hashSetId).remove(object);
+        hashSet.remove(object);
     }
 
     private static boolean is_air(long blockStateId) {
@@ -848,16 +819,16 @@ class GameFunctions {
             return false;
         }
 
-        Iterator<Long> iterator;
+        GrugIterator grugIterator;
         try {
-            iterator = ExampleMod.grug.getIterator(iteratorId);
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterating", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return false;
         }
 
-        return iterator.hasNext();
+        return grugIterator.iterator.hasNext();
     }
 
     private static long iteration(long iteratorId) {
@@ -865,16 +836,79 @@ class GameFunctions {
             return 0;
         }
 
-        Iterator<Long> iterator;
+        GrugIterator grugIterator;
         try {
-            iterator = ExampleMod.grug.getIterator(iteratorId);
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
+
+            if (grugIterator.containerType != EntityType.HashSet) {
+                throw new AssertEntityTypeException(grugIterator.containerType, EntityType.HashSet);
+            }
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iteration", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        return iterator.next();
+        Object object = grugIterator.iterator.next();
+
+        long containedId = Grug.addEntity(grugIterator.containedType, object);
+        Grug.fnEntities.add(containedId);
+
+        return containedId;
+    }
+
+    private static long iteration_key(long iteratorId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        GrugIterator grugIterator;
+        try {
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
+
+            if (grugIterator.containerType != EntityType.HashMap) {
+                throw new AssertEntityTypeException(grugIterator.containerType, EntityType.HashMap);
+            }
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("iteration_key", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return 0;
+        }
+
+        @SuppressWarnings("unchecked")
+        Object object = ((Entry<Object, Object>)grugIterator.iterator.next()).getKey();
+
+        long containedId = Grug.addEntity(grugIterator.containedType, object);
+        Grug.fnEntities.add(containedId);
+
+        return containedId;
+    }
+
+    private static long iteration_value(long iteratorId) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        GrugIterator grugIterator;
+        try {
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
+
+            if (grugIterator.containerType != EntityType.HashMap) {
+                throw new AssertEntityTypeException(grugIterator.containerType, EntityType.HashMap);
+            }
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("iteration_value", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return 0;
+        }
+
+        @SuppressWarnings("unchecked")
+        Object object = ((Entry<Object, Object>)grugIterator.iterator.next()).getValue();
+
+        long containedId = Grug.addEntity(grugIterator.containedType, object);
+        Grug.fnEntities.add(containedId);
+
+        return containedId;
     }
 
     private static long iterator(long iterable) {
@@ -882,27 +916,33 @@ class GameFunctions {
             return 0;
         }
 
-        Iterator<Long> iterator;
-        try {
-            EntityType entityType = Grug.getEntityType(iterable);
+        EntityType containerType = Grug.getEntityType(iterable);
+        Iterator<?> iterator;
 
-            if (!Grug.isEntityTypeInstanceOf(entityType, EntityType.HashSet)) {
-                Grug.sendGameFunctionErrorToEveryone("iterator", "Expected hash_set, but got " + StringUtils.getSnakeCase(entityType));
+        try {
+            if (Grug.isEntityTypeInstanceOf(containerType, EntityType.HashMap)) {
+                iterator = ExampleMod.grug.getHashMap(iterable).entrySet().iterator();
+            } else if (Grug.isEntityTypeInstanceOf(containerType, EntityType.HashSet)) {
+                iterator = ExampleMod.grug.getHashSet(iterable).iterator();
+            } else {
+                Grug.sendGameFunctionErrorToEveryone("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
                 Grug.gameFunctionErrorHappened = true;
                 return 0;
             }
-
-            iterator = ExampleMod.grug.getHashSet(iterable).iterator();
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterator", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        long iteratorId = Grug.addEntity(EntityType.Iterator, iterator);
-        Grug.fnEntities.add(iteratorId);
+        // TODO: I think I'll need to create GrugHashMap and GrugHashSet, solely so they can save the containedType
+        GrugIterator grugIterator = new GrugIterator(iterator, containerType, containedType);
 
-        return iteratorId;
+        long grugIteratorId = Grug.addEntity(EntityType.Iterator, grugIterator);
+
+        Grug.fnEntities.add(grugIteratorId);
+
+        return grugIteratorId;
     }
 
     private static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {
@@ -1060,6 +1100,14 @@ class GameFunctions {
         }
 
         levelInstance.addFreshEntity(entityInstance);
+    }
+
+    private static int unbox_i32(long box) {
+        if (Grug.gameFunctionErrorHappened) {
+            return 0;
+        }
+
+        return ExampleMod.grug.getBoxedI32(box);
     }
 
     private static long vec3_zero() {

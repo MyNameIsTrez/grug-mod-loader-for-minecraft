@@ -5,6 +5,7 @@ public enum EntityType {
     BlockEntity,
     BlockPos,
     BlockState,
+    BoxedI32,
     Entity,
     HashMap,
     HashSet,

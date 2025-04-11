@@ -102,13 +102,14 @@ helper_scan() {
 
     iter: id = iterator(current)
     while iterating(iter) {
-        result: id = iteration(iter)
-        pos: id = iteration_key(result)
-        age: id = iteration_value(result)
-
+        age: id = iteration_value(iter)
         if age > 2 {
             continue
-        } else if age == 0 {
+        }
+
+        pos: id = iteration_key(iter)
+
+        if age == 0 {
             helper_add_scanned(pos)
         }
         hash_map_put(scanned, pos, age + 1)
@@ -134,9 +135,8 @@ helper_update_next() {
 
     iter: id = iterator(scanned)
     while iterating(iter) {
-        result: id = iteration(iter)
-        age: id = iteration_value(result)
-        pos: id = iteration_key(result)
+        pos: id = iteration_key(iter)
+        age: id = iteration_value(iter)
 
         if age > 0 {
             hash_map_put(next, pos, age)
@@ -179,8 +179,7 @@ helper_has_neighbor(pos: id, x: i32, z: i32) bool {
 helper_remove_current_blocks() {
     iter: id = iterator(current)
     while iterating(iter) {
-        result: id = iteration(iter)
-        pos: id = iteration_key(result)
+        pos: id = iteration_key(iter)
         remove_block(pos, g_level)
     }
 }
@@ -188,9 +187,7 @@ helper_remove_current_blocks() {
 helper_place_next_blocks() {
     iter: id = iterator(next)
     while iterating(iter) {
-        result: id = iteration(iter)
-        age: id = iteration_value(result)
-        pos: id = iteration_key(result)
+        age: id = iteration_value(iter)
 
         block: id = white_concrete
         if (age == 1) {
@@ -198,6 +195,8 @@ helper_place_next_blocks() {
         } else if (age == 2) {
             block = red_concrete
         }
+
+        pos: id = iteration_key(iter)
         place_block(block, pos, flag, g_level)
     }
 }

@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -81,15 +82,7 @@ public class Grug {
     // and it gets assigned a new ArrayList<long> of on_ fn entities, before an on_ function is called.
     public static List<Long> fnEntities;
 
-    // This is deliberately not assigned a new List.
-    // This variable gets assigned an entity's list of child IDs before on_ functions are called.
-    // This allows on_ functions to add copies of entities to global data structures, like HashSets.
-    public static List<Long> globalEntities;
-
     public static boolean gameFunctionErrorHappened = false;
-
-    private static HashMap<Long, HashSet<Object>> allHashMapKeyObjects = new HashMap<>();
-    private static HashMap<Long, HashSet<Object>> allHashSetObjects = new HashMap<>();
 
     public Grug() {
         try {
@@ -216,7 +209,6 @@ public class Grug {
                 grugEntity.globals = new byte[file.globalsSize];
 
                 gameFunctionErrorHappened = false;
-                globalEntities = grugEntity.childEntities;
                 fnEntities = grugEntity.childEntities;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
@@ -226,15 +218,12 @@ public class Grug {
                     continue;
                 }
 
-                List<Long> oldGlobalEntities = Grug.globalEntities;
-                Grug.globalEntities = grugEntity.childEntities;
                 List<Long> oldFnEntities = Grug.fnEntities;
                 Grug.fnEntities = new ArrayList<Long>();
 
                 gameFunctionErrorHappened = false;
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
-                Grug.globalEntities = oldGlobalEntities;
                 Grug.removeEntities(Grug.fnEntities);
                 Grug.fnEntities = oldFnEntities;
             }
@@ -330,41 +319,6 @@ public class Grug {
         }
     }
 
-    public static long entityCopyForHashSet(long id, Object object, long hashSetId) {
-        // We give the Object a new ID, rather than reusing its existing ID.
-        // It ensures that even if the Object is already in a local HashSet,
-        // that when the local HashSet gets freed, the same Object in a global HashSet won't get freed.
-        //
-        // We even create a copy of the entity when adding to local HashSets,
-        // as it would be annoying if hash_set_clear() and hash_set_copy()
-        // would need to check for every entity whether it is in Grug.globalEntities
-        long newId = Grug.addEntity(Grug.getEntityType(id), object);
-
-        if (Grug.globalEntities.contains(hashSetId)) {
-            Grug.globalEntities.add(newId);
-        } else {
-            Grug.fnEntities.add(newId);
-        }
-
-        return newId;
-    }
-
-    public static void newHashMapKeyObjects(long hashMapId) {
-        allHashMapKeyObjects.put(hashMapId, new HashSet<>());
-    }
-
-    public static void newHashSetObjects(long hashSetId) {
-        allHashSetObjects.put(hashSetId, new HashSet<>());
-    }
-
-    public static HashSet<Object> getHashMapKeyObjects(long hashMapId) {
-        return allHashMapKeyObjects.get(hashMapId);
-    }
-
-    public static HashSet<Object> getHashSetObjects(long hashSetId) {
-        return allHashSetObjects.get(hashSetId);
-    }
-
     public Block getBlock(long id) {
         assertEntityType(id, EntityType.Block);
         return (Block)entityData.get(id);
@@ -385,21 +339,26 @@ public class Grug {
         return (BlockState)entityData.get(id);
     }
 
+    public Integer getBoxedI32(long id) {
+        assertEntityType(id, EntityType.BoxedI32);
+        return (Integer)entityData.get(id);
+    }
+
     public Entity getEntity(long id) {
         assertEntityType(id, EntityType.Entity);
         return (Entity)entityData.get(id);
     }
 
     @SuppressWarnings("unchecked")
-    public HashMap<Long, Long> getHashMap(long id) {
+    public HashMap<Object, Object> getHashMap(long id) {
         assertEntityType(id, EntityType.HashMap);
-        return (HashMap<Long, Long>)entityData.get(id);
+        return (HashMap<Object, Object>)entityData.get(id);
     }
 
     @SuppressWarnings("unchecked")
-    public HashSet<Long> getHashSet(long id) {
+    public HashSet<Object> getHashSet(long id) {
         assertEntityType(id, EntityType.HashSet);
-        return (HashSet<Long>)entityData.get(id);
+        return (HashSet<Object>)entityData.get(id);
     }
 
     public Item getItem(long id) {
@@ -417,10 +376,9 @@ public class Grug {
         return (ItemStack)entityData.get(id);
     }
 
-    @SuppressWarnings("unchecked")
-    public Iterator<Long> getIterator(long id) {
+    public GrugIterator getIterator(long id) {
         assertEntityType(id, EntityType.Iterator);
-        return (Iterator<Long>)entityData.get(id);
+        return (GrugIterator)entityData.get(id);
     }
 
     public Level getLevel(long id) {
