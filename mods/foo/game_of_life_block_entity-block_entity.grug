@@ -27,40 +27,44 @@ ticks: i32 = 0
 on_spawn() {
     helper_spawn_glider()
     # helper_spawn_r_pentomino()
+
+    # TODO: REMOVE!
+    helper_scan()
+    helper_update_next()
 }
 
-on_tick() {
-    if not running {
-        return
-    }
+# on_tick() {
+#     if not running {
+#         return
+#     }
 
-    # ticks = ticks + 1
-    # if ticks > 1000 {
-    #     return
-    # }
-    # if ticks % 20 != 0 {
-    #     return
-    # }
+#     # ticks = ticks + 1
+#     # if ticks > 1000 {
+#     #     return
+#     # }
+#     # if ticks % 20 != 0 {
+#     #     return
+#     # }
 
-    update: i32 = 0
-    while update < 1 {
-        helper_update()
-        update = update + 1
-    }
+#     update: i32 = 0
+#     while update < 1 {
+#         helper_update()
+#         update = update + 1
+#     }
 
-    # helper_cleanup()
-    # running = false
-}
+#     # helper_cleanup()
+#     # running = false
+# }
 
-on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, from_block_pos: id, is_moving: bool) {
-    running = not running
-    if running {
-        helper_remove_current_blocks()
-        hash_map_clear(current)
-        helper_spawn_glider()
-        # helper_spawn_r_pentomino()
-    }
-}
+# on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, from_block_pos: id, is_moving: bool) {
+#     running = not running
+#     if running {
+#         helper_remove_current_blocks()
+#         hash_map_clear(current)
+#         helper_spawn_glider()
+#         # helper_spawn_r_pentomino()
+#     }
+# }
 
 # Spawns the glider pattern of blocks:
 #  @
@@ -92,13 +96,13 @@ helper_place_offset_block(x: i32, z: i32) {
     hash_map_put(current, pos, box_i32(0))
 }
 
-helper_update() {
-    helper_scan()
-    helper_update_next()
-    helper_remove_current_blocks()
-    helper_place_next_blocks()
-    hash_map_copy(next, current)
-}
+# helper_update() {
+#     helper_scan()
+#     helper_update_next()
+#     # helper_remove_current_blocks()
+#     # helper_place_next_blocks()
+#     # hash_map_copy(next, current)
+# }
 
 helper_scan() {
     hash_map_clear(scanned)
@@ -181,35 +185,52 @@ helper_count_neighbors(pos: id) i32 {
 }
 
 helper_has_neighbor(pos: id, x: i32, z: i32) bool {
-    age: id = hash_map_get(current, helper_get_pos(pos, x, z))
-    return unbox_i32(age) == 0
-}
+    neighbor: id = helper_get_pos(pos, x, z)
 
-helper_remove_current_blocks() {
-    iter: id = iterator(current)
-    while iterating(iter) {
-        pos: id = iteration_key(iteration(iter))
-        remove_block(pos, g_level)
+    # TODO: REMOVE!
+    b: bool = hash_map_has_key(current, neighbor)
+    if not b {
+        return false
     }
+    print_bool(b)
+    age: id = hash_map_get(current, neighbor)
+    print_id(age)
+
+    # TODO: PUT THESE BACK!
+    # if not hash_map_has_key(current, neighbor) {
+    #     return false
+    # }
+    # age: id = hash_map_get(current, neighbor)
+    # return unbox_i32(age) == 0
+
+    return false
 }
 
-helper_place_next_blocks() {
-    iter: id = iterator(next)
-    while iterating(iter) {
-        iteration: id = iteration(iter)
-        age: i32 = unbox_i32(iteration_value(iteration))
+# helper_remove_current_blocks() {
+#     iter: id = iterator(current)
+#     while iterating(iter) {
+#         pos: id = iteration_key(iteration(iter))
+#         remove_block(pos, g_level)
+#     }
+# }
 
-        block: id = white_concrete
-        if (age == 1) {
-            block = orange_concrete
-        } else if (age == 2) {
-            block = red_concrete
-        }
+# helper_place_next_blocks() {
+#     iter: id = iterator(next)
+#     while iterating(iter) {
+#         iteration: id = iteration(iter)
+#         age: i32 = unbox_i32(iteration_value(iteration))
 
-        pos: id = iteration_key(iteration)
-        place_block(block, pos, flag, g_level)
-    }
-}
+#         block: id = white_concrete
+#         if (age == 1) {
+#             block = orange_concrete
+#         } else if (age == 2) {
+#             block = red_concrete
+#         }
+
+#         pos: id = iteration_key(iteration)
+#         place_block(block, pos, flag, g_level)
+#     }
+# }
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
     x = get_block_pos_x(pos) + x
