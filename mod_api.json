@@ -367,6 +367,20 @@
 				}
 			]
 		},
+		"hash_map_get": {
+			"description": "Returns the value that is associated with a key in the hash_map.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "hash_map",
+					"type": "id"
+				},
+				{
+					"name": "key",
+					"type": "id"
+				}
+			]
+		},
 		"hash_map_has_key": {
 			"description": "Returns whether the hash_map contains a specific key.",
 			"return_type": "bool",
@@ -554,7 +568,7 @@
 			]
 		},
 		"iteration": {
-			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos. Use iteration_key() and iteration_value() if you have an iterator over something that has keys.",
+			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos. If the iterator has keys, like a hash_set, pass the id this iteration() function returns to iteration_key() and iteration_value().",
 			"return_type": "id",
 			"arguments": [
 				{
@@ -564,7 +578,7 @@
 			]
 		},
 		"iteration_key": {
-			"description": "Gets the key of the current iteration object. So for a hash_map of block_pos, this returns the current loop's key. Use iteration() if you have an iterator over something that doesn't have keys.",
+			"description": "Gets the key of the current iteration object, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's key.",
 			"return_type": "id",
 			"arguments": [
 				{
@@ -574,7 +588,7 @@
 			]
 		},
 		"iteration_value": {
-			"description": "Gets the value of the current iteration object. So for a hash_map of block_pos, this returns the current loop's value. Use iteration() if you have an iterator over something that doesn't have keys.",
+			"description": "Gets the value of the current iteration object, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's value.",
 			"return_type": "id",
 			"arguments": [
 				{

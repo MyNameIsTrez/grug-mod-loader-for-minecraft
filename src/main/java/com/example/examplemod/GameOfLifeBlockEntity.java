@@ -1,7 +1,9 @@
 package com.example.examplemod;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -35,6 +37,7 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         grugEntity.globals = new byte[file.globalsSize];
 
         Grug.gameFunctionErrorHappened = false;
+        Grug.globalEntities = grugEntity.childEntities;
         Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
@@ -75,12 +78,15 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        List<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<Long>();
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new HashSet<Long>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
+        Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
@@ -90,12 +96,15 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        List<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<Long>();
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new HashSet<Long>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
+        Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
@@ -105,8 +114,10 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        List<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<Long>();
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new HashSet<Long>();
 
         long blockStateId = Grug.addEntity(EntityType.BlockState, blockState);
         Grug.fnEntities.add(blockStateId);
@@ -126,6 +137,7 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_neighbor_changed(grugEntity.onFns, grugEntity.globals, blockStateId, levelId, blockPosId, blockInId, fromBlockPosId, isMoving);
 
+        Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }

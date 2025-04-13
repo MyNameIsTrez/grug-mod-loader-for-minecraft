@@ -6,6 +6,9 @@ start_z: i32 = get_block_pos_z(start_pos)
 g_level: id = get_block_entity_level(me)
 
 white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
+orange_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
+red_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
+
 flag: i32 = block_flag_update_all()
 
 radius: i32 = 5
@@ -102,17 +105,19 @@ helper_scan() {
 
     iter: id = iterator(current)
     while iterating(iter) {
-        age: id = iteration_value(iter)
+        iteration: id = iteration(iter)
+
+        age: i32 = unbox_i32(iteration_value(iteration))
         if age > 2 {
             continue
         }
 
-        pos: id = iteration_key(iter)
+        pos: id = iteration_key(iteration)
 
         if age == 0 {
             helper_add_scanned(pos)
         }
-        hash_map_put(scanned, pos, age + 1)
+        hash_map_put(scanned, pos, box_i32(age + 1))
     }
 }
 
@@ -135,11 +140,15 @@ helper_update_next() {
 
     iter: id = iterator(scanned)
     while iterating(iter) {
-        pos: id = iteration_key(iter)
-        age: id = iteration_value(iter)
+        iteration: id = iteration(iter)
+
+        pos: id = iteration_key(iteration)
+
+        boxed_age: id = iteration_value(iteration)
+        age: i32 = unbox_i32(boxed_age)
 
         if age > 0 {
-            hash_map_put(next, pos, age)
+            hash_map_put(next, pos, boxed_age)
             continue
         }
 
@@ -179,7 +188,7 @@ helper_has_neighbor(pos: id, x: i32, z: i32) bool {
 helper_remove_current_blocks() {
     iter: id = iterator(current)
     while iterating(iter) {
-        pos: id = iteration_key(iter)
+        pos: id = iteration_key(iteration(iter))
         remove_block(pos, g_level)
     }
 }
@@ -187,7 +196,8 @@ helper_remove_current_blocks() {
 helper_place_next_blocks() {
     iter: id = iterator(next)
     while iterating(iter) {
-        age: id = iteration_value(iter)
+        iteration: id = iteration(iter)
+        age: i32 = unbox_i32(iteration_value(iteration))
 
         block: id = white_concrete
         if (age == 1) {
@@ -196,7 +206,7 @@ helper_place_next_blocks() {
             block = red_concrete
         }
 
-        pos: id = iteration_key(iter)
+        pos: id = iteration_key(iteration)
         place_block(block, pos, flag, g_level)
     }
 }

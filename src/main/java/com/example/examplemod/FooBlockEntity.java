@@ -1,7 +1,9 @@
 package com.example.examplemod;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,6 +35,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         grugEntity.globals = new byte[file.globalsSize];
 
         Grug.gameFunctionErrorHappened = false;
+        Grug.globalEntities = grugEntity.childEntities;
         Grug.fnEntities = grugEntity.childEntities;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
@@ -73,12 +76,15 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        List<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<Long>();
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new HashSet<Long>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
+        Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
@@ -88,12 +94,15 @@ public class FooBlockEntity extends GrugBlockEntity {
             return;
         }
 
-        List<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<Long>();
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
+        Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new HashSet<Long>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
+        Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
