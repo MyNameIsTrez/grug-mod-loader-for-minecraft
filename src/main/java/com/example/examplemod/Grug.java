@@ -90,7 +90,7 @@ public class Grug {
     public static boolean gameFunctionErrorHappened = false;
 
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
-    private static HashMap<Long, HashSet<Object>> allHashSetObjects = new HashMap<>();
+    private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
 
     public Grug() {
         try {
@@ -336,14 +336,14 @@ public class Grug {
     }
 
     public static void newHashSetObjects(long hashSetId) {
-        allHashSetObjects.put(hashSetId, new HashSet<>());
+        allHashSetObjects.put(hashSetId, new HashMap<>());
     }
 
     public static HashMap<Object, Long> getHashMapObjects(long hashMapId) {
         return allHashMapObjects.get(hashMapId);
     }
 
-    public static HashSet<Object> getHashSetObjects(long hashSetId) {
+    public static HashMap<Object, Long> getHashSetObjects(long hashSetId) {
         return allHashSetObjects.get(hashSetId);
     }
 

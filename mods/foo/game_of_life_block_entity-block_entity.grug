@@ -6,8 +6,8 @@ start_z: i32 = get_block_pos_z(start_pos)
 g_level: id = get_block_entity_level(me)
 
 white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
-orange_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
-red_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
+orange_concrete: id = get_default_block_state(block(resource_location("orange_concrete")))
+red_concrete: id = get_default_block_state(block(resource_location("red_concrete")))
 
 flag: i32 = block_flag_update_all()
 
@@ -31,6 +31,8 @@ on_spawn() {
     # TODO: REMOVE!
     helper_scan()
     helper_update_next()
+    helper_remove_current_blocks()
+    helper_place_next_blocks()
 }
 
 # on_tick() {
@@ -131,7 +133,10 @@ helper_add_scanned(pos: id) {
         z: i32 = -1
         while z <= 1 {
             if not (x == 0 and z == 0) {
-                hash_map_put(scanned, helper_get_pos(pos, x, z), box_i32(0))
+                neighbor: id = helper_get_pos(pos, x, z)
+                if not hash_map_has_key(scanned, neighbor) {
+                    hash_map_put(scanned, neighbor, box_i32(0))
+                }
             }
             z = z + 1
         }
@@ -151,15 +156,12 @@ helper_update_next() {
         boxed_age: id = iteration_value(iteration)
         age: i32 = unbox_i32(boxed_age)
 
-        if age > 0 {
-            hash_map_put(next, pos, boxed_age)
-            continue
-        }
-
         count: i32 = helper_count_neighbors(pos)
 
-        if count == 3 or (count == 2 and hash_map_has_key(current, pos)) {
+        if count == 3 or (count == 2 and age == 1) {
             hash_map_put(next, pos, box_i32(0))
+        } else if age > 0 {
+            hash_map_put(next, pos, boxed_age)
         }
     }
 }
@@ -187,50 +189,38 @@ helper_count_neighbors(pos: id) i32 {
 helper_has_neighbor(pos: id, x: i32, z: i32) bool {
     neighbor: id = helper_get_pos(pos, x, z)
 
-    # TODO: REMOVE!
-    b: bool = hash_map_has_key(current, neighbor)
-    if not b {
+    if not hash_map_has_key(current, neighbor) {
         return false
     }
-    print_bool(b)
     age: id = hash_map_get(current, neighbor)
-    print_id(age)
-
-    # TODO: PUT THESE BACK!
-    # if not hash_map_has_key(current, neighbor) {
-    #     return false
-    # }
-    # age: id = hash_map_get(current, neighbor)
-    # return unbox_i32(age) == 0
-
-    return false
+    return unbox_i32(age) == 0
 }
 
-# helper_remove_current_blocks() {
-#     iter: id = iterator(current)
-#     while iterating(iter) {
-#         pos: id = iteration_key(iteration(iter))
-#         remove_block(pos, g_level)
-#     }
-# }
+helper_remove_current_blocks() {
+    iter: id = iterator(current)
+    while iterating(iter) {
+        pos: id = iteration_key(iteration(iter))
+        remove_block(pos, g_level)
+    }
+}
 
-# helper_place_next_blocks() {
-#     iter: id = iterator(next)
-#     while iterating(iter) {
-#         iteration: id = iteration(iter)
-#         age: i32 = unbox_i32(iteration_value(iteration))
+helper_place_next_blocks() {
+    iter: id = iterator(next)
+    while iterating(iter) {
+        iteration: id = iteration(iter)
+        age: i32 = unbox_i32(iteration_value(iteration))
 
-#         block: id = white_concrete
-#         if (age == 1) {
-#             block = orange_concrete
-#         } else if (age == 2) {
-#             block = red_concrete
-#         }
+        block: id = white_concrete
+        if (age == 1) {
+            block = orange_concrete
+        } else if (age == 2) {
+            block = red_concrete
+        }
 
-#         pos: id = iteration_key(iteration)
-#         place_block(block, pos, flag, g_level)
-#     }
-# }
+        pos: id = iteration_key(iteration)
+        place_block(block, pos, flag, g_level)
+    }
+}
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
     x = get_block_pos_x(pos) + x
