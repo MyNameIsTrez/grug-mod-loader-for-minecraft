@@ -269,6 +269,7 @@ public class Grug {
 
     public static long addEntity(EntityType entityType, Object entityInstance) {
         ExampleMod.logger.debug("addEntity(entityType={}, entityInstance={})", entityType, entityInstance);
+        assert(entityInstance != null);
 
         int entityIndex = nextEntityIndices.get(entityType);
 
@@ -332,101 +333,141 @@ public class Grug {
     }
 
     public static HashMap<Object, Long> getHashMapObjects(long hashMapId) {
-        return allHashMapObjects.get(hashMapId);
+        HashMap<Object, Long> objects = allHashMapObjects.get(hashMapId);
+        assert objects != null;
+        return objects;
     }
 
     public static HashMap<Object, Long> getHashSetObjects(long hashSetId) {
-        return allHashSetObjects.get(hashSetId);
+        HashMap<Object, Long> objects = allHashSetObjects.get(hashSetId);
+        assert objects != null;
+        return objects;
     }
 
     public Block getBlock(long id) {
         assertEntityType(id, EntityType.Block);
-        return (Block)entityData.get(id);
+        Block block = (Block)entityData.get(id);
+        assert block != null;
+        return block;
     }
 
     public GrugBlockEntity getBlockEntity(long id) {
         assertEntityType(id, EntityType.BlockEntity);
-        return (GrugBlockEntity)entityData.get(id);
+        GrugBlockEntity blockEntity = (GrugBlockEntity)entityData.get(id);
+        assert blockEntity != null;
+        return blockEntity;
     }
 
     public BlockPos getBlockPos(long id) {
         assertEntityType(id, EntityType.BlockPos);
-        return (BlockPos)entityData.get(id);
+        BlockPos blockPos = (BlockPos)entityData.get(id);
+        assert blockPos != null;
+        return blockPos;
     }
 
     public BlockState getBlockState(long id) {
         assertEntityType(id, EntityType.BlockState);
-        return (BlockState)entityData.get(id);
+        BlockState blockState = (BlockState)entityData.get(id);
+        assert blockState != null;
+        return blockState;
     }
 
     public Integer getBoxedI32(long id) {
         assertEntityType(id, EntityType.BoxedI32);
-        return (Integer)entityData.get(id);
+        Integer boxedI32 = (Integer)entityData.get(id);
+        assert boxedI32 != null;
+        return boxedI32;
     }
 
     public Entity getEntity(long id) {
         assertEntityType(id, EntityType.Entity);
-        return (Entity)entityData.get(id);
+        Entity entity = (Entity)entityData.get(id);
+        assert entity != null;
+        return entity;
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<Long, Long> getHashMap(long id) {
         assertEntityType(id, EntityType.HashMap);
-        return (HashMap<Long, Long>)entityData.get(id);
+        HashMap<Long, Long> hashMap = (HashMap<Long, Long>)entityData.get(id);
+        assert hashMap != null;
+        return hashMap;
     }
 
     public Iterator<Entry<Long, Long>> getHashMapIterator(long id) {
         assertEntityType(id, EntityType.HashMapIterator);
-        return (Iterator<Entry<Long, Long>>)entityData.get(id);
+        Iterator<Entry<Long, Long>> hashMapIterator = (Iterator<Entry<Long, Long>>)entityData.get(id);
+        assert hashMapIterator != null;
+        return hashMapIterator;
     }
 
     @SuppressWarnings("unchecked")
     public HashSet<Long> getHashSet(long id) {
         assertEntityType(id, EntityType.HashSet);
-        return (HashSet<Long>)entityData.get(id);
+        HashSet<Long> hashSet = (HashSet<Long>)entityData.get(id);
+        assert hashSet != null;
+        return hashSet;
     }
 
     public Iterator<Long> getHashSetIterator(long id) {
         assertEntityType(id, EntityType.HashSetIterator);
-        return (Iterator<Long>)entityData.get(id);
+        Iterator<Long> hashSetIterator = (Iterator<Long>)entityData.get(id);
+        assert hashSetIterator != null;
+        return hashSetIterator;
     }
 
     public Item getItem(long id) {
         assertEntityType(id, EntityType.Item);
-        return (Item)entityData.get(id);
+        Item item = (Item)entityData.get(id);
+        assert item != null;
+        return item;
     }
 
     public ItemEntity getItemEntity(long id) {
         assertEntityType(id, EntityType.ItemEntity);
-        return (ItemEntity)entityData.get(id);
+        ItemEntity itemEntity = (ItemEntity)entityData.get(id);
+        assert itemEntity != null;
+        return itemEntity;
     }
 
     public ItemStack getItemStack(long id) {
         assertEntityType(id, EntityType.ItemStack);
-        return (ItemStack)entityData.get(id);
+        ItemStack itemStack = (ItemStack)entityData.get(id);
+        assert itemStack != null;
+        return itemStack;
     }
 
     public Entry<Long, Long> getIteration(long id) {
         assertEntityType(id, EntityType.Iteration);
-        return (Entry<Long, Long>)entityData.get(id);
+        Entry<Long, Long> iteration = (Entry<Long, Long>)entityData.get(id);
+        assert iteration != null;
+        return iteration;
     }
 
     public Level getLevel(long id) {
         assertEntityType(id, EntityType.Level);
-        return (Level)entityData.get(id);
+        Level level = (Level)entityData.get(id);
+        assert level != null;
+        return level;
     }
 
     public Object getObject(long id) {
-        return entityData.get(id);
+        Object object = entityData.get(id);
+        assert object != null;
+        return object;
     }
 
     public ResourceLocation getResourceLocation(long id) {
         assertEntityType(id, EntityType.ResourceLocation);
-        return (ResourceLocation)entityData.get(id);
+        ResourceLocation resourceLocation = (ResourceLocation)entityData.get(id);
+        assert resourceLocation != null;
+        return resourceLocation;
     }
 
     public Vec3 getVec3(long id) {
         assertEntityType(id, EntityType.Vec3);
-        return (Vec3)entityData.get(id);
+        Vec3 vec3 = (Vec3)entityData.get(id);
+        assert vec3 != null;
+        return vec3;
     }
 }
