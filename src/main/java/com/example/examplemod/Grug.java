@@ -289,25 +289,30 @@ public class Grug {
     }
 
     public static void removeEntities(Iterable<Long> entities) {
+        ExampleMod.logger.debug("removeEntities(entities={})", entities);
         for (long entity : entities) {
             removeEntity(entity);
         }
     }
 
     private static long getEntityID(EntityType entityType, int entityIndex) {
+        ExampleMod.logger.debug("getEntityID(entityType={}, entityIndex={})", entityType, entityIndex);
         return (long)entityType.ordinal() << 32 | entityIndex;
     }
 
     public static EntityType getEntityType(long id) {
+        ExampleMod.logger.debug("getEntityType(id={})", id);
         return EntityType.get((int)(id >> 32));
     }
 
     // private int getEntityIndex(long id) {
+    //     ExampleMod.logger.debug("getEntityIndex(id={})", id);
     //     return (int)(id & 0xffffffff);
     // }
 
     // TODO: I'm sure this can be done cleaner
     public static boolean isEntityTypeInstanceOf(EntityType derived, EntityType base) {
+        ExampleMod.logger.debug("isEntityTypeInstanceOf(derived={}, base={})", derived, base);
         if (derived == base) {
             return true;
         }
@@ -318,6 +323,7 @@ public class Grug {
     }
 
     private static void assertEntityType(long id, EntityType expectedEntityType) {
+        ExampleMod.logger.debug("assertEntityType(id={}, expectedEntityType={})", id, expectedEntityType);
         EntityType entityType = getEntityType(id);
         if (!isEntityTypeInstanceOf(entityType, expectedEntityType)) {
             throw new AssertEntityTypeException(entityType, expectedEntityType);
@@ -325,26 +331,31 @@ public class Grug {
     }
 
     public static void newHashMapObjects(long hashMapId) {
+        ExampleMod.logger.debug("newHashMapObjects(id={})", hashMapId);
         allHashMapObjects.put(hashMapId, new HashMap<>());
     }
 
     public static void newHashSetObjects(long hashSetId) {
+        ExampleMod.logger.debug("newHashSetObjects(id={})", hashSetId);
         allHashSetObjects.put(hashSetId, new HashMap<>());
     }
 
     public static HashMap<Object, Long> getHashMapObjects(long hashMapId) {
+        ExampleMod.logger.debug("getHashMapObjects(id={})", hashMapId);
         HashMap<Object, Long> objects = allHashMapObjects.get(hashMapId);
         assert objects != null;
         return objects;
     }
 
     public static HashMap<Object, Long> getHashSetObjects(long hashSetId) {
+        ExampleMod.logger.debug("getHashSetObjects(id={})", hashSetId);
         HashMap<Object, Long> objects = allHashSetObjects.get(hashSetId);
         assert objects != null;
         return objects;
     }
 
     public Block getBlock(long id) {
+        ExampleMod.logger.debug("getBlock(id={})", id);
         assertEntityType(id, EntityType.Block);
         Block block = (Block)entityData.get(id);
         assert block != null;
@@ -352,6 +363,7 @@ public class Grug {
     }
 
     public GrugBlockEntity getBlockEntity(long id) {
+        ExampleMod.logger.debug("getBlockEntity(id={})", id);
         assertEntityType(id, EntityType.BlockEntity);
         GrugBlockEntity blockEntity = (GrugBlockEntity)entityData.get(id);
         assert blockEntity != null;
@@ -359,6 +371,7 @@ public class Grug {
     }
 
     public BlockPos getBlockPos(long id) {
+        ExampleMod.logger.debug("getBlockPos(id={})", id);
         assertEntityType(id, EntityType.BlockPos);
         BlockPos blockPos = (BlockPos)entityData.get(id);
         assert blockPos != null;
@@ -366,6 +379,7 @@ public class Grug {
     }
 
     public BlockState getBlockState(long id) {
+        ExampleMod.logger.debug("getBlockState(id={})", id);
         assertEntityType(id, EntityType.BlockState);
         BlockState blockState = (BlockState)entityData.get(id);
         assert blockState != null;
@@ -373,6 +387,7 @@ public class Grug {
     }
 
     public Integer getBoxedI32(long id) {
+        ExampleMod.logger.debug("getBoxedI32(id={})", id);
         assertEntityType(id, EntityType.BoxedI32);
         Integer boxedI32 = (Integer)entityData.get(id);
         assert boxedI32 != null;
@@ -380,6 +395,7 @@ public class Grug {
     }
 
     public Entity getEntity(long id) {
+        ExampleMod.logger.debug("getEntity(id={})", id);
         assertEntityType(id, EntityType.Entity);
         Entity entity = (Entity)entityData.get(id);
         assert entity != null;
@@ -388,6 +404,7 @@ public class Grug {
 
     @SuppressWarnings("unchecked")
     public HashMap<Long, Long> getHashMap(long id) {
+        ExampleMod.logger.debug("getHashMap(id={})", id);
         assertEntityType(id, EntityType.HashMap);
         HashMap<Long, Long> hashMap = (HashMap<Long, Long>)entityData.get(id);
         assert hashMap != null;
@@ -395,6 +412,7 @@ public class Grug {
     }
 
     public Iterator<Entry<Long, Long>> getHashMapIterator(long id) {
+        ExampleMod.logger.debug("getHashMapIterator(id={})", id);
         assertEntityType(id, EntityType.HashMapIterator);
         Iterator<Entry<Long, Long>> hashMapIterator = (Iterator<Entry<Long, Long>>)entityData.get(id);
         assert hashMapIterator != null;
@@ -403,6 +421,7 @@ public class Grug {
 
     @SuppressWarnings("unchecked")
     public HashSet<Long> getHashSet(long id) {
+        ExampleMod.logger.debug("getHashSet(id={})", id);
         assertEntityType(id, EntityType.HashSet);
         HashSet<Long> hashSet = (HashSet<Long>)entityData.get(id);
         assert hashSet != null;
@@ -410,6 +429,7 @@ public class Grug {
     }
 
     public Iterator<Long> getHashSetIterator(long id) {
+        ExampleMod.logger.debug("getHashSetIterator(id={})", id);
         assertEntityType(id, EntityType.HashSetIterator);
         Iterator<Long> hashSetIterator = (Iterator<Long>)entityData.get(id);
         assert hashSetIterator != null;
@@ -417,6 +437,7 @@ public class Grug {
     }
 
     public Item getItem(long id) {
+        ExampleMod.logger.debug("getItem(id={})", id);
         assertEntityType(id, EntityType.Item);
         Item item = (Item)entityData.get(id);
         assert item != null;
@@ -424,6 +445,7 @@ public class Grug {
     }
 
     public ItemEntity getItemEntity(long id) {
+        ExampleMod.logger.debug("getItemEntity(id={})", id);
         assertEntityType(id, EntityType.ItemEntity);
         ItemEntity itemEntity = (ItemEntity)entityData.get(id);
         assert itemEntity != null;
@@ -431,6 +453,7 @@ public class Grug {
     }
 
     public ItemStack getItemStack(long id) {
+        ExampleMod.logger.debug("getItemStack(id={})", id);
         assertEntityType(id, EntityType.ItemStack);
         ItemStack itemStack = (ItemStack)entityData.get(id);
         assert itemStack != null;
@@ -438,6 +461,7 @@ public class Grug {
     }
 
     public Entry<Long, Long> getIteration(long id) {
+        ExampleMod.logger.debug("getIteration(id={})", id);
         assertEntityType(id, EntityType.Iteration);
         Entry<Long, Long> iteration = (Entry<Long, Long>)entityData.get(id);
         assert iteration != null;
@@ -445,6 +469,7 @@ public class Grug {
     }
 
     public Level getLevel(long id) {
+        ExampleMod.logger.debug("getLevel(id={})", id);
         assertEntityType(id, EntityType.Level);
         Level level = (Level)entityData.get(id);
         assert level != null;
@@ -452,12 +477,14 @@ public class Grug {
     }
 
     public Object getObject(long id) {
+        ExampleMod.logger.debug("getObject(id={})", id);
         Object object = entityData.get(id);
         assert object != null;
         return object;
     }
 
     public ResourceLocation getResourceLocation(long id) {
+        ExampleMod.logger.debug("getResourceLocation(id={})", id);
         assertEntityType(id, EntityType.ResourceLocation);
         ResourceLocation resourceLocation = (ResourceLocation)entityData.get(id);
         assert resourceLocation != null;
@@ -465,6 +492,7 @@ public class Grug {
     }
 
     public Vec3 getVec3(long id) {
+        ExampleMod.logger.debug("getVec3(id={})", id);
         assertEntityType(id, EntityType.Vec3);
         Vec3 vec3 = (Vec3)entityData.get(id);
         assert vec3 != null;
