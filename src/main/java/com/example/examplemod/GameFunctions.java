@@ -796,7 +796,7 @@ class GameFunctions {
         assert keyObject != null;
 
         HashMap<Object, Long> objects = Grug.getHashMapObjects(hashMapId);
-        
+
         Object valueObject = ExampleMod.grug.getObject(valueId);
         assert valueObject != null;
 
@@ -804,7 +804,7 @@ class GameFunctions {
             Long realKeyId = objects.get(keyObject);
             assert realKeyId != null;
 
-            // For simplicity and as an optimization, we only free the value, so not the existing key.
+            // As an optimization, we don't free the existing key.
             Long oldValueId = hashMap.get(realKeyId);
             if (Grug.globalEntities.contains(hashMapId)) {
                 Grug.globalEntities.remove(oldValueId);
@@ -819,7 +819,7 @@ class GameFunctions {
                 Grug.fnEntities.add(newValueId);
             }
 
-            hashMap.put(keyId, newValueId);
+            hashMap.put(realKeyId, newValueId);
         } else {
             long newKeyId = Grug.addEntity(Grug.getEntityType(keyId), keyObject);
             if (Grug.globalEntities.contains(hashMapId)) {
@@ -836,7 +836,6 @@ class GameFunctions {
             }
 
             hashMap.put(newKeyId, newValueId);
-
             objects.put(keyObject, newKeyId);
         }
     }
