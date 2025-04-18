@@ -243,7 +243,7 @@ public class Grug {
     }
 
     public static void sendMessageToEveryone(Component message) {
-        // System.err.println(message);
+        ExampleMod.logger.debug("sendMessageToEveryone(message={})", message);
 
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
