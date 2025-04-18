@@ -33,9 +33,7 @@ public class GameOfLifeBlock extends Block implements EntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof GameOfLifeBlockEntity)) {
-            throw new RuntimeException("neighborChanged of GameOfLifeBlock expected its blockEntity to be GameOfLifeBlockEntity");
-        }
+        assert blockEntity instanceof GameOfLifeBlockEntity;
         GameOfLifeBlockEntity gameOfLifeBlockEntity = (GameOfLifeBlockEntity)blockEntity;
         gameOfLifeBlockEntity.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
     }

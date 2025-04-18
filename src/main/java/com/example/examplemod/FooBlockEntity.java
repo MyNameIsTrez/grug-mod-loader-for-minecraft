@@ -55,10 +55,7 @@ public class FooBlockEntity extends GrugBlockEntity {
         // Swap-remove itself from Grug.entities
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
 
-        // assert grugEntities != null; // I haven't been able to figure out how to enable asserts
-        if (grugEntities == null) {
-            throw new RuntimeException("Swap-removing from Grug's entities failed");
-        }
+        assert grugEntities != null;
 
         GrugEntity lastEntity = grugEntities.removeLast();
 

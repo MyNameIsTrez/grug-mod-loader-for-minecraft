@@ -620,17 +620,13 @@ class GameFunctions {
         }
 
         Object keyObject = ExampleMod.grug.getObject(keyId);
-        if (keyObject == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_get", "Invalid key");
-            Grug.gameFunctionErrorHappened = true;
-            return 0;
-        }
+        assert keyObject != null;
         
         HashMap<Object, Long> objects = Grug.getHashMapObjects(hashMapId);
 
         Long realKeyId = objects.get(keyObject);
         if (realKeyId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_get", "Invalid key");
+            Grug.sendGameFunctionErrorToEveryone("hash_map_get", "hash_map does not contain key");
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
@@ -666,28 +662,16 @@ class GameFunctions {
         }
 
         Object keyObject = ExampleMod.grug.getObject(keyId);
-        if (keyObject == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_put", "Invalid key");
-            Grug.gameFunctionErrorHappened = true;
-            return;
-        }
+        assert keyObject != null;
 
         HashMap<Object, Long> objects = Grug.getHashMapObjects(hashMapId);
         
         Object valueObject = ExampleMod.grug.getObject(valueId);
-        if (valueObject == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_put", "Invalid value");
-            Grug.gameFunctionErrorHappened = true;
-            return;
-        }
+        assert valueObject != null;
 
         if (objects.containsKey(keyObject)) {
             Long realKeyId = objects.get(keyObject);
-            if (realKeyId == null) {
-                Grug.sendGameFunctionErrorToEveryone("hash_map_put", "Invalid key");
-                Grug.gameFunctionErrorHappened = true;
-                return;
-            }
+            assert realKeyId != null;
 
             // For simplicity and as an optimization, we only free the value, so not the existing key.
             Long oldValueId = hashMap.get(realKeyId);
@@ -741,17 +725,13 @@ class GameFunctions {
         }
 
         Object keyObject = ExampleMod.grug.getObject(keyId);
-        if (keyObject == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", "Invalid key");
-            Grug.gameFunctionErrorHappened = true;
-            return;
-        }
+        assert keyObject != null;
 
         HashMap<Object, Long> objects = Grug.getHashMapObjects(hashMapId);
 
         Long realKeyId = objects.get(keyObject);
         if (realKeyId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", "Invalid key");
+            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", "hash_map does not contain key");
             Grug.gameFunctionErrorHappened = true;
             return;
         }
@@ -918,17 +898,13 @@ class GameFunctions {
         }
 
         Object valueObject = ExampleMod.grug.getObject(valueId);
-        if (valueObject == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", "Invalid value");
-            Grug.gameFunctionErrorHappened = true;
-            return;
-        }
+        assert valueObject != null;
 
         HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
 
         Long realValueId = objects.get(valueObject);
         if (realValueId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", "Invalid value");
+            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", "hash_set does not contain value");
             Grug.gameFunctionErrorHappened = true;
             return;
         }
@@ -1052,7 +1028,7 @@ class GameFunctions {
             return false;
         }
 
-        Iterator iterator;
+        Iterator<?> iterator;
         try {
             iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
