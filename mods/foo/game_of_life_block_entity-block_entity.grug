@@ -31,19 +31,20 @@ on_spawn() {
     # TODO: REMOVE!
     helper_scan()
     helper_update_next()
-    helper_remove_current_blocks()
-    helper_place_next_blocks()
-    hash_map_copy(next, current)
     helper_scan()
-    helper_update_next()
-    helper_remove_current_blocks()
-    helper_place_next_blocks()
     hash_map_copy(next, current)
-    helper_scan()
-    helper_update_next()
-    helper_remove_current_blocks()
-    helper_place_next_blocks()
-    hash_map_copy(next, current)
+
+    # TODO: Check that this does not crash anymore
+    # helper_scan()
+    # helper_update_next()
+    # helper_remove_current_blocks()
+    # helper_place_next_blocks()
+    # hash_map_copy(next, current)
+    # helper_scan()
+    # helper_update_next()
+    # helper_remove_current_blocks()
+    # helper_place_next_blocks()
+    # hash_map_copy(next, current)
 }
 
 # on_tick() {
@@ -207,31 +208,31 @@ helper_has_neighbor(pos: id, x: i32, z: i32) bool {
     return unbox_i32(age) == 0
 }
 
-helper_remove_current_blocks() {
-    iter: id = iterator(current)
-    while iterating(iter) {
-        pos: id = iteration_key(iteration(iter))
-        remove_block(pos, g_level)
-    }
-}
+# helper_remove_current_blocks() {
+#     iter: id = iterator(current)
+#     while iterating(iter) {
+#         pos: id = iteration_key(iteration(iter))
+#         remove_block(pos, g_level)
+#     }
+# }
 
-helper_place_next_blocks() {
-    iter: id = iterator(next)
-    while iterating(iter) {
-        iteration: id = iteration(iter)
-        age: i32 = unbox_i32(iteration_value(iteration))
+# helper_place_next_blocks() {
+#     iter: id = iterator(next)
+#     while iterating(iter) {
+#         iteration: id = iteration(iter)
+#         age: i32 = unbox_i32(iteration_value(iteration))
 
-        block: id = white_concrete
-        if (age == 1) {
-            block = orange_concrete
-        } else if (age == 2) {
-            block = red_concrete
-        }
+#         block: id = white_concrete
+#         if (age == 1) {
+#             block = orange_concrete
+#         } else if (age == 2) {
+#             block = red_concrete
+#         }
 
-        pos: id = iteration_key(iteration)
-        place_block(block, pos, flag, g_level)
-    }
-}
+#         pos: id = iteration_key(iteration)
+#         place_block(block, pos, flag, g_level)
+#     }
+# }
 
 helper_get_pos(pos: id, x: i32, z: i32) id {
     x = get_block_pos_x(pos) + x
