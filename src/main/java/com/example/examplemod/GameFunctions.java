@@ -21,6 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 class GameFunctions {
     public static long block(long resourceLocation) {
+        ExampleMod.logger.debug("block(resourceLocation={})", resourceLocation);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -49,6 +50,7 @@ class GameFunctions {
     }
 
     public static long block_pos(int x, int y, int z) {
+        ExampleMod.logger.debug("block_pos(x={}, y={}, z={})", x, y, z);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -62,10 +64,12 @@ class GameFunctions {
     }
 
     public static int block_flag_update_all() {
+        ExampleMod.logger.debug("block_flag_update_all()");
         return Block.UPDATE_ALL;
     }
 
     public static long box_i32(int i32) {
+        ExampleMod.logger.debug("box_i32(i32={})", i32);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -79,6 +83,7 @@ class GameFunctions {
     }
 
     public static void destroy_block(long blockPosId, long levelId) {
+        ExampleMod.logger.debug("destroy_block(blockPosId={}, levelId={})", blockPosId, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -98,6 +103,7 @@ class GameFunctions {
     }
 
     public static void destroy_and_drop_block(long blockPosId, long levelId) {
+        ExampleMod.logger.debug("destroy_and_drop_block(blockPosId={}, levelId={})", blockPosId, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -117,6 +123,7 @@ class GameFunctions {
     }
 
     public static long get_block_entity_level(long blockEntityId) {
+        ExampleMod.logger.debug("get_block_entity_level(blockEntityId={})", blockEntityId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -137,6 +144,7 @@ class GameFunctions {
     }
 
     public static long get_block_pos_above(long blockPosId) {
+        ExampleMod.logger.debug("get_block_pos_above(blockPosId={})", blockPosId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -158,6 +166,7 @@ class GameFunctions {
     }
 
     public static long get_block_pos_above_n(long blockPosId, int n) {
+        ExampleMod.logger.debug("get_block_pos_above_n(blockPosId={}, n={})", blockPosId, n);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -179,6 +188,7 @@ class GameFunctions {
     }
 
     public static long get_block_pos_center(long blockPosId) {
+        ExampleMod.logger.debug("get_block_pos_center(blockPosId={})", blockPosId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -215,6 +225,7 @@ class GameFunctions {
     }
 
     public static int get_block_pos_y(long id) {
+        ExampleMod.logger.debug("get_block_pos_y(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -229,6 +240,7 @@ class GameFunctions {
     }
 
     public static int get_block_pos_z(long id) {
+        ExampleMod.logger.debug("get_block_pos_z(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -243,6 +255,7 @@ class GameFunctions {
     }
 
     public static long get_block_state(long blockPosId, long levelId) {
+        ExampleMod.logger.debug("get_block_state(blockPosId={}, levelId={})", blockPosId, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -267,6 +280,7 @@ class GameFunctions {
     }
 
     public static long get_default_block_state(long blockId) {
+        ExampleMod.logger.debug("get_default_block_state(blockId={})", blockId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -289,6 +303,7 @@ class GameFunctions {
     }
 
     public static int get_hash_map_size(long hashMapId) {
+        ExampleMod.logger.debug("get_hash_map_size(hashMapId={})", hashMapId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -306,6 +321,7 @@ class GameFunctions {
     }
 
     public static String get_hash_map_string(long hashMapId) {
+        ExampleMod.logger.debug("get_hash_map_string(hashMapId={})", hashMapId);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -323,6 +339,7 @@ class GameFunctions {
     }
 
     public static int get_hash_set_size(long hashSetId) {
+        ExampleMod.logger.debug("get_hash_set_size(hashSetId={})", hashSetId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -340,6 +357,7 @@ class GameFunctions {
     }
 
     public static String get_hash_set_string(long hashSetId) {
+        ExampleMod.logger.debug("get_hash_set_string(hashSetId={})", hashSetId);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -357,6 +375,7 @@ class GameFunctions {
     }
 
     public static String get_item_name(long id) {
+        ExampleMod.logger.debug("get_item_name(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -374,6 +393,7 @@ class GameFunctions {
     }
 
     public static String get_item_entity_name(long id) {
+        ExampleMod.logger.debug("get_item_entity_name(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -388,6 +408,7 @@ class GameFunctions {
     }
 
     public static String get_item_stack_name(long id) {
+        ExampleMod.logger.debug("get_item_stack_name(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -408,6 +429,7 @@ class GameFunctions {
     }
 
     public static String get_level_name(long id) {
+        ExampleMod.logger.debug("get_level_name(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -425,6 +447,7 @@ class GameFunctions {
     }
 
     public static String get_resource_location_string(long id) {
+        ExampleMod.logger.debug("get_resource_location_string(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return "";
         }
@@ -442,6 +465,7 @@ class GameFunctions {
     }
 
     public static float get_vec3_x(long id) {
+        ExampleMod.logger.debug("get_vec3_x(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -456,6 +480,7 @@ class GameFunctions {
     }
 
     public static float get_vec3_y(long id) {
+        ExampleMod.logger.debug("get_vec3_y(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -470,6 +495,7 @@ class GameFunctions {
     }
 
     public static float get_vec3_z(long id) {
+        ExampleMod.logger.debug("get_vec3_z(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -484,6 +510,7 @@ class GameFunctions {
     }
 
     public static long get_world_position_of_block_entity(long blockEntityId) {
+        ExampleMod.logger.debug("get_world_position_of_block_entity(blockEntityId={})", blockEntityId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -498,6 +525,7 @@ class GameFunctions {
     }
 
     public static long hash_map() {
+        ExampleMod.logger.debug("hash_map()");
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -513,6 +541,7 @@ class GameFunctions {
     }
 
     public static void hash_map_clear(long hashMapId) {
+        ExampleMod.logger.debug("hash_map_clear(hashMapId={})", hashMapId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -545,6 +574,7 @@ class GameFunctions {
     }
 
     public static void hash_map_copy(long hashMapFromId, long hashMapToId) {
+        ExampleMod.logger.debug("hash_map_copy(hashMapFromId={}, hashMapToId={})", hashMapFromId, hashMapToId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -607,6 +637,7 @@ class GameFunctions {
     }
 
     public static long hash_map_get(long hashMapId, long keyId) {
+        ExampleMod.logger.debug("hash_map_get(hashMapId={}, keyId={})", hashMapId, keyId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -638,17 +669,19 @@ class GameFunctions {
         return valueId;
     }
 
-    public static boolean hash_map_has_key(long hashMapId, long key) {
+    public static boolean hash_map_has_key(long hashMapId, long keyId) {
+        ExampleMod.logger.debug("hash_map_has_key(hashMapId={}, keyId={})", hashMapId, keyId);
         if (Grug.gameFunctionErrorHappened) {
             return false;
         }
 
-        Object object = ExampleMod.grug.getObject(key);
+        Object object = ExampleMod.grug.getObject(keyId);
 
         return Grug.getHashMapObjects(hashMapId).containsKey(object);
     }
 
     public static void hash_map_put(long hashMapId, long keyId, long valueId) {
+        ExampleMod.logger.debug("hash_map_put(hashMapId={}, keyId={}, valueId={})", hashMapId, keyId, valueId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -712,6 +745,7 @@ class GameFunctions {
     }
 
     public static void hash_map_remove_key(long hashMapId, long keyId) {
+        ExampleMod.logger.debug("hash_map_remove_key(hashMapId={}, keyId={})", hashMapId, keyId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -752,6 +786,7 @@ class GameFunctions {
     }
 
     public static long hash_set() {
+        ExampleMod.logger.debug("hash_set()");
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -767,6 +802,7 @@ class GameFunctions {
     }
 
     public static void hash_set_add(long hashSetId, long valueId) {
+        ExampleMod.logger.debug("hash_set_add(hashSetId={}, valueId={})", hashSetId, valueId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -799,6 +835,7 @@ class GameFunctions {
     }
 
     public static void hash_set_clear(long hashSetId) {
+        ExampleMod.logger.debug("hash_set_clear(hashSetId={})", hashSetId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -828,6 +865,7 @@ class GameFunctions {
     }
 
     public static void hash_set_copy(long hashSetFromId, long hashSetToId) {
+        ExampleMod.logger.debug("hash_set_copy(hashSetFromId={}, hashSetToId={})", hashSetFromId, hashSetToId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -874,17 +912,19 @@ class GameFunctions {
         }
     }
 
-    public static boolean hash_set_has(long hashSetId, long value) {
+    public static boolean hash_set_has(long hashSetId, long valueId) {
+        ExampleMod.logger.debug("hash_set_has(hashSetId={}, valueId={})", hashSetId, valueId);
         if (Grug.gameFunctionErrorHappened) {
             return false;
         }
 
-        Object object = ExampleMod.grug.getObject(value);
+        Object object = ExampleMod.grug.getObject(valueId);
 
         return Grug.getHashSetObjects(hashSetId).containsKey(object);
     }
 
     public static void hash_set_remove(long hashSetId, long valueId) {
+        ExampleMod.logger.debug("hash_set_remove(hashSetId={}, valueId={})", hashSetId, valueId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -923,6 +963,7 @@ class GameFunctions {
     }
 
     public static boolean is_air(long blockStateId) {
+        ExampleMod.logger.debug("is_air(blockStateId={})", blockStateId);
         if (Grug.gameFunctionErrorHappened) {
             return false;
         }
@@ -940,6 +981,7 @@ class GameFunctions {
     }
 
     public static boolean is_client_side(long levelId) {
+        ExampleMod.logger.debug("is_client_side(levelId={})", levelId);
         if (Grug.gameFunctionErrorHappened) {
             return false;
         }
@@ -957,6 +999,7 @@ class GameFunctions {
     }
 
     public static long item(long resourceLocation) {
+        ExampleMod.logger.debug("item(resourceLocation={})", resourceLocation);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -985,6 +1028,7 @@ class GameFunctions {
     }
 
     public static long item_entity(long level, float x, float y, float z, long itemStack) {
+        ExampleMod.logger.debug("item_entity(level={}, x={}, y={}, z={}, itemStack={})", level, x, y, z, itemStack);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1005,6 +1049,7 @@ class GameFunctions {
     }
 
     public static long item_stack(long item) {
+        ExampleMod.logger.debug("item_stack(item={})", item);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1025,6 +1070,7 @@ class GameFunctions {
     }
 
     public static boolean iterating(long iteratorId) {
+        ExampleMod.logger.debug("iterating(iteratorId={})", iteratorId);
         if (Grug.gameFunctionErrorHappened) {
             return false;
         }
@@ -1042,6 +1088,7 @@ class GameFunctions {
     }
 
     public static long iteration(long iteratorId) {
+        ExampleMod.logger.debug("iteration(iteratorId={})", iteratorId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1082,6 +1129,7 @@ class GameFunctions {
     }
 
     public static long iteration_key(long iterationId) {
+        ExampleMod.logger.debug("iteration_key(iterationId={})", iterationId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1099,6 +1147,7 @@ class GameFunctions {
     }
 
     public static long iteration_value(long iterationId) {
+        ExampleMod.logger.debug("iteration_value(iterationId={})", iterationId);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1116,6 +1165,7 @@ class GameFunctions {
     }
 
     public static long iterator(long iterable) {
+        ExampleMod.logger.debug("iterator(iterable={})", iterable);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1148,6 +1198,7 @@ class GameFunctions {
     }
 
     public static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {
+        ExampleMod.logger.debug("place_block(blockStateId={}, blockPosId={}, flags={}, levelId={})", blockStateId, blockPosId, flags, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1169,6 +1220,7 @@ class GameFunctions {
     }
 
     public static void print_bool(boolean b) {
+        ExampleMod.logger.debug("print_bool(b={})", b);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1177,6 +1229,7 @@ class GameFunctions {
     }
 
     public static void print_f32(float f) {
+        ExampleMod.logger.debug("print_f32(f={})", f);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1185,6 +1238,7 @@ class GameFunctions {
     }
 
     public static void print_i32(int n) {
+        ExampleMod.logger.debug("print_i32(n={})", n);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1193,6 +1247,7 @@ class GameFunctions {
     }
 
     public static void print_id(long id) {
+        ExampleMod.logger.debug("print_id(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1201,6 +1256,7 @@ class GameFunctions {
     }
 
     public static void print_string(String str) {
+        ExampleMod.logger.debug("print_string(str={})", str);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1209,6 +1265,7 @@ class GameFunctions {
     }
 
     public static void remove_block(long blockPosId, long levelId) {
+        ExampleMod.logger.debug("remove_block(blockPosId={}, levelId={})", blockPosId, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1228,6 +1285,7 @@ class GameFunctions {
     }
 
     public static void remove_moving_block(long blockPosId, long levelId) {
+        ExampleMod.logger.debug("remove_moving_block(blockPosId={}, levelId={})", blockPosId, levelId);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1247,6 +1305,7 @@ class GameFunctions {
     }
 
     public static long resource_location(String resourceLocationString) {
+        ExampleMod.logger.debug("resource_location(resourceLocationString={})", resourceLocationString);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1267,6 +1326,7 @@ class GameFunctions {
     }
 
     public static void set_entity_delta_movement(long entity, long vec3) {
+        ExampleMod.logger.debug("set_entity_delta_movement(entity={}, vec3={})", entity, vec3);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1286,6 +1346,7 @@ class GameFunctions {
     }
 
     public static void spawn_entity(long entity, long level) {
+        ExampleMod.logger.debug("spawn_entity(entity={}, level={})", entity, level);
         if (Grug.gameFunctionErrorHappened) {
             return;
         }
@@ -1305,6 +1366,7 @@ class GameFunctions {
     }
 
     public static int unbox_i32(long box) {
+        ExampleMod.logger.debug("unbox_i32(box={})", box);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
@@ -1313,6 +1375,7 @@ class GameFunctions {
     }
 
     public static long vec3_zero() {
+        ExampleMod.logger.debug("vec3_zero()");
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }
