@@ -268,9 +268,7 @@ public class Grug {
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {
-        // System.out.println("nextEntityIndices: " + nextEntityIndices);
-        // System.out.println("entityData: " + entityData);
-        // System.out.println("entityInstance: " + entityInstance);
+        ExampleMod.logger.debug("addEntity(entityType={}, entityInstance={})", entityType, entityInstance);
 
         int entityIndex = nextEntityIndices.get(entityType);
 
@@ -280,18 +278,12 @@ public class Grug {
 
         entityData.put(id, entityInstance);
 
-        // System.out.println("entityType: " + entityType);
-        // System.out.println("entityIndex: " + entityIndex);
-        // System.out.println("returned id: " + id);
-
+        ExampleMod.logger.debug("Returning {}", id);
         return id;
     }
 
     public static void removeEntity(long id) {
-        // System.out.println("id: " + id);
-        // System.out.println("getEntityType(id): " + getEntityType(id));
-        // System.out.println("getEntityIndex(id): " + getEntityIndex(id));
-
+        ExampleMod.logger.debug("removeEntity(id={})", id);
         entityData.remove(id);
     }
 
