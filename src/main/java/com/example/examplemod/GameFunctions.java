@@ -200,6 +200,7 @@ class GameFunctions {
     }
 
     public static int get_block_pos_x(long id) {
+        ExampleMod.logger.debug("get_block_pos_x(id={})", id);
         if (Grug.gameFunctionErrorHappened) {
             return 0;
         }

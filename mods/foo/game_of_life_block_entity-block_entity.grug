@@ -33,6 +33,17 @@ on_spawn() {
     helper_update_next()
     helper_remove_current_blocks()
     helper_place_next_blocks()
+    hash_map_copy(next, current)
+    helper_scan()
+    helper_update_next()
+    helper_remove_current_blocks()
+    helper_place_next_blocks()
+    hash_map_copy(next, current)
+    helper_scan()
+    helper_update_next()
+    helper_remove_current_blocks()
+    helper_place_next_blocks()
+    hash_map_copy(next, current)
 }
 
 # on_tick() {

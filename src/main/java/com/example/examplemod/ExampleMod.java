@@ -41,7 +41,7 @@ public class ExampleMod
     // Define mod id in a common place for everything to reference
     public static final String MODID = "examplemod";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger logger = LogUtils.getLogger();
 
     public static Grug grug;
 
@@ -75,7 +75,7 @@ public class ExampleMod
 
     public ExampleMod()
     {
-        LOGGER.info("HELLO FROM CONSTRUCTOR");
+        logger.info("HELLO FROM CONSTRUCTOR");
 
         // This line is deliberately put here, as opposed to the `public static Grug grug;` line,
         // since Forge doesn't display proper grug mod error messages otherwise during game startup
@@ -122,14 +122,14 @@ public class ExampleMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        LOGGER.info("HELLO FROM COMMON SETUP");
+        logger.info("HELLO FROM COMMON SETUP");
 
         if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+            logger.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
+        logger.info(Config.magicNumberIntroduction + Config.magicNumber);
 
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        Config.items.forEach((item) -> logger.info("ITEM >> {}", item.toString()));
     }
 
     // Add the example block item to the building blocks tab
@@ -147,7 +147,7 @@ public class ExampleMod
     public void onServerStarting(ServerStartingEvent event)
     {
         // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+        logger.info("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -158,7 +158,7 @@ public class ExampleMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
+            logger.info("HELLO FROM CLIENT SETUP");
         }
     }
 
