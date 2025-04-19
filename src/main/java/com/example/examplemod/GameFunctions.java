@@ -1254,63 +1254,63 @@ class GameFunctions {
             return 0;
         }
 
-        long iterationIdOrValue;
+        long entryOrValueId;
         if (iteratorType == EntityType.HashMapIterator) {
             // TODO: Add a test that asserts whether we do or don't allow saving
             //       an Entry<Long, Long> in a global. I'm not sure if Java by itself even allows it?
 
-            Entry<Long, Long> iteration = (Entry<Long, Long>)iterator.next();
+            Entry<Long, Long> entry = (Entry<Long, Long>)iterator.next();
 
-            iterationIdOrValue = Grug.addEntity(EntityType.Iteration, iteration);
-            Grug.fnEntities.add(iterationIdOrValue);
+            entryOrValueId = Grug.addEntity(EntityType.Entry, entry);
+            Grug.fnEntities.add(entryOrValueId);
         } else if (iteratorType == EntityType.HashSetIterator) {
-            iterationIdOrValue = (long)iterator.next();
+            entryOrValueId = (long)iterator.next();
         } else {
             throw new RuntimeException("iteration() failed to handle an iterator type, which means iteration() needs to be updated");
         }
 
-        ExampleMod.logger.debug("Returning {}", iterationIdOrValue);
-        return iterationIdOrValue;
+        ExampleMod.logger.debug("Returning {}", entryOrValueId);
+        return entryOrValueId;
     }
 
-    public static long entry_key(long iterationId) {
-        ExampleMod.logger.debug("entry_key(iterationId={})", iterationId);
+    public static long entry_key(long entryId) {
+        ExampleMod.logger.debug("entry_key(entryId={})", entryId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
             return 0;
         }
 
-        Entry<Long, Long> iteration;
+        Entry<Long, Long> entry;
         try {
-            iteration = ExampleMod.grug.getIteration(iterationId);
+            entry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("entry_key", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        Long key = iteration.getKey();
+        Long key = entry.getKey();
         ExampleMod.logger.debug("Returning {}", key);
         return key;
     }
 
-    public static long entry_value(long iterationId) {
-        ExampleMod.logger.debug("entry_value(iterationId={})", iterationId);
+    public static long entry_value(long entryId) {
+        ExampleMod.logger.debug("entry_value(entryId={})", entryId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
             return 0;
         }
 
-        Entry<Long, Long> iteration;
+        Entry<Long, Long> entry;
         try {
-            iteration = ExampleMod.grug.getIteration(iterationId);
+            entry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("entry_value", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        Long value = iteration.getValue();
+        Long value = entry.getValue();
         ExampleMod.logger.debug("Returning {}", value);
         return value;
     }

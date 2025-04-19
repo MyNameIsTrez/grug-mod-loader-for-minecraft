@@ -568,7 +568,7 @@
 			]
 		},
 		"iteration": {
-			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos. If the iterator has keys, like a hash_set, pass the id this iteration() function returns to entry_key() and entry_value().",
+			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos. If the iterator has keys, like a hash_set, pass the entry id this iteration() function returns to entry_key() and entry_value().",
 			"return_type": "id",
 			"arguments": [
 				{

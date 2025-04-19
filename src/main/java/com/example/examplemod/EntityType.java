@@ -7,6 +7,7 @@ public enum EntityType {
     BlockState,
     BoxedI32,
     Entity,
+    Entry,
     HashMap,
     HashMapIterator,
     HashSet,
@@ -14,7 +15,6 @@ public enum EntityType {
     Item,
     ItemEntity,
     ItemStack,
-    Iteration,
     Level,
     ResourceLocation,
     Vec3;

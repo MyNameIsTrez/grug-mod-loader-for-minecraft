@@ -465,9 +465,9 @@ public class Grug {
         return itemStack;
     }
 
-    public Entry<Long, Long> getIteration(long id) {
-        ExampleMod.logger.debug("getIteration(id={})", id);
-        assertEntityType(id, EntityType.Iteration);
+    public Entry<Long, Long> getEntry(long id) {
+        ExampleMod.logger.debug("getEntry(id={})", id);
+        assertEntityType(id, EntityType.Entry);
         Entry<Long, Long> iteration = (Entry<Long, Long>)entityData.get(id);
         assert iteration != null;
         return iteration;
