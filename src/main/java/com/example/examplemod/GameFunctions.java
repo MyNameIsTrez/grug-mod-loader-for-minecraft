@@ -1273,8 +1273,8 @@ class GameFunctions {
         return iterationIdOrValue;
     }
 
-    public static long iteration_key(long iterationId) {
-        ExampleMod.logger.debug("iteration_key(iterationId={})", iterationId);
+    public static long entry_key(long iterationId) {
+        ExampleMod.logger.debug("entry_key(iterationId={})", iterationId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
             return 0;
@@ -1284,7 +1284,7 @@ class GameFunctions {
         try {
             iteration = ExampleMod.grug.getIteration(iterationId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iteration_key", assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("entry_key", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
@@ -1294,8 +1294,8 @@ class GameFunctions {
         return key;
     }
 
-    public static long iteration_value(long iterationId) {
-        ExampleMod.logger.debug("iteration_value(iterationId={})", iterationId);
+    public static long entry_value(long iterationId) {
+        ExampleMod.logger.debug("entry_value(iterationId={})", iterationId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
             return 0;
@@ -1305,7 +1305,7 @@ class GameFunctions {
         try {
             iteration = ExampleMod.grug.getIteration(iterationId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iteration_value", assertEntityTypeException.getMessage());
+            Grug.sendGameFunctionErrorToEveryone("entry_value", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }

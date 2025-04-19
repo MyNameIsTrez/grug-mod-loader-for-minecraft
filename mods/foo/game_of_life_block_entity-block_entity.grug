@@ -235,9 +235,9 @@ helper_get_pos(pos: id, x: i32, z: i32) id {
 helper_age_previous() {
     iter: id = iterator(previous)
     while iterating(iter) {
-        iteration: id = iteration(iter)
-        pos: id = iteration_key(iteration)
-        age: i32 = unbox_i32(iteration_value(iteration))
+        entry: id = iteration(iter)
+        pos: id = entry_key(entry)
+        age: i32 = unbox_i32(entry_value(entry))
 
         if age + 1 <= max_age {
             hash_map_put(previous, pos, box_i32(age + 1))
@@ -259,9 +259,9 @@ helper_add_current_to_previous() {
 helper_place_previous_blocks() {
     iter: id = iterator(previous)
     while iterating(iter) {
-        iteration: id = iteration(iter)
-        pos: id = iteration_key(iteration)
-        age: i32 = unbox_i32(iteration_value(iteration))
+        entry: id = iteration(iter)
+        pos: id = entry_key(entry)
+        age: i32 = unbox_i32(entry_value(entry))
 
         place_block(helper_get_block(age), pos, flag, g_level)
     }
