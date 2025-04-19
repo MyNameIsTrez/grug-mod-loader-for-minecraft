@@ -227,17 +227,13 @@ public class Grug {
                     continue;
                 }
 
-                Set<Long> oldGlobalEntities = Grug.globalEntities;
                 Grug.globalEntities = grugEntity.childEntities;
-                Set<Long> oldFnEntities = Grug.fnEntities;
                 Grug.fnEntities = new HashSet<Long>();
 
                 gameFunctionErrorHappened = false;
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
-                Grug.globalEntities = oldGlobalEntities;
                 Grug.removeEntities(Grug.fnEntities);
-                Grug.fnEntities = oldFnEntities;
             }
         }
     }

@@ -36,10 +36,16 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
 
         grugEntity.globals = new byte[file.globalsSize];
 
-        Grug.gameFunctionErrorHappened = false;
+        Set<Long> oldGlobalEntities = Grug.globalEntities;
         Grug.globalEntities = grugEntity.childEntities;
+        Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = grugEntity.childEntities;
+
+        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
+
+        Grug.globalEntities = oldGlobalEntities;
+        Grug.fnEntities = oldFnEntities;
 
         grugEntity.onFns = file.onFns;
 

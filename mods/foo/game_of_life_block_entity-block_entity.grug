@@ -248,7 +248,7 @@ helper_age_previous() {
         # 1. Use a ConcurrentHashMap?
         # 2. Let GameFunctions.java throw if an iterator is already active?
         #  - The Java code would somehow need to associate `iter` with `previous` to detect `hash_map_put(previous` being UB.
-        #  - --> A new activeIterations map<iter ID, iterable ID> should be added, which hash_map_put() and co. then check.
+        #  - --> A new activeIterators map<iter ID, iterable ID> should be added, which hash_map_put() and co. then check.
         #  - Idk how to deal with globally stored iterators.
         # 3. Show ConcurrentModificationException to the player?
         #  - Bad idea, cause they only get thrown if .next() happens to be called after the UB.
