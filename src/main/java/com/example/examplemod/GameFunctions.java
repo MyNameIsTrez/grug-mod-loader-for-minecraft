@@ -783,6 +783,12 @@ class GameFunctions {
             return;
         }
 
+        if (Grug.fnIteratedIterables.contains(hashMapId)) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_put", "hash_map is being iterated over, so can't call this function on it");
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
+
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
@@ -844,6 +850,12 @@ class GameFunctions {
         ExampleMod.logger.debug("hash_map_remove_key(hashMapId={}, keyId={})", hashMapId, keyId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
+            return;
+        }
+
+        if (Grug.fnIteratedIterables.contains(hashMapId)) {
+            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", "hash_map is being iterated over, so can't call this function on it");
+            Grug.gameFunctionErrorHappened = true;
             return;
         }
 
@@ -1303,23 +1315,23 @@ class GameFunctions {
         return value;
     }
 
-    public static long iterator(long iterable) {
-        ExampleMod.logger.debug("iterator(iterable={})", iterable);
+    public static long iterator(long iterableId) {
+        ExampleMod.logger.debug("iterator(iterableId={})", iterableId);
         if (Grug.gameFunctionErrorHappened) {
             ExampleMod.logger.debug("gameFunctionErrorHappened");
             return 0;
         }
 
-        EntityType containerType = Grug.getEntityType(iterable);
+        EntityType containerType = Grug.getEntityType(iterableId);
         Iterator<?> iterator;
         long grugIteratorId;
 
         try {
             if (containerType == EntityType.HashMap) {
-                iterator = ExampleMod.grug.getHashMap(iterable).entrySet().iterator();
+                iterator = ExampleMod.grug.getHashMap(iterableId).entrySet().iterator();
                 grugIteratorId = Grug.addEntity(EntityType.HashMapIterator, iterator);
             } else if (containerType == EntityType.HashSet) {
-                iterator = ExampleMod.grug.getHashSet(iterable).iterator();
+                iterator = ExampleMod.grug.getHashSet(iterableId).iterator();
                 grugIteratorId = Grug.addEntity(EntityType.HashSetIterator, iterator);
             } else {
                 Grug.sendGameFunctionErrorToEveryone("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
@@ -1333,6 +1345,7 @@ class GameFunctions {
         }
 
         Grug.fnEntities.add(grugIteratorId);
+        Grug.fnIteratedIterables.add(iterableId);
 
         ExampleMod.logger.debug("Returning {}", grugIteratorId);
         return grugIteratorId;

@@ -239,19 +239,6 @@ helper_age_previous() {
         pos: id = iteration_key(iteration)
         age: i32 = unbox_i32(iteration_value(iteration))
 
-        # TODO:
-        # The below lines cause a ConcurrentModificationException.
-        # The problem is that although iter.remove() and iter.setValue() works, and I could add game fns for those,
-        # people shouldn't be able to crash the game by calling hash_map_put() like I am right now.
-        # Check https://stackoverflow.com/questions/1884889/iterating-over-and-removing-from-a-map
-        # Check https://stackoverflow.com/a/10993535/13279557
-        # 1. Use a ConcurrentHashMap?
-        # 2. Let GameFunctions.java throw if an iterator is already active?
-        #  - The Java code would somehow need to associate `iter` with `previous` to detect `hash_map_put(previous` being UB.
-        #  - --> A new activeIterators map<iter ID, iterable ID> should be added, which hash_map_put() and co. then check.
-        #  - Idk how to deal with globally stored iterators.
-        # 3. Show ConcurrentModificationException to the player?
-        #  - Bad idea, cause they only get thrown if .next() happens to be called after the UB.
         if age + 1 <= max_age {
             hash_map_put(previous, pos, box_i32(age + 1))
         } else {
