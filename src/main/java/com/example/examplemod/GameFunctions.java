@@ -1194,9 +1194,18 @@ class GameFunctions {
             return false;
         }
 
+        EntityType iteratorType = Grug.getEntityType(iteratorId);
         Iterator<?> iterator;
         try {
-            iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
+            if (iteratorType == EntityType.HashMapIterator) {
+                iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
+            } else if (iteratorType == EntityType.HashSetIterator) {
+                iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
+            } else {
+                Grug.sendGameFunctionErrorToEveryone("iterating", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
+                Grug.gameFunctionErrorHappened = true;
+                return false;
+            }
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterating", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
@@ -1220,7 +1229,7 @@ class GameFunctions {
         try {
             if (iteratorType == EntityType.HashMapIterator) {
                 iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
-            } else if (iteratorType == EntityType.HashMapIterator) {
+            } else if (iteratorType == EntityType.HashSetIterator) {
                 iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
             } else {
                 Grug.sendGameFunctionErrorToEveryone("iterator", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
