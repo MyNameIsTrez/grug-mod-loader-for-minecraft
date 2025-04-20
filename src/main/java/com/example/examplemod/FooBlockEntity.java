@@ -38,15 +38,12 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = grugEntity.childEntities;
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = grugEntity.childEntities;
-        Set<Long> oldFnIteratedIterables = Grug.fnIteratedIterables;
-        Grug.fnIteratedIterables = new HashSet<>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
         Grug.globalEntities = oldGlobalEntities;
         Grug.fnEntities = oldFnEntities;
-        Grug.fnIteratedIterables = oldFnIteratedIterables;
 
         grugEntity.onFns = file.onFns;
 
@@ -86,8 +83,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = grugEntity.childEntities;
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
-        Set<Long> oldFnIteratedIterables = Grug.fnIteratedIterables;
-        Grug.fnIteratedIterables = new HashSet<>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
@@ -95,7 +90,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
-        Grug.fnIteratedIterables = oldFnIteratedIterables;
     }
 
     public void tick() {
@@ -107,8 +101,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = grugEntity.childEntities;
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
-        Set<Long> oldFnIteratedIterables = Grug.fnIteratedIterables;
-        Grug.fnIteratedIterables = new HashSet<>();
 
         Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
@@ -116,6 +108,5 @@ public class FooBlockEntity extends GrugBlockEntity {
         Grug.globalEntities = oldGlobalEntities;
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
-        Grug.fnIteratedIterables = oldFnIteratedIterables;
     }
 }

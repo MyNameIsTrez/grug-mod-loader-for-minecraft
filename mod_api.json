@@ -113,6 +113,39 @@
 				}
 			]
 		},
+		"entry_key": {
+			"description": "Gets the key of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's key.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "iteration",
+					"type": "id"
+				}
+			]
+		},
+		"entry_set_value": {
+			"description": "Sets the value of an entry. This function can't be called after iterator_remove().",
+			"arguments": [
+				{
+					"name": "entry",
+					"type": "id"
+				},
+				{
+					"name": "value",
+					"type": "id"
+				}
+			]
+		},
+		"entry_value": {
+			"description": "Gets the value of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's value.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "iteration",
+					"type": "id"
+				}
+			]
+		},
 		"get_block_entity_level": {
 			"description": "Gets the level (dimension) a block entity is in.",
 			"return_type": "id",
@@ -577,32 +610,21 @@
 				}
 			]
 		},
-		"entry_key": {
-			"description": "Gets the key of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's key.",
-			"return_type": "id",
-			"arguments": [
-				{
-					"name": "iteration",
-					"type": "id"
-				}
-			]
-		},
-		"entry_value": {
-			"description": "Gets the value of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's value.",
-			"return_type": "id",
-			"arguments": [
-				{
-					"name": "iteration",
-					"type": "id"
-				}
-			]
-		},
 		"iterator": {
 			"description": "Creates a new iterator. Used to loop over something that is iterable, like an array_list, or a hash_set.",
 			"return_type": "id",
 			"arguments": [
 				{
 					"name": "iterable",
+					"type": "id"
+				}
+			]
+		},
+		"iterator_remove": {
+			"description": "Removes the element of this iteration from the iterable. This function can only be called once per iteration.",
+			"arguments": [
+				{
+					"name": "iterator",
 					"type": "id"
 				}
 			]

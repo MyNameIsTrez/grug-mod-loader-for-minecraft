@@ -83,13 +83,6 @@ public class Grug {
     public static Set<Long> fnEntities;
 
     // This is deliberately not initialized with a new HashSet.
-    // The values are iterable IDs.
-    // This is used to work around the fact that Java throws a ConcurrentModificationException,
-    // when for example hash_map_put() is called on the container being iterated over.
-    // This system is more flexible than using ConcurrentHashMap, though also probably slower.
-    public static Set<Long> fnIteratedIterables;
-
-    // This is deliberately not initialized with a new HashSet.
     // This variable gets assigned an entity's HashSet of child IDs before on_ functions are called.
     // This allows on_ functions to add copies of entities to global data structures, like HashSets.
     public static Set<Long> globalEntities;
@@ -226,7 +219,6 @@ public class Grug {
                 gameFunctionErrorHappened = false;
                 globalEntities = grugEntity.childEntities;
                 fnEntities = grugEntity.childEntities;
-                fnIteratedIterables = new HashSet<>();
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
                 grugEntity.onFns = file.onFns;
@@ -237,7 +229,6 @@ public class Grug {
 
                 globalEntities = grugEntity.childEntities;
                 fnEntities = new HashSet<>();
-                fnIteratedIterables = new HashSet<>();
 
                 gameFunctionErrorHappened = false;
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);

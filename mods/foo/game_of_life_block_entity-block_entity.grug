@@ -11,7 +11,7 @@ yellow_concrete: id = get_default_block_state(block(resource_location("yellow_co
 orange_concrete: id = get_default_block_state(block(resource_location("orange_concrete")))
 red_concrete: id = get_default_block_state(block(resource_location("red_concrete")))
 
-max_age: i32 = 1
+max_age: i32 = 4
 
 flag: i32 = block_flag_update_all()
 
@@ -25,7 +25,9 @@ current: id = hash_set()
 scanned: id = hash_set()
 next: id = hash_set()
 
-previous: id = hash_map()
+blocks: id = hash_map()
+# TODO: Get rid of blocks_copy
+blocks_copy: id = hash_map()
 
 running: bool = true
 ticks: i32 = 0
@@ -47,7 +49,7 @@ on_tick() {
     # if ticks > 20 {
     #     return
     # }
-    # if ticks % 20 != 0 {
+    # if ticks % 40 != 0 {
     #     return
     # }
 
@@ -63,7 +65,7 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
 
     if running {
         hash_set_clear(current)
-        hash_map_clear(previous)
+        hash_map_clear(blocks)
 
         helper_clear_area()
         helper_spawn_border()
@@ -126,6 +128,7 @@ helper_spawn_glider() {
     helper_place_offset_block(1, 1)
     helper_place_offset_block(0, 1)
     helper_place_offset_block(-1, 1)
+    helper_place_blocks()
 }
 
 # Spawns the R-pentonimo pattern of blocks:
@@ -138,20 +141,72 @@ helper_spawn_glider() {
 #     helper_place_offset_block(-1, 0)
 #     helper_place_offset_block(0, 0)
 #     helper_place_offset_block(0, 1)
+#     helper_place_blocks()
 # }
 
 helper_place_offset_block(x: i32, z: i32) {
     pos: id = block_pos(start_x + x, start_y, start_z + z)
     place_block(white_concrete, pos, flag, g_level)
     hash_set_add(current, pos)
+    hash_map_put(blocks, pos, box_i32(0))
+}
+
+# TODO: Use the simpler helper_place_blocks() below
+helper_place_blocks() {
+    hash_map_copy(blocks, blocks_copy)
+    iter: id = iterator(blocks_copy)
+    while iterating(iter) {
+        entry: id = iteration(iter)
+        pos: id = entry_key(entry)
+        age: i32 = unbox_i32(entry_value(entry))
+
+        if age + 1 <= max_age {
+            hash_map_put(blocks, pos, box_i32(age + 1))
+            place_block(helper_get_block(age), pos, flag, g_level)
+        } else {
+            hash_map_remove_key(blocks, pos)
+            remove_block(pos, g_level)
+        }
+    }
+}
+
+# helper_place_blocks() {
+#     iter: id = iterator(blocks)
+#     while iterating(iter) {
+#         entry: id = iteration(iter)
+#         pos: id = entry_key(entry)
+#         age: i32 = unbox_i32(entry_value(entry))
+
+#         if age + 1 <= max_age {
+#             entry_set_value(entry, box_i32(age + 1))
+#         } else {
+#             # TODO: REMOVE!
+#             iterator_remove(iter)
+
+#             iterator_remove(iter)
+#             remove_block(pos, g_level)
+
+#             # TODO: REMOVE!
+#             entry_set_value(entry, box_i32(age + 1))
+#         }
+#     }
+# }
+
+helper_get_block(age: i32) id {
+    if age == 0 {
+        return white_concrete
+    } else if age == 1 {
+        return yellow_concrete
+    } else if age == 2 {
+        return orange_concrete
+    }
+    return red_concrete
 }
 
 helper_update() {
     helper_scan()
     helper_update_next()
-    helper_age_previous()
-    helper_add_current_to_previous()
-    helper_place_previous_blocks()
+    helper_place_blocks()
     hash_set_copy(next, current)
 }
 
@@ -186,9 +241,9 @@ helper_update_next() {
 
         count: i32 = helper_count_neighbors(pos)
 
-        if count == 3 or (count == 2 and hash_map_has_key(previous, pos) and unbox_i32(hash_map_get(previous, pos)) == 1) {
+        if count == 3 or (count == 2 and hash_set_has(current, pos)) {
             hash_set_add(next, pos)
-            place_block(white_concrete, pos, flag, g_level)
+            hash_map_put(blocks, pos, box_i32(0))
         }
     }
 }
@@ -217,61 +272,17 @@ helper_get_pos(pos: id, x: i32, z: i32) id {
     x = get_block_pos_x(pos) + x
     z = get_block_pos_z(pos) + z
 
-    if (x < min_x) {
+    if x < min_x {
         x = max_x
-    } else if (x > max_x) {
+    } else if x > max_x {
         x = min_x
     }
 
-    if (z < min_z) {
+    if z < min_z {
         z = max_z
-    } else if (z > max_z) {
+    } else if z > max_z {
         z = min_z
     }
 
     return block_pos(x, start_y, z)
-}
-
-helper_age_previous() {
-    iter: id = iterator(previous)
-    while iterating(iter) {
-        entry: id = iteration(iter)
-        pos: id = entry_key(entry)
-        age: i32 = unbox_i32(entry_value(entry))
-
-        if age + 1 <= max_age {
-            hash_map_put(previous, pos, box_i32(age + 1))
-        } else {
-            hash_map_remove_key(previous, pos)
-            remove_block(pos, g_level)
-        }
-    }
-}
-
-helper_add_current_to_previous() {
-    iter: id = iterator(current)
-    while iterating(iter) {
-        pos: id = iteration(iter)
-        hash_map_put(previous, pos, box_i32(1))
-    }
-}
-
-helper_place_previous_blocks() {
-    iter: id = iterator(previous)
-    while iterating(iter) {
-        entry: id = iteration(iter)
-        pos: id = entry_key(entry)
-        age: i32 = unbox_i32(entry_value(entry))
-
-        place_block(helper_get_block(age), pos, flag, g_level)
-    }
-}
-
-helper_get_block(age: i32) id {
-    if (age == 1) {
-        return yellow_concrete
-    } else if (age == 2) {
-        return orange_concrete
-    }
-    return red_concrete
 }
