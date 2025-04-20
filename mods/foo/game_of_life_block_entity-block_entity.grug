@@ -5,13 +5,24 @@ start_z: i32 = get_block_pos_z(start_pos)
 
 g_level: id = get_block_entity_level(me)
 
-light_gray_concrete: id = get_default_block_state(block(resource_location("light_gray_concrete")))
 white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
-yellow_concrete: id = get_default_block_state(block(resource_location("yellow_concrete")))
-orange_concrete: id = get_default_block_state(block(resource_location("orange_concrete")))
+light_gray_concrete: id = get_default_block_state(block(resource_location("light_gray_concrete")))
+gray_concrete: id = get_default_block_state(block(resource_location("gray_concrete")))
+black_concrete: id = get_default_block_state(block(resource_location("black_concrete")))
+brown_concrete: id = get_default_block_state(block(resource_location("brown_concrete")))
 red_concrete: id = get_default_block_state(block(resource_location("red_concrete")))
+orange_concrete: id = get_default_block_state(block(resource_location("orange_concrete")))
+yellow_concrete: id = get_default_block_state(block(resource_location("yellow_concrete")))
+lime_concrete: id = get_default_block_state(block(resource_location("lime_concrete")))
+green_concrete: id = get_default_block_state(block(resource_location("green_concrete")))
+cyan_concrete: id = get_default_block_state(block(resource_location("cyan_concrete")))
+light_blue_concrete: id = get_default_block_state(block(resource_location("light_blue_concrete")))
+blue_concrete: id = get_default_block_state(block(resource_location("blue_concrete")))
+purple_concrete: id = get_default_block_state(block(resource_location("purple_concrete")))
+magenta_concrete: id = get_default_block_state(block(resource_location("magenta_concrete")))
+pink_concrete: id = get_default_block_state(block(resource_location("pink_concrete")))
 
-max_age: i32 = 4
+max_age: i32 = 11
 
 flag: i32 = block_flag_update_all()
 
@@ -95,11 +106,11 @@ helper_spawn_border() {
     while x <= max_x + 1 {
         # Top edge
         pos: id = block_pos(x, start_y, min_z - 1)
-        place_block(light_gray_concrete, pos, flag, g_level)
+        place_block(gray_concrete, pos, flag, g_level)
 
         # Bottom edge
         pos = block_pos(x, start_y, max_z + 1)
-        place_block(light_gray_concrete, pos, flag, g_level)
+        place_block(gray_concrete, pos, flag, g_level)
 
         x = x + 1
     }
@@ -108,11 +119,11 @@ helper_spawn_border() {
     while z <= max_z {
         # Left edge
         pos = block_pos(min_x - 1, start_y, z)
-        place_block(light_gray_concrete, pos, flag, g_level)
+        place_block(gray_concrete, pos, flag, g_level)
 
         # Right edge
         pos = block_pos(max_x + 1, start_y, z)
-        place_block(light_gray_concrete, pos, flag, g_level)
+        place_block(gray_concrete, pos, flag, g_level)
 
         z = z + 1
     }
@@ -160,7 +171,7 @@ helper_place_blocks() {
         pos: id = entry_key(entry)
         age: i32 = unbox_i32(entry_value(entry))
 
-        if age + 1 <= max_age {
+        if age <= max_age {
             hash_map_put(blocks, pos, box_i32(age + 1))
             place_block(helper_get_block(age), pos, flag, g_level)
         } else {
@@ -196,11 +207,27 @@ helper_get_block(age: i32) id {
     if age == 0 {
         return white_concrete
     } else if age == 1 {
-        return yellow_concrete
+        return red_concrete
     } else if age == 2 {
         return orange_concrete
+    } else if age == 3 {
+        return yellow_concrete
+    } else if age == 4 {
+        return lime_concrete
+    } else if age == 5 {
+        return green_concrete
+    } else if age == 6 {
+        return cyan_concrete
+    } else if age == 7 {
+        return light_blue_concrete
+    } else if age == 8 {
+        return blue_concrete
+    } else if age == 9 {
+        return purple_concrete
+    } else if age == 10 {
+        return magenta_concrete
     }
-    return red_concrete
+    return pink_concrete
 }
 
 helper_update() {
