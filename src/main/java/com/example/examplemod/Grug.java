@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -194,7 +195,15 @@ public class Grug {
 
         reloadModifiedEntities();
 
+        // TODO: Implement
         // reloadModifiedResources();
+
+        // TODO: None of these seem to log the mspf
+        // TODO: Display the mspf, where if it's colored green or red, depending on whether it's above 50 mspf
+        // System.out.println("fps: " + Minecraft.getInstance().getFps());
+        // System.out.println("frame time: " + Minecraft.getInstance().getFrameTime());
+        // System.out.println("frame time ns: " + Minecraft.getInstance().getFrameTimeNs());
+        // System.out.println("delta frame time: " + Minecraft.getInstance().getDeltaFrameTime());
     }
 
     public void reloadModifiedEntities() {
