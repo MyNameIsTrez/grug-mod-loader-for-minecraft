@@ -78,12 +78,12 @@ public class Grug {
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
-    // This is deliberately not initialized with a new HashSet.
+    // This is deliberately not initialized.
     // This variable gets assigned an entity's HashSet of child IDs before init_globals() is called,
-    // and it gets assigned a new HashSet<long> of on_ fn entities, before an on_ function is called.
+    // and it gets assigned a new HashSet<Long> of on_ fn entities, before an on_ function is called.
     public static Set<Long> fnEntities;
 
-    // This is deliberately not initialized with a new HashSet.
+    // This is deliberately not initialized.
     // This variable gets assigned an entity's HashSet of child IDs before on_ functions are called.
     // This allows on_ functions to add copies of entities to global data structures, like HashSets.
     public static Set<Long> globalEntities;
@@ -407,6 +407,14 @@ public class Grug {
         return entity;
     }
 
+    public GrugEntry getEntry(long id) {
+        ExampleMod.logger.debug("getEntry(id={})", id);
+        assertEntityType(id, EntityType.Entry);
+        GrugEntry iteration = (GrugEntry)entityData.get(id);
+        assert iteration != null;
+        return iteration;
+    }
+
     @SuppressWarnings("unchecked")
     public HashMap<Long, Long> getHashMap(long id) {
         ExampleMod.logger.debug("getHashMap(id={})", id);
@@ -416,14 +424,6 @@ public class Grug {
         return hashMap;
     }
 
-    public Iterator<Entry<Long, Long>> getHashMapIterator(long id) {
-        ExampleMod.logger.debug("getHashMapIterator(id={})", id);
-        assertEntityType(id, EntityType.HashMapIterator);
-        Iterator<Entry<Long, Long>> hashMapIterator = (Iterator<Entry<Long, Long>>)entityData.get(id);
-        assert hashMapIterator != null;
-        return hashMapIterator;
-    }
-
     @SuppressWarnings("unchecked")
     public HashSet<Long> getHashSet(long id) {
         ExampleMod.logger.debug("getHashSet(id={})", id);
@@ -431,14 +431,6 @@ public class Grug {
         HashSet<Long> hashSet = (HashSet<Long>)entityData.get(id);
         assert hashSet != null;
         return hashSet;
-    }
-
-    public Iterator<Long> getHashSetIterator(long id) {
-        ExampleMod.logger.debug("getHashSetIterator(id={})", id);
-        assertEntityType(id, EntityType.HashSetIterator);
-        Iterator<Long> hashSetIterator = (Iterator<Long>)entityData.get(id);
-        assert hashSetIterator != null;
-        return hashSetIterator;
     }
 
     public Item getItem(long id) {
@@ -465,12 +457,12 @@ public class Grug {
         return itemStack;
     }
 
-    public Entry<Long, Long> getEntry(long id) {
-        ExampleMod.logger.debug("getEntry(id={})", id);
-        assertEntityType(id, EntityType.Entry);
-        Entry<Long, Long> iteration = (Entry<Long, Long>)entityData.get(id);
-        assert iteration != null;
-        return iteration;
+    public GrugIterator getIterator(long id) {
+        ExampleMod.logger.debug("getIterator(id={})", id);
+        assertEntityType(id, EntityType.Iterator);
+        GrugIterator iterator = (GrugIterator)entityData.get(id);
+        assert iterator != null;
+        return iterator;
     }
 
     public Level getLevel(long id) {

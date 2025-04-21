@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import com.example.examplemod.GrugIterator.IterableType;
+
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -140,50 +142,52 @@ class GameFunctions {
             return 0;
         }
 
-        Entry<Long, Long> entry;
+        GrugEntry grugEntry;
         try {
-            entry = ExampleMod.grug.getEntry(entryId);
+            grugEntry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("entry_key", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        Long key = entry.getKey();
+        Long key = grugEntry.entry.getKey();
         ExampleMod.logger.debug("Returning {}", key);
         return key;
     }
 
     public static void entry_set_value(long entryId, long valueId) {
-        // ExampleMod.logger.debug("entry_set_value(entryId={}, valueId={})", entryId, valueId);
-        // if (Grug.gameFunctionErrorHappened) {
-        //     ExampleMod.logger.debug("gameFunctionErrorHappened");
-        //     return;
-        // }
+        ExampleMod.logger.debug("entry_set_value(entryId={}, valueId={})", entryId, valueId);
+        if (Grug.gameFunctionErrorHappened) {
+            ExampleMod.logger.debug("gameFunctionErrorHappened");
+            return;
+        }
 
-        // Entry<Long, Long> entry;
-        // try {
-        //     entry = ExampleMod.grug.getEntry(entryId);
-        // } catch (AssertEntityTypeException assertEntityTypeException) {
-        //     Grug.sendGameFunctionErrorToEveryone("entry_set_value", assertEntityTypeException.getMessage());
-        //     Grug.gameFunctionErrorHappened = true;
-        //     return;
-        // }
+        GrugEntry grugEntry;
+        try {
+            grugEntry = ExampleMod.grug.getEntry(entryId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("entry_set_value", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
 
-        // // TODO: Remove the old entity.
-        // // TODO: I think this would require a new fnEntryToIterable map, as we don't have hashMapId.
-        // entry.getValue();
-        // // Long oldValueId = hashMap.get(realKeyId);
-        // // if (Grug.globalEntities.contains(hashMapId)) {
-        // //     Grug.globalEntities.remove(oldValueId);
-        // // } else {
-        // //     Grug.fnEntities.remove(oldValueId);
-        // // }
+        // The below code removes the old entity value, replacing it with a new entity.
 
-        // // TODO: Insert a new entity.
-        // Object valueObject = ExampleMod.grug.getObject(valueId);
+        Object valueObject = ExampleMod.grug.getObject(valueId);
 
-        // entry.setValue(?);
+        long newValueId = Grug.addEntity(Grug.getEntityType(valueId), valueObject);
+
+        Long oldValueId = grugEntry.entry.setValue(newValueId);
+        assert oldValueId != null;
+
+        if (grugEntry.isHashMapGlobal) {
+            Grug.globalEntities.remove(oldValueId);
+            Grug.globalEntities.add(newValueId);
+        } else {
+            Grug.fnEntities.remove(oldValueId);
+            Grug.fnEntities.add(newValueId);
+        }
     }
 
     public static long entry_value(long entryId) {
@@ -193,16 +197,16 @@ class GameFunctions {
             return 0;
         }
 
-        Entry<Long, Long> entry;
+        GrugEntry grugEntry;
         try {
-            entry = ExampleMod.grug.getEntry(entryId);
+            grugEntry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("entry_value", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return 0;
         }
 
-        Long value = entry.getValue();
+        Long value = grugEntry.entry.getValue();
         ExampleMod.logger.debug("Returning {}", value);
         return value;
     }
@@ -1269,25 +1273,16 @@ class GameFunctions {
             return false;
         }
 
-        EntityType iteratorType = Grug.getEntityType(iteratorId);
-        Iterator<?> iterator;
+        GrugIterator grugIterator;
         try {
-            if (iteratorType == EntityType.HashMapIterator) {
-                iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
-            } else if (iteratorType == EntityType.HashSetIterator) {
-                iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
-            } else {
-                Grug.sendGameFunctionErrorToEveryone("iterating", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
-                Grug.gameFunctionErrorHappened = true;
-                return false;
-            }
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterating", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
             return false;
         }
 
-        boolean hasNext = iterator.hasNext();
+        boolean hasNext = grugIterator.iterator.hasNext();
         ExampleMod.logger.debug("Returning {}", hasNext);
         return hasNext;
     }
@@ -1299,18 +1294,9 @@ class GameFunctions {
             return 0;
         }
 
-        EntityType iteratorType = Grug.getEntityType(iteratorId);
-        Iterator<?> iterator;
+        GrugIterator grugIterator;
         try {
-            if (iteratorType == EntityType.HashMapIterator) {
-                iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
-            } else if (iteratorType == EntityType.HashSetIterator) {
-                iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
-            } else {
-                Grug.sendGameFunctionErrorToEveryone("iteration", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
-                Grug.gameFunctionErrorHappened = true;
-                return 0;
-            }
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iteration", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
@@ -1318,23 +1304,23 @@ class GameFunctions {
         }
 
         long entryOrValueId;
-        if (iteratorType == EntityType.HashMapIterator) {
-            // TODO: Add a test that asserts whether we do or don't allow saving
-            //       an Entry<Long, Long> in a global. I'm not sure if Java by itself even allows it?
+        if (grugIterator.iterableType == IterableType.HashMap) {
+            // TODO: Add a test that asserts whether we do or don't allow saving a GrugEntry in a global
+            // TODO: I'm not sure if Java by itself even allows it?
 
             Entry<Long, Long> entry;
             try {
-                entry = (Entry<Long, Long>)iterator.next();
+                entry = (Entry<Long, Long>)grugIterator.iterator.next();
             } catch (ConcurrentModificationException err) {
                 Grug.sendGameFunctionErrorToEveryone("iteration", "the iterable was modified during iteration");
                 Grug.gameFunctionErrorHappened = true;
                 return 0;
             }
 
-            entryOrValueId = Grug.addEntity(EntityType.Entry, entry);
+            entryOrValueId = Grug.addEntity(EntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
             Grug.fnEntities.add(entryOrValueId);
-        } else if (iteratorType == EntityType.HashSetIterator) {
-            entryOrValueId = (long)iterator.next();
+        } else if (grugIterator.iterableType == IterableType.HashSet) {
+            entryOrValueId = (long)grugIterator.iterator.next();
         } else {
             throw new RuntimeException("iteration() failed to handle an iterator type, which means iteration() needs to be updated");
         }
@@ -1352,15 +1338,14 @@ class GameFunctions {
 
         EntityType containerType = Grug.getEntityType(iterableId);
         Iterator<?> iterator;
-        long grugIteratorId;
-
+        IterableType iterableType;
         try {
             if (containerType == EntityType.HashMap) {
                 iterator = ExampleMod.grug.getHashMap(iterableId).entrySet().iterator();
-                grugIteratorId = Grug.addEntity(EntityType.HashMapIterator, iterator);
+                iterableType = IterableType.HashMap;
             } else if (containerType == EntityType.HashSet) {
                 iterator = ExampleMod.grug.getHashSet(iterableId).iterator();
-                grugIteratorId = Grug.addEntity(EntityType.HashSetIterator, iterator);
+                iterableType = IterableType.HashSet;
             } else {
                 Grug.sendGameFunctionErrorToEveryone("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
                 Grug.gameFunctionErrorHappened = true;
@@ -1372,6 +1357,8 @@ class GameFunctions {
             return 0;
         }
 
+        GrugIterator grugIterator = new GrugIterator(iterator, iterableType, Grug.globalEntities.contains(iterableId));
+        long grugIteratorId = Grug.addEntity(EntityType.Iterator, grugIterator);
         Grug.fnEntities.add(grugIteratorId);
 
         ExampleMod.logger.debug("Returning {}", grugIteratorId);
@@ -1385,18 +1372,9 @@ class GameFunctions {
             return;
         }
 
-        EntityType iteratorType = Grug.getEntityType(iteratorId);
-        Iterator<?> iterator;
+        GrugIterator grugIterator;
         try {
-            if (iteratorType == EntityType.HashMapIterator) {
-                iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
-            } else if (iteratorType == EntityType.HashSetIterator) {
-                iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
-            } else {
-                Grug.sendGameFunctionErrorToEveryone("iterator_remove", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
-                Grug.gameFunctionErrorHappened = true;
-                return;
-            }
+            grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.sendGameFunctionErrorToEveryone("iterator_remove", assertEntityTypeException.getMessage());
             Grug.gameFunctionErrorHappened = true;
@@ -1404,7 +1382,7 @@ class GameFunctions {
         }
 
         try {
-            iterator.remove();
+            grugIterator.iterator.remove();
         } catch (IllegalStateException err) {
             Grug.sendGameFunctionErrorToEveryone("iterator_remove", "iterator_remove() can only be called once, for each call to iteration()");
             Grug.gameFunctionErrorHappened = true;

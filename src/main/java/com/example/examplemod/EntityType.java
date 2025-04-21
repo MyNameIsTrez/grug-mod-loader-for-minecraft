@@ -9,12 +9,11 @@ public enum EntityType {
     Entity,
     Entry,
     HashMap,
-    HashMapIterator,
     HashSet,
-    HashSetIterator,
     Item,
     ItemEntity,
     ItemStack,
+    Iterator,
     Level,
     ResourceLocation,
     Vec3;

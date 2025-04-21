@@ -37,8 +37,6 @@ scanned: id = hash_set()
 next: id = hash_set()
 
 blocks: id = hash_map()
-# TODO: Get rid of blocks_copy
-blocks_copy: id = hash_map()
 
 running: bool = true
 ticks: i32 = 0
@@ -163,18 +161,14 @@ helper_place_offset_block(x: i32, z: i32) {
 }
 
 helper_place_blocks() {
-    hash_map_copy(blocks, blocks_copy)
-    iter: id = iterator(blocks_copy)
+    iter: id = iterator(blocks)
     while iterating(iter) {
         entry: id = iteration(iter)
         pos: id = entry_key(entry)
         age: i32 = unbox_i32(entry_value(entry))
 
         if age <= max_age {
-            # TODO: Use this, so the hash_map_copy() at the start of this fn can be removed
-            # entry_set_value(entry, box_i32(age + 1))
-
-            hash_map_put(blocks, pos, box_i32(age + 1))
+            entry_set_value(entry, box_i32(age + 1))
             place_block(helper_get_block(age), pos, flag, g_level)
         } else {
             iterator_remove(iter)
