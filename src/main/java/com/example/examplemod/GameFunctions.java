@@ -1379,32 +1379,37 @@ class GameFunctions {
     }
 
     public static void iterator_remove(long iteratorId) {
-        // TODO: Check that this function works as desired
-        // ExampleMod.logger.debug("iterator_remove(iteratorId={})", iteratorId);
-        // if (Grug.gameFunctionErrorHappened) {
-        //     ExampleMod.logger.debug("gameFunctionErrorHappened");
-        //     return;
-        // }
+        ExampleMod.logger.debug("iterator_remove(iteratorId={})", iteratorId);
+        if (Grug.gameFunctionErrorHappened) {
+            ExampleMod.logger.debug("gameFunctionErrorHappened");
+            return;
+        }
 
-        // EntityType iteratorType = Grug.getEntityType(iteratorId);
-        // Iterator<?> iterator;
-        // try {
-        //     if (iteratorType == EntityType.HashMapIterator) {
-        //         iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
-        //     } else if (iteratorType == EntityType.HashSetIterator) {
-        //         iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
-        //     } else {
-        //         Grug.sendGameFunctionErrorToEveryone("iterator_remove", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
-        //         Grug.gameFunctionErrorHappened = true;
-        //         return;
-        //     }
-        // } catch (AssertEntityTypeException assertEntityTypeException) {
-        //     Grug.sendGameFunctionErrorToEveryone("iterator_remove", assertEntityTypeException.getMessage());
-        //     Grug.gameFunctionErrorHappened = true;
-        //     return;
-        // }
+        EntityType iteratorType = Grug.getEntityType(iteratorId);
+        Iterator<?> iterator;
+        try {
+            if (iteratorType == EntityType.HashMapIterator) {
+                iterator = ExampleMod.grug.getHashMapIterator(iteratorId);
+            } else if (iteratorType == EntityType.HashSetIterator) {
+                iterator = ExampleMod.grug.getHashSetIterator(iteratorId);
+            } else {
+                Grug.sendGameFunctionErrorToEveryone("iterator_remove", "Expected an iterator, but got " + StringUtils.getSnakeCase(iteratorType));
+                Grug.gameFunctionErrorHappened = true;
+                return;
+            }
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.sendGameFunctionErrorToEveryone("iterator_remove", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
 
-        // iterator.remove();
+        try {
+            iterator.remove();
+        } catch (IllegalStateException err) {
+            Grug.sendGameFunctionErrorToEveryone("iterator_remove", "iterator_remove() can only be called once, for each call to iteration()");
+            Grug.gameFunctionErrorHappened = true;
+            return;
+        }
     }
 
     public static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {

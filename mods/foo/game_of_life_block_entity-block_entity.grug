@@ -26,7 +26,7 @@ max_age: i32 = 11
 
 flag: i32 = block_flag_update_all()
 
-radius: i32 = 20
+radius: i32 = 15
 min_x: i32 = start_x - radius
 max_x: i32 = start_x + radius
 min_z: i32 = start_z - radius
@@ -162,7 +162,6 @@ helper_place_offset_block(x: i32, z: i32) {
     hash_map_put(blocks, pos, box_i32(0))
 }
 
-# TODO: Use the simpler helper_place_blocks() below
 helper_place_blocks() {
     hash_map_copy(blocks, blocks_copy)
     iter: id = iterator(blocks_copy)
@@ -172,36 +171,20 @@ helper_place_blocks() {
         age: i32 = unbox_i32(entry_value(entry))
 
         if age <= max_age {
+            # TODO: Use this, so the hash_map_copy() at the start of this fn can be removed
+            # entry_set_value(entry, box_i32(age + 1))
+
             hash_map_put(blocks, pos, box_i32(age + 1))
             place_block(helper_get_block(age), pos, flag, g_level)
         } else {
-            hash_map_remove_key(blocks, pos)
+            iterator_remove(iter)
             remove_block(pos, g_level)
+
+            # TODO: Check that this throws
+            # entry_set_value(entry, box_i32(age + 1))
         }
     }
 }
-
-# helper_place_blocks() {
-#     iter: id = iterator(blocks)
-#     while iterating(iter) {
-#         entry: id = iteration(iter)
-#         pos: id = entry_key(entry)
-#         age: i32 = unbox_i32(entry_value(entry))
-
-#         if age + 1 <= max_age {
-#             entry_set_value(entry, box_i32(age + 1))
-#         } else {
-#             # TODO: REMOVE!
-#             iterator_remove(iter)
-
-#             iterator_remove(iter)
-#             remove_block(pos, g_level)
-
-#             # TODO: REMOVE!
-#             entry_set_value(entry, box_i32(age + 1))
-#         }
-#     }
-# }
 
 helper_get_block(age: i32) id {
     if age == 0 {
