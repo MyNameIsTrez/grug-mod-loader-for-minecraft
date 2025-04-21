@@ -173,9 +173,6 @@ helper_place_blocks() {
         } else {
             iterator_remove(iter)
             remove_block(pos, g_level)
-
-            # TODO: Check that this throws
-            # entry_set_value(entry, box_i32(age + 1))
         }
     }
 }
