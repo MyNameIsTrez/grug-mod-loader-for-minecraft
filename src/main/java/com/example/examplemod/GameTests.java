@@ -6,7 +6,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(ExampleMod.MODID)
 public class GameTests {
-    @GameTest
+    @GameTest(template = "examplemod:foo")
     public static void foo(GameTestHelper helper) {
         helper.succeed();
     }
