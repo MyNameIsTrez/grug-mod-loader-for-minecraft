@@ -60,11 +60,6 @@ public class Grug {
 
     public native void getEntityFile(String entity, GrugFile file);
 
-    // TODO: This does not recycle indices of despawned entities,
-    // TODO: which means this will eventually wrap around back to 0
-    private static Map<EntityType, Integer> nextEntityIndices = new HashMap<>();
-    private static Map<Long, Object> entityData = new HashMap<>();
-
     public native boolean block_entity_has_on_spawn(long onFns);
     public native void block_entity_on_spawn(long onFns, byte[] globals);
 
@@ -75,6 +70,11 @@ public class Grug {
     public native void block_entity_on_neighbor_changed(long onFns, byte[] globals, long state, long level, long pos, long blockIn, long fromPos, boolean isMoving);
 
     private ReloadData reloadData = new ReloadData();
+
+    // TODO: This does not recycle indices of despawned entities,
+    // TODO: which means this will eventually wrap around back to 0
+    private static Map<EntityType, Integer> nextEntityIndices = new HashMap<>();
+    private static Map<Long, Object> entityData = new HashMap<>();
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
@@ -127,6 +127,25 @@ public class Grug {
         for (EntityType entityType : EntityType.values()) {
             nextEntityIndices.put(entityType, 0);
         }
+    }
+
+    // This function was written for the tests in GameTests.java.
+    // The reason that GameTests.java doesn't just recreate the Grug class for every test,
+    // where all of the static variables in the Grug class could be made non-static,
+    // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
+    public static void resetVariables() {
+        nextEntityIndices.clear();
+        entityData.clear();
+        grugEntitiesMap.clear();
+        if (fnEntities != null) {
+            fnEntities.clear();
+        }
+        if (globalEntities != null) {
+            globalEntities.clear();
+        }
+        gameFunctionErrorHappened = false;
+        allHashMapObjects.clear();
+        allHashSetObjects.clear();
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {

@@ -8,6 +8,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 public class GameTests {
     @GameTest(template = ExampleMod.MODID+":foo")
     public static void foo(GameTestHelper helper) {
+        Grug.resetVariables();
         helper.succeed();
     }
 }
