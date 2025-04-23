@@ -18,3 +18,7 @@ Make sure to be on Linux, and to use VS Code.
 See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
 
 If you get `Exception in thread "main" java.lang.reflect.InvocationTargetException`, with `Caused by: com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}` when using `F5` to launch the game, you'll need to use `./gradlew runClient` instead. (Make sure to use `cd ..` if you are in the `run` directory.)
+
+## Running the tests
+
+Run `./gradlew runGameTestServer`.
