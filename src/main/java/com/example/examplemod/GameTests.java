@@ -8,7 +8,6 @@ import net.minecraftforge.gametest.GameTestHolder;
 public class GameTests {
     @GameTest
     public static void foo(GameTestHelper helper) {
-        // helper.setStructure("examplemod:foo");
-        helper.assertTrue(true, "hmm ok");
+        helper.assertTrue(true, "this should never fail");
     }
 }
