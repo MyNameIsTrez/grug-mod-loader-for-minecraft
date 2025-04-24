@@ -25,25 +25,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 class GameFunctions {
     public static long block(long resourceLocation) {
         ExampleMod.logger.debug("block(resourceLocation={})", resourceLocation);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Block block;
         try {
             ResourceLocation resourceLocationInstance = ExampleMod.grug.getResourceLocation(resourceLocation);
 
             if (!ForgeRegistries.BLOCKS.containsKey(resourceLocationInstance)) {
-                Grug.sendGameFunctionErrorToEveryone("block", "invalid resource_location argument");
-                Grug.gameFunctionErrorHappened = true;
+                Grug.gameFunctionErrorHappened("block", "invalid resource_location argument");
                 return 0;
             }
 
             block = ForgeRegistries.BLOCKS.getValue(resourceLocationInstance);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("block", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -56,10 +50,6 @@ class GameFunctions {
 
     public static long block_pos(int x, int y, int z) {
         ExampleMod.logger.debug("block_pos(x={}, y={}, z={})", x, y, z);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         BlockPos blockPos = new BlockPos(x, y, z);
 
@@ -79,10 +69,6 @@ class GameFunctions {
 
     public static long box_i32(int i32) {
         ExampleMod.logger.debug("box_i32(i32={})", i32);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Integer boxedI32 = i32;
 
@@ -95,10 +81,6 @@ class GameFunctions {
 
     public static void destroy_block(long blockPosId, long levelId) {
         ExampleMod.logger.debug("destroy_block(blockPosId={}, levelId={})", blockPosId, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         BlockPos blockPos;
         Level level;
@@ -106,8 +88,7 @@ class GameFunctions {
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("destroy_block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("destroy_block", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -116,10 +97,6 @@ class GameFunctions {
 
     public static void destroy_and_drop_block(long blockPosId, long levelId) {
         ExampleMod.logger.debug("destroy_and_drop_block(blockPosId={}, levelId={})", blockPosId, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         BlockPos blockPos;
         Level level;
@@ -127,8 +104,7 @@ class GameFunctions {
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("destroy_and_drop_block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("destroy_and_drop_block", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -137,17 +113,12 @@ class GameFunctions {
 
     public static long entry_key(long entryId) {
         ExampleMod.logger.debug("entry_key(entryId={})", entryId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         GrugEntry grugEntry;
         try {
             grugEntry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("entry_key", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("entry_key", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -158,17 +129,12 @@ class GameFunctions {
 
     public static void entry_set_value(long entryId, long valueId) {
         ExampleMod.logger.debug("entry_set_value(entryId={}, valueId={})", entryId, valueId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         GrugEntry grugEntry;
         try {
             grugEntry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("entry_set_value", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("entry_set_value", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -192,17 +158,12 @@ class GameFunctions {
 
     public static long entry_value(long entryId) {
         ExampleMod.logger.debug("entry_value(entryId={})", entryId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         GrugEntry grugEntry;
         try {
             grugEntry = ExampleMod.grug.getEntry(entryId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("entry_value", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("entry_value", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -213,17 +174,12 @@ class GameFunctions {
 
     public static long get_block_entity_level(long blockEntityId) {
         ExampleMod.logger.debug("get_block_entity_level(blockEntityId={})", blockEntityId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Level level;
         try {
             level = ExampleMod.grug.getBlockEntity(blockEntityId).getLevel();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_entity_level", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_entity_level", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -236,18 +192,13 @@ class GameFunctions {
 
     public static long get_block_pos_above(long blockPosId) {
         ExampleMod.logger.debug("get_block_pos_above(blockPosId={})", blockPosId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         BlockPos above;
         try {
             // The .above() call allocates a new BlockPos
             above = ExampleMod.grug.getBlockPos(blockPosId).above();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_above", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_above", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -260,18 +211,13 @@ class GameFunctions {
 
     public static long get_block_pos_above_n(long blockPosId, int n) {
         ExampleMod.logger.debug("get_block_pos_above_n(blockPosId={}, n={})", blockPosId, n);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         BlockPos above;
         try {
             // The .above() call allocates a new BlockPos
             above = ExampleMod.grug.getBlockPos(blockPosId).above(n);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_above_n", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_above_n", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -284,18 +230,13 @@ class GameFunctions {
 
     public static long get_block_pos_center(long blockPosId) {
         ExampleMod.logger.debug("get_block_pos_center(blockPosId={})", blockPosId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Vec3 center;
         try {
             // The .getCenter() call allocates a new Vec3
             center = ExampleMod.grug.getBlockPos(blockPosId).getCenter();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_center", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_center", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -308,17 +249,12 @@ class GameFunctions {
 
     public static int get_block_pos_x(long id) {
         ExampleMod.logger.debug("get_block_pos_x(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         int x;
         try {
             x = ExampleMod.grug.getBlockPos(id).getX();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_x", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_x", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -328,17 +264,12 @@ class GameFunctions {
 
     public static int get_block_pos_y(long id) {
         ExampleMod.logger.debug("get_block_pos_y(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         int y;
         try {
             y = ExampleMod.grug.getBlockPos(id).getY();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_y", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_y", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -348,17 +279,12 @@ class GameFunctions {
 
     public static int get_block_pos_z(long id) {
         ExampleMod.logger.debug("get_block_pos_z(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         int z;
         try {
             z = ExampleMod.grug.getBlockPos(id).getZ();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_pos_z", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_pos_z", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -368,10 +294,6 @@ class GameFunctions {
 
     public static long get_block_state(long blockPosId, long levelId) {
         ExampleMod.logger.debug("get_block_state(blockPosId={}, levelId={})", blockPosId, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Level level;
         BlockPos blockPos;
@@ -379,8 +301,7 @@ class GameFunctions {
             level = ExampleMod.grug.getLevel(levelId);
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_block_state", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_block_state", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -395,17 +316,12 @@ class GameFunctions {
 
     public static long get_default_block_state(long blockId) {
         ExampleMod.logger.debug("get_default_block_state(blockId={})", blockId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Block block;
         try {
             block = ExampleMod.grug.getBlock(blockId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_default_block_state", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_default_block_state", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -420,17 +336,12 @@ class GameFunctions {
 
     public static int get_hash_map_size(long hashMapId) {
         ExampleMod.logger.debug("get_hash_map_size(hashMapId={})", hashMapId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_hash_map_size", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_hash_map_size", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -441,17 +352,12 @@ class GameFunctions {
 
     public static String get_hash_map_string(long hashMapId) {
         ExampleMod.logger.debug("get_hash_map_string(hashMapId={})", hashMapId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_hash_map_string", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_hash_map_string", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -462,17 +368,12 @@ class GameFunctions {
 
     public static int get_hash_set_size(long hashSetId) {
         ExampleMod.logger.debug("get_hash_set_size(hashSetId={})", hashSetId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         HashSet<Long> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_hash_set_size", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_hash_set_size", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -483,17 +384,12 @@ class GameFunctions {
 
     public static String get_hash_set_string(long hashSetId) {
         ExampleMod.logger.debug("get_hash_set_string(hashSetId={})", hashSetId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         HashSet<Long> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_hash_set_string", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_hash_set_string", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -504,17 +400,12 @@ class GameFunctions {
 
     public static String get_item_name(long id) {
         ExampleMod.logger.debug("get_item_name(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         Item item;
         try {
             item = ExampleMod.grug.getItem(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_item_name", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_item_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -525,17 +416,12 @@ class GameFunctions {
 
     public static String get_item_entity_name(long id) {
         ExampleMod.logger.debug("get_item_entity_name(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         String name;
         try {
             name = ExampleMod.grug.getItemEntity(id).getName().getString();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_item_entity_name", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_item_entity_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -545,17 +431,12 @@ class GameFunctions {
 
     public static String get_item_stack_name(long id) {
         ExampleMod.logger.debug("get_item_stack_name(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         ItemStack itemStack;
         try {
             itemStack = ExampleMod.grug.getItemStack(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_item_stack_name", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_item_stack_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -570,17 +451,12 @@ class GameFunctions {
 
     public static String get_level_name(long id) {
         ExampleMod.logger.debug("get_level_name(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         Level level;
         try {
             level = ExampleMod.grug.getLevel(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_level_name", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_level_name", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -591,17 +467,12 @@ class GameFunctions {
 
     public static String get_resource_location_string(long id) {
         ExampleMod.logger.debug("get_resource_location_string(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return "";
-        }
 
         ResourceLocation resourceLocation;
         try {
             resourceLocation = ExampleMod.grug.getResourceLocation(id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_resource_location_string", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_resource_location_string", assertEntityTypeException.getMessage());
             return "";
         }
 
@@ -612,17 +483,12 @@ class GameFunctions {
 
     public static float get_vec3_x(long id) {
         ExampleMod.logger.debug("get_vec3_x(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         float x;
         try {
             x = (float)ExampleMod.grug.getVec3(id).x();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_vec3_x", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_vec3_x", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -632,17 +498,12 @@ class GameFunctions {
 
     public static float get_vec3_y(long id) {
         ExampleMod.logger.debug("get_vec3_y(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         float y;
         try {
             y = (float)ExampleMod.grug.getVec3(id).y();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_vec3_y", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_vec3_y", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -652,17 +513,12 @@ class GameFunctions {
 
     public static float get_vec3_z(long id) {
         ExampleMod.logger.debug("get_vec3_z(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         float z;
         try {
             z = (float)ExampleMod.grug.getVec3(id).z();
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_vec3_z", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_vec3_z", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -672,17 +528,12 @@ class GameFunctions {
 
     public static long get_world_position_of_block_entity(long blockEntityId) {
         ExampleMod.logger.debug("get_world_position_of_block_entity(blockEntityId={})", blockEntityId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         long worldPositionId;
         try {
             worldPositionId = ExampleMod.grug.getBlockEntity(blockEntityId).worldPositionId;
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("get_world_position_of_block_entity", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("get_world_position_of_block_entity", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -692,10 +543,6 @@ class GameFunctions {
 
     public static long hash_map() {
         ExampleMod.logger.debug("hash_map()");
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         HashMap<Long, Long> hashMap = new HashMap<>();
 
@@ -710,17 +557,12 @@ class GameFunctions {
 
     public static void hash_map_clear(long hashMapId) {
         ExampleMod.logger.debug("hash_map_clear(hashMapId={})", hashMapId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_clear", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_clear", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -744,10 +586,6 @@ class GameFunctions {
 
     public static void hash_map_copy(long hashMapFromId, long hashMapToId) {
         ExampleMod.logger.debug("hash_map_copy(hashMapFromId={}, hashMapToId={})", hashMapFromId, hashMapToId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashMap<Long, Long> hashMapFrom;
         HashMap<Long, Long> hashMapTo;
@@ -755,8 +593,7 @@ class GameFunctions {
             hashMapFrom = ExampleMod.grug.getHashMap(hashMapFromId);
             hashMapTo = ExampleMod.grug.getHashMap(hashMapToId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_copy", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_copy", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -808,17 +645,12 @@ class GameFunctions {
 
     public static long hash_map_get(long hashMapId, long keyId) {
         ExampleMod.logger.debug("hash_map_get(hashMapId={}, keyId={})", hashMapId, keyId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_get", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_get", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -829,8 +661,7 @@ class GameFunctions {
 
         Long realKeyId = objects.get(keyObject);
         if (realKeyId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_get", "hash_map does not contain key");
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_get", "hash_map does not contain key");
             return 0;
         }
 
@@ -843,10 +674,6 @@ class GameFunctions {
 
     public static boolean hash_map_has_key(long hashMapId, long keyId) {
         ExampleMod.logger.debug("hash_map_has_key(hashMapId={}, keyId={})", hashMapId, keyId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return false;
-        }
 
         Object object = ExampleMod.grug.getObject(keyId);
 
@@ -857,17 +684,12 @@ class GameFunctions {
 
     public static void hash_map_put(long hashMapId, long keyId, long valueId) {
         ExampleMod.logger.debug("hash_map_put(hashMapId={}, keyId={}, valueId={})", hashMapId, keyId, valueId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_put", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_put", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -921,17 +743,12 @@ class GameFunctions {
 
     public static void hash_map_remove_key(long hashMapId, long keyId) {
         ExampleMod.logger.debug("hash_map_remove_key(hashMapId={}, keyId={})", hashMapId, keyId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashMap<Long, Long> hashMap;
         try {
             hashMap = ExampleMod.grug.getHashMap(hashMapId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_remove_key", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -942,8 +759,7 @@ class GameFunctions {
 
         Long realKeyId = objects.get(keyObject);
         if (realKeyId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_map_remove_key", "hash_map does not contain key");
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_map_remove_key", "hash_map does not contain key");
             return;
         }
 
@@ -963,10 +779,6 @@ class GameFunctions {
 
     public static long hash_set() {
         ExampleMod.logger.debug("hash_set()");
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         HashSet<Long> hashSet = new HashSet<>();
 
@@ -981,17 +793,12 @@ class GameFunctions {
 
     public static void hash_set_add(long hashSetId, long valueId) {
         ExampleMod.logger.debug("hash_set_add(hashSetId={}, valueId={})", hashSetId, valueId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashSet<Long> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_add", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_set_add", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1015,17 +822,12 @@ class GameFunctions {
 
     public static void hash_set_clear(long hashSetId) {
         ExampleMod.logger.debug("hash_set_clear(hashSetId={})", hashSetId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashSet<Long> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_clear", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_set_clear", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1046,10 +848,6 @@ class GameFunctions {
 
     public static void hash_set_copy(long hashSetFromId, long hashSetToId) {
         ExampleMod.logger.debug("hash_set_copy(hashSetFromId={}, hashSetToId={})", hashSetFromId, hashSetToId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashSet<Long> hashSetFrom;
         HashSet<Long> hashSetTo;
@@ -1057,8 +855,7 @@ class GameFunctions {
             hashSetFrom = ExampleMod.grug.getHashSet(hashSetFromId);
             hashSetTo = ExampleMod.grug.getHashSet(hashSetToId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_copy", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_set_copy", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1095,10 +892,6 @@ class GameFunctions {
 
     public static boolean hash_set_has(long hashSetId, long valueId) {
         ExampleMod.logger.debug("hash_set_has(hashSetId={}, valueId={})", hashSetId, valueId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return false;
-        }
 
         Object object = ExampleMod.grug.getObject(valueId);
 
@@ -1109,17 +902,12 @@ class GameFunctions {
 
     public static void hash_set_remove(long hashSetId, long valueId) {
         ExampleMod.logger.debug("hash_set_remove(hashSetId={}, valueId={})", hashSetId, valueId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         HashSet<Long> hashSet;
         try {
             hashSet = ExampleMod.grug.getHashSet(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_set_remove", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1130,8 +918,7 @@ class GameFunctions {
 
         Long realValueId = objects.get(valueObject);
         if (realValueId == null) {
-            Grug.sendGameFunctionErrorToEveryone("hash_set_remove", "hash_set does not contain value");
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("hash_set_remove", "hash_set does not contain value");
             return;
         }
 
@@ -1149,17 +936,12 @@ class GameFunctions {
 
     public static boolean is_air(long blockStateId) {
         ExampleMod.logger.debug("is_air(blockStateId={})", blockStateId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return false;
-        }
 
         BlockState blockState;
         try {
             blockState = ExampleMod.grug.getBlockState(blockStateId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("is_air", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("is_air", assertEntityTypeException.getMessage());
             return false;
         }
 
@@ -1170,17 +952,12 @@ class GameFunctions {
 
     public static boolean is_client_side(long levelId) {
         ExampleMod.logger.debug("is_client_side(levelId={})", levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return false;
-        }
 
         Level level;
         try {
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("is_client_side", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("is_client_side", assertEntityTypeException.getMessage());
             return false;
         }
 
@@ -1191,25 +968,19 @@ class GameFunctions {
 
     public static long item(long resourceLocation) {
         ExampleMod.logger.debug("item(resourceLocation={})", resourceLocation);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         Item item;
         try {
             ResourceLocation resourceLocationInstance = ExampleMod.grug.getResourceLocation(resourceLocation);
 
             if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
-                Grug.sendGameFunctionErrorToEveryone("item", "invalid resource_location argument");
-                Grug.gameFunctionErrorHappened = true;
+                Grug.gameFunctionErrorHappened("item", "invalid resource_location argument");
                 return 0;
             }
 
             item = ForgeRegistries.ITEMS.getValue(resourceLocationInstance);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("item", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("item", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -1222,17 +993,12 @@ class GameFunctions {
 
     public static long item_entity(long level, float x, float y, float z, long itemStack) {
         ExampleMod.logger.debug("item_entity(level={}, x={}, y={}, z={}, itemStack={})", level, x, y, z, itemStack);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         ItemEntity itemEntity;
         try {
             itemEntity = new ItemEntity(ExampleMod.grug.getLevel(level), x, y, z, ExampleMod.grug.getItemStack(itemStack));
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("item_entity", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("item_entity", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -1245,17 +1011,12 @@ class GameFunctions {
 
     public static long item_stack(long item) {
         ExampleMod.logger.debug("item_stack(item={})", item);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         ItemStack itemStack;
         try {
             itemStack = new ItemStack(ExampleMod.grug.getItem(item));
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("item_stack", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("item_stack", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -1268,17 +1029,12 @@ class GameFunctions {
 
     public static boolean iterating(long iteratorId) {
         ExampleMod.logger.debug("iterating(iteratorId={})", iteratorId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return false;
-        }
 
         GrugIterator grugIterator;
         try {
             grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iterating", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("iterating", assertEntityTypeException.getMessage());
             return false;
         }
 
@@ -1289,17 +1045,12 @@ class GameFunctions {
 
     public static long iteration(long iteratorId) {
         ExampleMod.logger.debug("iteration(iteratorId={})", iteratorId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         GrugIterator grugIterator;
         try {
             grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iteration", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("iteration", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -1312,8 +1063,7 @@ class GameFunctions {
             try {
                 entry = (Entry<Long, Long>)grugIterator.iterator.next();
             } catch (ConcurrentModificationException err) {
-                Grug.sendGameFunctionErrorToEveryone("iteration", "the iterable was modified during iteration");
-                Grug.gameFunctionErrorHappened = true;
+                Grug.gameFunctionErrorHappened("iteration", "the iterable was modified during iteration");
                 return 0;
             }
 
@@ -1331,10 +1081,6 @@ class GameFunctions {
 
     public static long iterator(long iterableId) {
         ExampleMod.logger.debug("iterator(iterableId={})", iterableId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         EntityType containerType = Grug.getEntityType(iterableId);
         Iterator<?> iterator;
@@ -1347,13 +1093,11 @@ class GameFunctions {
                 iterator = ExampleMod.grug.getHashSet(iterableId).iterator();
                 iterableType = IterableType.HashSet;
             } else {
-                Grug.sendGameFunctionErrorToEveryone("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
-                Grug.gameFunctionErrorHappened = true;
+                Grug.gameFunctionErrorHappened("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
                 return 0;
             }
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iterator", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("iterator", assertEntityTypeException.getMessage());
             return 0;
         }
 
@@ -1367,35 +1111,25 @@ class GameFunctions {
 
     public static void iterator_remove(long iteratorId) {
         ExampleMod.logger.debug("iterator_remove(iteratorId={})", iteratorId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         GrugIterator grugIterator;
         try {
             grugIterator = ExampleMod.grug.getIterator(iteratorId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("iterator_remove", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("iterator_remove", assertEntityTypeException.getMessage());
             return;
         }
 
         try {
             grugIterator.iterator.remove();
         } catch (IllegalStateException err) {
-            Grug.sendGameFunctionErrorToEveryone("iterator_remove", "iterator_remove() can only be called once, for each call to iteration()");
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("iterator_remove", "iterator_remove() can only be called once, for each call to iteration()");
             return;
         }
     }
 
     public static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {
         ExampleMod.logger.debug("place_block(blockStateId={}, blockPosId={}, flags={}, levelId={})", blockStateId, blockPosId, flags, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         BlockState blockState;
         BlockPos blockPos;
@@ -1405,8 +1139,7 @@ class GameFunctions {
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("place_block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("place_block", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1415,60 +1148,36 @@ class GameFunctions {
 
     public static void print_bool(boolean b) {
         ExampleMod.logger.debug("print_bool(b={})", b);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Grug.sendMessageToEveryone(Component.literal(Boolean.toString(b)));
     }
 
     public static void print_f32(float f) {
         ExampleMod.logger.debug("print_f32(f={})", f);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Grug.sendMessageToEveryone(Component.literal(Float.toString(f)));
     }
 
     public static void print_i32(int n) {
         ExampleMod.logger.debug("print_i32(n={})", n);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Grug.sendMessageToEveryone(Component.literal(Integer.toString(n)));
     }
 
     public static void print_id(long id) {
         ExampleMod.logger.debug("print_id(id={})", id);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Grug.sendMessageToEveryone(Component.literal(Long.toString(id)));
     }
 
     public static void print_string(String str) {
         ExampleMod.logger.debug("print_string(str={})", str);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Grug.sendMessageToEveryone(Component.literal(str));
     }
 
     public static void remove_block(long blockPosId, long levelId) {
         ExampleMod.logger.debug("remove_block(blockPosId={}, levelId={})", blockPosId, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         BlockPos blockPos;
         Level level;
@@ -1476,8 +1185,7 @@ class GameFunctions {
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("remove_block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("remove_block", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1486,10 +1194,6 @@ class GameFunctions {
 
     public static void remove_moving_block(long blockPosId, long levelId) {
         ExampleMod.logger.debug("remove_moving_block(blockPosId={}, levelId={})", blockPosId, levelId);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         BlockPos blockPos;
         Level level;
@@ -1497,8 +1201,7 @@ class GameFunctions {
             blockPos = ExampleMod.grug.getBlockPos(blockPosId);
             level = ExampleMod.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("remove_moving_block", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("remove_moving_block", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1507,17 +1210,12 @@ class GameFunctions {
 
     public static long resource_location(String resourceLocationString) {
         ExampleMod.logger.debug("resource_location(resourceLocationString={})", resourceLocationString);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         ResourceLocation resourceLocation;
         try {
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
-            Grug.sendGameFunctionErrorToEveryone("resource_location", "invalid resource_location_string argument");
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("resource_location", "invalid resource_location_string argument");
             return 0;
         }
 
@@ -1530,10 +1228,6 @@ class GameFunctions {
 
     public static void set_entity_delta_movement(long entity, long vec3) {
         ExampleMod.logger.debug("set_entity_delta_movement(entity={}, vec3={})", entity, vec3);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Entity entityInstance;
         Vec3 vec3Instance;
@@ -1541,8 +1235,7 @@ class GameFunctions {
             entityInstance = ExampleMod.grug.getEntity(entity);
             vec3Instance = ExampleMod.grug.getVec3(vec3);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("set_item_entity_delta_movement", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("set_item_entity_delta_movement", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1551,10 +1244,6 @@ class GameFunctions {
 
     public static void spawn_entity(long entity, long level) {
         ExampleMod.logger.debug("spawn_entity(entity={}, level={})", entity, level);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return;
-        }
 
         Entity entityInstance;
         Level levelInstance;
@@ -1562,8 +1251,7 @@ class GameFunctions {
             entityInstance = ExampleMod.grug.getEntity(entity);
             levelInstance = ExampleMod.grug.getLevel(level);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.sendGameFunctionErrorToEveryone("spawn_entity", assertEntityTypeException.getMessage());
-            Grug.gameFunctionErrorHappened = true;
+            Grug.gameFunctionErrorHappened("spawn_entity", assertEntityTypeException.getMessage());
             return;
         }
 
@@ -1572,10 +1260,6 @@ class GameFunctions {
 
     public static int unbox_i32(long box) {
         ExampleMod.logger.debug("unbox_i32(box={})", box);
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         int unboxedI32 = ExampleMod.grug.getBoxedI32(box);
         ExampleMod.logger.debug("Returning {}", unboxedI32);
@@ -1584,10 +1268,6 @@ class GameFunctions {
 
     public static long vec3_zero() {
         ExampleMod.logger.debug("vec3_zero()");
-        if (Grug.gameFunctionErrorHappened) {
-            ExampleMod.logger.debug("gameFunctionErrorHappened");
-            return 0;
-        }
 
         long vec3ZeroId = Grug.addEntity(EntityType.Vec3, Vec3.ZERO);
         Grug.fnEntities.add(vec3ZeroId);

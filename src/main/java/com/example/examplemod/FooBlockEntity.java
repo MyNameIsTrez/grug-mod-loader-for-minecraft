@@ -39,7 +39,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = grugEntity.childEntities;
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
         Grug.globalEntities = oldGlobalEntities;
@@ -84,7 +83,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
         Grug.globalEntities = oldGlobalEntities;
@@ -102,7 +100,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
         Grug.globalEntities = oldGlobalEntities;

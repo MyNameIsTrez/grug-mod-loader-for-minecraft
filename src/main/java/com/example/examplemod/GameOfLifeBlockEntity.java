@@ -41,7 +41,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = grugEntity.childEntities;
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
         Grug.globalEntities = oldGlobalEntities;
@@ -86,7 +85,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
         Grug.globalEntities = oldGlobalEntities;
@@ -104,7 +102,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
         Grug.globalEntities = oldGlobalEntities;
@@ -137,7 +134,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         long fromBlockPosId = Grug.addEntity(EntityType.BlockPos, fromBlockPos);
         Grug.fnEntities.add(fromBlockPosId);
 
-        Grug.gameFunctionErrorHappened = false;
         ExampleMod.grug.block_entity_on_neighbor_changed(grugEntity.onFns, grugEntity.globals, blockStateId, levelId, blockPosId, blockInId, fromBlockPosId, isMoving);
 
         Grug.globalEntities = oldGlobalEntities;

@@ -52,6 +52,8 @@ public class Grug {
     private native int getGrugReloadsSize();
     private native void fillReloadData(ReloadData reloadData, int i);
 
+    private native void gameFunctionErrorHappened();
+
     private native void fillRootGrugDir(GrugDir root);
     private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
     private native void fillGrugFile(GrugFile file, long parentDirAddress, int fileIndex);
@@ -87,8 +89,6 @@ public class Grug {
     // This variable gets assigned an entity's HashSet of child IDs before on_ functions are called.
     // This allows on_ functions to add copies of entities to global data structures, like HashSets.
     public static Set<Long> globalEntities;
-
-    public static boolean gameFunctionErrorHappened = false;
 
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
     private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
@@ -143,7 +143,6 @@ public class Grug {
         if (globalEntities != null) {
             globalEntities.clear();
         }
-        gameFunctionErrorHappened = false;
         allHashMapObjects.clear();
         allHashSetObjects.clear();
     }
@@ -244,7 +243,6 @@ public class Grug {
 
                 grugEntity.globals = new byte[file.globalsSize];
 
-                gameFunctionErrorHappened = false;
                 globalEntities = grugEntity.childEntities;
                 fnEntities = grugEntity.childEntities;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
@@ -258,7 +256,6 @@ public class Grug {
                 globalEntities = grugEntity.childEntities;
                 fnEntities = new HashSet<>();
 
-                gameFunctionErrorHappened = false;
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
                 removeEntities(fnEntities);
@@ -282,7 +279,9 @@ public class Grug {
         }
     }
 
-    public static void sendGameFunctionErrorToEveryone(String gameFunctionName, String message) {
+    public static void gameFunctionErrorHappened(String gameFunctionName, String message) {
+        ExampleMod.grug.gameFunctionErrorHappened();
+
         sendMessageToEveryone(
             Component.literal("grug game function error in ").withColor(ChatFormatting.RED.getColor())
             .append(Component.literal(gameFunctionName + "()").withColor(0xc792ea))
