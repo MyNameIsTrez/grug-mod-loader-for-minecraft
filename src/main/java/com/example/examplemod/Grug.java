@@ -52,7 +52,7 @@ public class Grug {
     private native int getGrugReloadsSize();
     private native void fillReloadData(ReloadData reloadData, int i);
 
-    private native void gameFunctionErrorHappened();
+    private native void gameFunctionErrorHappened(String message);
 
     private native void fillRootGrugDir(GrugDir root);
     private native void fillGrugDir(GrugDir dir, long parentDirAddress, int dirIndex);
@@ -280,14 +280,7 @@ public class Grug {
     }
 
     public static void gameFunctionErrorHappened(String gameFunctionName, String message) {
-        ExampleMod.grug.gameFunctionErrorHappened();
-
-        sendMessageToEveryone(
-            Component.literal("grug game function error in ").withColor(ChatFormatting.RED.getColor())
-            .append(Component.literal(gameFunctionName + "()").withColor(0xc792ea))
-            .append(Component.literal(": ").withColor(ChatFormatting.RED.getColor()))
-            .append(Component.literal(message).withColor(ChatFormatting.WHITE.getColor()))
-        );
+        ExampleMod.grug.gameFunctionErrorHappened(gameFunctionName + "(): " + message);
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {

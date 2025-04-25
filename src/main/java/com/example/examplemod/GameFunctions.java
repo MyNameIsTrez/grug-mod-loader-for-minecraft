@@ -1123,7 +1123,7 @@ class GameFunctions {
         try {
             grugIterator.iterator.remove();
         } catch (IllegalStateException err) {
-            Grug.gameFunctionErrorHappened("iterator_remove", "iterator_remove() can only be called once, for each call to iteration()");
+            Grug.gameFunctionErrorHappened("iterator_remove", "can only be called once, per call to iteration()");
             return;
         }
     }
