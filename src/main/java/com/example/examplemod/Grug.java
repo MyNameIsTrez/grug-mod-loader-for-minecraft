@@ -134,15 +134,13 @@ public class Grug {
     // where all of the static variables in the Grug class could be made non-static,
     // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
     public static void resetVariables() {
-        nextEntityIndices.clear();
+        for (EntityType entityType : nextEntityIndices.keySet()) {
+            nextEntityIndices.put(entityType, 0);
+        }
         entityData.clear();
         grugEntitiesMap.clear();
-        if (fnEntities != null) {
-            fnEntities.clear();
-        }
-        if (globalEntities != null) {
-            globalEntities.clear();
-        }
+        fnEntities = null;
+        globalEntities = null;
         allHashMapObjects.clear();
         allHashSetObjects.clear();
     }
