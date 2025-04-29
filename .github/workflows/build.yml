@@ -17,10 +17,10 @@ jobs:
         run: git submodule update --init
 
       # TODO: Consider removing
-      - name: Install newer Java version
-        run: sudo apt install openjdk-24-jre
-        # run: sudo apt install jdk-23
-        # run: sudo apt install default-jre
+      # - name: Install newer Java version
+      #   run: sudo apt install openjdk-24-jre
+      #   run: sudo apt install jdk-23
+      #   run: sudo apt install default-jre
 
       # TODO: REMOVE!
       - name: Print Java version
