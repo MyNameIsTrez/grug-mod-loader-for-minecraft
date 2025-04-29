@@ -14,6 +14,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(ExampleMod.MODID)
 public class GameTests {
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+
+        resource_location: id = resource_location("white_concrete")
+
+        block: id = block(resource_location)
+
+        assert_fn_entities_contains(block)
+    }
+    ```
+    */
     @GameTest(template = ExampleMod.MODID+":placeholder")
     public static void block(GameTestHelper helper) {
         Grug.resetVariables();
@@ -31,6 +45,18 @@ public class GameTests {
         helper.succeed();
     }
 
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+
+        block_pos: id = block_pos(0, 0, 0)
+
+        assert_fn_entities_contains(block_pos)
+    }
+    ```
+    */
     @GameTest(template = ExampleMod.MODID+":placeholder")
     public static void block_pos(GameTestHelper helper) {
         Grug.resetVariables();
@@ -45,6 +71,15 @@ public class GameTests {
         helper.succeed();
     }
 
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        # I'm not sure how assert_enum() would be implemented in Java
+        assert_enum(block_flag_update_all(), "Block.UPDATE_ALL")
+    }
+    ```
+    */
     @GameTest(template = ExampleMod.MODID+":placeholder")
     public static void block_flag_update_all(GameTestHelper helper) {
         int flag = GameFunctions.block_flag_update_all();
@@ -53,6 +88,14 @@ public class GameTests {
         helper.succeed();
     }
 
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        assert_fn_entities_contains(box_i32(1))
+    }
+    ```
+    */
     @GameTest(template = ExampleMod.MODID+":placeholder")
     public static void box_i32(GameTestHelper helper) {
         Grug.resetVariables();
@@ -66,6 +109,36 @@ public class GameTests {
         helper.succeed();
     }
 
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+
+        resource_location: id = resource_location("diamond_block")
+
+        block: id = block(resource_location)
+
+        relative_structure_block_pos: id = block_pos(0, 1, 0)
+
+        assert_block_present(block, relative_structure_block_pos)
+
+        absolute_diamond_block_pos: id = absolute_pos(relative_structure_block_pos)
+
+        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
+        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
+        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
+
+        block_pos: id = block_pos(x, y, z)
+
+        level: id = get_game_test_info_server_level()
+
+        remove_block(block_pos, level)
+
+        assert_block_not_present(block, relative_structure_block_pos)
+    }
+    ```
+    */
     @GameTest(template = ExampleMod.MODID+":diamond_block")
     public static void destroy_block(GameTestHelper helper) {
         Grug.resetVariables();
@@ -96,11 +169,13 @@ public class GameTests {
     }
 
     /*
-    This function is roughly equivalent to this grug code:
+    This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
         hash_set: id = hash_set()
+
         hash_set_add(hash_set, box_i32(1))
+
         assert(hash_set_has(hash_set, box_i32(1)))
     }
     ```
@@ -124,11 +199,13 @@ public class GameTests {
     }
 
     /*
-    This function is roughly equivalent to this grug code:
+    This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
         hash_set: id = hash_set()
+
         hash_set_add(hash_set, box_i32(1))
+
         assert(hash_set_has(hash_set, box_i32(1)))
     }
     ```
@@ -152,7 +229,7 @@ public class GameTests {
     }
 
     /*
-    This function is roughly equivalent to this grug code:
+    This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     hash_set: id = hash_set()
 
@@ -163,8 +240,8 @@ public class GameTests {
     on_b() {
         hash_set_add(hash_set, box_i32(2))
 
-        assert_hash_set_has_global_entities(hash_set, box_i32(1))
-        assert_hash_set_has_global_entities(hash_set, box_i32(2))
+        assert_hash_set_contains_global_entity(hash_set, box_i32(1))
+        assert_hash_set_contains_global_entity(hash_set, box_i32(2))
     }
     ```
     */
@@ -212,11 +289,13 @@ public class GameTests {
     }
 
     /*
-    This function is roughly equivalent to this grug code:
+    This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
         hash_set: id = hash_set()
+
         hash_set_add(hash_set, box_i32(1))
+
         assert(hash_set_has(hash_set, box_i32(1)))
     }
     ```
