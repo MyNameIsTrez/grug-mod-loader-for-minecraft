@@ -16,36 +16,18 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
-      - name: Print arch
-        run: dpkg --print-architecture
-
-      # TODO: Consider removing
-      - name: Install newer Java version
-        run: sudo apt install openjdk-21-jre
-      #   run: sudo apt install jdk-23
-      #   run: sudo apt install default-jre
-
-      - name: Print active java version
-        run: update-alternatives --config java
-
-      - name: Print active javac version
-        run: update-alternatives --config javac
-
-      # TODO: REMOVE!
-      - name: Print Java version
-        run: java -version
-
       - name: Compile libgrug.so
         run: gcc grug/grug.c -o src/main/resources/natives/libgrug.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -rdynamic
 
+      # You can add a job that runs `update-alternatives --config java`, to get a list of the installed versions.
       - name: Compile libglobal_library_loader.so
-        run: gcc global_library_loader.c -o src/main/resources/natives/libglobal_library_loader.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux
+        run: gcc global_library_loader.c -o src/main/resources/natives/libglobal_library_loader.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux
 
       - name: Regenerate adapter.c
         run: python3 grug-adapter-for-java/generate.py mod_api.json adapter.c com/example/examplemod Grug
 
       - name: Compile libadapter.so
-        run: gcc adapter.c -o src/main/resources/natives/libadapter.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux
+        run: gcc adapter.c -o src/main/resources/natives/libadapter.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux
 
       - name: Run the tests
         run: ./gradlew runGameTestServer --warning-mode=fail
