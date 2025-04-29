@@ -18,7 +18,8 @@ jobs:
 
       # TODO: Consider removing
       - name: Install newer Java version
-        run: sudo apt install jdk-23
+        run: sudo apt install openjdk-23-jre
+        # run: sudo apt install jdk-23
         # run: sudo apt install default-jre
 
       # TODO: REMOVE!
