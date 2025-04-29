@@ -16,6 +16,9 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
+      - name: Print arch
+        run: dpkg --print-architecture
+
       # TODO: Consider removing
       - name: Install newer Java version
         run: sudo apt install openjdk-21-jre
