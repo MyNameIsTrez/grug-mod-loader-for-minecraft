@@ -16,13 +16,5 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
-      # TODO: REMOVE!
-      # - name: Install nasm
-      #   run: sudo apt install nasm
-
-      # TODO: REMOVE!
-      - name: Print the gradlew version
-        run: ./gradlew --version
-
       - name: Run the tests
-        run: ./gradlew runGameTestServer
+        run: ./gradlew runGameTestServer --warning-mode=fail
