@@ -807,8 +807,6 @@ class GameFunctions {
         HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
 
         if (!objects.containsKey(valueObject)) {
-            objects.put(valueObject, valueId);
-
             long newValueId = Grug.addEntity(Grug.getEntityType(valueId), valueObject);
             if (Grug.globalEntities.contains(hashSetId)) {
                 Grug.globalEntities.add(newValueId);
@@ -817,6 +815,7 @@ class GameFunctions {
             }
 
             hashSet.add(newValueId);
+            objects.put(valueObject, newValueId);
         }
     }
 
