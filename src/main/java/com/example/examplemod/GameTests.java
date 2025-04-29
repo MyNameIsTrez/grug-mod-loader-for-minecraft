@@ -96,7 +96,63 @@ public class GameTests {
     }
 
     /*
-    This code is tested:
+    This function is roughly equivalent to this grug code:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+        hash_set_add(hash_set, box_i32(1))
+        assert(hash_set_has(hash_set, box_i32(1)))
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long hashSetId = GameFunctions.hash_set();
+
+        long boxId = GameFunctions.box_i32(1);
+        GameFunctions.hash_set_add(hashSetId, boxId);
+
+        long boxIdSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
+
+        helper.succeed();
+    }
+
+    /*
+    This function is roughly equivalent to this grug code:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+        hash_set_add(hash_set, box_i32(1))
+        assert(hash_set_has(hash_set, box_i32(1)))
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_add(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long hashSetId = GameFunctions.hash_set();
+
+        long boxId = GameFunctions.box_i32(1);
+        GameFunctions.hash_set_add(hashSetId, boxId);
+
+        long boxIdSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
+
+        helper.succeed();
+    }
+
+    /*
+    This function is roughly equivalent to this grug code:
     ```grug
     hash_set: id = hash_set()
 
@@ -151,6 +207,34 @@ public class GameTests {
         Long realBoxId2 = objects.get(boxId2Object);
         helper.assertTrue(realBoxId2 != null, "realBoxId2 was not supposed to be null");
         helper.assertTrue(Grug.globalEntities.contains(realBoxId2), "Grug.globalEntities did not contain realBoxId2 " + realBoxId2);
+
+        helper.succeed();
+    }
+
+    /*
+    This function is roughly equivalent to this grug code:
+    ```grug
+    on_a() {
+        hash_set: id = hash_set()
+        hash_set_add(hash_set, box_i32(1))
+        assert(hash_set_has(hash_set, box_i32(1)))
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_has(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long hashSetId = GameFunctions.hash_set();
+
+        long boxId = GameFunctions.box_i32(1);
+        GameFunctions.hash_set_add(hashSetId, boxId);
+
+        long boxIdSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
 
         helper.succeed();
     }
