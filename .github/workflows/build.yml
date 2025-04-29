@@ -16,5 +16,17 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
+      - name: Compile libgrug.so
+        run: gcc grug/grug.c -o src/main/resources/natives/libgrug.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -rdynamic
+
+      - name: Compile libglobal_library_loader.so
+        run: gcc global_library_loader.c -o src/main/resources/natives/libglobal_library_loader.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux
+
+      - name: Regenerate adapter.c
+        run: python3 grug-adapter-for-java/generate.py mod_api.json adapter.c com/example/examplemod Grug
+
+      - name: Compile libadapter.so
+        run: gcc adapter.c -o src/main/resources/natives/libadapter.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include -I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux
+
       - name: Run the tests
         run: ./gradlew runGameTestServer --warning-mode=fail
