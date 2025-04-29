@@ -16,6 +16,10 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
+      # TODO: Consider removing
+      - name: Install newer Java version
+        run: sudo apt install default-jre
+
       # TODO: REMOVE!
       - name: Print Java version
         run: java -version
