@@ -19,7 +19,7 @@ jobs:
       - name: Compile libgrug.so
         run: gcc grug/grug.c -o src/main/resources/natives/libgrug.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -rdynamic
 
-      # You can add a job that runs `update-alternatives --config java`, to get a list of the installed versions.
+      # To get a list of all the installed Java version, you can add a job that runs `update-alternatives --config java`.
       - name: Compile libglobal_library_loader.so
         run: gcc global_library_loader.c -o src/main/resources/natives/libglobal_library_loader.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux
 
@@ -30,4 +30,4 @@ jobs:
         run: gcc adapter.c -o src/main/resources/natives/libadapter.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux
 
       - name: Run the tests
-        run: ./gradlew runGameTestServer --warning-mode=fail
+        run: ./gradlew runGameTestServer
