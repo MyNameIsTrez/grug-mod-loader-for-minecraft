@@ -81,14 +81,14 @@ public class Grug {
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
     // This is deliberately not initialized.
-    // This variable gets assigned an entity's HashSet of child IDs before init_globals() is called,
-    // and it gets assigned a new HashSet<Long> of on_ fn entities, before an on_ function is called.
-    public static Set<Long> fnEntities;
-
-    // This is deliberately not initialized.
     // This variable gets assigned an entity's HashSet of child IDs before on_ functions are called.
     // This allows on_ functions to add copies of entities to global data structures, like HashSets.
     public static Set<Long> globalEntities;
+
+    // This is deliberately not initialized.
+    // This variable gets assigned an entity's HashSet of child IDs before init_globals() is called,
+    // and it gets assigned a new HashSet<Long> of on_ fn entities, before an on_ function is called.
+    public static Set<Long> fnEntities;
 
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
     private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
