@@ -16,6 +16,10 @@ jobs:
       - name: Clone the grug submodule
         run: git submodule update --init
 
+      # TODO: REMOVE!
+      - name: Print Java version
+        run: java -version
+
       - name: Compile libgrug.so
         run: gcc grug/grug.c -o src/main/resources/natives/libgrug.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -rdynamic
 
