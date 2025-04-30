@@ -55,7 +55,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = ExampleMod.MODID+":placeholder")
-    public static void block_expected_resource_location(GameTestHelper helper) {
+    public static void block_error_expected_resource_location(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -81,7 +81,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = ExampleMod.MODID+":placeholder")
-    public static void block_invalid_resource_location(GameTestHelper helper) {
+    public static void block_error_invalid_resource_location(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -324,6 +324,9 @@ public class GameTests {
         long boxId2 = GameFunctions.box_i32(2);
         helper.assertTrue(boxId2 != -1, "Invalid boxId2 " + boxId2);
         GameFunctions.hash_set_add(hashSetId, boxId2);
+
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxId1), "hashSetId did not contain boxId1 " + boxId1);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxId2), "hashSetId did not contain boxId2 " + boxId2);
 
         String hashSetString = GameFunctions.get_hash_set_string(hashSetId);
         helper.assertTrue(!hashSetString.isEmpty(), "Invalid empty hashSetString");
