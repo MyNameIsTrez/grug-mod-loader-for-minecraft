@@ -47,9 +47,9 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
-        box_id: id = box_i32(1)
+        box: id = box_i32(1)
 
-        block: id = block_nullable(box_id)
+        block: id = block_nullable(box)
         assert(block == null_id)
     }
     ```
@@ -60,10 +60,10 @@ public class GameTests {
 
         Grug.fnEntities = new HashSet<>();
 
-        long boxId = GameFunctions.box_i32(1);
-        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
 
-        long block = GameFunctions.block(boxId);
+        long block = GameFunctions.block(box);
         helper.assertTrue(block == -1, "Expected an invalid block, but got " + block);
 
         helper.succeed();
@@ -140,9 +140,9 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
-        box_id: id = box_i32(1)
+        box: id = box_i32(1)
 
-        assert_fn_entities_contains(box_id)
+        assert_fn_entities_contains(box)
     }
     ```
     */
@@ -152,10 +152,10 @@ public class GameTests {
 
         Grug.fnEntities = new HashSet<>();
 
-        long boxId = GameFunctions.box_i32(0);
-        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
+        long box = GameFunctions.box_i32(0);
+        helper.assertTrue(box != -1, "Invalid box " + box);
 
-        helper.assertTrue(Grug.fnEntities.contains(boxId), "fnEntities did not contain boxId " + boxId);
+        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain box " + box);
 
         helper.succeed();
     }
@@ -164,9 +164,7 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
-        resource_location: id = resource_location("diamond_block")
-
-        block: id = block(resource_location)
+        block: id = block(resource_location("diamond_block"))
 
         relative_structure_block_pos: id = block_pos(0, 1, 0)
 
@@ -182,7 +180,7 @@ public class GameTests {
 
         level: id = get_game_test_info_server_level()
 
-        remove_block(block_pos, level)
+        destroy_block(block_pos, level)
 
         assert_block_not_present(block, relative_structure_block_pos)
     }
@@ -194,9 +192,7 @@ public class GameTests {
 
         Grug.fnEntities = new HashSet<>();
 
-        ResourceLocation resourceLocation = new ResourceLocation("diamond_block");
-
-        Block block = ForgeRegistries.BLOCKS.getValue(resourceLocation);
+        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
 
@@ -204,16 +200,117 @@ public class GameTests {
 
         BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeStructureBlockPos);
 
-        long blockPosId = GameFunctions.block_pos(absoluteDiamondBlockPos.getX(), absoluteDiamondBlockPos.getY(), absoluteDiamondBlockPos.getZ());
+        int x = absoluteDiamondBlockPos.getX();
+        int y = absoluteDiamondBlockPos.getY();
+        int z = absoluteDiamondBlockPos.getZ();
+
+        long blockPosId = GameFunctions.block_pos(x, y, z);
         helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
 
         ServerLevel level = helper.getLevel();
 
         long levelId = Grug.addEntity(EntityType.Level, level);
 
-        GameFunctions.remove_block(blockPosId, levelId);
+        GameFunctions.destroy_block(blockPosId, levelId);
 
         helper.assertBlockNotPresent(block, relativeStructureBlockPos);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        block: id = block(resource_location("diamond_block"))
+
+        relative_structure_block_pos: id = block_pos(0, 1, 0)
+
+        assert_block_present(block, relative_structure_block_pos)
+
+        box: id = box_i32(1)
+
+        destroy_block(box, box)
+
+        assert_block_present(block, relative_structure_block_pos)
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":diamond_block")
+    public static void destroy_block_error_expected_block_pos(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
+
+        BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
+
+        helper.assertBlockPresent(block, relativeStructureBlockPos);
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+
+        GameFunctions.destroy_block(box, box);
+
+        helper.assertBlockPresent(block, relativeStructureBlockPos);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        block: id = block(resource_location("diamond_block"))
+
+        relative_structure_block_pos: id = block_pos(0, 1, 0)
+
+        assert_block_present(block, relative_structure_block_pos)
+
+        absolute_diamond_block_pos: id = absolute_pos(relative_structure_block_pos)
+
+        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
+        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
+        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
+
+        block_pos: id = block_pos(x, y, z)
+
+        box: id = box_i32(1)
+
+        destroy_block(block_pos, box)
+
+        assert_block_not_present(block, relative_structure_block_pos)
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":diamond_block")
+    public static void destroy_block_error_expected_level(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
+
+        BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
+
+        helper.assertBlockPresent(block, relativeStructureBlockPos);
+
+        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeStructureBlockPos);
+
+        int x = absoluteDiamondBlockPos.getX();
+        int y = absoluteDiamondBlockPos.getY();
+        int z = absoluteDiamondBlockPos.getZ();
+
+        long blockPosId = GameFunctions.block_pos(x, y, z);
+        helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+
+        GameFunctions.destroy_block(blockPosId, box);
+
+        helper.assertBlockPresent(block, relativeStructureBlockPos);
 
         helper.succeed();
     }
@@ -240,14 +337,14 @@ public class GameTests {
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
-        long boxId = GameFunctions.box_i32(1);
-        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
-        GameFunctions.hash_set_add(hashSetId, boxId);
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(hashSetId, box);
 
-        long boxIdSecond = GameFunctions.box_i32(1);
-        helper.assertTrue(boxIdSecond != -1, "Invalid boxIdSecond " + boxIdSecond);
+        long boxSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
 
         helper.succeed();
     }
@@ -274,14 +371,14 @@ public class GameTests {
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
-        long boxId = GameFunctions.box_i32(1);
-        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
-        GameFunctions.hash_set_add(hashSetId, boxId);
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(hashSetId, box);
 
-        long boxIdSecond = GameFunctions.box_i32(1);
-        helper.assertTrue(boxIdSecond != -1, "Invalid boxIdSecond " + boxIdSecond);
+        long boxSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
 
         helper.succeed();
     }
@@ -315,18 +412,18 @@ public class GameTests {
 
         Grug.fnEntities = new HashSet<>();
 
-        long boxId1 = GameFunctions.box_i32(1);
-        helper.assertTrue(boxId1 != -1, "Invalid boxId1 " + boxId1);
-        GameFunctions.hash_set_add(hashSetId, boxId1);
+        long box1 = GameFunctions.box_i32(1);
+        helper.assertTrue(box1 != -1, "Invalid box1 " + box1);
+        GameFunctions.hash_set_add(hashSetId, box1);
 
         Grug.fnEntities = new HashSet<>();
 
-        long boxId2 = GameFunctions.box_i32(2);
-        helper.assertTrue(boxId2 != -1, "Invalid boxId2 " + boxId2);
-        GameFunctions.hash_set_add(hashSetId, boxId2);
+        long box2 = GameFunctions.box_i32(2);
+        helper.assertTrue(box2 != -1, "Invalid box2 " + box2);
+        GameFunctions.hash_set_add(hashSetId, box2);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxId1), "hashSetId did not contain boxId1 " + boxId1);
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxId2), "hashSetId did not contain boxId2 " + boxId2);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, box1), "hashSetId did not contain box1 " + box1);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, box2), "hashSetId did not contain box2 " + box2);
 
         String hashSetString = GameFunctions.get_hash_set_string(hashSetId);
         helper.assertTrue(!hashSetString.isEmpty(), "Invalid empty hashSetString");
@@ -339,17 +436,17 @@ public class GameTests {
 
         HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
 
-        Object boxId1Object = ExampleMod.grug.getObject(boxId1);
-        helper.assertTrue(boxId1Object != null, "boxId1Object was not supposed to be null");
-        Long realBoxId1 = objects.get(boxId1Object);
-        helper.assertTrue(realBoxId1 != null, "realBoxId1 was not supposed to be null");
-        helper.assertTrue(Grug.globalEntities.contains(realBoxId1), "Grug.globalEntities did not contain realBoxId1 " + realBoxId1);
+        Object box1Object = ExampleMod.grug.getObject(box1);
+        helper.assertTrue(box1Object != null, "box1Object was not supposed to be null");
+        Long realBox1 = objects.get(box1Object);
+        helper.assertTrue(realBox1 != null, "realBox1 was not supposed to be null");
+        helper.assertTrue(Grug.globalEntities.contains(realBox1), "Grug.globalEntities did not contain realBox1 " + realBox1);
 
-        Object boxId2Object = ExampleMod.grug.getObject(boxId2);
-        helper.assertTrue(boxId2Object != null, "boxId2Object was not supposed to be null");
-        Long realBoxId2 = objects.get(boxId2Object);
-        helper.assertTrue(realBoxId2 != null, "realBoxId2 was not supposed to be null");
-        helper.assertTrue(Grug.globalEntities.contains(realBoxId2), "Grug.globalEntities did not contain realBoxId2 " + realBoxId2);
+        Object box2Object = ExampleMod.grug.getObject(box2);
+        helper.assertTrue(box2Object != null, "box2Object was not supposed to be null");
+        Long realBox2 = objects.get(box2Object);
+        helper.assertTrue(realBox2 != null, "realBox2 was not supposed to be null");
+        helper.assertTrue(Grug.globalEntities.contains(realBox2), "Grug.globalEntities did not contain realBox2 " + realBox2);
 
         helper.succeed();
     }
@@ -376,13 +473,13 @@ public class GameTests {
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
-        long boxId = GameFunctions.box_i32(1);
-        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
-        GameFunctions.hash_set_add(hashSetId, boxId);
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(hashSetId, box);
 
-        long boxIdSecond = GameFunctions.box_i32(1);
-        helper.assertTrue(boxIdSecond != -1, "Invalid boxIdSecond " + boxIdSecond);
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxIdSecond), "hashSetId did not contain boxIdSecond " + boxIdSecond);
+        long boxSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
 
         helper.succeed();
     }
