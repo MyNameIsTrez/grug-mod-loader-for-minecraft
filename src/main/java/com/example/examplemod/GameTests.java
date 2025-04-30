@@ -47,6 +47,32 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
+        box_id: id = box_i32(1)
+
+        block: id = block_nullable(box_id)
+        assert(block == null_id)
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void block_expected_resource_location(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long boxId = GameFunctions.box_i32(1);
+        helper.assertTrue(boxId != -1, "Invalid boxId " + boxId);
+
+        long block = GameFunctions.block(boxId);
+        helper.assertTrue(block == -1, "Expected an invalid block, but got " + block);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
         resource_location: id = resource_location("diamond")
 
         block: id = block_nullable(resource_location)
