@@ -51,6 +51,8 @@ public class GameTests {
 
         block: id = block_nullable(box)
         assert(block == null_id)
+
+        assert_game_function_error("block(): Expected resource_location, but got boxed_i32")
     }
     ```
     */
@@ -65,6 +67,8 @@ public class GameTests {
 
         long block = GameFunctions.block(box);
         helper.assertTrue(block == -1, "Expected an invalid block, but got " + block);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("block(): Expected resource_location, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.succeed();
     }
@@ -232,6 +236,8 @@ public class GameTests {
 
         destroy_block(box, box)
 
+        assert_game_function_error("destroy_block(): Expected block_pos, but got boxed_i32")
+
         assert_block_present(block, relative_structure_block_pos)
     }
     ```
@@ -252,6 +258,8 @@ public class GameTests {
         helper.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.destroy_block(box, box);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.assertBlockPresent(block, relativeStructureBlockPos);
 
@@ -279,6 +287,8 @@ public class GameTests {
         box: id = box_i32(1)
 
         destroy_block(block_pos, box)
+
+        assert_game_function_error("destroy_block(): Expected level, but got boxed_i32")
 
         assert_block_not_present(block, relative_structure_block_pos)
     }
@@ -309,6 +319,8 @@ public class GameTests {
         helper.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.destroy_block(blockPosId, box);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.assertBlockPresent(block, relativeStructureBlockPos);
 
@@ -379,6 +391,34 @@ public class GameTests {
         helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
 
         helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        box: id = box_i32(1)
+
+        hash_set_add(box, box)
+
+        assert_game_function_error("hash_set_add(): Expected hash_set, but got boxed_i32")
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_add_error_expected_hash_set(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(box, box);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("hash_set_add(): Expected hash_set, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.succeed();
     }

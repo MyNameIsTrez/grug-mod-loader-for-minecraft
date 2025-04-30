@@ -93,6 +93,9 @@ public class Grug {
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
     private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
 
+    // This is only used by GameTests.java.
+    public static String gameFunctionError = null;
+
     public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
@@ -143,6 +146,7 @@ public class Grug {
         globalEntities = null;
         allHashMapObjects.clear();
         allHashSetObjects.clear();
+        gameFunctionError = null;
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -279,6 +283,8 @@ public class Grug {
 
     public static void gameFunctionErrorHappened(String gameFunctionName, String message) {
         ExampleMod.grug.gameFunctionErrorHappened(gameFunctionName + "(): " + message);
+
+        gameFunctionError = gameFunctionName + "(): " + message;
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {
