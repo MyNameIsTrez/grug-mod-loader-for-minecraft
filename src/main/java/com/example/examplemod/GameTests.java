@@ -399,6 +399,48 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
+        hash_set: id = hash_set()
+
+        hash_set_add(hash_set, box_i32(1))
+        hash_set_add(hash_set, box_i32(1))
+
+        assert(hash_set_has(hash_set, box_i32(1)))
+        assert(hash_set_size(hash_set) == 1)
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_add_duplicate(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long hashSetId = GameFunctions.hash_set();
+        helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(hashSetId, box);
+
+        long boxSecond = GameFunctions.box_i32(1);
+        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
+        GameFunctions.hash_set_add(hashSetId, boxSecond);
+
+        long boxThird = GameFunctions.box_i32(1);
+        helper.assertTrue(boxThird != -1, "Invalid boxThird " + boxThird);
+
+        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxThird), "hashSetId did not contain boxThird " + boxThird);
+
+        helper.assertTrue(GameFunctions.get_hash_set_size(hashSetId) == 1, "GameFunctions.get_hash_set_size(hashSetId) was expected to be 1, but was " + GameFunctions.get_hash_set_size(hashSetId));
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
         box: id = box_i32(1)
 
         hash_set_add(box, box)
@@ -428,11 +470,20 @@ public class GameTests {
     hash_set: id = hash_set()
 
     on_a() {
-        hash_set_add(hash_set, box_i32(1))
-    }
+        box1: id = box_i32(1)
+        hash_set_add(hash_set, box1)
 
-    on_b() {
-        hash_set_add(hash_set, box_i32(2))
+        box2: id = box_i32(2)
+        hash_set_add(hash_set, box2)
+
+        assert(hash_set_has(hash_set, box1))
+        assert(hash_set_has(hash_set, box2))
+
+        assert(hash_set_string(hash_set) == "[17179869185, 17179869187]")
+
+        assert_global_entities_size(3)
+
+        assert_global_entities_contains(hash_set)
 
         assert_hash_set_contains_global_entity(hash_set, box_i32(1))
         assert_hash_set_contains_global_entity(hash_set, box_i32(2))
@@ -454,8 +505,6 @@ public class GameTests {
         long box1 = GameFunctions.box_i32(1);
         helper.assertTrue(box1 != -1, "Invalid box1 " + box1);
         GameFunctions.hash_set_add(hashSetId, box1);
-
-        Grug.fnEntities = new HashSet<>();
 
         long box2 = GameFunctions.box_i32(2);
         helper.assertTrue(box2 != -1, "Invalid box2 " + box2);
