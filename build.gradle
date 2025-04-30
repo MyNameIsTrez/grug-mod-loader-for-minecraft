@@ -244,15 +244,78 @@ sourceSets.each {
     it.java.destinationDirectory = dir
 }
 
-// tasks.register('lmao') {
-//     println 'haaha!!!!!'
+jacoco {
+    toolVersion = "0.8.13"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+// tasks.named('runGameTestServer') {
+//     dependsOn 'testClasses'
 // }
 
-tasks.register('runGameTestsWithCoverage') {
+//// Suggestion 1:
+
+// tasks.register('runGameTestsWithCoverage') {
+//     dependsOn 'runGameTestServer' // Ensure tests are run first
+//     doLast {
+//         println 'before'
+//         jacocoTestReport
+//         println 'after'
+//     }
+// }
+
+// // Ensure JaCoCo is hooked into the runGameTestServer task
+// jacocoTestReport {
+//     dependsOn 'runGameTestServer' // Ensure it runs after the test task
+//     reports {
+//         xml {
+//             destination = file("build/jacoco.xml") // Output location for XML
+//         }
+//         html {
+//             destination = file("build/jacocoHtml") // Output location for HTML
+//         }
+//     }
+// }
+
+//// Suggestion 2:
+
+// Dynamically hook JaCoCo report after `runGameTestServer` is created
+// tasks.whenTaskAdded { task ->
+//     if (task.name == 'runGameTestServer') {
+//         task.finalizedBy jacocoTestReport // Ensure JaCoCo report runs after tests
+//     }
+// }
+
+// tasks.register('runGameTestsWithCoverage') {
+//     dependsOn 'runGameTestServer' // Ensure the tests run first
+//     doLast {
+//         println 'before'
+//         // Trigger Jacoco report generation after the tests are complete
+//         jacocoTestReport
+//         println 'after'
+//     }
+// }
+
+// // Ensure JaCoCo is properly hooked into the game test server task
+// jacocoTestReport {
+//     dependsOn 'runGameTestServer' // Ensure it runs after the test task
+//     reports {
+//         xml {
+//             destination = file("build/jacoco.xml") // Output location for XML
+//         }
+//         html {
+//             destination = file("build/jacocoHtml") // Output location for HTML
+//         }
+//     }
+// }
+
+//// My idea:
+
+test {
     dependsOn 'runGameTestServer'
-    doLast {
-        println 'before'
-        jacocoTestReport
-        println 'after'
-    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
