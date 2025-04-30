@@ -892,9 +892,18 @@ class GameFunctions {
     public static boolean hash_set_has(long hashSetId, long valueId) {
         ExampleMod.logger.debug("hash_set_has(hashSetId={}, valueId={})", hashSetId, valueId);
 
-        Object object = ExampleMod.grug.getObject(valueId);
+        HashMap<Object, Long> objects;
+        try {
+            objects = Grug.getHashSetObjects(hashSetId);
+            assert objects != null;
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.gameFunctionErrorHappened("hash_set_has", assertEntityTypeException.getMessage());
+            return false;
+        }
 
-        boolean hasValue = Grug.getHashSetObjects(hashSetId).containsKey(object);
+        Object object = ExampleMod.grug.getObject(valueId);
+        
+        boolean hasValue = objects.containsKey(object);
         ExampleMod.logger.debug("Returning {}", hasValue);
         return hasValue;
     }

@@ -411,7 +411,6 @@ public class GameTests {
     public static void hash_set_add_error_expected_hash_set(GameTestHelper helper) {
         Grug.resetVariables();
 
-        Grug.globalEntities = new HashSet<>();
         Grug.fnEntities = new HashSet<>();
 
         long box = GameFunctions.box_i32(1);
@@ -520,6 +519,33 @@ public class GameTests {
         long boxSecond = GameFunctions.box_i32(1);
         helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
         helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        box: id = box_i32(1)
+
+        assert(!hash_set_has(box, box))
+
+        assert_game_function_error("hash_set_has(): Expected hash_set, but got boxed_i32")
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_has_error_expected_hash_set(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        helper.assertFalse(GameFunctions.hash_set_has(box, box), "hash_set_has() was expected to return false");
+
+        helper.assertTrue(Grug.gameFunctionError.equals("hash_set_has(): Expected hash_set, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.succeed();
     }

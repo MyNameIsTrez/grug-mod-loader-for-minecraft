@@ -370,7 +370,10 @@ public class Grug {
     public static HashMap<Object, Long> getHashSetObjects(long hashSetId) {
         ExampleMod.logger.debug("getHashSetObjects(id={})", hashSetId);
         HashMap<Object, Long> objects = allHashSetObjects.get(hashSetId);
-        assert objects != null;
+        if (objects == null) {
+            assertEntityType(hashSetId, EntityType.HashSet);
+            assert false; // Unreachable.
+        }
         return objects;
     }
 
