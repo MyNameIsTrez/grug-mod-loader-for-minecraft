@@ -527,6 +527,39 @@ public class GameTests {
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
     on_a() {
+        hash_set: id = hash_set()
+
+        hash_set_add(hash_set, box_i32(1))
+
+        assert(!hash_set_has(hash_set, box_i32(2)))
+    }
+    ```
+    */
+    @GameTest(template = ExampleMod.MODID+":placeholder")
+    public static void hash_set_has_not(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.globalEntities = new HashSet<>();
+        Grug.fnEntities = new HashSet<>();
+
+        long hashSetId = GameFunctions.hash_set();
+        helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+        GameFunctions.hash_set_add(hashSetId, box);
+
+        long boxSecond = GameFunctions.box_i32(2);
+        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
+        helper.assertFalse(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did contain boxSecond " + boxSecond);
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
         box: id = box_i32(1)
 
         assert(!hash_set_has(box, box))
