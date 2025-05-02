@@ -13,7 +13,11 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(ExampleMod.MODID)
-public class GameTests {
+final public class GameTests {
+    // Prevents coverage warnings
+    private GameTests() {
+    }
+
     /*
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
