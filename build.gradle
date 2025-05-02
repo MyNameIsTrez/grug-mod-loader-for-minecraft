@@ -264,8 +264,10 @@ jacocoTestReport {
 
     dependsOn 'runGameTestServer'
 
-    // This XML file is for jacoco-reporter in .github/workflows/build.yml
+    // CSV is for jacoco-badge-generator, in .github/workflows/build.yml
+    // XML is for jacoco-reporter, in .github/workflows/build.yml
     reports {
+        csv.required = true
         xml.required = true
     }
 
