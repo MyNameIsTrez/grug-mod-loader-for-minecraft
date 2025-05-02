@@ -264,6 +264,11 @@ jacocoTestReport {
 
     dependsOn 'runGameTestServer'
 
+    // This XML file is for jacoco-reporter in .github/workflows/build.yml
+    reports {
+        xml.required = true
+    }
+
     // Only include GameFunctions.java in the coverage report
     afterEvaluate {
         jacocoTestReport {
