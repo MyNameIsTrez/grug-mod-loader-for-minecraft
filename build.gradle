@@ -252,7 +252,7 @@ gradle.taskGraph.whenReady { taskGraph ->
             if (task.name == 'runGameTestServer') {
                 // Add the Jacoco agent to the jvmArgs for runGameTestServer
                 task.jvmArgs = [
-                    "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameTests"
+                    "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameFunctions:com/example/examplemod/GameTests"
                 ]
             }
         }
@@ -269,6 +269,7 @@ jacocoTestReport {
         jacocoTestReport {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, includes: [
+                    'com/example/examplemod/GameFunctions.class',
                     'com/example/examplemod/GameTests.class'
                 ])
             }))
