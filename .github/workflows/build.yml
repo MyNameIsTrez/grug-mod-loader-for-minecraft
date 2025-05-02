@@ -6,6 +6,8 @@ jobs:
   tests:
     name: tests
     runs-on: ubuntu-latest
+
+    # Required for the "JaCoCo code coverage report" step below to not cause an error
     permissions:
       checks: write
 
@@ -48,18 +50,18 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: false
 
-      - name: Add JaCoCo report to workflow run summary
-        run: |
-          echo "| Outcome | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Code Coverage % | ${{ steps.jacoco_reporter.outputs.coverage_percentage }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| :heavy_check_mark: Number of Lines Covered | ${{ steps.jacoco_reporter.outputs.covered_lines }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| :x: Number of Lines Missed | ${{ steps.jacoco_reporter.outputs.missed_lines }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Total Number of Lines | ${{ steps.jacoco_reporter.outputs.total_lines }} |" >> $GITHUB_STEP_SUMMARY
+      # - name: Add JaCoCo report to workflow run summary
+      #   run: |
+      #     echo "| Outcome | Value |" >> $GITHUB_STEP_SUMMARY
+      #     echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+      #     echo "| Code Coverage % | ${{ steps.jacoco_reporter.outputs.coverage_percentage }} |" >> $GITHUB_STEP_SUMMARY
+      #     echo "| :heavy_check_mark: Number of Lines Covered | ${{ steps.jacoco_reporter.outputs.covered_lines }} |" >> $GITHUB_STEP_SUMMARY
+      #     echo "| :x: Number of Lines Missed | ${{ steps.jacoco_reporter.outputs.missed_lines }} |" >> $GITHUB_STEP_SUMMARY
+      #     echo "| Total Number of Lines | ${{ steps.jacoco_reporter.outputs.total_lines }} |" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload code coverage artifacts
         uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report-markdown
-          path: */coverage-results.md 
+          path: "*/coverage-results.md"
           retention-days: 1
