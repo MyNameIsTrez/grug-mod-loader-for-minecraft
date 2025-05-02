@@ -111,10 +111,6 @@ minecraft {
         // By default, the server will crash when no gametests are provided.
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
-            jvmArgs = [
-                "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameTests"
-            ]
-
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
             // "SCAN": For mods scan.
@@ -244,6 +240,23 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+// Modify the jvmArgs for the runGameTestServer task if jacocoTestReport is in the task graph
+gradle.taskGraph.whenReady { taskGraph ->
+    // Check if jacocoTestReport is part of the task graph
+    if (taskGraph.hasTask(':jacocoTestReport')) {
+        
+        // Iterate over all tasks in the task graph to find the runGameTestServer task
+        taskGraph.allTasks.each { task ->
+            if (task.name == 'runGameTestServer') {
+                // Add the Jacoco agent to the jvmArgs for runGameTestServer
+                task.jvmArgs = [
+                    "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameTests"
+                ]
+            }
+        }
+    }
 }
 
 jacocoTestReport {
