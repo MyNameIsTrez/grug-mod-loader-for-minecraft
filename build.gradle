@@ -261,5 +261,17 @@ gradle.taskGraph.whenReady { taskGraph ->
 
 jacocoTestReport {
     dependsOn downloadJacocoJar
+
     dependsOn 'runGameTestServer'
+
+    // Only include GameTests in the coverage report
+    afterEvaluate {
+        jacocoTestReport {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, includes: [
+                    'com/example/examplemod/GameTests.class'
+                ])
+            }))
+        }
+    }
 }
