@@ -118,32 +118,18 @@ minecraft {
                 "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameTests"
                 // "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=GameTests"
             ]
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
             property 'forge.enabledGameTestNamespaces', mod_id
         }
-        // gameTestServer {
-        //     workingDirectory project.file('run')
-
-        //     // Recommended logging data for a userdev environment
-        //     // The markers can be added/remove as needed separated by commas.
-        //     // "SCAN": For mods scan.
-        //     // "REGISTRIES": For firing of registry events.
-        //     // "REGISTRYDUMP": For getting the contents of all registries.
-        //     property 'forge.logging.markers', 'REGISTRIES'
-
-        //     // Recommended logging level for the console
-        //     // You can set various levels here.
-        //     // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-        //     property 'forge.logging.console.level', 'debug'
-
-        //     // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        //     property 'forge.enabledGameTestNamespaces', mod_id
-
-        //     mods {
-        //         examplemod {
-        //             source sourceSets.main
-        //         }
-        //     }
-        // }
 
         data {
             // example of overriding the workingDirectory set in configureEach above
@@ -264,155 +250,20 @@ sourceSets.each {
     it.java.destinationDirectory = dir
 }
 
-// jacoco {
-//     toolVersion = "0.8.13"
-//     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-// }
-
-// tasks.named('runGameTestServer') {
-//     dependsOn 'testClasses'
-// }
-
-//// Suggestion 1:
-
-// tasks.register('runGameTestsWithCoverage') {
-//     dependsOn 'runGameTestServer' // Ensure tests are run first
-//     doLast {
-//         println 'before'
-//         jacocoTestReport
-//         println 'after'
-//     }
-// }
-
-// // Ensure JaCoCo is hooked into the runGameTestServer task
-// jacocoTestReport {
-//     dependsOn 'runGameTestServer' // Ensure it runs after the test task
-//     reports {
-//         xml {
-//             destination = file("build/jacoco.xml") // Output location for XML
-//         }
-//         html {
-//             destination = file("build/jacocoHtml") // Output location for HTML
-//         }
-//     }
-// }
-
-//// Suggestion 2:
-
-// Dynamically hook JaCoCo report after `runGameTestServer` is created
-// tasks.whenTaskAdded { task ->
-//     if (task.name == 'runGameTestServer') {
-//         task.finalizedBy jacocoTestReport // Ensure JaCoCo report runs after tests
-//     }
-// }
-
-// tasks.register('runGameTestsWithCoverage') {
-//     dependsOn 'runGameTestServer' // Ensure the tests run first
-//     doLast {
-//         println 'before'
-//         // Trigger Jacoco report generation after the tests are complete
-//         jacocoTestReport
-//         println 'after'
-//     }
-// }
-
-// // Ensure JaCoCo is properly hooked into the game test server task
-// jacocoTestReport {
-//     dependsOn 'runGameTestServer' // Ensure it runs after the test task
-//     reports {
-//         xml {
-//             destination = file("build/jacoco.xml") // Output location for XML
-//         }
-//         html {
-//             destination = file("build/jacocoHtml") // Output location for HTML
-//         }
-//     }
-// }
-
-//// My idea:
-
-// jacocoTestReport {
-//     dependsOn gameTestServer
-// }
-
-// test {
-//     dependsOn 'runGameTestServer'
-//     finalizedBy jacocoTestReport // report is always generated after tests run
-// }
-
-// jacocoTestReport {
-//     dependsOn test // tests are required to run before generating the report
-// }
-
-// task runWithCoverage(type: JavaExec) {
-//     dependsOn 'runGameTestServer'
-
-//     // main = 'com.example.examplemod.GameTests'
-//     // classpath = sourceSets.main.runtimeClasspath
-
-//     // main = 'net.minecraft.server.Main'
-//     // classpath = sourceSets.main.runtimeClasspath
-
-//     // jvmArgs = ['-javaagent:/home/trez/Downloads/wowi/jacocoagent.jar=destfile=build/jacoco/test.exec']
-// }
-
-// jacocoTestReport {
-//     dependsOn 'runGameTestServer'
-
-//     // Only include GameTests in the coverage report
-//     afterEvaluate {
-//         jacocoTestReport {
-//             classDirectories.setFrom(files(classDirectories.files.collect {
-//                 fileTree(dir: it, includes: [
-//                     'com/example/examplemod/GameTests.class'
-//                 ])
-//             }))
-//         }
-//     }
-// }
-
-// task jacocoGameTest(type: JavaExec) {
-//     classpath = sourceSets.main.runtimeClasspath
-//     main = "net.minecraftforge.gradle.GradleStart"  // This ensures the Forge environment is set up
-
-//     // Apply the JaCoCo agent *only* for this task
-//     jvmArgs = [
-//         '-javaagent:/home/trez/Downloads/wowi/jacocoagent.jar=destfile=build/jacoco/test.exec'
-//     ]
-    
-//     // Set the main class for running the tests (adjust if necessary)
-//     args = ['--gameTest', '--gameTestNamespace', mod_id]
-// }
-
-// jacocoTestReport {
-//     dependsOn jacocoGameTest
-//     // Optionally, add custom reports or additional configurations if necessary
-// }
-
-//// Final version:
-// tasks.register('runGameTestsWithCoverage') {
-//     dependsOn 'runGameTestServer'
-// }
-
-// jacocoTestReport {
-//     dependsOn runGameTestsWithCoverage
-// }
-
-//// Final version 2:
 tasks.register('runGameTestsWithCoverage') {
-    dependsOn download
     dependsOn 'runGameTestServer'
 }
 
-// task foo(type: JavaExec) {
-//     jvmArgs = [
-//         '-javaagent:/home/trez/Downloads/wowi/jacocoagent.jar=destfile=build/jacoco/test.exec,includes=com/example/examplemod/App'
-//     ]
-//     main = 'com.example.examplemod.App'
-//     classpath = sourceSets.main.runtimeClasspath
-// }
+task foo(type: JavaExec) {
+    jvmArgs = [
+        "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/App"
+    ]
+    main = 'com.example.examplemod.App'
+    classpath = sourceSets.main.runtimeClasspath
+}
 
 jacocoTestReport {
-    // dependsOn foo
+    dependsOn download
+    dependsOn foo
     dependsOn runGameTestsWithCoverage
 }
