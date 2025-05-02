@@ -36,7 +36,7 @@ jobs:
       - name: Run the tests
         run: ./gradlew jacocoTestReport
 
-      # Generates coverage-report.md and publishes as checkrun
+      # Generates coverage-results.md
       - name: JaCoCo code coverage report
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v5.0
@@ -50,24 +50,11 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: false
 
-      # TODO: Add back!
-      # - name: Add JaCoCo report to workflow run summary
-      #   run: |
-      #     echo "| Outcome | Value |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| Code Coverage % | ${{ steps.jacoco_reporter.outputs.coverage_percentage }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| :heavy_check_mark: Number of Lines Covered | ${{ steps.jacoco_reporter.outputs.covered_lines }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| :x: Number of Lines Missed | ${{ steps.jacoco_reporter.outputs.missed_lines }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| Total Number of Lines | ${{ steps.jacoco_reporter.outputs.total_lines }} |" >> $GITHUB_STEP_SUMMARY
-
-      # TODO: Consider removing
-      - name: Get the coverage info
+      - name: Add JaCoCo report to workflow run summary
         run: |
-          echo "Total coverage coverage-overall ${{ steps.jacoco.outputs.coverage-overall }}"
-          echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
-          echo "Coverage coveragePercentage ${{ steps.jacoco_reporter.outputs.coveragePercentage }}"
-          echo "Coverage coveragePercentageString ${{ steps.jacoco_reporter.outputs.coveragePercentageString }}"
-
-      # TODO: Consider removing
-      - name: Publish coverage workflow build summary
-        run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+          echo "| Outcome | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Coverage % | ${{ steps.jacoco_reporter.outputs.coverage_percentage }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| :heavy_check_mark: Number of Lines Covered | ${{ steps.jacoco_reporter.outputs.covered_lines }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| :x: Number of Lines Missed | ${{ steps.jacoco_reporter.outputs.missed_lines }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Number of Lines | ${{ steps.jacoco_reporter.outputs.total_lines }} |" >> $GITHUB_STEP_SUMMARY
