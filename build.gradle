@@ -266,9 +266,10 @@ jacocoTestReport {
 
     // CSV is for jacoco-badge-generator, in .github/workflows/build.yml
     // XML is for jacoco-reporter, in .github/workflows/build.yml
+    // TODO: If jacoco-reporter is not used anymore, stop outputting XML here
     reports {
         csv.required = true
-        xml.required = true
+        // xml.required = true
     }
 
     // Only include GameFunctions.java in the coverage report

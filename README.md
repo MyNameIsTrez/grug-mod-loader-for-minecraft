@@ -1,6 +1,7 @@
 # grug-toys
 
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
+[![Branches](.github/badges/branches.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
 
 This is the first Minecraft mod written in grug, and serves as a testing ground.
 
