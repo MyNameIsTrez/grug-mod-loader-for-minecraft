@@ -10,6 +10,7 @@ jobs:
     # Required for the "JaCoCo code coverage report" step below to not cause an error
     permissions:
       checks: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
