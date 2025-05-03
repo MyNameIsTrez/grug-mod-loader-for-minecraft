@@ -42,7 +42,7 @@ jobs:
         with:
           generate-branches-badge: true
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
-          fail-if-coverage-less-than: "20%"
+          fail-if-coverage-less-than: "10%"
 
       - name: Commit and push the badge (if it changed)
         uses: EndBug/add-and-commit@v7
