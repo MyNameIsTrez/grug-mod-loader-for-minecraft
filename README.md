@@ -1,13 +1,11 @@
-# grug-toys
+# grug mod loader for Minecraft
 
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
 [![Branches](.github/badges/branches.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
 
-This is the first Minecraft mod written in grug, and serves as a testing ground.
+This is the grug mod loader for Minecraft. See [my blog post](https://mynameistrez.github.io/2024/02/29/creating-the-perfect-modding-language.html) for an introduction to the grug modding language.
 
-See [my blog post](https://mynameistrez.github.io/2024/02/29/creating-the-perfect-modding-language.html) for an introduction to the grug modding language.
-
-The mod is written for [Minecraft Forge - MC 1.20.6](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.6.html), specifically the recommended `forge-1.20.6-50.1.0-mdk.zip` version.
+This grug mod loader is written for [Minecraft Forge - MC 1.20.6](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.6.html) (specifically `forge-1.20.6-50.1.0-mdk.zip`).
 
 ## Building this mod
 
