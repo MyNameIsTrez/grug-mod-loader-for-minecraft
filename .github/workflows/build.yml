@@ -37,44 +37,12 @@ jobs:
       - name: Run the tests
         run: ./gradlew jacocoTestReport
 
-      # TODO: Remove, if jacoco-badge-generator does this job better
-      # # Generates coverage-results.md
-      # - name: JaCoCo code coverage report
-      #   id: jacoco_reporter
-      #   uses: PavanMudigonda/jacoco-reporter@v5.0
-      #   with:
-      #     coverage_results_path: build/reports/jacoco/test/jacocoTestReport.xml
-      #     coverage_report_name: Coverage
-      #     coverage_report_title: JaCoCo
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     skip_check_run: false
-      #     minimum_coverage: 10
-      #     fail_below_threshold: true
-      #     publish_only_summary: false
-
-      # TODO: Remove, if jacoco-badge-generator does this job better
-      # - name: Add JaCoCo report to workflow run summary
-      #   run: |
-      #     echo "| Outcome | Value |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| Code Coverage % | ${{ steps.jacoco_reporter.outputs.coverage_percentage }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| :heavy_check_mark: Number of Lines Covered | ${{ steps.jacoco_reporter.outputs.covered_lines }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| :x: Number of Lines Missed | ${{ steps.jacoco_reporter.outputs.missed_lines }} |" >> $GITHUB_STEP_SUMMARY
-      #     echo "| Total Number of Lines | ${{ steps.jacoco_reporter.outputs.total_lines }} |" >> $GITHUB_STEP_SUMMARY
-
       - name: Generate JaCoCo badge
         uses: cicirello/jacoco-badge-generator@v2
         with:
-          # TODO: If I don't like the branches badge, remove this line
           generate-branches-badge: true
-
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
 
-      - name: Log coverage percentage
-        run: |
-          echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-          echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-  
       - name: Commit and push the badge (if it changed)
         uses: EndBug/add-and-commit@v7
         with:
