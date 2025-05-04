@@ -24,6 +24,4 @@ If you get `Exception in thread "main" java.lang.reflect.InvocationTargetExcepti
 
 ## Running the tests
 
-Run `./gradlew runGameTestServer`.
-
-You can instead run `./gradlew jacocoTestReport` if you also want a game function coverage report.
+Run `./gradlew jacocoTestReport` if you also want to generate a coverage report, and `./gradlew runGameTestServer` if you don't.
