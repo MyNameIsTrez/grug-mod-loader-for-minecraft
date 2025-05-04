@@ -794,16 +794,16 @@ class GameFunctions {
         GrugModLoader.logger.debug("hash_set_add(hashSetId={}, valueId={})", hashSetId, valueId);
 
         HashSet<Long> hashSet;
+        HashMap<Object, Long> objects;
         try {
             hashSet = GrugModLoader.grug.getHashSet(hashSetId);
+            objects = Grug.getHashSetObjects(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("hash_set_add", assertEntityTypeException.getMessage());
             return;
         }
 
         Object valueObject = GrugModLoader.grug.getObject(valueId);
-
-        HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
 
         if (!objects.containsKey(valueObject)) {
             long newValueId = Grug.addEntity(Grug.getEntityType(valueId), valueObject);
@@ -822,8 +822,10 @@ class GameFunctions {
         GrugModLoader.logger.debug("hash_set_clear(hashSetId={})", hashSetId);
 
         HashSet<Long> hashSet;
+        HashMap<Object, Long> objects;
         try {
             hashSet = GrugModLoader.grug.getHashSet(hashSetId);
+            objects = Grug.getHashSetObjects(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("hash_set_clear", assertEntityTypeException.getMessage());
             return;
@@ -841,7 +843,7 @@ class GameFunctions {
 
         Grug.removeEntities(hashSet);
         hashSet.clear();
-        Grug.getHashSetObjects(hashSetId).clear();
+        objects.clear();
     }
 
     public static void hash_set_copy(long hashSetFromId, long hashSetToId) {
@@ -849,9 +851,11 @@ class GameFunctions {
 
         HashSet<Long> hashSetFrom;
         HashSet<Long> hashSetTo;
+        HashMap<Object, Long> hashSetToObjects;
         try {
             hashSetFrom = GrugModLoader.grug.getHashSet(hashSetFromId);
             hashSetTo = GrugModLoader.grug.getHashSet(hashSetToId);
+            hashSetToObjects = Grug.getHashSetObjects(hashSetToId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("hash_set_copy", assertEntityTypeException.getMessage());
             return;
@@ -869,8 +873,6 @@ class GameFunctions {
 
         Grug.removeEntities(hashSetTo);
         hashSetTo.clear();
-
-        HashMap<Object, Long> hashSetToObjects = Grug.getHashSetObjects(hashSetToId);
         hashSetToObjects.clear();
 
         for (Long valueId : hashSetFrom) {
@@ -911,8 +913,10 @@ class GameFunctions {
         GrugModLoader.logger.debug("hash_set_remove(hashSetId={}, valueId={})", hashSetId, valueId);
 
         HashSet<Long> hashSet;
+        HashMap<Object, Long> objects;
         try {
             hashSet = GrugModLoader.grug.getHashSet(hashSetId);
+            objects = Grug.getHashSetObjects(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("hash_set_remove", assertEntityTypeException.getMessage());
             return;
@@ -920,8 +924,6 @@ class GameFunctions {
 
         Object valueObject = GrugModLoader.grug.getObject(valueId);
         assert valueObject != null;
-
-        HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
 
         Long realValueId = objects.get(valueObject);
         if (realValueId == null) {
@@ -1268,7 +1270,14 @@ class GameFunctions {
     public static int unbox_i32(long box) {
         GrugModLoader.logger.debug("unbox_i32(box={})", box);
 
-        int unboxedI32 = GrugModLoader.grug.getBoxedI32(box);
+        int unboxedI32;
+        try {
+            unboxedI32 = GrugModLoader.grug.getBoxedI32(box);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.gameFunctionErrorHappened("unbox_i32", assertEntityTypeException.getMessage());
+            return -1;
+        }
+
         GrugModLoader.logger.debug("Returning {}", unboxedI32);
         return unboxedI32;
     }

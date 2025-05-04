@@ -522,7 +522,14 @@ public class GameTests {
 
         helper.assertTrue(Grug.globalEntities.contains(hashSetId), "Grug.globalEntities did not contain hashSetId " + hashSetId);
 
-        HashMap<Object, Long> objects = Grug.getHashSetObjects(hashSetId);
+        HashMap<Object, Long> objects;
+        try {
+            objects = Grug.getHashSetObjects(hashSetId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            // Unreachable
+            helper.fail(assertEntityTypeException.getMessage());
+            return;
+        }
 
         Object box1Object = GrugModLoader.grug.getObject(box1);
         helper.assertTrue(box1Object != null, "box1Object was not supposed to be null");
