@@ -1070,7 +1070,9 @@ class GameFunctions {
 
             Entry<Long, Long> entry;
             try {
-                entry = (Entry<Long, Long>)grugIterator.iterator.next();
+                @SuppressWarnings("unchecked")
+                Entry<Long, Long> localEntry = (Entry<Long, Long>)grugIterator.iterator.next();
+                entry = localEntry;
             } catch (ConcurrentModificationException err) {
                 Grug.gameFunctionErrorHappened("iteration", "the iterable was modified during iteration");
                 return -1;
