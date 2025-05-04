@@ -294,11 +294,11 @@ class GameFunctions {
     public static long get_block_state(long blockPosId, long levelId) {
         GrugModLoader.logger.debug("get_block_state(blockPosId={}, levelId={})", blockPosId, levelId);
 
-        Level level;
         BlockPos blockPos;
+        Level level;
         try {
-            level = GrugModLoader.grug.getLevel(levelId);
             blockPos = GrugModLoader.grug.getBlockPos(blockPosId);
+            level = GrugModLoader.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_block_state", assertEntityTypeException.getMessage());
             return -1;
