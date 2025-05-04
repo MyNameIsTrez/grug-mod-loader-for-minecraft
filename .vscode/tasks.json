@@ -94,7 +94,7 @@
         "grug-adapter-for-java/generate.py",
         "mod_api.json",
         "adapter.c",
-        "com/example/examplemod",
+        "grug/grugmodloader",
         "Grug"
       ],
       "problemMatcher": [],

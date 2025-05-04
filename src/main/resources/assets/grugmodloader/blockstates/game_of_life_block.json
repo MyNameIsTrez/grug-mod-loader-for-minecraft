@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "grugmodloader:block/game_of_life_block"
+        }
+    }
+}

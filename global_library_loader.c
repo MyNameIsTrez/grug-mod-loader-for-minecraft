@@ -3,7 +3,7 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 
-JNIEXPORT void JNICALL Java_com_example_examplemod_Grug_loadGlobalLibraries(JNIEnv *javaEnv, jobject javaObject) {
+JNIEXPORT void JNICALL Java_grug_grugmodloader_Grug_loadGlobalLibraries(JNIEnv *javaEnv, jobject javaObject) {
     (void)javaEnv;
     (void)javaObject;
 

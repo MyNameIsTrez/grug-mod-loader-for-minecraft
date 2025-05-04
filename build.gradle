@@ -246,13 +246,12 @@ sourceSets.each {
 gradle.taskGraph.whenReady { taskGraph ->
     // Check if jacocoTestReport is part of the task graph
     if (taskGraph.hasTask(':jacocoTestReport')) {
-        
         // Iterate over all tasks in the task graph to find the runGameTestServer task
         taskGraph.allTasks.each { task ->
             if (task.name == 'runGameTestServer') {
                 // Add the Jacoco agent to the jvmArgs for runGameTestServer
                 task.jvmArgs = [
-                    "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=com/example/examplemod/GameFunctions"
+                    "-javaagent:" + buildDir + "/lib/org.jacoco.agent-0.8.12-runtime.jar=destfile=" + buildDir + "/jacoco/test.exec,includes=grug/grugmodloader/GameFunctions"
                 ]
             }
         }
@@ -274,7 +273,7 @@ jacocoTestReport {
         jacocoTestReport {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, includes: [
-                    'com/example/examplemod/GameFunctions.class'
+                    'grug/grugmodloader/GameFunctions.class'
                 ])
             }))
         }

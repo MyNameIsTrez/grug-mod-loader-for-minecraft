@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "": {
-            "model": "examplemod:block/game_of_life_block"
-        }
-    }
-}

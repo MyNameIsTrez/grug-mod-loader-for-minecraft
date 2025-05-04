@@ -8,7 +8,7 @@
       "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run",
-      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dexamplemod -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
+      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dgrugmodloader -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
       "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
@@ -24,7 +24,7 @@
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run-data",
       "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Djava.net.preferIPv6Addresses\u003dsystem",
-      "args": "--launchTarget forge_userdev_data --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir . --mod examplemod --all --output /home/trez/Programming/grug-toys/src/generated/resources --existing /home/trez/Programming/grug-toys/src/main/resources",
+      "args": "--launchTarget forge_userdev_data --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir . --mod grugmodloader --all --output /home/trez/Programming/grug-toys/src/generated/resources --existing /home/trez/Programming/grug-toys/src/main/resources",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
         "MCP_MAPPINGS": "official_1.20.6"
@@ -38,7 +38,7 @@
       "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run",
-      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dexamplemod -Djava.net.preferIPv6Addresses\u003dsystem",
+      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dgrugmodloader -Djava.net.preferIPv6Addresses\u003dsystem",
       "args": "--launchTarget forge_userdev_server_gametest --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
@@ -53,7 +53,7 @@
       "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
       "projectName": "grug-toys",
       "cwd": "${workspaceFolder}/run",
-      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dexamplemod -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
+      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level\u003ddebug -Dforge.logging.markers\u003dREGISTRIES -Dforge.enabledGameTestNamespaces\u003dgrugmodloader -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
       "args": "--launchTarget forge_userdev_server --gameDir . --nogui",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
@@ -65,7 +65,7 @@
         "name": "Run generate.py",
         "type": "debugpy",
         "request": "launch",
-        "program": "${workspaceRoot}/src/main/java/com/example/examplemod/grug-adapter-for-java/generate.py",
+        "program": "${workspaceRoot}/src/main/java/grug/grugmodloader/grug-adapter-for-java/generate.py",
         "args": [
             "mod_api.json",
             "generated_adapter.c"

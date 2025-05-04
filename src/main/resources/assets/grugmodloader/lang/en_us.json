@@ -1,0 +1,5 @@
+{
+    "item.grugmodloader.example_item": "Example Item",
+    "block.grugmodloader.foo_block": "Foo Block",
+    "block.grugmodloader.game_of_life_block": "Game of Life Block"
+}

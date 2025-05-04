@@ -29,7 +29,7 @@ jobs:
         run: gcc global_library_loader.c -o src/main/resources/natives/libglobal_library_loader.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux
 
       - name: Regenerate adapter.c
-        run: python3 grug-adapter-for-java/generate.py mod_api.json adapter.c com/example/examplemod Grug
+        run: python3 grug-adapter-for-java/generate.py mod_api.json adapter.c grug/grugmodloader Grug
 
       - name: Compile libadapter.so
         run: gcc adapter.c -o src/main/resources/natives/libadapter.so -shared -fPIC -Wall -Wextra -Werror -Wpedantic -Wshadow -Wfatal-errors -g -I/usr/lib/jvm/temurin-17-jdk-amd64/include -I/usr/lib/jvm/temurin-17-jdk-amd64/include/linux

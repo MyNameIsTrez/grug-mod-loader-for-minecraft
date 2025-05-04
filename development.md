@@ -2,7 +2,7 @@
 
 ## Getting JNI method signature
 
-To get the JNI signature of a method located in say `Grug.java`, use `javap -s bin/main/com/example/examplemod/Grug.class`.
+To get the JNI signature of a method located in say `Grug.java`, use `javap -s bin/main/grug/grugmodloader/Grug.class`.
 
 To get the full signature, copy the method to a new `foo.java` file:
 
