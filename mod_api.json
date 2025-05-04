@@ -289,7 +289,7 @@
 			"return_type": "string",
 			"arguments": [
 				{
-					"name": "id",
+					"name": "item",
 					"type": "id"
 				}
 			]
@@ -299,7 +299,7 @@
 			"return_type": "string",
 			"arguments": [
 				{
-					"name": "id",
+					"name": "item_entity",
 					"type": "id"
 				}
 			]
@@ -309,7 +309,7 @@
 			"return_type": "string",
 			"arguments": [
 				{
-					"name": "id",
+					"name": "item_stack",
 					"type": "id"
 				}
 			]
@@ -319,7 +319,7 @@
 			"return_type": "string",
 			"arguments": [
 				{
-					"name": "id",
+					"name": "level",
 					"type": "id"
 				}
 			]

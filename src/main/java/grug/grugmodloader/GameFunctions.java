@@ -397,12 +397,12 @@ class GameFunctions {
         return str;
     }
 
-    public static String get_item_name(long id) {
-        GrugModLoader.logger.debug("get_item_name(id={})", id);
+    public static String get_item_name(long itemId) {
+        GrugModLoader.logger.debug("get_item_name(itemId={})", itemId);
 
         Item item;
         try {
-            item = GrugModLoader.grug.getItem(id);
+            item = GrugModLoader.grug.getItem(itemId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_item_name", assertEntityTypeException.getMessage());
             return "";
@@ -413,12 +413,12 @@ class GameFunctions {
         return name;
     }
 
-    public static String get_item_entity_name(long id) {
-        GrugModLoader.logger.debug("get_item_entity_name(id={})", id);
+    public static String get_item_entity_name(long itemEntityId) {
+        GrugModLoader.logger.debug("get_item_entity_name(itemEntityId={})", itemEntityId);
 
         String name;
         try {
-            name = GrugModLoader.grug.getItemEntity(id).getName().getString();
+            name = GrugModLoader.grug.getItemEntity(itemEntityId).getName().getString();
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_item_entity_name", assertEntityTypeException.getMessage());
             return "";
@@ -428,12 +428,12 @@ class GameFunctions {
         return name;
     }
 
-    public static String get_item_stack_name(long id) {
-        GrugModLoader.logger.debug("get_item_stack_name(id={})", id);
+    public static String get_item_stack_name(long itemStackId) {
+        GrugModLoader.logger.debug("get_item_stack_name(itemStackId={})", itemStackId);
 
         ItemStack itemStack;
         try {
-            itemStack = GrugModLoader.grug.getItemStack(id);
+            itemStack = GrugModLoader.grug.getItemStack(itemStackId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_item_stack_name", assertEntityTypeException.getMessage());
             return "";
@@ -448,12 +448,12 @@ class GameFunctions {
         return name;
     }
 
-    public static String get_level_name(long id) {
-        GrugModLoader.logger.debug("get_level_name(id={})", id);
+    public static String get_level_name(long levelId) {
+        GrugModLoader.logger.debug("get_level_name(levelId={})", levelId);
 
         Level level;
         try {
-            level = GrugModLoader.grug.getLevel(id);
+            level = GrugModLoader.grug.getLevel(levelId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_level_name", assertEntityTypeException.getMessage());
             return "";
@@ -464,12 +464,12 @@ class GameFunctions {
         return name;
     }
 
-    public static String get_resource_location_string(long id) {
-        GrugModLoader.logger.debug("get_resource_location_string(id={})", id);
+    public static String get_resource_location_string(long resourceLocationId) {
+        GrugModLoader.logger.debug("get_resource_location_string(resourceLocationId={})", resourceLocationId);
 
         ResourceLocation resourceLocation;
         try {
-            resourceLocation = GrugModLoader.grug.getResourceLocation(id);
+            resourceLocation = GrugModLoader.grug.getResourceLocation(resourceLocationId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_resource_location_string", assertEntityTypeException.getMessage());
             return "";
@@ -480,12 +480,12 @@ class GameFunctions {
         return str;
     }
 
-    public static float get_vec3_x(long id) {
-        GrugModLoader.logger.debug("get_vec3_x(id={})", id);
+    public static float get_vec3_x(long vec3Id) {
+        GrugModLoader.logger.debug("get_vec3_x(vec3Id={})", vec3Id);
 
         float x;
         try {
-            x = (float)GrugModLoader.grug.getVec3(id).x();
+            x = (float)GrugModLoader.grug.getVec3(vec3Id).x();
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_vec3_x", assertEntityTypeException.getMessage());
             return -1;
@@ -495,12 +495,12 @@ class GameFunctions {
         return x;
     }
 
-    public static float get_vec3_y(long id) {
-        GrugModLoader.logger.debug("get_vec3_y(id={})", id);
+    public static float get_vec3_y(long vec3Id) {
+        GrugModLoader.logger.debug("get_vec3_y(vec3Id={})", vec3Id);
 
         float y;
         try {
-            y = (float)GrugModLoader.grug.getVec3(id).y();
+            y = (float)GrugModLoader.grug.getVec3(vec3Id).y();
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_vec3_y", assertEntityTypeException.getMessage());
             return -1;
@@ -510,12 +510,12 @@ class GameFunctions {
         return y;
     }
 
-    public static float get_vec3_z(long id) {
-        GrugModLoader.logger.debug("get_vec3_z(id={})", id);
+    public static float get_vec3_z(long vec3Id) {
+        GrugModLoader.logger.debug("get_vec3_z(vec3Id={})", vec3Id);
 
         float z;
         try {
-            z = (float)GrugModLoader.grug.getVec3(id).z();
+            z = (float)GrugModLoader.grug.getVec3(vec3Id).z();
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_vec3_z", assertEntityTypeException.getMessage());
             return -1;
