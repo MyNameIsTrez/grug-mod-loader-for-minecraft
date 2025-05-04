@@ -348,24 +348,25 @@ public class Grug {
     }
 
     public static void newHashMapObjects(long hashMapId) {
-        GrugModLoader.logger.debug("newHashMapObjects(id={})", hashMapId);
+        GrugModLoader.logger.debug("newHashMapObjects(hashMapId={})", hashMapId);
         allHashMapObjects.put(hashMapId, new HashMap<>());
     }
 
     public static void newHashSetObjects(long hashSetId) {
-        GrugModLoader.logger.debug("newHashSetObjects(id={})", hashSetId);
+        GrugModLoader.logger.debug("newHashSetObjects(hashSetId={})", hashSetId);
         allHashSetObjects.put(hashSetId, new HashMap<>());
     }
 
-    public static HashMap<Object, Long> getHashMapObjects(long hashMapId) {
-        GrugModLoader.logger.debug("getHashMapObjects(id={})", hashMapId);
+    public static HashMap<Object, Long> getHashMapObjects(long hashMapId) throws AssertEntityTypeException {
+        GrugModLoader.logger.debug("getHashMapObjects(hashMapId={})", hashMapId);
+        assertEntityType(hashMapId, EntityType.HashMap);
         HashMap<Object, Long> objects = allHashMapObjects.get(hashMapId);
         assert objects != null;
         return objects;
     }
 
     public static HashMap<Object, Long> getHashSetObjects(long hashSetId) throws AssertEntityTypeException {
-        GrugModLoader.logger.debug("getHashSetObjects(id={})", hashSetId);
+        GrugModLoader.logger.debug("getHashSetObjects(hashSetId={})", hashSetId);
         HashMap<Object, Long> objects = allHashSetObjects.get(hashSetId);
         if (objects == null) {
             assertEntityType(hashSetId, EntityType.HashSet);

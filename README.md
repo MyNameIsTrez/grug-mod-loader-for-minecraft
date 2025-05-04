@@ -3,9 +3,11 @@
 [![Coverage](.github/badges/jacoco.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
 [![Branches](.github/badges/branches.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
 
-This is the grug mod loader for Minecraft 1.20.6, for Minecraft Forge [50.1.0](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.6.html).
+This is the grug mod loader for Minecraft.
 
 See [my blog post](https://mynameistrez.github.io/2024/02/29/creating-the-perfect-modding-language.html) for an introduction to the grug modding language.
+
+This mod currently only works in Minecraft 1.20.6, for Minecraft Forge [50.1.0](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.6.html).
 
 ## Building this mod
 
