@@ -14,39 +14,39 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 // TODO: Add these tests:
 // destroy_and_drop_block
-// destroy_and_drop_block_error_expected_block_pos
-// destroy_and_drop_block_error_expected_level
+// destroy_and_drop_block_expected_block_pos
+// destroy_and_drop_block_expected_level
 // entry_key
-// entry_key_error_expected_entry
+// entry_key_expected_entry
 // entry_set_value
-// entry_set_value_error_expected_entry
+// entry_set_value_expected_entry
 // entry_value
-// entry_value_error_expected_entry
+// entry_value_expected_entry
 // get_block_entity_level
-// get_block_entity_level_error_expected_block_entity
+// get_block_entity_level_expected_block_entity
 // get_block_pos_above
-// get_block_pos_above_error_expected_block_pos
+// get_block_pos_above_expected_block_pos
 // get_block_pos_above_n
-// get_block_pos_above_n_error_expected_block_pos
+// get_block_pos_above_n_expected_block_pos
 // get_block_pos_center
-// get_block_pos_center_error_expected_block_pos
+// get_block_pos_center_expected_block_pos
 // get_block_pos_x
-// get_block_pos_x_error_expected_block_pos
+// get_block_pos_x_expected_block_pos
 // get_block_pos_y
-// get_block_pos_y_error_expected_block_pos
+// get_block_pos_y_expected_block_pos
 // get_block_pos_z
-// get_block_pos_z_error_expected_block_pos
+// get_block_pos_z_expected_block_pos
 // get_block_state
-// get_block_state_error_expected_block_pos
-// get_block_state_error_expected_level
+// get_block_state_expected_block_pos
+// get_block_state_expected_level
 // get_default_block_state
-// get_default_block_state_error_expected_block
+// get_default_block_state_expected_block
 // get_hash_map_size
-// get_hash_map_size_error_expected_hash_map
+// get_hash_map_size_expected_hash_map
 // get_hash_map_string
-// get_hash_map_string_error_expected_hash_map
+// get_hash_map_string_expected_hash_map
 // get_hash_set_size
-// get_hash_set_size_error_expected_hash_set
+// get_hash_set_size_expected_hash_set
 // get_hash_set_string
 // get_hash_set_string_expected_hash_set
 // get_item_name
@@ -124,7 +124,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 // iteration_hash_map
 // iteration_hash_map_grug_entry_stored_in_global
 // iteration_hash_set
-// iterator_error_expected_iterable
+// iterator_expected_iterable
 // iterator_hash_map
 // iterator_hash_set
 // iterator_remove
@@ -187,7 +187,6 @@ public class GameTests {
         helper.succeed();
     }
 
-
     /*
     This Java function should eventually be replaced with this rough grug equivalent:
     ```grug
@@ -202,7 +201,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void block_error_expected_resource_location(GameTestHelper helper) {
+    public static void block_expected_resource_location(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -388,7 +387,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void destroy_block_error_expected_block_pos(GameTestHelper helper) {
+    public static void destroy_block_expected_block_pos(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -440,7 +439,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void destroy_block_error_expected_level(GameTestHelper helper) {
+    public static void destroy_block_expected_level(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -595,7 +594,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add_error_expected_hash_set(GameTestHelper helper) {
+    public static void hash_set_add_expected_hash_set(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -770,7 +769,7 @@ public class GameTests {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_has_error_expected_hash_set(GameTestHelper helper) {
+    public static void hash_set_has_expected_hash_set(GameTestHelper helper) {
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
