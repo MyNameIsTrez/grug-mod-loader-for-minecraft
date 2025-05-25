@@ -20,6 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 // entry_key_expected_entry
 // entry_set_value
 // entry_set_value_expected_entry
+// entry_set_value_global
 // entry_value
 // entry_value_expected_entry
 // get_block_entity_level
@@ -86,6 +87,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 // hash_map_put
 // hash_map_put_expected_hash_map
 // hash_map_put_existing_key
+// hash_map_put_existing_key_global
+// hash_map_put_global
 // hash_map_put_other_hash_map
 // hash_map_remove_key
 // hash_map_remove_key_expected_hash_map
@@ -125,6 +128,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 // iteration_hash_map_grug_entry_stored_in_global
 // iteration_hash_set
 // iterator_expected_iterable
+// iterator_global
 // iterator_hash_map
 // iterator_hash_set
 // iterator_remove

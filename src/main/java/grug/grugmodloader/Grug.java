@@ -34,7 +34,7 @@ public class Grug {
 
     private native void initGrugAdapter();
 
-    private native boolean grugInit(String modApiJsonPath, String modsDirPath, long onFnTimeLimitMs);
+    private native boolean grugInit(String modApiJsonPath, String modsDirPath, String dllDirPath, long onFnTimeLimitMs);
 
     private native void setOnFnsToFastMode();
 
@@ -110,7 +110,7 @@ public class Grug {
 
         initGrugAdapter();
 
-        if (grugInit("../mod_api.json", "../mods", 10000)) {
+        if (grugInit("../mod_api.json", "../mods", "mod_dlls", 10000)) {
             throw new RuntimeException("grugInit() error: " + errorMsg() + " (detected by grug.c:" + errorGrugCLineNumber() + ")");
         }
 
