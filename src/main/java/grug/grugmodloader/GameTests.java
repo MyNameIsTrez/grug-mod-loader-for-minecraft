@@ -156,7 +156,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 // spawn_entity
 // spawn_entity_expected_entity
 // spawn_entity_expected_level
-// unbox_i32
 // unbox_i32_expected_boxed_i32
 // vec3_zero
 
@@ -304,7 +303,7 @@ public class GameTests {
 
         Grug.fnEntities = new HashSet<>();
 
-        long box = GameFunctions.box_i32(0);
+        long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
 
         helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain box " + box);
@@ -783,6 +782,34 @@ public class GameTests {
         helper.assertFalse(GameFunctions.hash_set_has(box, box), "hash_set_has() was expected to return false");
 
         helper.assertTrue(Grug.gameFunctionError.equals("hash_set_has(): Expected hash_set, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+
+        helper.succeed();
+    }
+
+    /*
+    This Java function should eventually be replaced with this rough grug equivalent:
+    ```grug
+    on_a() {
+        box: id = box_i32(1)
+
+        assert_fn_entities_contains(box)
+
+        assert(unbox_i32(box) == 1)
+    }
+    ```
+    */
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void unbox_i32(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long box = GameFunctions.box_i32(1);
+        helper.assertTrue(box != -1, "Invalid box " + box);
+
+        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain box " + box);
+
+        helper.assertTrue(GameFunctions.unbox_i32(box) == 1, "box did not contain the value 1");
 
         helper.succeed();
     }
