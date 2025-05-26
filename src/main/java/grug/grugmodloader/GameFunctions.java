@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-class GameFunctions {
+public class GameFunctions {
     public static long block(long resourceLocation) {
         GrugModLoader.logger.debug("block(resourceLocation={})", resourceLocation);
 
