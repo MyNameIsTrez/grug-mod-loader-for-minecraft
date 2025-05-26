@@ -37,4 +37,33 @@ public class TestUnboxI32 {
 
         helper.succeed();
     }
+
+    /*
+    ```grug
+    on_a() {
+        resource_location: id = resource_location("white_concrete")
+
+        unboxed_i32: i32 = unbox_i32(resource_location)
+        assert(unboxed_i32 == -1)
+
+        assert_game_function_error("unbox_i32(): Expected boxed_i32, but got resource_location")
+    }
+    ```
+    */
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void unbox_i32_expected_boxed_i32(GameTestHelper helper) {
+        Grug.resetVariables();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long resourceLocation = GameFunctions.resource_location("white_concrete");
+        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+
+        int unboxedI32 = GameFunctions.unbox_i32(resourceLocation);
+        helper.assertTrue(unboxedI32 == -1, "Expected an invalid unboxed i32, but got " + unboxedI32);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("unbox_i32(): Expected boxed_i32, but got resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+
+        helper.succeed();
+    }
 }

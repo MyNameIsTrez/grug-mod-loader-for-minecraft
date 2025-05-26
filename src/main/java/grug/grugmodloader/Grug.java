@@ -90,7 +90,7 @@ public class Grug {
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
     private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
 
-    // This is only used by GameTests.java.
+    // This is read by grug's game tests.
     public static String gameFunctionError = null;
 
     public Grug() {
@@ -279,9 +279,9 @@ public class Grug {
     }
 
     public static void gameFunctionErrorHappened(String gameFunctionName, String message) {
-        GrugModLoader.grug.gameFunctionErrorHappened(gameFunctionName + "(): " + message);
-
         gameFunctionError = gameFunctionName + "(): " + message;
+
+        GrugModLoader.grug.gameFunctionErrorHappened(gameFunctionError);
     }
 
     public static long addEntity(EntityType entityType, Object entityInstance) {

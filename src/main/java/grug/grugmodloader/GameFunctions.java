@@ -30,7 +30,7 @@ public class GameFunctions {
             ResourceLocation resourceLocationInstance = GrugModLoader.grug.getResourceLocation(resourceLocation);
 
             if (!ForgeRegistries.BLOCKS.containsKey(resourceLocationInstance)) {
-                Grug.gameFunctionErrorHappened("block", "invalid resource_location");
+                Grug.gameFunctionErrorHappened("block", "Invalid resource_location");
                 return -1;
             }
 
@@ -992,7 +992,7 @@ public class GameFunctions {
             ResourceLocation resourceLocationInstance = GrugModLoader.grug.getResourceLocation(resourceLocation);
 
             if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
-                Grug.gameFunctionErrorHappened("item", "invalid resource_location");
+                Grug.gameFunctionErrorHappened("item", "Invalid resource_location");
                 return -1;
             }
 
@@ -1080,7 +1080,7 @@ public class GameFunctions {
                 Entry<Long, Long> localEntry = (Entry<Long, Long>)grugIterator.iterator.next();
                 entry = localEntry;
             } catch (ConcurrentModificationException err) {
-                Grug.gameFunctionErrorHappened("iteration", "the iterable was modified during iteration");
+                Grug.gameFunctionErrorHappened("iteration", "The iterable was modified during iteration");
                 return -1;
             }
 
@@ -1140,7 +1140,7 @@ public class GameFunctions {
         try {
             grugIterator.iterator.remove();
         } catch (IllegalStateException err) {
-            Grug.gameFunctionErrorHappened("iterator_remove", "can only be called once, per call to iteration()");
+            Grug.gameFunctionErrorHappened("iterator_remove", "Can only be called once, per call to iteration()");
             return;
         }
     }
@@ -1232,7 +1232,7 @@ public class GameFunctions {
         try {
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
-            Grug.gameFunctionErrorHappened("resource_location", "invalid resource_location_string");
+            Grug.gameFunctionErrorHappened("resource_location", "Invalid resource_location_string");
             return -1;
         }
 

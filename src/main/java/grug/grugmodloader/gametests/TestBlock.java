@@ -44,8 +44,8 @@ public class TestBlock {
     on_a() {
         box: id = box_i32(1)
 
-        block: id = block_nullable(box)
-        assert(block == null_id)
+        block: id = block(box)
+        assert_error_id(block)
 
         assert_game_function_error("block(): Expected resource_location, but got boxed_i32")
     }
@@ -73,8 +73,10 @@ public class TestBlock {
     on_a() {
         resource_location: id = resource_location("diamond")
 
-        block: id = block_nullable(resource_location)
-        assert(block == null_id)
+        block: id = block(resource_location)
+        assert_error_id(block)
+
+        assert_game_function_error("block(): Invalid resource_location")
     }
     ```
     */
@@ -89,6 +91,8 @@ public class TestBlock {
 
         long block = GameFunctions.block(resourceLocation);
         helper.assertTrue(block == -1, "Expected an invalid block, but got " + block);
+
+        helper.assertTrue(Grug.gameFunctionError.equals("block(): Invalid resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
         helper.succeed();
     }
