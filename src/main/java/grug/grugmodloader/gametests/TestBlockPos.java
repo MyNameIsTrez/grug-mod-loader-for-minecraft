@@ -29,7 +29,7 @@ public class TestBlockPos {
         long blockPos = GameFunctions.block_pos(0, 0, 0);
         helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
 
-        helper.assertTrue(Grug.fnEntities.contains(blockPos), "fnEntities did not contain blockPos " + blockPos);
+        helper.assertTrue(Grug.fnEntities.contains(blockPos), "fnEntities did not contain " + blockPos);
 
         helper.succeed();
     }

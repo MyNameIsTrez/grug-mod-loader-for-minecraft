@@ -34,7 +34,7 @@ public class TestBlock {
         long block = GameFunctions.block(resourceLocation);
         helper.assertTrue(block != -1, "Invalid block " + block);
 
-        helper.assertTrue(Grug.fnEntities.contains(block), "fnEntities did not contain block " + block);
+        helper.assertTrue(Grug.fnEntities.contains(block), "fnEntities did not contain " + block);
 
         helper.succeed();
     }

@@ -31,7 +31,7 @@ public class TestUnboxI32 {
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
 
-        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain box " + box);
+        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
 
         helper.assertTrue(GameFunctions.unbox_i32(box) == 1, "box did not contain the value 1");
 
