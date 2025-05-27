@@ -709,7 +709,7 @@
 			]
 		},
 		"remove_moving_block": {
-			"description": "Removes a block.",
+			"description": "Removes a moving block.",
 			"arguments": [
 				{
 					"name": "pos",
