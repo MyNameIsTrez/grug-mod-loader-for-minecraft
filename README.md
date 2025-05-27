@@ -27,3 +27,5 @@ If you get `Exception in thread "main" java.lang.reflect.InvocationTargetExcepti
 ## Running the tests
 
 Run `./gradlew jacocoTestReport`.
+
+You can view the coverage results in your browser by opening the `build/reports/jacoco/test/html/index.html` file it generates.
