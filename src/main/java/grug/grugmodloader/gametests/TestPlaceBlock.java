@@ -97,7 +97,6 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_expected_block_state(GameTestHelper helper) {
-        TODO:
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
@@ -129,7 +128,6 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_expected_block_pos(GameTestHelper helper) {
-        TODO:
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
