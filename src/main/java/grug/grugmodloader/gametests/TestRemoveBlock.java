@@ -22,11 +22,11 @@ public class TestRemoveBlock {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_structure_block_pos: id = block_pos(0, 1, 0)
+        relative_diamond_block_pos: id = block_pos(0, 1, 0)
 
-        assert_block_present(block, relative_structure_block_pos)
+        assert_block_present(block, relative_diamond_block_pos)
 
-        absolute_diamond_block_pos: id = absolute_pos(relative_structure_block_pos)
+        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
 
         x: i32 = get_block_pos_x(absolute_diamond_block_pos)
         y: i32 = get_block_pos_y(absolute_diamond_block_pos)
@@ -38,7 +38,7 @@ public class TestRemoveBlock {
 
         remove_block(block_pos, level)
 
-        assert_block_not_present(block, relative_structure_block_pos)
+        assert_block_not_present(block, relative_diamond_block_pos)
     }
     ```
     */
@@ -50,11 +50,11 @@ public class TestRemoveBlock {
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
-        BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
+        BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeStructureBlockPos);
+        helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeStructureBlockPos);
+        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
@@ -69,7 +69,7 @@ public class TestRemoveBlock {
 
         GameFunctions.remove_block(blockPosId, levelId);
 
-        helper.assertBlockNotPresent(block, relativeStructureBlockPos);
+        helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
 
         helper.succeed();
     }
@@ -79,9 +79,9 @@ public class TestRemoveBlock {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_structure_block_pos: id = block_pos(0, 1, 0)
+        relative_diamond_block_pos: id = block_pos(0, 1, 0)
 
-        assert_block_present(block, relative_structure_block_pos)
+        assert_block_present(block, relative_diamond_block_pos)
 
         box: id = box_i32(1)
 
@@ -89,7 +89,7 @@ public class TestRemoveBlock {
 
         assert_game_function_error("remove_block(): Expected block_pos, but got boxed_i32")
 
-        assert_block_present(block, relative_structure_block_pos)
+        assert_block_present(block, relative_diamond_block_pos)
     }
     ```
     */
@@ -101,9 +101,9 @@ public class TestRemoveBlock {
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
-        BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
+        BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeStructureBlockPos);
+        helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
@@ -112,7 +112,7 @@ public class TestRemoveBlock {
 
         helper.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeStructureBlockPos);
+        helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
         helper.succeed();
     }
@@ -122,11 +122,11 @@ public class TestRemoveBlock {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_structure_block_pos: id = block_pos(0, 1, 0)
+        relative_diamond_block_pos: id = block_pos(0, 1, 0)
 
-        assert_block_present(block, relative_structure_block_pos)
+        assert_block_present(block, relative_diamond_block_pos)
 
-        absolute_diamond_block_pos: id = absolute_pos(relative_structure_block_pos)
+        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
 
         x: i32 = get_block_pos_x(absolute_diamond_block_pos)
         y: i32 = get_block_pos_y(absolute_diamond_block_pos)
@@ -140,7 +140,7 @@ public class TestRemoveBlock {
 
         assert_game_function_error("remove_block(): Expected level, but got boxed_i32")
 
-        assert_block_not_present(block, relative_structure_block_pos)
+        assert_block_not_present(block, relative_diamond_block_pos)
     }
     ```
     */
@@ -152,11 +152,11 @@ public class TestRemoveBlock {
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
-        BlockPos relativeStructureBlockPos = new BlockPos(0, 1, 0);
+        BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeStructureBlockPos);
+        helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeStructureBlockPos);
+        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
@@ -172,7 +172,7 @@ public class TestRemoveBlock {
 
         helper.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeStructureBlockPos);
+        helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
         helper.succeed();
     }

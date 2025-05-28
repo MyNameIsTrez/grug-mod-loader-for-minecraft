@@ -14,7 +14,7 @@ public class TestResourceLocation {
     /*
     ```grug
     on_a() {
-        resource_location: id = resource_location("white_concrete")
+        resource_location: id = resource_location("diamond_block")
 
         assert_fn_entities_contains(resource_location)
     }
@@ -26,7 +26,7 @@ public class TestResourceLocation {
 
         Grug.fnEntities = new HashSet<>();
 
-        long resourceLocation = GameFunctions.resource_location("white_concrete");
+        long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         helper.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);

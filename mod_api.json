@@ -91,7 +91,7 @@
 			"description": "Removes a block. Spawns particles of the removed block.",
 			"arguments": [
 				{
-					"name": "pos",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{
@@ -104,7 +104,7 @@
 			"description": "Removes a block, and drops it as an item. Spawns particles of the removed block.",
 			"arguments": [
 				{
-					"name": "pos",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{
@@ -637,7 +637,7 @@
 					"type": "id"
 				},
 				{
-					"name": "pos",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{
@@ -699,7 +699,7 @@
 			"description": "Removes a block.",
 			"arguments": [
 				{
-					"name": "pos",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{
@@ -712,7 +712,7 @@
 			"description": "Removes a moving block.",
 			"arguments": [
 				{
-					"name": "pos",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{

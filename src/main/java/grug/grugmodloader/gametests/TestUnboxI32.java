@@ -41,7 +41,7 @@ public class TestUnboxI32 {
     /*
     ```grug
     on_a() {
-        resource_location: id = resource_location("white_concrete")
+        resource_location: id = resource_location("diamond_block")
 
         unboxed_i32: i32 = unbox_i32(resource_location)
         assert(unboxed_i32 == -1)
@@ -56,7 +56,7 @@ public class TestUnboxI32 {
 
         Grug.fnEntities = new HashSet<>();
 
-        long resourceLocation = GameFunctions.resource_location("white_concrete");
+        long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         int unboxedI32 = GameFunctions.unbox_i32(resourceLocation);
