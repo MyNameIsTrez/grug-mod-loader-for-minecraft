@@ -1209,22 +1209,6 @@ public class GameFunctions {
         level.removeBlock(blockPos, false);
     }
 
-    public static void remove_moving_block(long blockPosId, long levelId) {
-        GrugModLoader.logger.debug("remove_moving_block(blockPosId={}, levelId={})", blockPosId, levelId);
-
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = GrugModLoader.grug.getBlockPos(blockPosId);
-            level = GrugModLoader.grug.getLevel(levelId);
-        } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.gameFunctionErrorHappened("remove_moving_block", assertEntityTypeException.getMessage());
-            return;
-        }
-
-        level.removeBlock(blockPos, true);
-    }
-
     public static long resource_location(String resourceLocationString) {
         GrugModLoader.logger.debug("resource_location(resourceLocationString={})", resourceLocationString);
 

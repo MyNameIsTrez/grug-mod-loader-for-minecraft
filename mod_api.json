@@ -708,19 +708,6 @@
 				}
 			]
 		},
-		"remove_moving_block": {
-			"description": "Removes a moving block.",
-			"arguments": [
-				{
-					"name": "block_pos",
-					"type": "id"
-				},
-				{
-					"name": "level",
-					"type": "id"
-				}
-			]
-		},
 		"resource_location": {
 			"description": "Creates a new resource_location.",
 			"return_type": "id",
