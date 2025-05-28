@@ -14,7 +14,6 @@ public class TestItem {
     /*
     ```grug
     on_a() {
-        TODO:
         resource_location: id = resource_location("diamond")
 
         item: id = item(resource_location)
@@ -25,7 +24,6 @@ public class TestItem {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item(GameTestHelper helper) {
-        TODO:
         Grug.resetVariables();
 
         Grug.fnEntities = new HashSet<>();
