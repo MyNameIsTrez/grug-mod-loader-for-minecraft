@@ -71,7 +71,7 @@ public class TestBlock {
     /*
     ```grug
     on_a() {
-        resource_location: id = resource_location("diamond")
+        resource_location: id = resource_location("foo")
 
         block: id = block(resource_location)
         assert_error_id(block)
@@ -86,7 +86,7 @@ public class TestBlock {
 
         Grug.fnEntities = new HashSet<>();
 
-        long resourceLocation = GameFunctions.resource_location("diamond");
+        long resourceLocation = GameFunctions.resource_location("foo");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long block = GameFunctions.block(resourceLocation);
