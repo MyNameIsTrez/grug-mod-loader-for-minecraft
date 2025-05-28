@@ -34,9 +34,7 @@ public class TestDestroyBlock {
 
         block_pos: id = block_pos(x, y, z)
 
-        level: id = get_game_test_info_server_level()
-
-        destroy_block(block_pos, level)
+        destroy_block(block_pos, get_level())
 
         assert_block_not_present(block, relative_diamond_block_pos)
     }
@@ -63,11 +61,9 @@ public class TestDestroyBlock {
         long blockPosId = GameFunctions.block_pos(x, y, z);
         helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
 
-        ServerLevel level = helper.getLevel();
+        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 
-        long levelId = Grug.addEntity(EntityType.Level, level);
-
-        GameFunctions.destroy_block(blockPosId, levelId);
+        GameFunctions.destroy_block(blockPosId, level);
 
         helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
 

@@ -37,9 +37,7 @@ public class TestPlaceBlock {
 
         flag: i32 = block_flag_update_all()
 
-        level: id = get_game_test_info_server_level()
-
-        place_block(block_state, block_pos, flag, level)
+        place_block(block_state, block_pos, flag, get_level())
 
         assert_block_present(block, relative_diamond_block_pos)
     }
@@ -77,9 +75,9 @@ public class TestPlaceBlock {
         int flag = GameFunctions.block_flag_update_all();
         helper.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
 
-        long levelId = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 
-        GameFunctions.place_block(blockState, blockPos, flag, levelId);
+        GameFunctions.place_block(blockState, blockPos, flag, level);
 
         helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
@@ -175,9 +173,7 @@ public class TestPlaceBlock {
 
         flag: i32 = block_flag_update_all()
 
-        level: id = get_game_test_info_server_level()
-
-        place_block(block_state, block_pos, 2147483647, level)
+        place_block(block_state, block_pos, 2147483647, get_level())
 
         assert_block_present(block, relative_diamond_block_pos)
     }
@@ -212,9 +208,9 @@ public class TestPlaceBlock {
         long blockPos = GameFunctions.block_pos(x, y, z);
         helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
 
-        long levelId = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 
-        GameFunctions.place_block(blockState, blockPos, 2147483647, levelId);
+        GameFunctions.place_block(blockState, blockPos, 2147483647, level);
 
         helper.assertBlockPresent(block, relativeDiamondBlockPos);
 
