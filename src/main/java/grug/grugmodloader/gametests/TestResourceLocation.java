@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestResourceLocation {
+public class TestResourceLocation extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -22,9 +22,7 @@ public class TestResourceLocation {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -45,9 +43,7 @@ public class TestResourceLocation {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location_weird_but_valid_resource_location_string(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("foo");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -69,9 +65,7 @@ public class TestResourceLocation {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location_invalid_resource_location_string(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("@");
         helper.assertTrue(resourceLocation == -1, "Expected an invalid resourceLocation, but got " + resourceLocation);

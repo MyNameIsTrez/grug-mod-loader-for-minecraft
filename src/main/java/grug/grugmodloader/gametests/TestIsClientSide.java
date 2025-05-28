@@ -11,7 +11,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestIsClientSide {
+public class TestIsClientSide extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -21,9 +21,7 @@ public class TestIsClientSide {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void is_client_side_false(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 
@@ -41,9 +39,7 @@ public class TestIsClientSide {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void is_client_side_expected_level(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);

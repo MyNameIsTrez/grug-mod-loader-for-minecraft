@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestVec3Zero {
+public class TestVec3Zero extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -26,9 +26,7 @@ public class TestVec3Zero {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void vec3_zero(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long vec3 = GameFunctions.vec3_zero();
         helper.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);

@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestHashSet {
+public class TestHashSet extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -24,10 +24,7 @@ public class TestHashSet {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.globalEntities = new HashSet<>();
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);

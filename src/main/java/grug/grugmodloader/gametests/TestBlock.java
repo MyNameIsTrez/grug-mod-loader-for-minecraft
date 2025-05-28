@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestBlock {
+public class TestBlock extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -24,9 +24,7 @@ public class TestBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -53,9 +51,7 @@ public class TestBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block_expected_resource_location(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
@@ -82,9 +78,7 @@ public class TestBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block_error_invalid_resource_location(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("foo");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);

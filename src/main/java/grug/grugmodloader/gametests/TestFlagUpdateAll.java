@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestFlagUpdateAll {
+public class TestFlagUpdateAll extends GameTestsUtils {
     /*
     ```grug
     on_a() {

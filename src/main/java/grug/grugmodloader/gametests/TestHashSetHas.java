@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestHashSetHas {
+public class TestHashSetHas extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -24,10 +24,7 @@ public class TestHashSetHas {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_has(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.globalEntities = new HashSet<>();
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
@@ -56,10 +53,7 @@ public class TestHashSetHas {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_has_not(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.globalEntities = new HashSet<>();
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long hashSetId = GameFunctions.hash_set();
         helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
@@ -88,9 +82,7 @@ public class TestHashSetHas {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_has_expected_hash_set(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);

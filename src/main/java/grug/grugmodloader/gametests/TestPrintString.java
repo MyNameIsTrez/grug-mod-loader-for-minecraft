@@ -8,7 +8,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestPrintString {
+public class TestPrintString extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -18,7 +18,7 @@ public class TestPrintString {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void print_string(GameTestHelper helper) {
-        Grug.resetVariables();
+        reset();
 
         GameFunctions.print_string("foo");
 

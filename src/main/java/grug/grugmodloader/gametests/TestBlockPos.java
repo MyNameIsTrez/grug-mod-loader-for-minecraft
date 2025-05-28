@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestBlockPos {
+public class TestBlockPos extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -22,9 +22,7 @@ public class TestBlockPos {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block_pos(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long blockPos = GameFunctions.block_pos(0, 0, 0);
         helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);

@@ -11,7 +11,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestItemEntity {
+public class TestItemEntity extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -25,9 +25,7 @@ public class TestItemEntity {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_entity(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 
@@ -62,9 +60,7 @@ public class TestItemEntity {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_entity_expected_level(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
@@ -89,9 +85,7 @@ public class TestItemEntity {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_entity_expected_item_stack(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long level = Grug.addEntity(EntityType.Level, helper.getLevel());
 

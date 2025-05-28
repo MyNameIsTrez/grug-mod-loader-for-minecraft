@@ -15,7 +15,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestIsAir {
+public class TestIsAir extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -25,9 +25,7 @@ public class TestIsAir {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void is_air_true(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("air");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -51,9 +49,7 @@ public class TestIsAir {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void is_air_false(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -79,9 +75,7 @@ public class TestIsAir {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void is_air_expected_block_state(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);

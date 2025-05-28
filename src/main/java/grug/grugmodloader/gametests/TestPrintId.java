@@ -10,7 +10,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestPrintId {
+public class TestPrintId extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -24,9 +24,7 @@ public class TestPrintId {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void print_id(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);

@@ -16,7 +16,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestRemoveBlock {
+public class TestRemoveBlock extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -42,9 +42,7 @@ public class TestRemoveBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
     public static void remove_block(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
@@ -91,9 +89,7 @@ public class TestRemoveBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
     public static void remove_block_expected_block_pos(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
@@ -142,9 +138,7 @@ public class TestRemoveBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
     public static void remove_block_expected_level(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 

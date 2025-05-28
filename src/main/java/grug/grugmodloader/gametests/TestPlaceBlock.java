@@ -15,7 +15,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestPlaceBlock {
+public class TestPlaceBlock extends GameTestsUtils {
     /*
     ```grug
     on_a() {
@@ -45,9 +45,7 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -97,9 +95,7 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_expected_block_state(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long box = GameFunctions.box_i32(1);
         helper.assertTrue(box != -1, "Invalid box " + box);
@@ -128,9 +124,7 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_expected_block_pos(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -179,9 +173,7 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_weird_but_valid_flags(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
@@ -246,9 +238,7 @@ public class TestPlaceBlock {
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void place_block_expected_level(GameTestHelper helper) {
-        Grug.resetVariables();
-
-        Grug.fnEntities = new HashSet<>();
+        reset();
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
