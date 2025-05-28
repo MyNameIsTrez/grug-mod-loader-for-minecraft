@@ -1,7 +1,6 @@
 package grug.grugmodloader.gametests;
 
 import grug.grugmodloader.GameFunctions;
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

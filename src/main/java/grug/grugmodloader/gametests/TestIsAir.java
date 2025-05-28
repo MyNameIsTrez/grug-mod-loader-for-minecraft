@@ -1,18 +1,11 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashSet;
-
-import grug.grugmodloader.EntityType;
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
-import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(GrugModLoader.MODID)
 public class TestIsAir extends GameTestsUtils {

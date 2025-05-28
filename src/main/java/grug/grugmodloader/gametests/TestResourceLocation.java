@@ -1,7 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashSet;
-
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
