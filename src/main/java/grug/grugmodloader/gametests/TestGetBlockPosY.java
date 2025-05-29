@@ -4,7 +4,7 @@ import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 
-public class GetBlockPosY extends GameTestsUtils {
+public class TestGetBlockPosY extends GameTestsUtils {
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block(GameTestHelper h) {
         reset(h);

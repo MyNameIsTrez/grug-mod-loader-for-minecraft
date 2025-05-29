@@ -125,6 +125,10 @@ public class GameTestsUtils {
         return blockState;
     }
 
+    public static int get_hash_set_size(long hashSet) {
+        return GameFunctions.get_hash_set_size(hashSet);
+    }
+
     public static String get_hash_set_string(long hashSet) {
         return GameFunctions.get_hash_set_string(hashSet);
     }
@@ -162,10 +166,6 @@ public class GameTestsUtils {
 
     public static boolean hash_set_has(long hashSet, long value) {
         return GameFunctions.hash_set_has(hashSet, value);
-    }
-
-    public static int hash_set_size(long hashSet) {
-        return GameFunctions.get_hash_set_size(hashSet);
     }
 
     public static boolean is_client_side(long level) {

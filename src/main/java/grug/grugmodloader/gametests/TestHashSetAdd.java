@@ -35,7 +35,7 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         h.assertTrue(hash_set_has(hash_set, box_i32(1)), "hash_set did not contain box");
 
-        int size = hash_set_size(hash_set);
+        int size = get_hash_set_size(hash_set);
         h.assertTrue(size == 1, "size was expected to be 1, but was " + size);
 
         h.succeed();
