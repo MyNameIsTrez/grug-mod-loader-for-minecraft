@@ -19,17 +19,17 @@ public class TestPlaceBlock extends GameTestsUtils {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_diamond_block_pos: id = block_pos(0, 1, 0)
+        relative: id = block_pos(0, 1, 0)
 
-        assert_block_not_present(block, relative_diamond_block_pos)
+        assert_block_not_present(block, relative)
 
         block_state: id = get_default_block_state(block)
 
-        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
+        absolute: id = absolute_pos(relative)
 
-        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
-        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
-        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
+        x: i32 = get_block_pos_x(absolute)
+        y: i32 = get_block_pos_y(absolute)
+        z: i32 = get_block_pos_z(absolute)
 
         block_pos: id = block_pos(x, y, z)
 
@@ -37,7 +37,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         place_block(block_state, block_pos, flag, get_level())
 
-        assert_block_present(block, relative_diamond_block_pos)
+        assert_block_present(block, relative)
     }
     ```
     */
@@ -53,17 +53,17 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
-        BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
+        BlockPos relative = new BlockPos(0, 2, 0);
 
-        h.assertBlockNotPresent(block, relativeDiamondBlockPos);
+        h.assertBlockNotPresent(block, relative);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
+        BlockPos absolute = h.absolutePos(relative);
 
-        int x = absoluteDiamondBlockPos.getX();
-        int y = absoluteDiamondBlockPos.getY();
-        int z = absoluteDiamondBlockPos.getZ();
+        int x = absolute.getX();
+        int y = absolute.getY();
+        int z = absolute.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
@@ -75,7 +75,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         GameFunctions.place_block(blockState, blockPos, flag, level);
 
-        h.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relative);
 
         h.succeed();
     }
@@ -147,17 +147,17 @@ public class TestPlaceBlock extends GameTestsUtils {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_diamond_block_pos: id = block_pos(0, 1, 0)
+        relative: id = block_pos(0, 1, 0)
 
-        assert_block_not_present(block, relative_diamond_block_pos)
+        assert_block_not_present(block, relative)
 
         block_state: id = get_default_block_state(block)
 
-        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
+        absolute: id = absolute_pos(relative)
 
-        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
-        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
-        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
+        x: i32 = get_block_pos_x(absolute)
+        y: i32 = get_block_pos_y(absolute)
+        z: i32 = get_block_pos_z(absolute)
 
         block_pos: id = block_pos(x, y, z)
 
@@ -165,7 +165,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         place_block(block_state, block_pos, 2147483647, get_level())
 
-        assert_block_present(block, relative_diamond_block_pos)
+        assert_block_present(block, relative)
     }
     ```
     */
@@ -181,17 +181,17 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
-        BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
+        BlockPos relative = new BlockPos(0, 2, 0);
 
-        h.assertBlockNotPresent(block, relativeDiamondBlockPos);
+        h.assertBlockNotPresent(block, relative);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
+        BlockPos absolute = h.absolutePos(relative);
 
-        int x = absoluteDiamondBlockPos.getX();
-        int y = absoluteDiamondBlockPos.getY();
-        int z = absoluteDiamondBlockPos.getZ();
+        int x = absolute.getX();
+        int y = absolute.getY();
+        int z = absolute.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
@@ -200,7 +200,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         GameFunctions.place_block(blockState, blockPos, 2147483647, level);
 
-        h.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relative);
 
         h.succeed();
     }
@@ -210,17 +210,17 @@ public class TestPlaceBlock extends GameTestsUtils {
     on_a() {
         block: id = block(resource_location("diamond_block"))
 
-        relative_diamond_block_pos: id = block_pos(0, 1, 0)
+        relative: id = block_pos(0, 1, 0)
 
-        assert_block_not_present(block, relative_diamond_block_pos)
+        assert_block_not_present(block, relative)
 
         block_state: id = get_default_block_state(block)
 
-        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
+        absolute: id = absolute_pos(relative)
 
-        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
-        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
-        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
+        x: i32 = get_block_pos_x(absolute)
+        y: i32 = get_block_pos_y(absolute)
+        z: i32 = get_block_pos_z(absolute)
 
         block_pos: id = block_pos(x, y, z)
 
@@ -230,7 +230,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         place_block(block_state, block_pos, flag, box)
 
-        assert_block_present(block, relative_diamond_block_pos)
+        assert_block_present(block, relative)
     }
     ```
     */
@@ -244,15 +244,15 @@ public class TestPlaceBlock extends GameTestsUtils {
         long blockId = GameFunctions.block(resourceLocation);
         h.assertTrue(blockId != -1, "Invalid blockId " + blockId);
 
-        BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
+        BlockPos relative = new BlockPos(0, 2, 0);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
+        BlockPos absolute = h.absolutePos(relative);
 
-        int x = absoluteDiamondBlockPos.getX();
-        int y = absoluteDiamondBlockPos.getY();
-        int z = absoluteDiamondBlockPos.getZ();
+        int x = absolute.getX();
+        int y = absolute.getY();
+        int z = absolute.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);

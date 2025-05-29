@@ -75,8 +75,8 @@ public class GameTestsUtils {
         return box;
     }
 
-    public static void destroy_block(long blockPosId) {
-        GameFunctions.destroy_block(blockPosId, get_level());
+    public static void destroy_block(long blockPosId, long level) {
+        GameFunctions.destroy_block(blockPosId, level);
     }
 
     public static long resource_location(String resourceLocationString) {

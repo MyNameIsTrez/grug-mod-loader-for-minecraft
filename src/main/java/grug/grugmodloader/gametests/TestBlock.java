@@ -25,9 +25,7 @@ public class TestBlock extends GameTestsUtils {
     public static void block_expected_resource_location(GameTestHelper h) {
         reset(h);
 
-        long box = box_i32(1);
-
-        long block = GameFunctions.block(box);
+        long block = GameFunctions.block(box_i32(1));
         assert_error_id(block);
 
         assert_game_function_error("block(): Expected resource_location, but got boxed_i32");
