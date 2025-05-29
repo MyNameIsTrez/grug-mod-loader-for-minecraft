@@ -21,16 +21,16 @@ public class TestPrintId extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void print_id(GameTestHelper helper) {
-        reset();
+    public static void print_id(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
-        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
+        h.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
 
         GameFunctions.print_id(box);
 
-        helper.succeed();
+        h.succeed();
     }
 }

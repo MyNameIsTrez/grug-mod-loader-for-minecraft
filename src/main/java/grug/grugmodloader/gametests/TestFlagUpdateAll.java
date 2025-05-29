@@ -18,10 +18,10 @@ public class TestFlagUpdateAll extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void block_flag_update_all(GameTestHelper helper) {
+    public static void block_flag_update_all(GameTestHelper h) {
         int flag = GameFunctions.block_flag_update_all();
-        helper.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
+        h.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
 
-        helper.succeed();
+        h.succeed();
     }
 }

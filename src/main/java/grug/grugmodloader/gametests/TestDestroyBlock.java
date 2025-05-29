@@ -14,55 +14,29 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(GrugModLoader.MODID)
 public class TestDestroyBlock extends GameTestsUtils {
-    /*
-    ```grug
-    on_a() {
-        block: id = block(resource_location("diamond_block"))
-
-        relative_diamond_block_pos: id = block_pos(0, 1, 0)
-
-        assert_block_present(block, relative_diamond_block_pos)
-
-        absolute_diamond_block_pos: id = absolute_pos(relative_diamond_block_pos)
-
-        x: i32 = get_block_pos_x(absolute_diamond_block_pos)
-        y: i32 = get_block_pos_y(absolute_diamond_block_pos)
-        z: i32 = get_block_pos_z(absolute_diamond_block_pos)
-
-        block_pos: id = block_pos(x, y, z)
-
-        destroy_block(block_pos, get_level())
-
-        assert_block_not_present(block, relative_diamond_block_pos)
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void destroy_block(GameTestHelper helper) {
-        reset();
+    public static void destroy_block(GameTestHelper h) {
+        reset(h);
 
-        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
+        Block block = get_block("diamond_block");
 
-        BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
+        BlockPos relative = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        assert_block_present(block, relative);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absolute = h.absolutePos(relative);
 
-        int x = absoluteDiamondBlockPos.getX();
-        int y = absoluteDiamondBlockPos.getY();
-        int z = absoluteDiamondBlockPos.getZ();
+        int x = absolute.getX();
+        int y = absolute.getY();
+        int z = absolute.getZ();
 
-        long blockPosId = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
+        long block_pos = block_pos(x, y, z);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        destroy_block(block_pos);
 
-        GameFunctions.destroy_block(blockPosId, level);
+        assert_block_not_present(block, relative);
 
-        helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
-
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -85,25 +59,25 @@ public class TestDestroyBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void destroy_block_expected_block_pos(GameTestHelper helper) {
-        reset();
+    public static void destroy_block_expected_block_pos(GameTestHelper h) {
+        reset(h);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.destroy_block(box, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -134,33 +108,33 @@ public class TestDestroyBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void destroy_block_expected_level(GameTestHelper helper) {
-        reset();
+    public static void destroy_block_expected_level(GameTestHelper h) {
+        reset(h);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPosId = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
+        h.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.destroy_block(blockPosId, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("destroy_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 }

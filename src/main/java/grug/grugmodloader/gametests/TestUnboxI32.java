@@ -21,17 +21,17 @@ public class TestUnboxI32 extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void unbox_i32(GameTestHelper helper) {
-        reset();
+    public static void unbox_i32(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
-        helper.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
+        h.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
 
-        helper.assertTrue(GameFunctions.unbox_i32(box) == 1, "box did not contain the value 1");
+        h.assertTrue(GameFunctions.unbox_i32(box) == 1, "box did not contain the value 1");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -47,17 +47,17 @@ public class TestUnboxI32 extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void unbox_i32_expected_boxed_i32(GameTestHelper helper) {
-        reset();
+    public static void unbox_i32_expected_boxed_i32(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         int unboxedI32 = GameFunctions.unbox_i32(resourceLocation);
-        helper.assertTrue(unboxedI32 == -1, "Expected an invalid unboxed i32, but got " + unboxedI32);
+        h.assertTrue(unboxedI32 == -1, "Expected an invalid unboxed i32, but got " + unboxedI32);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("unbox_i32(): Expected boxed_i32, but got resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("unbox_i32(): Expected boxed_i32, but got resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 }

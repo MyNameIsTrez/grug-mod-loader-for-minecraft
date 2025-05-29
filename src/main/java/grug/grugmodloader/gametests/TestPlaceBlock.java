@@ -42,42 +42,42 @@ public class TestPlaceBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void place_block(GameTestHelper helper) {
-        reset();
+    public static void place_block(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long blockId = GameFunctions.block(resourceLocation);
-        helper.assertTrue(blockId != -1, "Invalid blockId " + blockId);
+        h.assertTrue(blockId != -1, "Invalid blockId " + blockId);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
 
-        helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
+        h.assertBlockNotPresent(block, relativeDiamondBlockPos);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
+        h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
 
         int flag = GameFunctions.block_flag_update_all();
-        helper.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
+        h.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
         GameFunctions.place_block(blockState, blockPos, flag, level);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -92,17 +92,17 @@ public class TestPlaceBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void place_block_expected_block_state(GameTestHelper helper) {
-        reset();
+    public static void place_block_expected_block_state(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.place_block(box, box, 0, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("place_block(): Expected block_state, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("place_block(): Expected block_state, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -121,25 +121,25 @@ public class TestPlaceBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void place_block_expected_block_pos(GameTestHelper helper) {
-        reset();
+    public static void place_block_expected_block_pos(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long blockId = GameFunctions.block(resourceLocation);
-        helper.assertTrue(blockId != -1, "Invalid blockId " + blockId);
+        h.assertTrue(blockId != -1, "Invalid blockId " + blockId);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.place_block(blockState, box, 0, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("place_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("place_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -170,39 +170,39 @@ public class TestPlaceBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void place_block_weird_but_valid_flags(GameTestHelper helper) {
-        reset();
+    public static void place_block_weird_but_valid_flags(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long blockId = GameFunctions.block(resourceLocation);
-        helper.assertTrue(blockId != -1, "Invalid blockId " + blockId);
+        h.assertTrue(blockId != -1, "Invalid blockId " + blockId);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
 
-        helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
+        h.assertBlockNotPresent(block, relativeDiamondBlockPos);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
+        h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
         GameFunctions.place_block(blockState, blockPos, 2147483647, level);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -235,36 +235,36 @@ public class TestPlaceBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void place_block_expected_level(GameTestHelper helper) {
-        reset();
+    public static void place_block_expected_level(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long blockId = GameFunctions.block(resourceLocation);
-        helper.assertTrue(blockId != -1, "Invalid blockId " + blockId);
+        h.assertTrue(blockId != -1, "Invalid blockId " + blockId);
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 2, 0);
 
         long blockState = GameFunctions.get_default_block_state(blockId);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPos = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
+        h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
 
         int flag = GameFunctions.block_flag_update_all();
-        helper.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
+        h.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.place_block(blockState, blockPos, flag, box);
 
-        helper.succeed();
+        h.succeed();
     }
 }

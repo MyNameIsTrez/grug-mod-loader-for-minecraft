@@ -22,26 +22,26 @@ public class TestItemEntity extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item_entity(GameTestHelper helper) {
-        reset();
+    public static void item_entity(GameTestHelper h) {
+        reset(h);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
         long resourceLocation = GameFunctions.resource_location("diamond");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long item = GameFunctions.item(resourceLocation);
-        helper.assertTrue(item != -1, "Invalid item " + item);
+        h.assertTrue(item != -1, "Invalid item " + item);
 
         long itemStack = GameFunctions.item_stack(item);
-        helper.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
+        h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
 
         long itemEntity = GameFunctions.item_entity(level, 0, 0, 0, itemStack);
-        helper.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
+        h.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
 
-        helper.assertTrue(Grug.fnEntities.contains(itemEntity), "fnEntities did not contain " + itemEntity);
+        h.assertTrue(Grug.fnEntities.contains(itemEntity), "fnEntities did not contain " + itemEntity);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -57,18 +57,18 @@ public class TestItemEntity extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item_entity_expected_level(GameTestHelper helper) {
-        reset();
+    public static void item_entity_expected_level(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         long itemEntity = GameFunctions.item_entity(box, 0, 0, 0, box);
-        helper.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
+        h.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("item_entity(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("item_entity(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -82,19 +82,19 @@ public class TestItemEntity extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item_entity_expected_item_stack(GameTestHelper helper) {
-        reset();
+    public static void item_entity_expected_item_stack(GameTestHelper h) {
+        reset(h);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         long itemEntity = GameFunctions.item_entity(level, 0, 0, 0, box);
-        helper.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
+        h.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("item_entity(): Expected item_stack, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("item_entity(): Expected item_stack, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 }

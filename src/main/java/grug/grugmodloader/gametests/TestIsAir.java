@@ -17,20 +17,20 @@ public class TestIsAir extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void is_air_true(GameTestHelper helper) {
-        reset();
+    public static void is_air_true(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("air");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long block = GameFunctions.block(resourceLocation);
-        helper.assertTrue(block != -1, "Invalid block " + block);
+        h.assertTrue(block != -1, "Invalid block " + block);
 
         long blockState = GameFunctions.get_default_block_state(block);
 
-        helper.assertTrue(GameFunctions.is_air(blockState), "Expected air, but got " + blockState);
+        h.assertTrue(GameFunctions.is_air(blockState), "Expected air, but got " + blockState);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -41,20 +41,20 @@ public class TestIsAir extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void is_air_false(GameTestHelper helper) {
-        reset();
+    public static void is_air_false(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long block = GameFunctions.block(resourceLocation);
-        helper.assertTrue(block != -1, "Invalid block " + block);
+        h.assertTrue(block != -1, "Invalid block " + block);
 
         long blockState = GameFunctions.get_default_block_state(block);
 
-        helper.assertTrue(!GameFunctions.is_air(blockState), "Expected not air, but got " + blockState);
+        h.assertTrue(!GameFunctions.is_air(blockState), "Expected not air, but got " + blockState);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -67,16 +67,16 @@ public class TestIsAir extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void is_air_expected_block_state(GameTestHelper helper) {
-        reset();
+    public static void is_air_expected_block_state(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
-        helper.assertTrue(!GameFunctions.is_air(box), "Expected not air, but got " + box);
+        h.assertTrue(!GameFunctions.is_air(box), "Expected not air, but got " + box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("is_air(): Expected block_state, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("is_air(): Expected block_state, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 }

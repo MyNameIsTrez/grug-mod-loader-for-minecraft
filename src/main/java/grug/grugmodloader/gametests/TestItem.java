@@ -21,18 +21,18 @@ public class TestItem extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item(GameTestHelper helper) {
-        reset();
+    public static void item(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long item = GameFunctions.item(resourceLocation);
-        helper.assertTrue(item != -1, "Invalid item " + item);
+        h.assertTrue(item != -1, "Invalid item " + item);
 
-        helper.assertTrue(Grug.fnEntities.contains(item), "fnEntities did not contain " + item);
+        h.assertTrue(Grug.fnEntities.contains(item), "fnEntities did not contain " + item);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -48,18 +48,18 @@ public class TestItem extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item_expected_resource_location(GameTestHelper helper) {
-        reset();
+    public static void item_expected_resource_location(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         long item = GameFunctions.item(box);
-        helper.assertTrue(item == -1, "Expected an invalid item, but got " + item);
+        h.assertTrue(item == -1, "Expected an invalid item, but got " + item);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("item(): Expected resource_location, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("item(): Expected resource_location, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -75,17 +75,17 @@ public class TestItem extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void item_error_invalid_resource_location(GameTestHelper helper) {
-        reset();
+    public static void item_error_invalid_resource_location(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("foo");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
         long item = GameFunctions.item(resourceLocation);
-        helper.assertTrue(item == -1, "Expected an invalid item, but got " + item);
+        h.assertTrue(item == -1, "Expected an invalid item, but got " + item);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("item(): Invalid resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("item(): Invalid resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 }

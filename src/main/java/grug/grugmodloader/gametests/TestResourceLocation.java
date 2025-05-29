@@ -19,15 +19,15 @@ public class TestResourceLocation extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void resource_location(GameTestHelper helper) {
-        reset();
+    public static void resource_location(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("diamond_block");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
-        helper.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
+        h.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -40,15 +40,15 @@ public class TestResourceLocation extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void resource_location_weird_but_valid_resource_location_string(GameTestHelper helper) {
-        reset();
+    public static void resource_location_weird_but_valid_resource_location_string(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("foo");
-        helper.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
-        helper.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
+        h.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -62,14 +62,14 @@ public class TestResourceLocation extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void resource_location_invalid_resource_location_string(GameTestHelper helper) {
-        reset();
+    public static void resource_location_invalid_resource_location_string(GameTestHelper h) {
+        reset(h);
 
         long resourceLocation = GameFunctions.resource_location("@");
-        helper.assertTrue(resourceLocation == -1, "Expected an invalid resourceLocation, but got " + resourceLocation);
+        h.assertTrue(resourceLocation == -1, "Expected an invalid resourceLocation, but got " + resourceLocation);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("resource_location(): Invalid resource_location_string"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("resource_location(): Invalid resource_location_string"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 }

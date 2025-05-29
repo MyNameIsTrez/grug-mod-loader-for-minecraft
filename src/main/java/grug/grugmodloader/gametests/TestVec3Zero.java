@@ -23,18 +23,18 @@ public class TestVec3Zero extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void vec3_zero(GameTestHelper helper) {
-        reset();
+    public static void vec3_zero(GameTestHelper h) {
+        reset(h);
 
         long vec3 = GameFunctions.vec3_zero();
-        helper.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
+        h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
 
-        helper.assertTrue(Grug.fnEntities.contains(vec3), "fnEntities did not contain " + vec3);
+        h.assertTrue(Grug.fnEntities.contains(vec3), "fnEntities did not contain " + vec3);
 
-        helper.assertTrue(GameFunctions.get_vec3_x(vec3) == 0, "vec3 its X value was not 0");
-        helper.assertTrue(GameFunctions.get_vec3_y(vec3) == 0, "vec3 its Y value was not 0");
-        helper.assertTrue(GameFunctions.get_vec3_z(vec3) == 0, "vec3 its Z value was not 0");
+        h.assertTrue(GameFunctions.get_vec3_x(vec3) == 0, "vec3 its X value was not 0");
+        h.assertTrue(GameFunctions.get_vec3_y(vec3) == 0, "vec3 its Y value was not 0");
+        h.assertTrue(GameFunctions.get_vec3_z(vec3) == 0, "vec3 its Z value was not 0");
 
-        helper.succeed();
+        h.succeed();
     }
 }

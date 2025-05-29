@@ -25,22 +25,22 @@ public class TestHashSetAdd extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add(GameTestHelper helper) {
-        reset();
+    public static void hash_set_add(GameTestHelper h) {
+        reset(h);
 
         long hashSetId = GameFunctions.hash_set();
-        helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
+        h.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
         GameFunctions.hash_set_add(hashSetId, box);
 
         long boxSecond = GameFunctions.box_i32(1);
-        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
+        h.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
+        h.assertTrue(GameFunctions.hash_set_has(hashSetId, boxSecond), "hashSetId did not contain boxSecond " + boxSecond);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -57,28 +57,28 @@ public class TestHashSetAdd extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add_duplicate(GameTestHelper helper) {
-        reset();
+    public static void hash_set_add_duplicate(GameTestHelper h) {
+        reset(h);
 
         long hashSetId = GameFunctions.hash_set();
-        helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
+        h.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
         GameFunctions.hash_set_add(hashSetId, box);
 
         long boxSecond = GameFunctions.box_i32(1);
-        helper.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
+        h.assertTrue(boxSecond != -1, "Invalid boxSecond " + boxSecond);
         GameFunctions.hash_set_add(hashSetId, boxSecond);
 
         long boxThird = GameFunctions.box_i32(1);
-        helper.assertTrue(boxThird != -1, "Invalid boxThird " + boxThird);
+        h.assertTrue(boxThird != -1, "Invalid boxThird " + boxThird);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, boxThird), "hashSetId did not contain boxThird " + boxThird);
+        h.assertTrue(GameFunctions.hash_set_has(hashSetId, boxThird), "hashSetId did not contain boxThird " + boxThird);
 
-        helper.assertTrue(GameFunctions.get_hash_set_size(hashSetId) == 1, "GameFunctions.get_hash_set_size(hashSetId) was expected to be 1, but was " + GameFunctions.get_hash_set_size(hashSetId));
+        h.assertTrue(GameFunctions.get_hash_set_size(hashSetId) == 1, "GameFunctions.get_hash_set_size(hashSetId) was expected to be 1, but was " + GameFunctions.get_hash_set_size(hashSetId));
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -93,16 +93,16 @@ public class TestHashSetAdd extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add_expected_hash_set(GameTestHelper helper) {
-        reset();
+    public static void hash_set_add_expected_hash_set(GameTestHelper h) {
+        reset(h);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
         GameFunctions.hash_set_add(box, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("hash_set_add(): Expected hash_set, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("hash_set_add(): Expected hash_set, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -131,57 +131,57 @@ public class TestHashSetAdd extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add_to_global_set(GameTestHelper helper) {
-        reset();
+    public static void hash_set_add_to_global_set(GameTestHelper h) {
+        reset(h);
 
         Grug.fnEntities = Grug.globalEntities;
 
         long hashSetId = GameFunctions.hash_set();
-        helper.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
+        h.assertTrue(hashSetId != -1, "Invalid hashSetId " + hashSetId);
 
         Grug.fnEntities = new HashSet<>();
 
         long box1 = GameFunctions.box_i32(1);
-        helper.assertTrue(box1 != -1, "Invalid box1 " + box1);
+        h.assertTrue(box1 != -1, "Invalid box1 " + box1);
         GameFunctions.hash_set_add(hashSetId, box1);
 
         long box2 = GameFunctions.box_i32(2);
-        helper.assertTrue(box2 != -1, "Invalid box2 " + box2);
+        h.assertTrue(box2 != -1, "Invalid box2 " + box2);
         GameFunctions.hash_set_add(hashSetId, box2);
 
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, box1), "hashSetId did not contain box1 " + box1);
-        helper.assertTrue(GameFunctions.hash_set_has(hashSetId, box2), "hashSetId did not contain box2 " + box2);
+        h.assertTrue(GameFunctions.hash_set_has(hashSetId, box1), "hashSetId did not contain box1 " + box1);
+        h.assertTrue(GameFunctions.hash_set_has(hashSetId, box2), "hashSetId did not contain box2 " + box2);
 
         String hashSetString = GameFunctions.get_hash_set_string(hashSetId);
-        helper.assertTrue(!hashSetString.isEmpty(), "Invalid empty hashSetString");
+        h.assertTrue(!hashSetString.isEmpty(), "Invalid empty hashSetString");
 
-        helper.assertTrue(hashSetString.equals("[17179869185, 17179869187]"), "Got unexpected hashSetString value '" + hashSetString + "'");
+        h.assertTrue(hashSetString.equals("[17179869185, 17179869187]"), "Got unexpected hashSetString value '" + hashSetString + "'");
 
-        helper.assertTrue(Grug.globalEntities.size() == 3, "Grug.globalEntities.size() was expected to be 3, but was " + Grug.globalEntities.size());
+        h.assertTrue(Grug.globalEntities.size() == 3, "Grug.globalEntities.size() was expected to be 3, but was " + Grug.globalEntities.size());
 
-        helper.assertTrue(Grug.globalEntities.contains(hashSetId), "Grug.globalEntities did not contain hashSetId " + hashSetId);
+        h.assertTrue(Grug.globalEntities.contains(hashSetId), "Grug.globalEntities did not contain hashSetId " + hashSetId);
 
         HashMap<Object, Long> objects;
         try {
             objects = Grug.getHashSetObjects(hashSetId);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             // Unreachable
-            helper.fail(assertEntityTypeException.getMessage());
+            h.fail(assertEntityTypeException.getMessage());
             return;
         }
 
         Object box1Object = GrugModLoader.grug.getObject(box1);
-        helper.assertTrue(box1Object != null, "box1Object was not supposed to be null");
+        h.assertTrue(box1Object != null, "box1Object was not supposed to be null");
         Long realBox1 = objects.get(box1Object);
-        helper.assertTrue(realBox1 != null, "realBox1 was not supposed to be null");
-        helper.assertTrue(Grug.globalEntities.contains(realBox1), "Grug.globalEntities did not contain realBox1 " + realBox1);
+        h.assertTrue(realBox1 != null, "realBox1 was not supposed to be null");
+        h.assertTrue(Grug.globalEntities.contains(realBox1), "Grug.globalEntities did not contain realBox1 " + realBox1);
 
         Object box2Object = GrugModLoader.grug.getObject(box2);
-        helper.assertTrue(box2Object != null, "box2Object was not supposed to be null");
+        h.assertTrue(box2Object != null, "box2Object was not supposed to be null");
         Long realBox2 = objects.get(box2Object);
-        helper.assertTrue(realBox2 != null, "realBox2 was not supposed to be null");
-        helper.assertTrue(Grug.globalEntities.contains(realBox2), "Grug.globalEntities did not contain realBox2 " + realBox2);
+        h.assertTrue(realBox2 != null, "realBox2 was not supposed to be null");
+        h.assertTrue(Grug.globalEntities.contains(realBox2), "Grug.globalEntities did not contain realBox2 " + realBox2);
 
-        helper.succeed();
+        h.succeed();
     }
 }

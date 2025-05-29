@@ -38,31 +38,31 @@ public class TestRemoveBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void remove_block(GameTestHelper helper) {
-        reset();
+    public static void remove_block(GameTestHelper h) {
+        reset(h);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPosId = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
+        h.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
 
-        long level = Grug.addEntity(EntityType.Level, helper.getLevel());
+        long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
         GameFunctions.remove_block(blockPosId, level);
 
-        helper.assertBlockNotPresent(block, relativeDiamondBlockPos);
+        h.assertBlockNotPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -85,25 +85,25 @@ public class TestRemoveBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void remove_block_expected_block_pos(GameTestHelper helper) {
-        reset();
+    public static void remove_block_expected_block_pos(GameTestHelper h) {
+        reset(h);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.remove_block(box, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected block_pos, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 
     /*
@@ -134,33 +134,33 @@ public class TestRemoveBlock extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":diamond_block")
-    public static void remove_block_expected_level(GameTestHelper helper) {
-        reset();
+    public static void remove_block_expected_level(GameTestHelper h) {
+        reset(h);
 
         Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("diamond_block"));
 
         BlockPos relativeDiamondBlockPos = new BlockPos(0, 1, 0);
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        BlockPos absoluteDiamondBlockPos = helper.absolutePos(relativeDiamondBlockPos);
+        BlockPos absoluteDiamondBlockPos = h.absolutePos(relativeDiamondBlockPos);
 
         int x = absoluteDiamondBlockPos.getX();
         int y = absoluteDiamondBlockPos.getY();
         int z = absoluteDiamondBlockPos.getZ();
 
         long blockPosId = GameFunctions.block_pos(x, y, z);
-        helper.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
+        h.assertTrue(blockPosId != -1, "Invalid blockPosId " + blockPosId);
 
         long box = GameFunctions.box_i32(1);
-        helper.assertTrue(box != -1, "Invalid box " + box);
+        h.assertTrue(box != -1, "Invalid box " + box);
 
         GameFunctions.remove_block(blockPosId, box);
 
-        helper.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals("remove_block(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 
-        helper.assertBlockPresent(block, relativeDiamondBlockPos);
+        h.assertBlockPresent(block, relativeDiamondBlockPos);
 
-        helper.succeed();
+        h.succeed();
     }
 }

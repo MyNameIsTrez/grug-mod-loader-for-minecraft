@@ -16,11 +16,11 @@ public class TestPrintF32 extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void print_f32(GameTestHelper helper) {
-        reset();
+    public static void print_f32(GameTestHelper h) {
+        reset(h);
 
         GameFunctions.print_f32(1);
 
-        helper.succeed();
+        h.succeed();
     }
 }

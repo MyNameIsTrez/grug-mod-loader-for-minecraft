@@ -16,11 +16,11 @@ public class TestPrintBool extends GameTestsUtils {
     ```
     */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void print_bool(GameTestHelper helper) {
-        reset();
+    public static void print_bool(GameTestHelper h) {
+        reset(h);
 
         GameFunctions.print_bool(true);
 
-        helper.succeed();
+        h.succeed();
     }
 }
