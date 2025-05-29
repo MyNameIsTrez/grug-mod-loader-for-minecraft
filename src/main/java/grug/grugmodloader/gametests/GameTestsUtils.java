@@ -1,10 +1,13 @@
 package grug.grugmodloader.gametests;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
+import grug.grugmodloader.AssertEntityTypeException;
 import grug.grugmodloader.EntityType;
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
+import grug.grugmodloader.GrugModLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +34,14 @@ public class GameTestsUtils {
 
     public static long get_level() {
         return Grug.addEntity(EntityType.Level, h.getLevel());
+    }
+
+    public static HashMap<Object, Long> get_hash_set_objects(long hashSetId) throws AssertEntityTypeException {
+        return Grug.getHashSetObjects(hashSetId);
+    }
+
+    public static Object get_object(long id) {
+        return GrugModLoader.grug.getObject(id);
     }
 
     // Asserters
@@ -63,6 +74,11 @@ public class GameTestsUtils {
         return block;
     }
 
+    public static void block_flag_update_all() {
+        int flag = GameFunctions.block_flag_update_all();
+        h.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
+    }
+
     public static long block_pos(int x, int y, int z) {
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
@@ -77,6 +93,28 @@ public class GameTestsUtils {
 
     public static void destroy_block(long blockPosId, long level) {
         GameFunctions.destroy_block(blockPosId, level);
+    }
+
+    public static String get_hash_set_string(long hashSet) {
+        return GameFunctions.get_hash_set_string(hashSet);
+    }
+
+    public static long hash_set() {
+        long hashSet = GameFunctions.hash_set();
+        h.assertTrue(hashSet != -1, "Invalid hashSet " + hashSet);
+        return hashSet;
+    }
+
+    public static void hash_set_add(long hashSet, long value) {
+        GameFunctions.hash_set_add(hashSet, value);
+    }
+
+    public static boolean hash_set_has(long hashSet, long value) {
+        return GameFunctions.hash_set_has(hashSet, value);
+    }
+
+    public static int hash_set_size(long hashSet) {
+        return GameFunctions.get_hash_set_size(hashSet);
     }
 
     public static long resource_location(String resourceLocationString) {
