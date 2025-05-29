@@ -125,6 +125,10 @@ public class GameTestsUtils {
         return blockState;
     }
 
+    public static int get_hash_map_size(long hashMap) {
+        return GameFunctions.get_hash_map_size(hashMap);
+    }
+
     public static int get_hash_set_size(long hashSet) {
         return GameFunctions.get_hash_set_size(hashSet);
     }
@@ -147,6 +151,17 @@ public class GameTestsUtils {
 
     public static float get_vec3_z(long vec3) {
         return GameFunctions.get_vec3_z(vec3);
+    }
+
+    public static long hash_map() {
+        long hashMap = GameFunctions.hash_map();
+        h.assertTrue(hashMap != -1, "Invalid hashMap " + hashMap);
+        assert_fn_entities_contains(hashMap);
+        return hashMap;
+    }
+
+    public static void hash_map_put(long hashMap, long key, long value) {
+        GameFunctions.hash_map_put(hashMap, key, value);
     }
 
     public static long hash_set() {
