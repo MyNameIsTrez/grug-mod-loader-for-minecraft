@@ -139,6 +139,18 @@ public class GameTestsUtils {
         return item;
     }
 
+    public static long item_entity(long level, int x, int y, int z, long itemStack) {
+        long itemEntity = GameFunctions.item_entity(level, x, y, z, itemStack);
+        h.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
+        return itemEntity;
+    }
+
+    public static long item_stack(long item) {
+        long itemStack = GameFunctions.item_stack(item);
+        h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
+        return itemStack;
+    }
+
     public static long resource_location(String resourceLocationString) {
         long resourceLocation = GameFunctions.resource_location(resourceLocationString);
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
