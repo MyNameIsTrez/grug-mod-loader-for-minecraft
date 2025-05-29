@@ -83,9 +83,10 @@ public class GameTestsUtils {
         return block;
     }
 
-    public static void block_flag_update_all() {
+    public static int block_flag_update_all() {
         int flag = GameFunctions.block_flag_update_all();
         h.assertTrue(flag == Block.UPDATE_ALL, "Did not return Block.UPDATE_ALL, but " + flag);
+        return flag;
     }
 
     public static long block_pos(int x, int y, int z) {
@@ -158,6 +159,10 @@ public class GameTestsUtils {
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
         assert_fn_entities_contains(itemStack);
         return itemStack;
+    }
+
+    public static void place_block(long blockState, long block_pos, int flag, long level) {
+        GameFunctions.place_block(blockState, block_pos, flag, level);
     }
 
     public static void print_id(long id) {
