@@ -117,6 +117,18 @@ public class GameTestsUtils {
         return GameFunctions.get_hash_set_string(hashSet);
     }
 
+    public static float get_vec3_x(long vec3) {
+        return GameFunctions.get_vec3_x(vec3);
+    }
+
+    public static float get_vec3_y(long vec3) {
+        return GameFunctions.get_vec3_y(vec3);
+    }
+
+    public static float get_vec3_z(long vec3) {
+        return GameFunctions.get_vec3_z(vec3);
+    }
+
     public static long hash_set() {
         long hashSet = GameFunctions.hash_set();
         h.assertTrue(hashSet != -1, "Invalid hashSet " + hashSet);
