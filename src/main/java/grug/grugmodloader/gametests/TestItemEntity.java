@@ -14,9 +14,7 @@ public class TestItemEntity extends GameTestsUtils {
 
         long itemStack = item_stack(item(resource_location("diamond")));
 
-        long itemEntity = item_entity(get_level(), 0, 0, 0, itemStack);
-
-        assert_fn_entities_contains(itemEntity);
+        item_entity(get_level(), 0, 0, 0, itemStack);
 
         h.succeed();
     }

@@ -11,9 +11,7 @@ public class TestHashSet extends GameTestsUtils {
     public static void hash_set(GameTestHelper h) {
         reset(h);
 
-        long hash_set = hash_set();
-
-        assert_fn_entities_contains(hash_set);
+        hash_set();
 
         h.succeed();
     }

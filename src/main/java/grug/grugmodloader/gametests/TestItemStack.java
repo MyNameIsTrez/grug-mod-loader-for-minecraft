@@ -9,33 +9,11 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
 public class TestItemStack extends GameTestsUtils {
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("diamond")
-
-        item: id = item(resource_location)
-
-        item_stack: id = item_stack(item)
-
-        assert_fn_entities_contains(item_stack)
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_stack(GameTestHelper h) {
         reset(h);
 
-        long resourceLocation = GameFunctions.resource_location("diamond");
-        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
-
-        long item = GameFunctions.item(resourceLocation);
-        h.assertTrue(item != -1, "Invalid item " + item);
-
-        long itemStack = GameFunctions.item_stack(item);
-        h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
-
-        assert_fn_entities_contains(itemStack);
+        item_stack(item(resource_location("diamond")));
 
         h.succeed();
     }

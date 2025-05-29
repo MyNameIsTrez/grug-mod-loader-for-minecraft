@@ -79,6 +79,7 @@ public class GameTestsUtils {
     public static long block(long resourceLocation) {
         long block = GameFunctions.block(resourceLocation);
         h.assertTrue(block != -1, "Invalid block " + block);
+        assert_fn_entities_contains(block);
         return block;
     }
 
@@ -90,12 +91,14 @@ public class GameTestsUtils {
     public static long block_pos(int x, int y, int z) {
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
+        assert_fn_entities_contains(blockPos);
         return blockPos;
     }
 
     public static long box_i32(int i32) {
         long box = GameFunctions.box_i32(i32);
         h.assertTrue(box != -1, "Invalid box " + box);
+        assert_fn_entities_contains(box);
         return box;
     }
 
@@ -104,7 +107,9 @@ public class GameTestsUtils {
     }
 
     public static long get_default_block_state(long block) {
-        return GameFunctions.get_default_block_state(block);
+        long blockState = GameFunctions.get_default_block_state(block);
+        assert_fn_entities_contains(blockState);
+        return blockState;
     }
 
     public static String get_hash_set_string(long hashSet) {
@@ -114,6 +119,7 @@ public class GameTestsUtils {
     public static long hash_set() {
         long hashSet = GameFunctions.hash_set();
         h.assertTrue(hashSet != -1, "Invalid hashSet " + hashSet);
+        assert_fn_entities_contains(hashSet);
         return hashSet;
     }
 
@@ -136,24 +142,43 @@ public class GameTestsUtils {
     public static long item(long resourceLocation) {
         long item = GameFunctions.item(resourceLocation);
         h.assertTrue(item != -1, "Invalid item " + item);
+        assert_fn_entities_contains(item);
         return item;
     }
 
     public static long item_entity(long level, int x, int y, int z, long itemStack) {
         long itemEntity = GameFunctions.item_entity(level, x, y, z, itemStack);
         h.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
+        assert_fn_entities_contains(itemEntity);
         return itemEntity;
     }
 
     public static long item_stack(long item) {
         long itemStack = GameFunctions.item_stack(item);
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
+        assert_fn_entities_contains(itemStack);
         return itemStack;
+    }
+
+    public static void print_id(long id) {
+        GameFunctions.print_id(id);
     }
 
     public static long resource_location(String resourceLocationString) {
         long resourceLocation = GameFunctions.resource_location(resourceLocationString);
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        assert_fn_entities_contains(resourceLocation);
         return resourceLocation;
+    }
+
+    public static int unbox_i32(long box) {
+        return GameFunctions.unbox_i32(box);
+    }
+
+    public static long vec3_zero() {
+        long vec3 = GameFunctions.vec3_zero();
+        h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
+        assert_fn_entities_contains(vec3);
+        return vec3;
     }
 }

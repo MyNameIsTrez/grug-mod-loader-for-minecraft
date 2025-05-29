@@ -12,7 +12,7 @@ public class TestItem extends GameTestsUtils {
     public static void item(GameTestHelper h) {
         reset(h);
 
-        assert_fn_entities_contains(item(resource_location("diamond")));
+        item(resource_location("diamond"));
 
         h.succeed();
     }

@@ -9,58 +9,24 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
 public class TestResourceLocation extends GameTestsUtils {
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("diamond_block")
-
-        assert_fn_entities_contains(resource_location)
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location(GameTestHelper h) {
         reset(h);
 
-        long resourceLocation = GameFunctions.resource_location("diamond_block");
-        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
-
-        assert_fn_entities_contains(resourceLocation);
+        resource_location("diamond_block");
 
         h.succeed();
     }
 
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("foo")
-
-        assert_fn_entities_contains(resource_location)
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location_weird_but_valid_resource_location_string(GameTestHelper h) {
         reset(h);
 
-        long resourceLocation = GameFunctions.resource_location("foo");
-        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
-
-        assert_fn_entities_contains(resourceLocation);
+        resource_location("foo");
 
         h.succeed();
     }
 
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("@")
-        assert_error_id(resource_location)
-
-        assert_game_function_error("resource_location(): Invalid resource_location_string")
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void resource_location_invalid_resource_location_string(GameTestHelper h) {
         reset(h);
@@ -68,7 +34,7 @@ public class TestResourceLocation extends GameTestsUtils {
         long resourceLocation = GameFunctions.resource_location("@");
         h.assertTrue(resourceLocation == -1, "Expected an invalid resourceLocation, but got " + resourceLocation);
 
-        h.assertTrue(Grug.gameFunctionError.equals("resource_location(): Invalid resource_location_string"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        assert_game_function_error("resource_location(): Invalid resource_location_string");
 
         h.succeed();
     }

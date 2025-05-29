@@ -14,9 +14,7 @@ public class TestBlock extends GameTestsUtils {
 
         long resource_location = resource_location("diamond_block");
 
-        long block = block(resource_location);
-
-        assert_fn_entities_contains(block);
+        block(resource_location);
 
         h.succeed();
     }

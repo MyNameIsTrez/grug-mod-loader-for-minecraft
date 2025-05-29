@@ -11,9 +11,7 @@ public class TestBoxI32 extends GameTestsUtils {
     public static void box_i32(GameTestHelper h) {
         reset(h);
 
-        long box = box_i32(1);
-
-        assert_fn_entities_contains(box);
+        box_i32(1);
 
         h.succeed();
     }
