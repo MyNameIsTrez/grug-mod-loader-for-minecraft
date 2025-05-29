@@ -1274,6 +1274,18 @@ public class GameFunctions {
         return unboxedI32;
     }
 
+    public static long vec3(float x, float y, float z) {
+        GrugModLoader.logger.debug("vec3()");
+
+        Vec3 vec3 = new Vec3(x, y, z);
+
+        long vec3Id = Grug.addEntity(EntityType.Vec3, vec3);
+        Grug.fnEntities.add(vec3Id);
+
+        GrugModLoader.logger.debug("Returning {}", vec3Id);
+        return vec3Id;
+    }
+
     public static long vec3_zero() {
         GrugModLoader.logger.debug("vec3_zero()");
 

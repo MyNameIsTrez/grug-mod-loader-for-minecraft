@@ -9,8 +9,9 @@ public class TestVec3Y extends GameTestsUtils {
     public static void get_vec3_y(GameTestHelper h) {
         reset(h);
 
-        float y = get_vec3_y(vec3_zero());
-        h.assertTrue(y == 0, "vec3 Y was not 0, but " + y);
+        float y = get_vec3_y(vec3(1, 2, 3));
+
+        h.assertTrue(y == 2, "vec3 Y was not 2, but " + y);
 
         h.succeed();
     }
@@ -20,6 +21,7 @@ public class TestVec3Y extends GameTestsUtils {
         reset(h);
 
         float y = get_vec3_y(box_i32(1));
+
         h.assertTrue(y == -1, "vec3 Y was not -1, but " + y);
 
         assert_game_function_error("get_vec3_y(): Expected vec3, but got boxed_i32");

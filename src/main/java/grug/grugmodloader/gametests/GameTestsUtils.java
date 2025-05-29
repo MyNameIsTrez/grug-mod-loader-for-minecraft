@@ -107,6 +107,18 @@ public class GameTestsUtils {
         GameFunctions.destroy_block(blockPosId, level);
     }
 
+    public static int get_block_pos_x(long block_pos) {
+        return GameFunctions.get_block_pos_x(block_pos);
+    }
+
+    public static int get_block_pos_y(long block_pos) {
+        return GameFunctions.get_block_pos_y(block_pos);
+    }
+
+    public static int get_block_pos_z(long block_pos) {
+        return GameFunctions.get_block_pos_z(block_pos);
+    }
+
     public static long get_default_block_state(long block) {
         long blockState = GameFunctions.get_default_block_state(block);
         assert_fn_entities_contains(blockState);
@@ -218,6 +230,13 @@ public class GameTestsUtils {
 
     public static int unbox_i32(long box) {
         return GameFunctions.unbox_i32(box);
+    }
+
+    public static long vec3(float x, float y, float z) {
+        long vec3 = GameFunctions.vec3(x, y, z);
+        h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
+        assert_fn_entities_contains(vec3);
+        return vec3;
     }
 
     public static long vec3_zero() {
