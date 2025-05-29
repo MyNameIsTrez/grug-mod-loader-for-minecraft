@@ -36,12 +36,20 @@ public class GameTestsUtils {
         return Grug.addEntity(EntityType.Level, h.getLevel());
     }
 
-    public static HashMap<Object, Long> get_hash_set_objects(long hashSetId) throws AssertEntityTypeException {
-        return Grug.getHashSetObjects(hashSetId);
+    public static HashMap<Object, Long> get_hash_set_objects(long hashSetId) {
+        try {
+            return Grug.getHashSetObjects(hashSetId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            // Unreachable
+            h.fail(assertEntityTypeException.getMessage());
+        }
+        return null;
     }
 
     public static Object get_object(long id) {
-        return GrugModLoader.grug.getObject(id);
+        Object object = GrugModLoader.grug.getObject(id);
+        h.assertTrue(object != null, "object was not supposed to be null for id " + id);
+        return object;
     }
 
     // Asserters

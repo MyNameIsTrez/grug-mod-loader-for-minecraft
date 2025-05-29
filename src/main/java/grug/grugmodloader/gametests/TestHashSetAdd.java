@@ -83,25 +83,20 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         h.assertTrue(Grug.globalEntities.contains(hashSetId), "Grug.globalEntities did not contain hashSetId " + hashSetId);
 
-        HashMap<Object, Long> objects;
-        try {
-            objects = get_hash_set_objects(hashSetId);
-        } catch (AssertEntityTypeException assertEntityTypeException) {
-            // Unreachable
-            h.fail(assertEntityTypeException.getMessage());
-            return;
-        }
+        HashMap<Object, Long> objects = get_hash_set_objects(hashSetId);
 
         Object box1Object = get_object(box1);
-        h.assertTrue(box1Object != null, "box1Object was not supposed to be null");
+
         Long realBox1 = objects.get(box1Object);
         h.assertTrue(realBox1 != null, "realBox1 was not supposed to be null");
+
         h.assertTrue(Grug.globalEntities.contains(realBox1), "Grug.globalEntities did not contain realBox1 " + realBox1);
 
         Object box2Object = get_object(box2);
-        h.assertTrue(box2Object != null, "box2Object was not supposed to be null");
+
         Long realBox2 = objects.get(box2Object);
         h.assertTrue(realBox2 != null, "realBox2 was not supposed to be null");
+
         h.assertTrue(Grug.globalEntities.contains(realBox2), "Grug.globalEntities did not contain realBox2 " + realBox2);
 
         h.succeed();
