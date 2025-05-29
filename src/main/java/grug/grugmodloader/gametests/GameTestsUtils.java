@@ -117,6 +117,10 @@ public class GameTestsUtils {
         return GameFunctions.get_hash_set_string(hashSet);
     }
 
+    public static String get_level_name(long level) {
+        return GameFunctions.get_level_name(level);
+    }
+
     public static float get_vec3_x(long vec3) {
         return GameFunctions.get_vec3_x(vec3);
     }
