@@ -128,6 +128,10 @@ public class GameTestsUtils {
         GameFunctions.hash_set_add(hashSet, value);
     }
 
+    public static void hash_set_clear(long hashSet) {
+        GameFunctions.hash_set_clear(hashSet);
+    }
+
     public static boolean hash_set_has(long hashSet, long value) {
         return GameFunctions.hash_set_has(hashSet, value);
     }
