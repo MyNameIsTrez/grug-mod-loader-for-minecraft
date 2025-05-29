@@ -129,6 +129,10 @@ public class GameTestsUtils {
         return GameFunctions.get_hash_map_size(hashMap);
     }
 
+    public static String get_hash_map_string(long hashMap) {
+        return GameFunctions.get_hash_map_string(hashMap);
+    }
+
     public static int get_hash_set_size(long hashSet) {
         return GameFunctions.get_hash_set_size(hashSet);
     }

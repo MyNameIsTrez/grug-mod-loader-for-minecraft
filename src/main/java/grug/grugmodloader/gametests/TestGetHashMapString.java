@@ -1,0 +1,49 @@
+package grug.grugmodloader.gametests;
+
+import grug.grugmodloader.GrugModLoader;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraftforge.gametest.GameTestHolder;
+
+@GameTestHolder(GrugModLoader.MODID)
+public class TestGetHashMapString extends GameTestsUtils {
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void get_hash_map_string_empty_map(GameTestHelper h) {
+        reset(h);
+
+        String string = get_hash_map_string(hash_map());
+
+        h.assertTrue(string.equals("{}"), "hash_map string was not \"{}\", but \"" + string + "\"");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void get_hash_map_string(GameTestHelper h) {
+        reset(h);
+
+        long hash_map = hash_map();
+
+        hash_map_put(hash_map, box_i32(42), box_i32(1));
+        hash_map_put(hash_map, box_i32(69), box_i32(2));
+
+        String string = get_hash_map_string(hash_map);
+
+        h.assertTrue(string.equals("{17179869190=17179869191, 17179869186=17179869187}"), "hash_map string was not \"{17179869190=17179869191, 17179869186=17179869187}\", but \"" + string + "\"");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void get_hash_map_string_expected_hash_map(GameTestHelper h) {
+        reset(h);
+
+        String string = get_hash_map_string(box_i32(1));
+
+        h.assertTrue(string.equals(""), "hash_map string was not an empty string, but \"" + string + "\"");
+
+        assert_game_function_error("get_hash_map_string(): Expected hash_map, but got boxed_i32");
+
+        h.succeed();
+    }
+}
