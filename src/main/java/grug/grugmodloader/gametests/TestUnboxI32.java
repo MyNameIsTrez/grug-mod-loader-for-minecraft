@@ -27,7 +27,7 @@ public class TestUnboxI32 extends GameTestsUtils {
         long box = GameFunctions.box_i32(1);
         h.assertTrue(box != -1, "Invalid box " + box);
 
-        h.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
+        assert_fn_entities_contains(box);
 
         h.assertTrue(GameFunctions.unbox_i32(box) == 1, "box did not contain the value 1");
 

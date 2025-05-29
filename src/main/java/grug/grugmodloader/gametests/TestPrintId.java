@@ -27,7 +27,7 @@ public class TestPrintId extends GameTestsUtils {
         long box = GameFunctions.box_i32(1);
         h.assertTrue(box != -1, "Invalid box " + box);
 
-        h.assertTrue(Grug.fnEntities.contains(box), "fnEntities did not contain " + box);
+        assert_fn_entities_contains(box);
 
         GameFunctions.print_id(box);
 

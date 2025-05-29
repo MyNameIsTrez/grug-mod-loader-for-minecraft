@@ -25,7 +25,7 @@ public class TestResourceLocation extends GameTestsUtils {
         long resourceLocation = GameFunctions.resource_location("diamond_block");
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
-        h.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
+        assert_fn_entities_contains(resourceLocation);
 
         h.succeed();
     }
@@ -46,7 +46,7 @@ public class TestResourceLocation extends GameTestsUtils {
         long resourceLocation = GameFunctions.resource_location("foo");
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
 
-        h.assertTrue(Grug.fnEntities.contains(resourceLocation), "fnEntities did not contain " + resourceLocation);
+        assert_fn_entities_contains(resourceLocation);
 
         h.succeed();
     }

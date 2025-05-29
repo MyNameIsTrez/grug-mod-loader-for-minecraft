@@ -1,7 +1,6 @@
 package grug.grugmodloader.gametests;
 
 import grug.grugmodloader.GameFunctions;
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -9,82 +8,35 @@ import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
 public class TestItem extends GameTestsUtils {
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("diamond")
-
-        item: id = item(resource_location)
-
-        assert_fn_entities_contains(item)
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item(GameTestHelper h) {
         reset(h);
 
-        long resourceLocation = GameFunctions.resource_location("diamond");
-        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
-
-        long item = GameFunctions.item(resourceLocation);
-        h.assertTrue(item != -1, "Invalid item " + item);
-
-        h.assertTrue(Grug.fnEntities.contains(item), "fnEntities did not contain " + item);
+        assert_fn_entities_contains(item(resource_location("diamond")));
 
         h.succeed();
     }
 
-    /*
-    ```grug
-    on_a() {
-        box: id = box_i32(1)
-
-        item: id = item(box)
-        assert_error_id(item)
-
-        assert_game_function_error("item(): Expected resource_location, but got boxed_i32")
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_expected_resource_location(GameTestHelper h) {
         reset(h);
 
-        long box = GameFunctions.box_i32(1);
-        h.assertTrue(box != -1, "Invalid box " + box);
+        long item = GameFunctions.item(box_i32(1));
+        assert_error_id(item);
 
-        long item = GameFunctions.item(box);
-        h.assertTrue(item == -1, "Expected an invalid item, but got " + item);
-
-        h.assertTrue(Grug.gameFunctionError.equals("item(): Expected resource_location, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        assert_game_function_error("item(): Expected resource_location, but got boxed_i32");
 
         h.succeed();
     }
 
-    /*
-    ```grug
-    on_a() {
-        resource_location: id = resource_location("foo")
-
-        item: id = item(resource_location)
-        assert_error_id(item)
-
-        assert_game_function_error("item(): Invalid resource_location")
-    }
-    ```
-    */
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void item_error_invalid_resource_location(GameTestHelper h) {
         reset(h);
 
-        long resourceLocation = GameFunctions.resource_location("foo");
-        h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
+        long item = GameFunctions.item(resource_location("foo"));
+        assert_error_id(item);
 
-        long item = GameFunctions.item(resourceLocation);
-        h.assertTrue(item == -1, "Expected an invalid item, but got " + item);
-
-        h.assertTrue(Grug.gameFunctionError.equals("item(): Invalid resource_location"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        assert_game_function_error("item(): Invalid resource_location");
 
         h.succeed();
     }

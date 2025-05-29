@@ -35,7 +35,7 @@ public class TestItemStack extends GameTestsUtils {
         long itemStack = GameFunctions.item_stack(item);
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
 
-        h.assertTrue(Grug.fnEntities.contains(itemStack), "fnEntities did not contain " + itemStack);
+        assert_fn_entities_contains(itemStack);
 
         h.succeed();
     }

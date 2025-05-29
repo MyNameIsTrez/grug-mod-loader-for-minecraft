@@ -29,7 +29,7 @@ public class TestVec3Zero extends GameTestsUtils {
         long vec3 = GameFunctions.vec3_zero();
         h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
 
-        h.assertTrue(Grug.fnEntities.contains(vec3), "fnEntities did not contain " + vec3);
+        assert_fn_entities_contains(vec3);
 
         h.assertTrue(GameFunctions.get_vec3_x(vec3) == 0, "vec3 its X value was not 0");
         h.assertTrue(GameFunctions.get_vec3_y(vec3) == 0, "vec3 its Y value was not 0");

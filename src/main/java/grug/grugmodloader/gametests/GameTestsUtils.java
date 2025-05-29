@@ -103,6 +103,10 @@ public class GameTestsUtils {
         GameFunctions.destroy_block(blockPosId, level);
     }
 
+    public static long get_default_block_state(long block) {
+        return GameFunctions.get_default_block_state(block);
+    }
+
     public static String get_hash_set_string(long hashSet) {
         return GameFunctions.get_hash_set_string(hashSet);
     }
@@ -123,6 +127,16 @@ public class GameTestsUtils {
 
     public static int hash_set_size(long hashSet) {
         return GameFunctions.get_hash_set_size(hashSet);
+    }
+
+    public static boolean is_client_side(long level) {
+        return GameFunctions.is_client_side(level);
+    }
+
+    public static long item(long resourceLocation) {
+        long item = GameFunctions.item(resourceLocation);
+        h.assertTrue(item != -1, "Invalid item " + item);
+        return item;
     }
 
     public static long resource_location(String resourceLocationString) {
