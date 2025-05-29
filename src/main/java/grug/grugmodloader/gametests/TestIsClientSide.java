@@ -23,7 +23,7 @@ public class TestIsClientSide extends GameTestsUtils {
 
         long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
-        h.assertTrue(!GameFunctions.is_client_side(level), "Expected to not be client side, but not the case in level " + level);
+        h.assertFalse(GameFunctions.is_client_side(level), "Expected to not be client side, but not the case in level " + level);
 
         h.succeed();
     }
@@ -42,7 +42,7 @@ public class TestIsClientSide extends GameTestsUtils {
         long box = GameFunctions.box_i32(1);
         h.assertTrue(box != -1, "Invalid box " + box);
 
-        h.assertTrue(!GameFunctions.is_client_side(box), "Expected to not be client side, but not the case for box " + box);
+        h.assertFalse(GameFunctions.is_client_side(box), "Expected to not be client side, but not the case for box " + box);
 
         h.assertTrue(Grug.gameFunctionError.equals("is_client_side(): Expected level, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 

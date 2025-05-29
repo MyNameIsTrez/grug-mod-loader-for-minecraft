@@ -52,7 +52,7 @@ public class TestIsAir extends GameTestsUtils {
 
         long blockState = GameFunctions.get_default_block_state(block);
 
-        h.assertTrue(!GameFunctions.is_air(blockState), "Expected not air, but got " + blockState);
+        h.assertFalse(GameFunctions.is_air(blockState), "Expected not air, but got " + blockState);
 
         h.succeed();
     }
@@ -73,7 +73,7 @@ public class TestIsAir extends GameTestsUtils {
         long box = GameFunctions.box_i32(1);
         h.assertTrue(box != -1, "Invalid box " + box);
 
-        h.assertTrue(!GameFunctions.is_air(box), "Expected not air, but got " + box);
+        h.assertFalse(GameFunctions.is_air(box), "Expected not air, but got " + box);
 
         h.assertTrue(Grug.gameFunctionError.equals("is_air(): Expected block_state, but got boxed_i32"), "gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
 

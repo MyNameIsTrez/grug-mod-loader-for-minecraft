@@ -3,7 +3,6 @@ package grug.grugmodloader.gametests;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import grug.grugmodloader.AssertEntityTypeException;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
@@ -75,7 +74,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         h.assertTrue(hash_set_has(hashSetId, box2), "hashSetId did not contain box2 " + box2);
 
         String hashSetString = get_hash_set_string(hashSetId);
-        h.assertTrue(!hashSetString.isEmpty(), "Invalid empty hashSetString");
+        h.assertFalse(hashSetString.isEmpty(), "Invalid empty hashSetString");
 
         h.assertTrue(hashSetString.equals("[17179869185, 17179869187]"), "Got unexpected hashSetString value '" + hashSetString + "'");
 
