@@ -165,8 +165,28 @@ public class GameTestsUtils {
         GameFunctions.place_block(blockState, block_pos, flag, level);
     }
 
+    public static void print_bool(boolean b) {
+        GameFunctions.print_bool(b);
+    }
+
+    public static void print_f32(float f) {
+        GameFunctions.print_f32(f);
+    }
+
+    public static void print_i32(int i) {
+        GameFunctions.print_i32(i);
+    }
+
     public static void print_id(long id) {
         GameFunctions.print_id(id);
+    }
+
+    public static void print_string(String string) {
+        GameFunctions.print_string(string);
+    }
+
+    public static void remove_block(long blockPos, long level) {
+        GameFunctions.remove_block(blockPos, level);
     }
 
     public static long resource_location(String resourceLocationString) {
