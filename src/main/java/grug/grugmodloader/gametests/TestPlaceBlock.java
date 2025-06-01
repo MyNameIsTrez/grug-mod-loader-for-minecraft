@@ -60,7 +60,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         long block_id = block(resource_location("diamond_block"));
 
-        long block_state = GameFunctions.get_default_block_state(block_id);
+        long block_state = get_default_block_state(block_id);
 
         long box = box_i32(1);
 
@@ -93,7 +93,7 @@ public class TestPlaceBlock extends GameTestsUtils {
 
         long block_pos = block_pos(x, y, z);
 
-        GameFunctions.place_block(block_state, block_pos, 2147483647, get_level());
+        place_block(block_state, block_pos, 2147483647, get_level());
 
         h.assertBlockPresent(block, relative);
 
@@ -104,7 +104,7 @@ public class TestPlaceBlock extends GameTestsUtils {
     public static void place_block_expected_level(GameTestHelper h) {
         reset(h);
 
-        long block_id = GameFunctions.block(resource_location("diamond_block"));
+        long block_id = block(resource_location("diamond_block"));
 
         BlockPos relative = new BlockPos(0, 2, 0);
 
@@ -121,6 +121,8 @@ public class TestPlaceBlock extends GameTestsUtils {
         int flag = block_flag_update_all();
 
         GameFunctions.place_block(block_state, block_pos, flag, box_i32(1));
+
+        assert_game_function_error("place_block(): Expected level, but got boxed_i32");
 
         h.succeed();
     }

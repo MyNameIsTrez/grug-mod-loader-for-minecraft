@@ -22,7 +22,7 @@ public class TestItemStack extends GameTestsUtils {
         reset(h);
 
         long item_stack = GameFunctions.item_stack(box_i32(1));
-        h.assertTrue(item_stack == -1, "Expected an invalid item_stack, but got " + item_stack);
+        assert_error_id(item_stack);
 
         assert_game_function_error("item_stack(): Expected item, but got boxed_i32");
 

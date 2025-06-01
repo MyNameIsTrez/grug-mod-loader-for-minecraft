@@ -63,6 +63,8 @@ public class TestDestroyBlock extends GameTestsUtils {
 
         destroy_block(block_pos, box_i32(1));
 
+        assert_game_function_error("destroy_block(): Expected level, but got boxed_i32");
+
         h.succeed();
     }
 }

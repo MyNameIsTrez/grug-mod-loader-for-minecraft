@@ -12,12 +12,12 @@ public class TestHashSetHas extends GameTestsUtils {
     public static void hash_set_has(GameTestHelper h) {
         reset(h);
 
-        long hash_set = GameFunctions.hash_set();
+        long hash_set = hash_set();
 
-        GameFunctions.hash_set_add(hash_set, GameFunctions.box_i32(1));
+        hash_set_add(hash_set, box_i32(1));
 
-        long box = GameFunctions.box_i32(1);
-        h.assertTrue(GameFunctions.hash_set_has(hash_set, box), "hash_set did not contain box " + box);
+        long box = box_i32(1);
+        h.assertTrue(hash_set_has(hash_set, box), "hash_set did not contain box " + box);
 
         h.succeed();
     }
@@ -26,12 +26,12 @@ public class TestHashSetHas extends GameTestsUtils {
     public static void hash_set_has_not(GameTestHelper h) {
         reset(h);
 
-        long hash_set = GameFunctions.hash_set();
+        long hash_set = hash_set();
 
-        GameFunctions.hash_set_add(hash_set, GameFunctions.box_i32(1));
+        hash_set_add(hash_set, box_i32(1));
 
-        long box = GameFunctions.box_i32(2);
-        h.assertFalse(GameFunctions.hash_set_has(hash_set, box), "hash_set did contain box " + box);
+        long box = box_i32(2);
+        h.assertFalse(hash_set_has(hash_set, box), "hash_set did contain box " + box);
 
         h.succeed();
     }
@@ -40,7 +40,7 @@ public class TestHashSetHas extends GameTestsUtils {
     public static void hash_set_has_expected_hash_set(GameTestHelper h) {
         reset(h);
 
-        long box = GameFunctions.box_i32(1);
+        long box = box_i32(1);
 
         h.assertFalse(GameFunctions.hash_set_has(box, box), "hash_set_has() was expected to return false");
 
