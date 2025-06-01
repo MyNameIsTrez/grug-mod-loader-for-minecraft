@@ -19,7 +19,7 @@ public class TestGetItemStackName extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_item_name_expected_item(GameTestHelper h) {
+    public static void get_item_stack_name_expected_item(GameTestHelper h) {
         reset(h);
 
         String item_stack_name = get_item_stack_name(box_i32(1));

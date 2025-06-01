@@ -161,6 +161,10 @@ public class GameTestsUtils {
         return GameFunctions.get_level_name(level);
     }
 
+    public static String get_resource_location_string(long resourceLocation) {
+        return GameFunctions.get_resource_location_string(resourceLocation);
+    }
+
     public static float get_vec3_x(long vec3) {
         return GameFunctions.get_vec3_x(vec3);
     }
