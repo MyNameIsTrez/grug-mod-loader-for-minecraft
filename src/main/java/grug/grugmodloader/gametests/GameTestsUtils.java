@@ -141,6 +141,10 @@ public class GameTestsUtils {
         return GameFunctions.get_hash_set_string(hashSet);
     }
 
+    public static String get_item_entity_name(long item) {
+        return GameFunctions.get_item_entity_name(item);
+    }
+
     public static String get_item_name(long item) {
         return GameFunctions.get_item_name(item);
     }
