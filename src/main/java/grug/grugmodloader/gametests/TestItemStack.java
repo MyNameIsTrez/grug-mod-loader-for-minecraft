@@ -21,8 +21,7 @@ public class TestItemStack extends GameTestsUtils {
     public static void item_stack_expected_item(GameTestHelper h) {
         reset(h);
 
-        long item_stack = GameFunctions.item_stack(box_i32(1));
-        assert_error_id(item_stack);
+        assert_error_id(GameFunctions.item_stack(box_i32(1)));
 
         assert_game_function_error("item_stack(): Expected item, but got boxed_i32");
 

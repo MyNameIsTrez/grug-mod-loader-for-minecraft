@@ -25,8 +25,7 @@ public class TestItemEntity extends GameTestsUtils {
 
         long box = box_i32(1);
 
-        long item_entity = GameFunctions.item_entity(box, 0, 0, 0, box);
-        assert_error_id(item_entity);
+        assert_error_id(GameFunctions.item_entity(box, 0, 0, 0, box));
 
         assert_game_function_error("item_entity(): Expected level, but got boxed_i32");
 
@@ -39,8 +38,7 @@ public class TestItemEntity extends GameTestsUtils {
 
         long box = box_i32(1);
 
-        long item_entity = GameFunctions.item_entity(get_level(), 0, 0, 0, box);
-        assert_error_id(item_entity);
+        assert_error_id(GameFunctions.item_entity(get_level(), 0, 0, 0, box));
 
         assert_game_function_error("item_entity(): Expected item_stack, but got boxed_i32");
 

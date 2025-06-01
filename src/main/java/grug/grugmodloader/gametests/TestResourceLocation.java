@@ -30,8 +30,7 @@ public class TestResourceLocation extends GameTestsUtils {
     public static void resource_location_invalid_resource_location_string(GameTestHelper h) {
         reset(h);
 
-        long resource_location = GameFunctions.resource_location("@");
-        assert_error_id(resource_location);
+        assert_error_id(GameFunctions.resource_location("@"));
 
         assert_game_function_error("resource_location(): Invalid resource_location_string");
 

@@ -291,7 +291,7 @@ public class Grug {
 
     public static long addEntity(GrugEntityType entityType, Object entityInstance) {
         GrugModLoader.logger.debug("addEntity(entityType={}, entityInstance={})", entityType, entityInstance);
-        assert(entityInstance != null);
+        assert entityInstance != null;
 
         int entityIndex = nextEntityIndices.get(entityType);
 

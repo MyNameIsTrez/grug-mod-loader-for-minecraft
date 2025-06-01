@@ -23,8 +23,7 @@ public class TestGetDefaultBlockState extends GameTestsUtils {
     public static void get_default_block_state_expected_block(GameTestHelper h) {
         reset(h);
 
-        long block_state = GameFunctions.get_default_block_state(box_i32(1));
-        assert_error_id(block_state);
+        assert_error_id(GameFunctions.get_default_block_state(box_i32(1)));
 
         assert_game_function_error("get_default_block_state(): Expected block, but got boxed_i32");
 
