@@ -136,6 +136,10 @@ public class GameTestsUtils {
         return GameFunctions.get_block_pos_z(block_pos);
     }
 
+    public static long get_block_state(long blockPos, long level) {
+        return GameFunctions.get_block_state(blockPos, level);
+    }
+
     public static long get_default_block_state(long block) {
         long blockState = GameFunctions.get_default_block_state(block);
         assert_fn_entities_contains(blockState);

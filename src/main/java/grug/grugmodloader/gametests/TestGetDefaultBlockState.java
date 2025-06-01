@@ -1,5 +1,6 @@
 package grug.grugmodloader.gametests;
 
+import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -22,11 +23,10 @@ public class TestGetDefaultBlockState extends GameTestsUtils {
     public static void get_default_block_state_expected_block(GameTestHelper h) {
         reset(h);
 
-        long box = box_i32(1);
+        long block_state = GameFunctions.get_default_block_state(box_i32(1));
+        assert_error_id(block_state);
 
-        h.assertFalse(is_air(box), "Expected not air, but got " + box);
-
-        assert_game_function_error("is_air(): Expected block_state, but got boxed_i32");
+        assert_game_function_error("get_default_block_state(): Expected block, but got boxed_i32");
 
         h.succeed();
     }
