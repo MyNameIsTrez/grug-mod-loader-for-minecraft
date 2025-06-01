@@ -151,7 +151,7 @@
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "block_entity_id",
+					"name": "block_entity",
 					"type": "id"
 				}
 			]
@@ -161,7 +161,7 @@
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				}
 			]
@@ -171,7 +171,7 @@
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				},
 				{
@@ -185,7 +185,7 @@
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				}
 			]
@@ -195,7 +195,7 @@
 			"return_type": "i32",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				}
 			]
@@ -205,7 +205,7 @@
 			"return_type": "i32",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				}
 			]
@@ -215,7 +215,7 @@
 			"return_type": "i32",
 			"arguments": [
 				{
-					"name": "block_pos_id",
+					"name": "block_pos",
 					"type": "id"
 				}
 			]
@@ -339,7 +339,7 @@
 			"return_type": "f32",
 			"arguments": [
 				{
-					"name": "vec3_id",
+					"name": "vec3",
 					"type": "id"
 				}
 			]
@@ -349,7 +349,7 @@
 			"return_type": "f32",
 			"arguments": [
 				{
-					"name": "vec3_id",
+					"name": "vec3",
 					"type": "id"
 				}
 			]
@@ -359,7 +359,7 @@
 			"return_type": "f32",
 			"arguments": [
 				{
-					"name": "vec3_id",
+					"name": "vec3",
 					"type": "id"
 				}
 			]
@@ -369,7 +369,7 @@
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "block_entity_id",
+					"name": "block_entity",
 					"type": "id"
 				}
 			]
