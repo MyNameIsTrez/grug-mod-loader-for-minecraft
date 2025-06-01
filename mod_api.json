@@ -87,8 +87,8 @@
 				}
 			]
 		},
-		"destroy_block": {
-			"description": "Removes a block. Spawns particles of the removed block.",
+		"destroy_and_drop_block": {
+			"description": "Removes a block, and drops it as an item. Spawns particles of the removed block.",
 			"arguments": [
 				{
 					"name": "block_pos",
@@ -100,8 +100,8 @@
 				}
 			]
 		},
-		"destroy_and_drop_block": {
-			"description": "Removes a block, and drops it as an item. Spawns particles of the removed block.",
+		"destroy_block": {
+			"description": "Removes a block, without dropping it as an item. Spawns particles of the removed block.",
 			"arguments": [
 				{
 					"name": "block_pos",
@@ -696,7 +696,7 @@
 			]
 		},
 		"remove_block": {
-			"description": "Removes a block.",
+			"description": "Removes a block, without dropping it as an item.",
 			"arguments": [
 				{
 					"name": "block_pos",

@@ -1,7 +1,7 @@
 package grug.grugmodloader;
 
 public class StringUtils {
-    public static String getSnakeCase(EntityType entityType) {
+    public static String getSnakeCase(GrugEntityType entityType) {
         StringBuilder result = new StringBuilder();
         boolean firstCharacter = true;
         for (char c : entityType.toString().toCharArray()) {

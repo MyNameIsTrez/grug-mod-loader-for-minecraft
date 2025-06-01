@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import grug.grugmodloader.AssertEntityTypeException;
-import grug.grugmodloader.EntityType;
+import grug.grugmodloader.GrugEntityType;
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -33,7 +34,7 @@ public class GameTestsUtils {
     }
 
     public static long get_level() {
-        return Grug.addEntity(EntityType.Level, h.getLevel());
+        return Grug.addEntity(GrugEntityType.Level, h.getLevel());
     }
 
     public static HashMap<Object, Long> get_hash_set_objects(long hashSetId) {
@@ -60,6 +61,14 @@ public class GameTestsUtils {
 
     public static void assert_block_present(Block block, BlockPos blockPos) {
         h.assertBlockPresent(block, blockPos);
+    }
+
+    public static void assert_entity_not_present(EntityType<?> entityType) {
+        h.assertEntityNotPresent(entityType);
+    }
+
+    public static void assert_entity_present(EntityType<?> entityType) {
+        h.assertEntityPresent(entityType);
     }
 
     public static void assert_error_id(long id) {
@@ -105,6 +114,10 @@ public class GameTestsUtils {
         h.assertTrue(box != -1, "Invalid box " + box);
         assert_fn_entities_contains(box);
         return box;
+    }
+
+    public static void destroy_and_drop_block(long blockPosId, long level) {
+        GameFunctions.destroy_and_drop_block(blockPosId, level);
     }
 
     public static void destroy_block(long blockPosId, long level) {

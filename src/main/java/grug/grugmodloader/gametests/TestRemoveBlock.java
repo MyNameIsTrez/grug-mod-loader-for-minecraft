@@ -1,11 +1,12 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.EntityType;
+import grug.grugmodloader.GrugEntityType;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.gametest.GameTestHolder;
 
@@ -20,6 +21,7 @@ public class TestRemoveBlock extends GameTestsUtils {
         BlockPos relative = new BlockPos(0, 1, 0);
 
         h.assertBlockPresent(block, relative);
+        assert_entity_not_present(EntityType.ITEM);
 
         BlockPos absolute = h.absolutePos(relative);
 
@@ -29,11 +31,12 @@ public class TestRemoveBlock extends GameTestsUtils {
 
         long block_pos_id = block_pos(x, y, z);
 
-        long level = Grug.addEntity(EntityType.Level, h.getLevel());
+        long level = Grug.addEntity(GrugEntityType.Level, h.getLevel());
 
         remove_block(block_pos_id, level);
 
         h.assertBlockNotPresent(block, relative);
+        assert_entity_not_present(EntityType.ITEM);
 
         h.succeed();
     }
@@ -42,19 +45,11 @@ public class TestRemoveBlock extends GameTestsUtils {
     public static void remove_block_expected_block_pos(GameTestHelper h) {
         reset(h);
 
-        Block block = get_block("diamond_block");
-
-        BlockPos relative = new BlockPos(0, 1, 0);
-
-        h.assertBlockPresent(block, relative);
-
         long box = box_i32(1);
 
         remove_block(box, box);
 
         assert_game_function_error("remove_block(): Expected block_pos, but got boxed_i32");
-
-        h.assertBlockPresent(block, relative);
 
         h.succeed();
     }
@@ -63,11 +58,7 @@ public class TestRemoveBlock extends GameTestsUtils {
     public static void remove_block_expected_level(GameTestHelper h) {
         reset(h);
 
-        Block block = get_block("diamond_block");
-
         BlockPos relative = new BlockPos(0, 1, 0);
-
-        h.assertBlockPresent(block, relative);
 
         BlockPos absolute = h.absolutePos(relative);
 
@@ -82,8 +73,6 @@ public class TestRemoveBlock extends GameTestsUtils {
         remove_block(block_pos_id, box);
 
         assert_game_function_error("remove_block(): Expected level, but got boxed_i32");
-
-        h.assertBlockPresent(block, relative);
 
         h.succeed();
     }

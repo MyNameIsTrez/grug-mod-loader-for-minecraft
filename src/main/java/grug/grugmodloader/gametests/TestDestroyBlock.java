@@ -4,6 +4,7 @@ import grug.grugmodloader.GrugModLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.gametest.GameTestHolder;
 
@@ -18,6 +19,7 @@ public class TestDestroyBlock extends GameTestsUtils {
         BlockPos relative = new BlockPos(0, 1, 0);
 
         assert_block_present(block, relative);
+        assert_entity_not_present(EntityType.ITEM);
 
         BlockPos absolute = h.absolutePos(relative);
 
@@ -30,6 +32,7 @@ public class TestDestroyBlock extends GameTestsUtils {
         destroy_block(block_pos, get_level());
 
         assert_block_not_present(block, relative);
+        assert_entity_not_present(EntityType.ITEM);
 
         h.succeed();
     }

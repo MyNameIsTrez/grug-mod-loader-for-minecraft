@@ -72,7 +72,7 @@ public class Grug {
 
     // TODO: This does not recycle indices of despawned entities,
     // TODO: which means this will eventually wrap around back to 0
-    private static Map<EntityType, Integer> nextEntityIndices = new HashMap<>();
+    private static Map<GrugEntityType, Integer> nextEntityIndices = new HashMap<>();
     private static Map<Long, Object> entityData = new HashMap<>();
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
@@ -125,7 +125,7 @@ public class Grug {
             }
         }
 
-        for (EntityType entityType : EntityType.values()) {
+        for (GrugEntityType entityType : GrugEntityType.values()) {
             nextEntityIndices.put(entityType, 0);
         }
     }
@@ -135,7 +135,7 @@ public class Grug {
     // where all of the static variables in the Grug class could be made non-static,
     // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
     public static void resetVariables() {
-        for (EntityType entityType : nextEntityIndices.keySet()) {
+        for (GrugEntityType entityType : nextEntityIndices.keySet()) {
             nextEntityIndices.put(entityType, 0);
         }
         entityData.clear();
@@ -289,7 +289,7 @@ public class Grug {
         GrugModLoader.grug.gameFunctionErrorHappened(gameFunctionError);
     }
 
-    public static long addEntity(EntityType entityType, Object entityInstance) {
+    public static long addEntity(GrugEntityType entityType, Object entityInstance) {
         GrugModLoader.logger.debug("addEntity(entityType={}, entityInstance={})", entityType, entityInstance);
         assert(entityInstance != null);
 
@@ -317,14 +317,14 @@ public class Grug {
         }
     }
 
-    private static long getEntityID(EntityType entityType, int entityIndex) {
+    private static long getEntityID(GrugEntityType entityType, int entityIndex) {
         GrugModLoader.logger.debug("getEntityID(entityType={}, entityIndex={})", entityType, entityIndex);
         return (long)entityType.ordinal() << 32 | entityIndex;
     }
 
-    public static EntityType getEntityType(long id) {
+    public static GrugEntityType getEntityType(long id) {
         GrugModLoader.logger.debug("getEntityType(id={})", id);
-        return EntityType.get((int)(id >> 32));
+        return GrugEntityType.get((int)(id >> 32));
     }
 
     // private int getEntityIndex(long id) {
@@ -333,20 +333,20 @@ public class Grug {
     // }
 
     // TODO: I'm sure this can be done cleaner
-    public static boolean isEntityTypeInstanceOf(EntityType derived, EntityType base) {
+    public static boolean isEntityTypeInstanceOf(GrugEntityType derived, GrugEntityType base) {
         GrugModLoader.logger.debug("isEntityTypeInstanceOf(derived={}, base={})", derived, base);
         if (derived == base) {
             return true;
         }
-        if (derived == EntityType.ItemEntity && base == EntityType.Entity) {
+        if (derived == GrugEntityType.ItemEntity && base == GrugEntityType.Entity) {
             return true;
         }
         return false;
     }
 
-    private static void assertEntityType(long id, EntityType expectedEntityType) throws AssertEntityTypeException {
+    private static void assertEntityType(long id, GrugEntityType expectedEntityType) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("assertEntityType(id={}, expectedEntityType={})", id, expectedEntityType);
-        EntityType entityType = getEntityType(id);
+        GrugEntityType entityType = getEntityType(id);
         if (!isEntityTypeInstanceOf(entityType, expectedEntityType)) {
             throw new AssertEntityTypeException(entityType, expectedEntityType);
         }
@@ -364,7 +364,7 @@ public class Grug {
 
     public static HashMap<Object, Long> getHashMapObjects(long hashMapId) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getHashMapObjects(hashMapId={})", hashMapId);
-        assertEntityType(hashMapId, EntityType.HashMap);
+        assertEntityType(hashMapId, GrugEntityType.HashMap);
         HashMap<Object, Long> objects = allHashMapObjects.get(hashMapId);
         assert objects != null;
         return objects;
@@ -374,7 +374,7 @@ public class Grug {
         GrugModLoader.logger.debug("getHashSetObjects(hashSetId={})", hashSetId);
         HashMap<Object, Long> objects = allHashSetObjects.get(hashSetId);
         if (objects == null) {
-            assertEntityType(hashSetId, EntityType.HashSet);
+            assertEntityType(hashSetId, GrugEntityType.HashSet);
             assert false; // Unreachable.
         }
         return objects;
@@ -382,7 +382,7 @@ public class Grug {
 
     public Block getBlock(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBlock(id={})", id);
-        assertEntityType(id, EntityType.Block);
+        assertEntityType(id, GrugEntityType.Block);
         Block block = (Block)entityData.get(id);
         assert block != null;
         return block;
@@ -390,7 +390,7 @@ public class Grug {
 
     public GrugBlockEntity getBlockEntity(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBlockEntity(id={})", id);
-        assertEntityType(id, EntityType.BlockEntity);
+        assertEntityType(id, GrugEntityType.BlockEntity);
         GrugBlockEntity blockEntity = (GrugBlockEntity)entityData.get(id);
         assert blockEntity != null;
         return blockEntity;
@@ -398,7 +398,7 @@ public class Grug {
 
     public BlockPos getBlockPos(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBlockPos(id={})", id);
-        assertEntityType(id, EntityType.BlockPos);
+        assertEntityType(id, GrugEntityType.BlockPos);
         BlockPos blockPos = (BlockPos)entityData.get(id);
         assert blockPos != null;
         return blockPos;
@@ -406,7 +406,7 @@ public class Grug {
 
     public BlockState getBlockState(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBlockState(id={})", id);
-        assertEntityType(id, EntityType.BlockState);
+        assertEntityType(id, GrugEntityType.BlockState);
         BlockState blockState = (BlockState)entityData.get(id);
         assert blockState != null;
         return blockState;
@@ -414,7 +414,7 @@ public class Grug {
 
     public Integer getBoxedI32(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBoxedI32(id={})", id);
-        assertEntityType(id, EntityType.BoxedI32);
+        assertEntityType(id, GrugEntityType.BoxedI32);
         Integer boxedI32 = (Integer)entityData.get(id);
         assert boxedI32 != null;
         return boxedI32;
@@ -422,7 +422,7 @@ public class Grug {
 
     public Entity getEntity(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getEntity(id={})", id);
-        assertEntityType(id, EntityType.Entity);
+        assertEntityType(id, GrugEntityType.Entity);
         Entity entity = (Entity)entityData.get(id);
         assert entity != null;
         return entity;
@@ -430,7 +430,7 @@ public class Grug {
 
     public GrugEntry getEntry(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getEntry(id={})", id);
-        assertEntityType(id, EntityType.Entry);
+        assertEntityType(id, GrugEntityType.Entry);
         GrugEntry iteration = (GrugEntry)entityData.get(id);
         assert iteration != null;
         return iteration;
@@ -439,7 +439,7 @@ public class Grug {
     @SuppressWarnings("unchecked")
     public HashMap<Long, Long> getHashMap(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getHashMap(id={})", id);
-        assertEntityType(id, EntityType.HashMap);
+        assertEntityType(id, GrugEntityType.HashMap);
         HashMap<Long, Long> hashMap = (HashMap<Long, Long>)entityData.get(id);
         assert hashMap != null;
         return hashMap;
@@ -448,7 +448,7 @@ public class Grug {
     @SuppressWarnings("unchecked")
     public HashSet<Long> getHashSet(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getHashSet(id={})", id);
-        assertEntityType(id, EntityType.HashSet);
+        assertEntityType(id, GrugEntityType.HashSet);
         HashSet<Long> hashSet = (HashSet<Long>)entityData.get(id);
         assert hashSet != null;
         return hashSet;
@@ -456,7 +456,7 @@ public class Grug {
 
     public Item getItem(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getItem(id={})", id);
-        assertEntityType(id, EntityType.Item);
+        assertEntityType(id, GrugEntityType.Item);
         Item item = (Item)entityData.get(id);
         assert item != null;
         return item;
@@ -464,7 +464,7 @@ public class Grug {
 
     public ItemEntity getItemEntity(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getItemEntity(id={})", id);
-        assertEntityType(id, EntityType.ItemEntity);
+        assertEntityType(id, GrugEntityType.ItemEntity);
         ItemEntity itemEntity = (ItemEntity)entityData.get(id);
         assert itemEntity != null;
         return itemEntity;
@@ -472,7 +472,7 @@ public class Grug {
 
     public ItemStack getItemStack(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getItemStack(id={})", id);
-        assertEntityType(id, EntityType.ItemStack);
+        assertEntityType(id, GrugEntityType.ItemStack);
         ItemStack itemStack = (ItemStack)entityData.get(id);
         assert itemStack != null;
         return itemStack;
@@ -480,7 +480,7 @@ public class Grug {
 
     public GrugIterator getIterator(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getIterator(id={})", id);
-        assertEntityType(id, EntityType.Iterator);
+        assertEntityType(id, GrugEntityType.Iterator);
         GrugIterator iterator = (GrugIterator)entityData.get(id);
         assert iterator != null;
         return iterator;
@@ -488,7 +488,7 @@ public class Grug {
 
     public Level getLevel(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getLevel(id={})", id);
-        assertEntityType(id, EntityType.Level);
+        assertEntityType(id, GrugEntityType.Level);
         Level level = (Level)entityData.get(id);
         assert level != null;
         return level;
@@ -503,7 +503,7 @@ public class Grug {
 
     public ResourceLocation getResourceLocation(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getResourceLocation(id={})", id);
-        assertEntityType(id, EntityType.ResourceLocation);
+        assertEntityType(id, GrugEntityType.ResourceLocation);
         ResourceLocation resourceLocation = (ResourceLocation)entityData.get(id);
         assert resourceLocation != null;
         return resourceLocation;
@@ -511,7 +511,7 @@ public class Grug {
 
     public Vec3 getVec3(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getVec3(id={})", id);
-        assertEntityType(id, EntityType.Vec3);
+        assertEntityType(id, GrugEntityType.Vec3);
         Vec3 vec3 = (Vec3)entityData.get(id);
         assert vec3 != null;
         return vec3;

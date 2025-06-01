@@ -1,6 +1,6 @@
 package grug.grugmodloader;
 
-public enum EntityType {
+public enum GrugEntityType {
     Block,
     BlockEntity,
     BlockPos,
@@ -20,9 +20,9 @@ public enum EntityType {
 
     // EntityType.values()[i] is expensive, so we cache .values().
     // See https://stackoverflow.com/a/8762387/13279557
-    private final static EntityType[] values = EntityType.values();
+    private final static GrugEntityType[] values = GrugEntityType.values();
 
-    public static EntityType get(int i) {
+    public static GrugEntityType get(int i) {
         return values[i];
     }
 }

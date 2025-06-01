@@ -27,9 +27,9 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        grugEntity.id = Grug.addEntity(EntityType.BlockEntity, this);
+        grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
-        worldPositionId = Grug.addEntity(EntityType.BlockPos, worldPosition);
+        worldPositionId = Grug.addEntity(GrugEntityType.BlockPos, worldPosition);
 
         GrugFile file = new GrugFile();
         GrugModLoader.grug.getEntityFile("foo:game_of_life_block_entity", file);
@@ -119,19 +119,19 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         Set<Long> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
-        long blockStateId = Grug.addEntity(EntityType.BlockState, blockState);
+        long blockStateId = Grug.addEntity(GrugEntityType.BlockState, blockState);
         Grug.fnEntities.add(blockStateId);
 
-        long levelId = Grug.addEntity(EntityType.Level, level);
+        long levelId = Grug.addEntity(GrugEntityType.Level, level);
         Grug.fnEntities.add(levelId);
 
-        long blockPosId = Grug.addEntity(EntityType.BlockPos, blockPos);
+        long blockPosId = Grug.addEntity(GrugEntityType.BlockPos, blockPos);
         Grug.fnEntities.add(blockPosId);
 
-        long blockInId = Grug.addEntity(EntityType.Block, blockIn);
+        long blockInId = Grug.addEntity(GrugEntityType.Block, blockIn);
         Grug.fnEntities.add(blockInId);
 
-        long fromBlockPosId = Grug.addEntity(EntityType.BlockPos, fromBlockPos);
+        long fromBlockPosId = Grug.addEntity(GrugEntityType.BlockPos, fromBlockPos);
         Grug.fnEntities.add(fromBlockPosId);
 
         GrugModLoader.grug.block_entity_on_neighbor_changed(grugEntity.onFns, grugEntity.globals, blockStateId, levelId, blockPosId, blockInId, fromBlockPosId, isMoving);

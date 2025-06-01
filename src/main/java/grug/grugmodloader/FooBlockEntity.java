@@ -25,9 +25,9 @@ public class FooBlockEntity extends GrugBlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        grugEntity.id = Grug.addEntity(EntityType.BlockEntity, this);
+        grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
-        worldPositionId = Grug.addEntity(EntityType.BlockPos, worldPosition);
+        worldPositionId = Grug.addEntity(GrugEntityType.BlockPos, worldPosition);
 
         GrugFile file = new GrugFile();
         GrugModLoader.grug.getEntityFile("foo:foo_block_entity", file);

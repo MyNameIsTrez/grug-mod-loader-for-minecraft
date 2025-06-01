@@ -40,7 +40,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long blockId = Grug.addEntity(EntityType.Block, block);
+        long blockId = Grug.addEntity(GrugEntityType.Block, block);
         Grug.fnEntities.add(blockId);
 
         GrugModLoader.logger.debug("Returning {}", blockId);
@@ -52,7 +52,7 @@ public class GameFunctions {
 
         BlockPos blockPos = new BlockPos(x, y, z);
 
-        long blockPosId = Grug.addEntity(EntityType.BlockPos, blockPos);
+        long blockPosId = Grug.addEntity(GrugEntityType.BlockPos, blockPos);
         Grug.fnEntities.add(blockPosId);
 
         GrugModLoader.logger.debug("Returning {}", blockPosId);
@@ -71,27 +71,11 @@ public class GameFunctions {
 
         Integer boxedI32 = i32;
 
-        long boxId = Grug.addEntity(EntityType.BoxedI32, boxedI32);
+        long boxId = Grug.addEntity(GrugEntityType.BoxedI32, boxedI32);
         Grug.fnEntities.add(boxId);
 
         GrugModLoader.logger.debug("Returning {}", boxId);
         return boxId;
-    }
-
-    public static void destroy_block(long blockPosId, long levelId) {
-        GrugModLoader.logger.debug("destroy_block(blockPosId={}, levelId={})", blockPosId, levelId);
-
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = GrugModLoader.grug.getBlockPos(blockPosId);
-            level = GrugModLoader.grug.getLevel(levelId);
-        } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.gameFunctionErrorHappened("destroy_block", assertEntityTypeException.getMessage());
-            return;
-        }
-
-        level.destroyBlock(blockPos, false);
     }
 
     public static void destroy_and_drop_block(long blockPosId, long levelId) {
@@ -108,6 +92,22 @@ public class GameFunctions {
         }
 
         level.destroyBlock(blockPos, true);
+    }
+
+    public static void destroy_block(long blockPosId, long levelId) {
+        GrugModLoader.logger.debug("destroy_block(blockPosId={}, levelId={})", blockPosId, levelId);
+
+        BlockPos blockPos;
+        Level level;
+        try {
+            blockPos = GrugModLoader.grug.getBlockPos(blockPosId);
+            level = GrugModLoader.grug.getLevel(levelId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.gameFunctionErrorHappened("destroy_block", assertEntityTypeException.getMessage());
+            return;
+        }
+
+        level.destroyBlock(blockPos, false);
     }
 
     public static long entry_key(long entryId) {
@@ -182,7 +182,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long levelId = Grug.addEntity(EntityType.Level, level);
+        long levelId = Grug.addEntity(GrugEntityType.Level, level);
         Grug.fnEntities.add(levelId);
 
         GrugModLoader.logger.debug("Returning {}", levelId);
@@ -201,7 +201,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long aboveId = Grug.addEntity(EntityType.BlockPos, above);
+        long aboveId = Grug.addEntity(GrugEntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
 
         GrugModLoader.logger.debug("Returning {}", aboveId);
@@ -220,7 +220,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long aboveId = Grug.addEntity(EntityType.BlockPos, above);
+        long aboveId = Grug.addEntity(GrugEntityType.BlockPos, above);
         Grug.fnEntities.add(aboveId);
 
         GrugModLoader.logger.debug("Returning {}", aboveId);
@@ -239,7 +239,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long centerId = Grug.addEntity(EntityType.Vec3, center);
+        long centerId = Grug.addEntity(GrugEntityType.Vec3, center);
         Grug.fnEntities.add(centerId);
 
         GrugModLoader.logger.debug("Returning {}", centerId);
@@ -306,7 +306,7 @@ public class GameFunctions {
 
         BlockState blockState = level.getBlockState(blockPos);
 
-        long blockStateId = Grug.addEntity(EntityType.BlockState, blockState);
+        long blockStateId = Grug.addEntity(GrugEntityType.BlockState, blockState);
         Grug.fnEntities.add(blockStateId);
 
         GrugModLoader.logger.debug("Returning {}", blockStateId);
@@ -326,7 +326,7 @@ public class GameFunctions {
 
         BlockState blockState = block.defaultBlockState();
 
-        long blockStateId = Grug.addEntity(EntityType.BlockState, blockState);
+        long blockStateId = Grug.addEntity(GrugEntityType.BlockState, blockState);
         Grug.fnEntities.add(blockStateId);
 
         GrugModLoader.logger.debug("Returning {}", blockStateId);
@@ -545,7 +545,7 @@ public class GameFunctions {
 
         HashMap<Long, Long> hashMap = new HashMap<>();
 
-        long hashMapId = Grug.addEntity(EntityType.HashMap, hashMap);
+        long hashMapId = Grug.addEntity(GrugEntityType.HashMap, hashMap);
         Grug.fnEntities.add(hashMapId);
 
         Grug.newHashMapObjects(hashMapId);
@@ -791,7 +791,7 @@ public class GameFunctions {
 
         HashSet<Long> hashSet = new HashSet<>();
 
-        long hashSetId = Grug.addEntity(EntityType.HashSet, hashSet);
+        long hashSetId = Grug.addEntity(GrugEntityType.HashSet, hashSet);
         Grug.fnEntities.add(hashSetId);
 
         Grug.newHashSetObjects(hashSetId);
@@ -1002,7 +1002,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long itemId = Grug.addEntity(EntityType.Item, item);
+        long itemId = Grug.addEntity(GrugEntityType.Item, item);
         Grug.fnEntities.add(itemId);
 
         GrugModLoader.logger.debug("Returning {}", itemId);
@@ -1020,7 +1020,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long itemEntityId = Grug.addEntity(EntityType.ItemEntity, itemEntity);
+        long itemEntityId = Grug.addEntity(GrugEntityType.ItemEntity, itemEntity);
         Grug.fnEntities.add(itemEntityId);
 
         GrugModLoader.logger.debug("Returning {}", itemEntityId);
@@ -1038,7 +1038,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long itemStackId = Grug.addEntity(EntityType.ItemStack, itemStack);
+        long itemStackId = Grug.addEntity(GrugEntityType.ItemStack, itemStack);
         Grug.fnEntities.add(itemStackId);
 
         GrugModLoader.logger.debug("Returning {}", itemStackId);
@@ -1084,7 +1084,7 @@ public class GameFunctions {
                 return -1;
             }
 
-            entryOrValueId = Grug.addEntity(EntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
+            entryOrValueId = Grug.addEntity(GrugEntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
             Grug.fnEntities.add(entryOrValueId);
         } else if (grugIterator.iterableType == IterableType.HashSet) {
             entryOrValueId = (long)grugIterator.iterator.next();
@@ -1099,14 +1099,14 @@ public class GameFunctions {
     public static long iterator(long iterableId) {
         GrugModLoader.logger.debug("iterator(iterableId={})", iterableId);
 
-        EntityType containerType = Grug.getEntityType(iterableId);
+        GrugEntityType containerType = Grug.getEntityType(iterableId);
         Iterator<?> iterator;
         IterableType iterableType;
         try {
-            if (containerType == EntityType.HashMap) {
+            if (containerType == GrugEntityType.HashMap) {
                 iterator = GrugModLoader.grug.getHashMap(iterableId).entrySet().iterator();
                 iterableType = IterableType.HashMap;
-            } else if (containerType == EntityType.HashSet) {
+            } else if (containerType == GrugEntityType.HashSet) {
                 iterator = GrugModLoader.grug.getHashSet(iterableId).iterator();
                 iterableType = IterableType.HashSet;
             } else {
@@ -1119,7 +1119,7 @@ public class GameFunctions {
         }
 
         GrugIterator grugIterator = new GrugIterator(iterator, iterableType, Grug.globalEntities.contains(iterableId));
-        long grugIteratorId = Grug.addEntity(EntityType.Iterator, grugIterator);
+        long grugIteratorId = Grug.addEntity(GrugEntityType.Iterator, grugIterator);
         Grug.fnEntities.add(grugIteratorId);
 
         GrugModLoader.logger.debug("Returning {}", grugIteratorId);
@@ -1220,7 +1220,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long resourceLocationId = Grug.addEntity(EntityType.ResourceLocation, resourceLocation);
+        long resourceLocationId = Grug.addEntity(GrugEntityType.ResourceLocation, resourceLocation);
         Grug.fnEntities.add(resourceLocationId);
 
         GrugModLoader.logger.debug("Returning {}", resourceLocationId);
@@ -1279,7 +1279,7 @@ public class GameFunctions {
 
         Vec3 vec3 = new Vec3(x, y, z);
 
-        long vec3Id = Grug.addEntity(EntityType.Vec3, vec3);
+        long vec3Id = Grug.addEntity(GrugEntityType.Vec3, vec3);
         Grug.fnEntities.add(vec3Id);
 
         GrugModLoader.logger.debug("Returning {}", vec3Id);
@@ -1289,7 +1289,7 @@ public class GameFunctions {
     public static long vec3_zero() {
         GrugModLoader.logger.debug("vec3_zero()");
 
-        long vec3ZeroId = Grug.addEntity(EntityType.Vec3, Vec3.ZERO);
+        long vec3ZeroId = Grug.addEntity(GrugEntityType.Vec3, Vec3.ZERO);
         Grug.fnEntities.add(vec3ZeroId);
 
         GrugModLoader.logger.debug("Returning {}", vec3ZeroId);
