@@ -71,7 +71,11 @@ public class GameTestsUtils {
     }
 
     public static void assert_game_function_error(String expectedErrorString) {
-        h.assertTrue(Grug.gameFunctionError.equals(expectedErrorString), "Grug.gameFunctionError had the unexpected value '" + Grug.gameFunctionError + "'");
+        h.assertTrue(Grug.gameFunctionError.equals(expectedErrorString), "Expected Grug.gameFunctionError to be \"" + expectedErrorString + "\", but got \"" + Grug.gameFunctionError + "\"");
+    }
+
+    public static void assert_message(String expectedMessage) {
+        h.assertTrue(Grug.sentMessage.equals(expectedMessage), "Expected Grug.sentMessage to be \"" + expectedMessage + "\", but got \"" + Grug.sentMessage + "\"");
     }
 
     // Game function wrappers

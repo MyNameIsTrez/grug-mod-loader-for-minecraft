@@ -13,6 +13,8 @@ public class TestPrintI32 extends GameTestsUtils {
 
         print_i32(1);
 
+        assert_message("1");
+
         h.succeed();
     }
 }

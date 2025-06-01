@@ -13,6 +13,8 @@ public class TestPrintId extends GameTestsUtils {
 
         print_id(box_i32(1));
 
+        assert_message("17179869184");
+
         h.succeed();
     }
 }

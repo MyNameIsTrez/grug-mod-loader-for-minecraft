@@ -13,6 +13,8 @@ public class TestPrintString extends GameTestsUtils {
 
         print_string("foo");
 
+        assert_message("foo");
+
         h.succeed();
     }
 }

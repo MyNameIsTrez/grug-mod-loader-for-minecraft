@@ -90,8 +90,9 @@ public class Grug {
     private static HashMap<Long, HashMap<Object, Long>> allHashMapObjects = new HashMap<>();
     private static HashMap<Long, HashMap<Object, Long>> allHashSetObjects = new HashMap<>();
 
-    // This is read by grug's game tests.
+    // These are read by grug's game tests.
     public static String gameFunctionError = null;
+    public static String sentMessage = null;
 
     public Grug() {
         try {
@@ -144,6 +145,7 @@ public class Grug {
         allHashMapObjects.clear();
         allHashSetObjects.clear();
         gameFunctionError = null;
+        sentMessage = null;
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -264,6 +266,9 @@ public class Grug {
 
     public static void sendMessageToEveryone(Component message) {
         GrugModLoader.logger.debug("sendMessageToEveryone(message={})", message);
+
+        // Used by game tests.
+        sentMessage = message.getString();
 
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 

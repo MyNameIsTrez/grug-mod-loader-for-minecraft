@@ -13,6 +13,8 @@ public class TestPrintF32 extends GameTestsUtils {
 
         print_f32(1);
 
+        assert_message("1.0");
+
         h.succeed();
     }
 }

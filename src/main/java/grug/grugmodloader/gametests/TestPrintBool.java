@@ -13,6 +13,8 @@ public class TestPrintBool extends GameTestsUtils {
 
         print_bool(true);
 
+        assert_message("true");
+
         h.succeed();
     }
 }
