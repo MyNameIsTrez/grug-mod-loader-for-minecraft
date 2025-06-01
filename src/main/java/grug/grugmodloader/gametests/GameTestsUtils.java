@@ -149,6 +149,10 @@ public class GameTestsUtils {
         return GameFunctions.get_item_name(item);
     }
 
+    public static String get_item_stack_name(long item) {
+        return GameFunctions.get_item_stack_name(item);
+    }
+
     public static String get_level_name(long level) {
         return GameFunctions.get_level_name(level);
     }

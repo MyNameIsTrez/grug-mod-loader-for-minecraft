@@ -27,11 +27,11 @@ public class TestRemoveBlock extends GameTestsUtils {
         int y = absolute.getY();
         int z = absolute.getZ();
 
-        long blockPosId = block_pos(x, y, z);
+        long block_pos_id = block_pos(x, y, z);
 
         long level = Grug.addEntity(EntityType.Level, h.getLevel());
 
-        remove_block(blockPosId, level);
+        remove_block(block_pos_id, level);
 
         h.assertBlockNotPresent(block, relative);
 
@@ -75,11 +75,11 @@ public class TestRemoveBlock extends GameTestsUtils {
         int y = absolute.getY();
         int z = absolute.getZ();
 
-        long blockPosId = block_pos(x, y, z);
+        long block_pos_id = block_pos(x, y, z);
 
         long box = box_i32(1);
 
-        remove_block(blockPosId, box);
+        remove_block(block_pos_id, box);
 
         assert_game_function_error("remove_block(): Expected level, but got boxed_i32");
 

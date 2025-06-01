@@ -12,12 +12,12 @@ public class TestHashSetHas extends GameTestsUtils {
     public static void hash_set_has(GameTestHelper h) {
         reset(h);
 
-        long hashSet = GameFunctions.hash_set();
+        long hash_set = GameFunctions.hash_set();
 
-        GameFunctions.hash_set_add(hashSet, GameFunctions.box_i32(1));
+        GameFunctions.hash_set_add(hash_set, GameFunctions.box_i32(1));
 
-        long box2 = GameFunctions.box_i32(1);
-        h.assertTrue(GameFunctions.hash_set_has(hashSet, box2), "hashSet did not contain box2 " + box2);
+        long box = GameFunctions.box_i32(1);
+        h.assertTrue(GameFunctions.hash_set_has(hash_set, box), "hash_set did not contain box " + box);
 
         h.succeed();
     }
@@ -26,12 +26,12 @@ public class TestHashSetHas extends GameTestsUtils {
     public static void hash_set_has_not(GameTestHelper h) {
         reset(h);
 
-        long hashSet = GameFunctions.hash_set();
+        long hash_set = GameFunctions.hash_set();
 
-        GameFunctions.hash_set_add(hashSet, GameFunctions.box_i32(1));
+        GameFunctions.hash_set_add(hash_set, GameFunctions.box_i32(1));
 
-        long box2 = GameFunctions.box_i32(2);
-        h.assertFalse(GameFunctions.hash_set_has(hashSet, box2), "hashSet did contain box2 " + box2);
+        long box = GameFunctions.box_i32(2);
+        h.assertFalse(GameFunctions.hash_set_has(hash_set, box), "hash_set did contain box " + box);
 
         h.succeed();
     }

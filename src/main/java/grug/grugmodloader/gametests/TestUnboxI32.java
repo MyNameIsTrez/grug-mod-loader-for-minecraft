@@ -23,8 +23,8 @@ public class TestUnboxI32 extends GameTestsUtils {
     public static void unbox_i32_expected_boxed_i32(GameTestHelper h) {
         reset(h);
 
-        int unboxedI32 = GameFunctions.unbox_i32(resource_location("diamond_block"));
-        h.assertTrue(unboxedI32 == -1, "Expected an invalid unboxed i32, but got " + unboxedI32);
+        int unboxed_i32 = GameFunctions.unbox_i32(resource_location("diamond_block"));
+        h.assertTrue(unboxed_i32 == -1, "Expected an invalid unboxed i32, but got " + unboxed_i32);
 
         assert_game_function_error("unbox_i32(): Expected boxed_i32, but got resource_location");
 

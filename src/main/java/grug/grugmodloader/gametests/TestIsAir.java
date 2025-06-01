@@ -12,9 +12,9 @@ public class TestIsAir extends GameTestsUtils {
     public static void is_air_true(GameTestHelper h) {
         reset(h);
 
-        long blockState = GameFunctions.get_default_block_state(GameFunctions.block(GameFunctions.resource_location("air")));
+        long block_state = GameFunctions.get_default_block_state(GameFunctions.block(GameFunctions.resource_location("air")));
 
-        h.assertTrue(GameFunctions.is_air(blockState), "Expected air, but got " + blockState);
+        h.assertTrue(GameFunctions.is_air(block_state), "Expected air, but got " + block_state);
 
         h.succeed();
     }
@@ -23,9 +23,9 @@ public class TestIsAir extends GameTestsUtils {
     public static void is_air_false(GameTestHelper h) {
         reset(h);
 
-        long blockState = GameFunctions.get_default_block_state(GameFunctions.block(GameFunctions.resource_location("diamond_block")));
+        long block_state = GameFunctions.get_default_block_state(GameFunctions.block(GameFunctions.resource_location("diamond_block")));
 
-        h.assertFalse(GameFunctions.is_air(blockState), "Expected not air, but got " + blockState);
+        h.assertFalse(GameFunctions.is_air(block_state), "Expected not air, but got " + block_state);
 
         h.succeed();
     }

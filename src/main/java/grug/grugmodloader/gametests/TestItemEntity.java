@@ -12,9 +12,9 @@ public class TestItemEntity extends GameTestsUtils {
     public static void item_entity(GameTestHelper h) {
         reset(h);
 
-        long itemStack = item_stack(item(resource_location("diamond")));
+        long item_stack = item_stack(item(resource_location("diamond")));
 
-        item_entity(get_level(), 0, 0, 0, itemStack);
+        item_entity(get_level(), 0, 0, 0, item_stack);
 
         h.succeed();
     }
@@ -25,8 +25,8 @@ public class TestItemEntity extends GameTestsUtils {
 
         long box = box_i32(1);
 
-        long itemEntity = GameFunctions.item_entity(box, 0, 0, 0, box);
-        h.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
+        long item_entity = GameFunctions.item_entity(box, 0, 0, 0, box);
+        h.assertTrue(item_entity == -1, "Expected an invalid item_entity, but got " + item_entity);
 
         assert_game_function_error("item_entity(): Expected level, but got boxed_i32");
 
@@ -39,8 +39,8 @@ public class TestItemEntity extends GameTestsUtils {
 
         long box = box_i32(1);
 
-        long itemEntity = GameFunctions.item_entity(get_level(), 0, 0, 0, box);
-        h.assertTrue(itemEntity == -1, "Expected an invalid itemEntity, but got " + itemEntity);
+        long item_entity = GameFunctions.item_entity(get_level(), 0, 0, 0, box);
+        h.assertTrue(item_entity == -1, "Expected an invalid item_entity, but got " + item_entity);
 
         assert_game_function_error("item_entity(): Expected item_stack, but got boxed_i32");
 
