@@ -177,6 +177,7 @@ public class GameFunctions {
         Level level;
         try {
             level = GrugModLoader.grug.getBlockEntity(blockEntityId).getLevel();
+            assert level != null; // null when game tests forget to call .setLevel() on a BlockEntity
         } catch (AssertEntityTypeException assertEntityTypeException) {
             Grug.gameFunctionErrorHappened("get_block_entity_level", assertEntityTypeException.getMessage());
             return -1;

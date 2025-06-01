@@ -28,7 +28,7 @@ public class GameTestsUtils {
     }
 
     // Utils
-    
+
     public static Block get_block(String resourceLocationString) {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(resourceLocationString));
     }
@@ -134,6 +134,10 @@ public class GameTestsUtils {
 
     public static int get_block_pos_z(long block_pos) {
         return GameFunctions.get_block_pos_z(block_pos);
+    }
+
+    public static long get_block_entity_level(long blockEntity) {
+        return GameFunctions.get_block_entity_level(blockEntity);
     }
 
     public static long get_block_state(long blockPos, long level) {
