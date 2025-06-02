@@ -25,6 +25,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -388,10 +389,10 @@ public class Grug {
         return block;
     }
 
-    public GrugBlockEntity getBlockEntity(long id) throws AssertEntityTypeException {
+    public BlockEntity getBlockEntity(long id) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getBlockEntity(id={})", id);
         assertEntityType(id, GrugEntityType.BlockEntity);
-        GrugBlockEntity blockEntity = (GrugBlockEntity)entityData.get(id);
+        BlockEntity blockEntity = (BlockEntity)entityData.get(id);
         assert blockEntity != null;
         return blockEntity;
     }

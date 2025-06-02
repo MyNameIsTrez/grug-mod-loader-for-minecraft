@@ -17,6 +17,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -250,7 +251,7 @@ public class GameFunctions {
     public static long get_block_pos_of_block_entity(long blockEntityId) {
         GrugModLoader.logger.debug("get_block_pos_of_block_entity(blockEntityId={})", blockEntityId);
 
-        GrugBlockEntity blockEntity;
+        BlockEntity blockEntity;
         try {
             blockEntity = GrugModLoader.grug.getBlockEntity(blockEntityId);
         } catch (AssertEntityTypeException assertEntityTypeException) {

@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class FooBlockEntity extends GrugBlockEntity {
+public class FooBlockEntity extends BlockEntity {
+    public GrugEntity grugEntity = new GrugEntity();
+
     public FooBlockEntity(BlockPos pos, BlockState state) {
         super(GrugModLoader.FOO_BLOCK_ENTITY.get(), pos, state);
     }
