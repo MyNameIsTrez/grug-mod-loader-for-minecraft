@@ -36,9 +36,7 @@ public class TestItemEntity extends GameTestsUtils {
     public static void item_entity_expected_item_stack(GameTestHelper h) {
         reset(h);
 
-        long box = box_i32(1);
-
-        assert_error_id(GameFunctions.item_entity(get_level(), 0, 0, 0, box));
+        assert_error_id(GameFunctions.item_entity(get_level(), 0, 0, 0, box_i32(1)));
 
         assert_game_function_error("item_entity(): Expected item_stack, but got boxed_i32");
 

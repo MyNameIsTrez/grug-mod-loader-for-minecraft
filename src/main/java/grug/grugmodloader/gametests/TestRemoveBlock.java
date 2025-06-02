@@ -67,9 +67,7 @@ public class TestRemoveBlock extends GameTestsUtils {
 
         long block_pos_id = block_pos(x, y, z);
 
-        long box = box_i32(1);
-
-        remove_block(block_pos_id, box);
+        remove_block(block_pos_id, box_i32(1));
 
         assert_game_function_error("remove_block(): Expected level, but got boxed_i32");
 

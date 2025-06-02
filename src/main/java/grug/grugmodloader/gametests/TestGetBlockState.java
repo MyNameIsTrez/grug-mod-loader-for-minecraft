@@ -32,9 +32,7 @@ public class TestGetBlockState extends GameTestsUtils {
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void get_block_state_expected_level(GameTestHelper h) {
-        long box = box_i32(1);
-
-        assert_error_id(GameFunctions.get_block_state(block_pos(0, 0, 0), box));
+        assert_error_id(GameFunctions.get_block_state(block_pos(0, 0, 0), box_i32(1)));
 
         assert_game_function_error("get_block_state(): Expected level, but got boxed_i32");
 
