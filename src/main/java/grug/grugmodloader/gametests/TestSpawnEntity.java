@@ -13,6 +13,8 @@ public class TestSpawnEntity extends GameTestsUtils {
     public static void spawn_entity(GameTestHelper h) {
         reset(h);
 
+        // We need to spawn the item in the bounding box of the structure's bounds,
+        // as assertEntityPresent() only checks for items within the bounds.
         BlockPos relative = new BlockPos(0, 1, 0);
         BlockPos absolute = h.absolutePos(relative);
 
