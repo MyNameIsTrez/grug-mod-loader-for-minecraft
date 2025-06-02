@@ -55,6 +55,12 @@ public class GameTestsUtils {
         return Grug.addEntity(GrugEntityType.BlockEntity, foo_block_entity);
     }
 
+    public static long get_item_entity() {
+        long item_stack = item_stack(item(resource_location("diamond")));
+
+        return item_entity(get_level(), 0, 0, 0, item_stack);
+    }
+
     public static long get_level() {
         return Grug.addEntity(GrugEntityType.Level, h.getLevel());
     }
@@ -336,6 +342,10 @@ public class GameTestsUtils {
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
         assert_fn_entities_contains(resourceLocation);
         return resourceLocation;
+    }
+
+    public static void set_entity_delta_movement(long entity, long vec3) {
+        GameFunctions.set_entity_delta_movement(entity, vec3);
     }
 
     public static void spawn_entity(long entity, long level) {

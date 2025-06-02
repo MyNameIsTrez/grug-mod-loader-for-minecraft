@@ -11,11 +11,7 @@ public class TestGetItemEntityName extends GameTestsUtils {
     public static void get_item_entity_name(GameTestHelper h) {
         reset(h);
 
-        long item_stack = item_stack(item(resource_location("diamond")));
-
-        long item_entity = item_entity(get_level(), 0, 0, 0, item_stack);
-
-        String item_entity_name = get_item_entity_name(item_entity);
+        String item_entity_name = get_item_entity_name(get_item_entity());
 
         h.assertTrue(item_entity_name.equals("Diamond"), "Expected item name \"Diamond\", but got \"" + item_entity_name + "\"");
 

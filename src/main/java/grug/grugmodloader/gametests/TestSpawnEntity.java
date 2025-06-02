@@ -53,11 +53,7 @@ public class TestSpawnEntity extends GameTestsUtils {
     public static void spawn_entity_expected_level(GameTestHelper h) {
         reset(h);
 
-        long item_stack = item_stack(item(resource_location("diamond")));
-
-        long item_entity = item_entity(get_level(), 0, 0, 0, item_stack);
-
-        GameFunctions.spawn_entity(item_entity, box_i32(1));
+        GameFunctions.spawn_entity(get_item_entity(), box_i32(1));
 
         assert_game_function_error("spawn_entity(): Expected level, but got boxed_i32");
 

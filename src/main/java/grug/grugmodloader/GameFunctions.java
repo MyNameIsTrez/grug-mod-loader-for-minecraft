@@ -1241,7 +1241,7 @@ public class GameFunctions {
             entityInstance = GrugModLoader.grug.getEntity(entity);
             vec3Instance = GrugModLoader.grug.getVec3(vec3);
         } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.gameFunctionErrorHappened("set_item_entity_delta_movement", assertEntityTypeException.getMessage());
+            Grug.gameFunctionErrorHappened("set_entity_delta_movement", assertEntityTypeException.getMessage());
             return;
         }
 
