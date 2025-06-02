@@ -1,4 +1,4 @@
-start_pos: id = get_world_position_of_block_entity(me)
+start_pos: id = get_block_pos_of_block_entity(me)
 start_x: i32 = get_block_pos_x(start_pos)
 start_y: i32 = get_block_pos_y(start_pos) - 2
 start_z: i32 = get_block_pos_z(start_pos)

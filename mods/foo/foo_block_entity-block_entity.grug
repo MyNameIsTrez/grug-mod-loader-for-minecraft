@@ -1,5 +1,5 @@
 # Spawn the diamond 2 blocks above this block
-pos: id = get_block_pos_above_n(get_world_position_of_block_entity(me), 2)
+pos: id = get_block_pos_above_n(get_block_pos_of_block_entity(me), 2)
 
 # The dimension, so overworld/nether/end
 level: id = get_block_entity_level(me)

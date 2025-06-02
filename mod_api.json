@@ -190,6 +190,16 @@
 				}
 			]
 		},
+		"get_block_pos_of_block_entity": {
+			"description": "Gets the world position of a block_entity.",
+			"return_type": "id",
+			"arguments": [
+				{
+					"name": "block_entity",
+					"type": "id"
+				}
+			]
+		},
 		"get_block_pos_x": {
 			"description": "Gets the X coordinate of a block_pos.",
 			"return_type": "i32",
@@ -360,16 +370,6 @@
 			"arguments": [
 				{
 					"name": "vec3",
-					"type": "id"
-				}
-			]
-		},
-		"get_world_position_of_block_entity": {
-			"description": "Gets the world position of a block_entity.",
-			"return_type": "id",
-			"arguments": [
-				{
-					"name": "block_entity",
 					"type": "id"
 				}
 			]

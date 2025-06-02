@@ -27,8 +27,6 @@ public class FooBlockEntity extends GrugBlockEntity {
 
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
-        worldPositionId = Grug.addEntity(GrugEntityType.BlockPos, worldPosition);
-
         GrugFile file = new GrugFile();
         GrugModLoader.grug.getEntityFile("foo:foo_block_entity", file);
 
@@ -54,7 +52,6 @@ public class FooBlockEntity extends GrugBlockEntity {
         super.setRemoved();
 
         Grug.removeEntity(grugEntity.id);
-        Grug.removeEntity(worldPositionId);
         Grug.removeEntities(grugEntity.childEntities);
 
         // Swap-remove itself from Grug.entities

@@ -29,8 +29,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
 
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
-        worldPositionId = Grug.addEntity(GrugEntityType.BlockPos, worldPosition);
-
         GrugFile file = new GrugFile();
         GrugModLoader.grug.getEntityFile("foo:game_of_life_block_entity", file);
 
@@ -56,7 +54,6 @@ public class GameOfLifeBlockEntity extends GrugBlockEntity {
         super.setRemoved();
 
         Grug.removeEntity(grugEntity.id);
-        Grug.removeEntity(worldPositionId);
         Grug.removeEntities(grugEntity.childEntities);
 
         // Swap-remove itself from Grug.entities

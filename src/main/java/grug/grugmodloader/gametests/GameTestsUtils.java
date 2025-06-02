@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import grug.grugmodloader.AssertEntityTypeException;
+import grug.grugmodloader.FooBlock;
+import grug.grugmodloader.FooBlockEntity;
 import grug.grugmodloader.GrugEntityType;
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
@@ -13,6 +15,9 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class GameTestsUtils {
@@ -31,6 +36,23 @@ public class GameTestsUtils {
 
     public static Block get_block(String resourceLocationString) {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(resourceLocationString));
+    }
+
+    public static long get_foo_block_entity() {
+        BlockPos block_pos = new BlockPos(1, 2, 3);
+
+        FooBlock foo_block = GrugModLoader.FOO_BLOCK.get();
+        BlockState block_state = foo_block.defaultBlockState();
+
+        BlockEntityType<FooBlockEntity> foo_block_entity_type = GrugModLoader.FOO_BLOCK_ENTITY.get();
+
+        BlockEntity foo_block_entity = foo_block_entity_type.create(block_pos, block_state);
+
+        foo_block_entity.setLevel(h.getLevel());
+
+        foo_block_entity.onLoad();
+
+        return Grug.addEntity(GrugEntityType.BlockEntity, foo_block_entity);
     }
 
     public static long get_level() {
@@ -124,6 +146,17 @@ public class GameTestsUtils {
         GameFunctions.destroy_block(blockPosId, level);
     }
 
+    public static long get_block_entity_level(long blockEntity) {
+        return GameFunctions.get_block_entity_level(blockEntity);
+    }
+
+    public static long get_block_pos_of_block_entity(long blockEntity) {
+        long blockPos = GameFunctions.get_block_pos_of_block_entity(blockEntity);;
+        h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
+        assert_fn_entities_contains(blockPos);
+        return blockPos;
+    }
+
     public static int get_block_pos_x(long block_pos) {
         return GameFunctions.get_block_pos_x(block_pos);
     }
@@ -136,16 +169,13 @@ public class GameTestsUtils {
         return GameFunctions.get_block_pos_z(block_pos);
     }
 
-    public static long get_block_entity_level(long blockEntity) {
-        return GameFunctions.get_block_entity_level(blockEntity);
-    }
-
     public static long get_block_state(long blockPos, long level) {
         return GameFunctions.get_block_state(blockPos, level);
     }
 
     public static long get_default_block_state(long block) {
         long blockState = GameFunctions.get_default_block_state(block);
+        h.assertTrue(blockState != -1, "Invalid blockState " + blockState);
         assert_fn_entities_contains(blockState);
         return blockState;
     }

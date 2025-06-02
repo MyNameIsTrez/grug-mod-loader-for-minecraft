@@ -247,6 +247,24 @@ public class GameFunctions {
         return centerId;
     }
 
+    public static long get_block_pos_of_block_entity(long blockEntityId) {
+        GrugModLoader.logger.debug("get_block_pos_of_block_entity(blockEntityId={})", blockEntityId);
+
+        GrugBlockEntity blockEntity;
+        try {
+            blockEntity = GrugModLoader.grug.getBlockEntity(blockEntityId);
+        } catch (AssertEntityTypeException assertEntityTypeException) {
+            Grug.gameFunctionErrorHappened("get_block_pos_of_block_entity", assertEntityTypeException.getMessage());
+            return -1;
+        }
+
+        long blockPosId = Grug.addEntity(GrugEntityType.BlockPos, blockEntity.getBlockPos());
+        Grug.fnEntities.add(blockPosId);
+
+        GrugModLoader.logger.debug("Returning {}", blockPosId);
+        return blockPosId;
+    }
+
     public static int get_block_pos_x(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_x(blockPosId={})", blockPosId);
 
@@ -524,21 +542,6 @@ public class GameFunctions {
 
         GrugModLoader.logger.debug("Returning {}", z);
         return z;
-    }
-
-    public static long get_world_position_of_block_entity(long blockEntityId) {
-        GrugModLoader.logger.debug("get_world_position_of_block_entity(blockEntityId={})", blockEntityId);
-
-        long worldPositionId;
-        try {
-            worldPositionId = GrugModLoader.grug.getBlockEntity(blockEntityId).worldPositionId;
-        } catch (AssertEntityTypeException assertEntityTypeException) {
-            Grug.gameFunctionErrorHappened("get_world_position_of_block_entity", assertEntityTypeException.getMessage());
-            return -1;
-        }
-
-        GrugModLoader.logger.debug("Returning {}", worldPositionId);
-        return worldPositionId;
     }
 
     public static long hash_map() {

@@ -1,16 +1,8 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.FooBlock;
-import grug.grugmodloader.FooBlockEntity;
-import grug.grugmodloader.Grug;
-import grug.grugmodloader.GrugEntityType;
 import grug.grugmodloader.GrugModLoader;
-import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
@@ -19,17 +11,7 @@ public class TestGetBlockEntityLevel extends GameTestsUtils {
     public static void get_block_entity_level(GameTestHelper h) {
         reset(h);
 
-        BlockPos block_pos = new BlockPos(0, 0, 0);
-
-        FooBlock foo_block = GrugModLoader.FOO_BLOCK.get();
-        BlockState block_state = foo_block.defaultBlockState();
-
-        BlockEntityType<FooBlockEntity> foo_block_entity_type = GrugModLoader.FOO_BLOCK_ENTITY.get();
-        BlockEntity foo_block_entity = foo_block_entity_type.create(block_pos, block_state);
-
-        foo_block_entity.setLevel(h.getLevel());
-
-        long block_entity = Grug.addEntity(GrugEntityType.BlockEntity, foo_block_entity);
+        long block_entity = get_foo_block_entity();
 
         long level = get_block_entity_level(block_entity);
 
