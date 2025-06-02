@@ -1,0 +1,64 @@
+package grug.grugmodloader.gametests;
+
+import grug.grugmodloader.GameFunctions;
+import grug.grugmodloader.GrugModLoader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraftforge.gametest.GameTestHolder;
+
+@GameTestHolder(GrugModLoader.MODID)
+public class TestSpawnEntity extends GameTestsUtils {
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void spawn_entity(GameTestHelper h) {
+        reset(h);
+
+        BlockPos relative = new BlockPos(0, 1, 0);
+        BlockPos absolute = h.absolutePos(relative);
+
+        int x = absolute.getX();
+        int y = absolute.getY();
+        int z = absolute.getZ();
+
+        long item_stack = item_stack(item(resource_location("diamond")));
+
+        long item_entity = item_entity(get_level(), x, y, z, item_stack);
+
+        assert_item_entity_not_present();
+
+        spawn_entity(item_entity, get_level());
+        assert_no_error();
+
+        assert_item_entity_present();
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void spawn_entity_expected_entity(GameTestHelper h) {
+        reset(h);
+
+        long box = box_i32(1);
+
+        GameFunctions.spawn_entity(box, box);
+
+        assert_game_function_error("spawn_entity(): Expected entity, but got boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void spawn_entity_expected_level(GameTestHelper h) {
+        reset(h);
+
+        long item_stack = item_stack(item(resource_location("diamond")));
+
+        long item_entity = item_entity(get_level(), 0, 0, 0, item_stack);
+
+        GameFunctions.spawn_entity(item_entity, box_i32(1));
+
+        assert_game_function_error("spawn_entity(): Expected level, but got boxed_i32");
+
+        h.succeed();
+    }
+}

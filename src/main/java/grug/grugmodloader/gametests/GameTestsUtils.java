@@ -85,16 +85,16 @@ public class GameTestsUtils {
         h.assertBlockPresent(block, blockPos);
     }
 
-    public static void assert_entity_not_present(EntityType<?> entityType) {
-        h.assertEntityNotPresent(entityType);
-    }
-
-    public static void assert_entity_present(EntityType<?> entityType) {
-        h.assertEntityPresent(entityType);
-    }
-
     public static void assert_error_id(long id) {
         h.assertTrue(id == -1, "Expected the error id -1, but got " + id);
+    }
+
+    public static void assert_item_entity_not_present() {
+        h.assertEntityNotPresent(EntityType.ITEM);
+    }
+
+    public static void assert_item_entity_present() {
+        h.assertEntityPresent(EntityType.ITEM);
     }
 
     public static void assert_fn_entities_contains(long id) {
@@ -107,6 +107,10 @@ public class GameTestsUtils {
 
     public static void assert_message(String expectedMessage) {
         h.assertTrue(Grug.sentMessage.equals(expectedMessage), "Expected Grug.sentMessage to be \"" + expectedMessage + "\", but got \"" + Grug.sentMessage + "\"");
+    }
+
+    public static void assert_no_error() {
+        h.assertTrue(Grug.gameFunctionError == null, "Expected Grug.gameFunctionError to be null, but got \"" + Grug.gameFunctionError + "\"");
     }
 
     // Game function wrappers
@@ -332,6 +336,10 @@ public class GameTestsUtils {
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
         assert_fn_entities_contains(resourceLocation);
         return resourceLocation;
+    }
+
+    public static void spawn_entity(long entity, long level) {
+        GameFunctions.spawn_entity(entity, level);
     }
 
     public static int unbox_i32(long box) {
