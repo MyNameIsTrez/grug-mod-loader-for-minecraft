@@ -18,7 +18,7 @@ public enum GrugEntityType {
     ResourceLocation,
     Vec3;
 
-    // EntityType.values()[i] is expensive, so we cache .values().
+    // EntityType.values()[i] is expensive, so we cache .values() for our .get().
     // See https://stackoverflow.com/a/8762387/13279557
     private final static GrugEntityType[] values = GrugEntityType.values();
 
