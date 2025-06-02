@@ -161,6 +161,10 @@ public class GameTestsUtils {
         return GameFunctions.get_block_pos_above(block_pos);
     }
 
+    public static long get_block_pos_above_n(long block_pos, int n) {
+        return GameFunctions.get_block_pos_above_n(block_pos, n);
+    }
+
     public static int get_block_pos_x(long block_pos) {
         return GameFunctions.get_block_pos_x(block_pos);
     }
