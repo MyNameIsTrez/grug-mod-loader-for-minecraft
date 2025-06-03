@@ -167,6 +167,13 @@ public class GameTestsUtils {
         return key;
     }
 
+    public static long entry_value(long iterator) {
+        long value = GameFunctions.entry_value(iterator);
+        h.assertTrue(value != -1, "Invalid entry_value value " + value);
+        assert_fn_entities_contains(value);
+        return value;
+    }
+
     public static long get_block_entity_level(long blockEntity) {
         return GameFunctions.get_block_entity_level(blockEntity);
     }

@@ -7,9 +7,9 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
 
 @GameTestHolder(GrugModLoader.MODID)
-public class TestEntryKey extends GameTestsUtils {
+public class TestEntryValue extends GameTestsUtils {
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void entry_key(GameTestHelper h) {
+    public static void entry_value(GameTestHelper h) {
         reset(h);
 
         long hash_map = hash_map();
@@ -20,21 +20,21 @@ public class TestEntryKey extends GameTestsUtils {
 
         long entry = iteration(iterator);
 
-        long key = entry_key(entry);
+        long value = entry_value(entry);
 
-        int unboxed_key = unbox_i32(key);
-        h.assertTrue(unboxed_key == 1, "Expected unboxed_key to be 1, but it was " + unboxed_key);
+        int unboxed_value = unbox_i32(value);
+        h.assertTrue(unboxed_value == 2, "Expected unboxed_value to be 2, but it was " + unboxed_value);
 
         h.succeed();
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void entry_key_expected_entry(GameTestHelper h) {
+    public static void entry_value_expected_entry(GameTestHelper h) {
         reset(h);
 
-        assert_error_id(GameFunctions.entry_key(box_i32(1)));
+        assert_error_id(GameFunctions.entry_value(box_i32(1)));
 
-        assert_game_function_error("entry_key(): Expected entry, but got boxed_i32");
+        assert_game_function_error("entry_value(): Expected entry, but got boxed_i32");
 
         h.succeed();
     }
