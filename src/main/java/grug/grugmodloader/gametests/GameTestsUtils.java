@@ -95,6 +95,10 @@ public class GameTestsUtils {
         h.assertTrue(id == -1, "Expected the error id -1, but got " + id);
     }
 
+    public static void assert_not_error_id(long id) {
+        h.assertTrue(id != -1, "Expected the id to not be -1");
+    }
+
     public static void assert_item_entity_not_present() {
         h.assertEntityNotPresent(EntityType.ITEM);
     }
@@ -307,6 +311,13 @@ public class GameTestsUtils {
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
         assert_fn_entities_contains(itemStack);
         return itemStack;
+    }
+
+    public static long iterator(long iterable) {
+        long iterator = GameFunctions.iterator(iterable);
+        h.assertTrue(iterator != -1, "Invalid iterator " + iterator);
+        assert_fn_entities_contains(iterator);
+        return iterator;
     }
 
     public static void place_block(long blockState, long block_pos, int flag, long level) {

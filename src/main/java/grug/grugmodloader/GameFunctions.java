@@ -1115,7 +1115,7 @@ public class GameFunctions {
                 iterator = GrugModLoader.grug.getHashSet(iterableId).iterator();
                 iterableType = IterableType.HashSet;
             } else {
-                Grug.gameFunctionErrorHappened("iterator", "Expected an iterable, but got " + StringUtils.getSnakeCase(containerType));
+                Grug.gameFunctionErrorHappened("iterator", "Expected iterable, but got " + StringUtils.getSnakeCase(containerType));
                 return -1;
             }
         } catch (AssertEntityTypeException assertEntityTypeException) {
