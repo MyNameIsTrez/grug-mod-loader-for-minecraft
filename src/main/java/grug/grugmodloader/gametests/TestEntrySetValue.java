@@ -58,6 +58,16 @@ public class TestEntrySetValue extends GameTestsUtils {
         h.succeed();
     }
 
+    // "The behavior of this call is undefined
+    // if the mapping has already been removed from the map
+    // (by the iterator's remove operation)."
+    // and
+    // "IllegalStateException - implementations may, but are not required to,
+    // throw this exception if the entry has been removed from the backing map."
+    // come from the docs of java.util.Map.Entry.setValue()
+    //
+    // Even though the behavior is undefined, grug does not detect it for the modder yet.
+    // TODO: Let grug throw a runtime error here, and update this test accordingly.
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void entry_set_value_of_removed_entry(GameTestHelper h) {
         reset(h);
