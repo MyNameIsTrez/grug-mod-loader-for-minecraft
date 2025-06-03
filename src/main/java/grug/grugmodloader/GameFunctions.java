@@ -1100,7 +1100,7 @@ public class GameFunctions {
                 element = (long)grugIterator.iterator.next();
             }
         } catch (NoSuchElementException err) {
-            Grug.gameFunctionErrorHappened("iteration", "only call iteration() after iterating() returns true");
+            Grug.gameFunctionErrorHappened("iteration", "Only call iteration() after iterating() returns true");
             return -1;
         }
 

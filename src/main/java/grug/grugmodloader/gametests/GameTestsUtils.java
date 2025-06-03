@@ -265,6 +265,10 @@ public class GameTestsUtils {
         GameFunctions.hash_map_put(hashMap, key, value);
     }
 
+    public static void hash_map_remove_key(long hashMap, long key) {
+        GameFunctions.hash_map_remove_key(hashMap, key);
+    }
+
     public static long hash_set() {
         long hashSet = GameFunctions.hash_set();
         h.assertTrue(hashSet != -1, "Invalid hashSet " + hashSet);
@@ -311,6 +315,10 @@ public class GameTestsUtils {
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
         assert_fn_entities_contains(itemStack);
         return itemStack;
+    }
+
+    public static boolean iterating(long iterator) {
+        return GameFunctions.iterating(iterator);
     }
 
     public static long iteration(long iterator) {

@@ -34,7 +34,7 @@ public class TestIteration extends GameTestsUtils {
 
         assert_error_id(GameFunctions.iteration(iterator));
 
-        assert_game_function_error("iteration(): only call iteration() after iterating() returns true");
+        assert_game_function_error("iteration(): Only call iteration() after iterating() returns true");
 
         h.succeed();
     }
@@ -62,7 +62,26 @@ public class TestIteration extends GameTestsUtils {
 
         assert_error_id(GameFunctions.iteration(iterator));
 
-        assert_game_function_error("iteration(): only call iteration() after iterating() returns true");
+        assert_game_function_error("iteration(): Only call iteration() after iterating() returns true");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void iteration_hash_map_modified_during_iteration(GameTestHelper h) {
+        reset(h);
+
+        long hash_map = hash_map();
+
+        hash_map_put(hash_map, box_i32(1), box_i32(2));
+
+        long iterator = iterator(hash_map);
+
+        hash_map_remove_key(hash_map, box_i32(1));
+
+        assert_error_id(GameFunctions.iteration(iterator));
+
+        assert_game_function_error("iteration(): The iterable was modified during iteration");
 
         h.succeed();
     }
