@@ -160,6 +160,13 @@ public class GameTestsUtils {
         GameFunctions.destroy_block(blockPosId, level);
     }
 
+    public static long entry_key(long iterator) {
+        long key = GameFunctions.entry_key(iterator);
+        h.assertTrue(key != -1, "Invalid entry_key key " + key);
+        assert_fn_entities_contains(key);
+        return key;
+    }
+
     public static long get_block_entity_level(long blockEntity) {
         return GameFunctions.get_block_entity_level(blockEntity);
     }
