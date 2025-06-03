@@ -35,6 +35,7 @@ public class TestIterator extends GameTestsUtils {
         h.succeed();
     }
 
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void iterator_hash_map(GameTestHelper h) {
         reset(h);
 
