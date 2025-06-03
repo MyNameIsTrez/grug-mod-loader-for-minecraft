@@ -4,6 +4,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Map.Entry;
 
 import grug.grugmodloader.GrugIterator.IterableType;
@@ -1078,23 +1079,29 @@ public class GameFunctions {
         }
 
         long element;
-        if (grugIterator.iterableType == IterableType.HashMap) {
-            Entry<Long, Long> entry;
-            try {
-                @SuppressWarnings("unchecked")
-                Entry<Long, Long> localEntry = (Entry<Long, Long>)grugIterator.iterator.next();
-                entry = localEntry;
-            } catch (ConcurrentModificationException err) {
-                Grug.gameFunctionErrorHappened("iteration", "The iterable was modified during iteration");
-                return -1;
-            }
 
-            element = Grug.addEntity(GrugEntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
-            Grug.fnEntities.add(element);
-        } else if (grugIterator.iterableType == IterableType.HashSet) {
-            element = (long)grugIterator.iterator.next();
-        } else {
-            throw new RuntimeException("iteration() failed to handle an iterator type, which means iteration() needs to be updated");
+        try {
+            if (grugIterator.iterableType == IterableType.HashMap) {
+                Entry<Long, Long> entry;
+                try {
+                    @SuppressWarnings("unchecked")
+                    Entry<Long, Long> localEntry = (Entry<Long, Long>)grugIterator.iterator.next();
+                    entry = localEntry;
+                } catch (ConcurrentModificationException err) {
+                    Grug.gameFunctionErrorHappened("iteration", "The iterable was modified during iteration");
+                    return -1;
+                }
+
+                element = Grug.addEntity(GrugEntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
+                Grug.fnEntities.add(element);
+            } else {
+                assert grugIterator.iterableType == IterableType.HashSet;
+
+                element = (long)grugIterator.iterator.next();
+            }
+        } catch (NoSuchElementException err) {
+            Grug.gameFunctionErrorHappened("iteration", "only call iteration() after iterating() returns true");
+            return -1;
         }
 
         GrugModLoader.logger.debug("Returning {}", element);

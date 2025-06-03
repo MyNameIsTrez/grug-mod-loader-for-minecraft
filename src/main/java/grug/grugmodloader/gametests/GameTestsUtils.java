@@ -315,7 +315,7 @@ public class GameTestsUtils {
 
     public static long iteration(long iterator) {
         long element = GameFunctions.iteration(iterator);
-        h.assertTrue(element != -1, "Invalid element " + element);
+        h.assertTrue(element != -1, "Invalid iteration element " + element);
         assert_fn_entities_contains(element);
         return element;
     }
