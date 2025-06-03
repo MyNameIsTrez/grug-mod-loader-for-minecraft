@@ -167,6 +167,10 @@ public class GameTestsUtils {
         return key;
     }
 
+    public static void entry_set_value(long entry, long value) {
+        GameFunctions.entry_set_value(entry, value);
+    }
+
     public static long entry_value(long iterator) {
         long value = GameFunctions.entry_value(iterator);
         h.assertTrue(value != -1, "Invalid entry_value value " + value);
@@ -273,6 +277,10 @@ public class GameTestsUtils {
         h.assertTrue(hashMap != -1, "Invalid hashMap " + hashMap);
         assert_fn_entities_contains(hashMap);
         return hashMap;
+    }
+
+    public static long hash_map_get(long hashMap, long key) {
+        return GameFunctions.hash_map_get(hashMap, key);
     }
 
     public static void hash_map_put(long hashMap, long key, long value) {

@@ -78,6 +78,7 @@ public class TestIteration extends GameTestsUtils {
         long iterator = iterator(hash_map);
 
         hash_map_remove_key(hash_map, box_i32(1));
+        assert_no_error();
 
         assert_error_id(GameFunctions.iteration(iterator));
 
