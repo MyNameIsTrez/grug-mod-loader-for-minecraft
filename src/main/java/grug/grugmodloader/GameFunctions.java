@@ -1077,7 +1077,7 @@ public class GameFunctions {
             return -1;
         }
 
-        long entryOrValueId;
+        long element;
         if (grugIterator.iterableType == IterableType.HashMap) {
             Entry<Long, Long> entry;
             try {
@@ -1089,16 +1089,16 @@ public class GameFunctions {
                 return -1;
             }
 
-            entryOrValueId = Grug.addEntity(GrugEntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
-            Grug.fnEntities.add(entryOrValueId);
+            element = Grug.addEntity(GrugEntityType.Entry, new GrugEntry(entry, grugIterator.isIterableGlobal));
+            Grug.fnEntities.add(element);
         } else if (grugIterator.iterableType == IterableType.HashSet) {
-            entryOrValueId = (long)grugIterator.iterator.next();
+            element = (long)grugIterator.iterator.next();
         } else {
             throw new RuntimeException("iteration() failed to handle an iterator type, which means iteration() needs to be updated");
         }
 
-        GrugModLoader.logger.debug("Returning {}", entryOrValueId);
-        return entryOrValueId;
+        GrugModLoader.logger.debug("Returning {}", element);
+        return element;
     }
 
     public static long iterator(long iterableId) {

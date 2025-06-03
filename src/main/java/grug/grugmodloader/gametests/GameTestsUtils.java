@@ -313,11 +313,22 @@ public class GameTestsUtils {
         return itemStack;
     }
 
+    public static long iteration(long iterator) {
+        long element = GameFunctions.iteration(iterator);
+        h.assertTrue(element != -1, "Invalid element " + element);
+        assert_fn_entities_contains(element);
+        return element;
+    }
+
     public static long iterator(long iterable) {
         long iterator = GameFunctions.iterator(iterable);
         h.assertTrue(iterator != -1, "Invalid iterator " + iterator);
         assert_fn_entities_contains(iterator);
         return iterator;
+    }
+
+    public static void iterator_remove(long iterator) {
+        GameFunctions.iterator_remove(iterator);
     }
 
     public static void place_block(long blockState, long block_pos, int flag, long level) {
