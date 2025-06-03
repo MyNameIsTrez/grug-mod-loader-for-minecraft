@@ -1,5 +1,8 @@
 package grug.grugmodloader.gametests;
 
+import java.util.HashSet;
+
+import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -12,6 +15,29 @@ public class TestEntrySetValue extends GameTestsUtils {
         reset(h);
 
         long hash_map = hash_map();
+
+        hash_map_put(hash_map, box_i32(1), box_i32(2));
+
+        entry_set_value(iteration(iterator(hash_map)), box_i32(3));
+
+        int got = unbox_i32(hash_map_get(hash_map, box_i32(1)));
+        h.assertTrue(got == 3, "Expected hash_map[1] to be 3, but it was " + got);
+
+        int size = get_hash_map_size(hash_map);
+        h.assertTrue(size == 1, "Expected hash_map size to be 1, but it was " + size);
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void entry_set_value_in_global_map(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = Grug.globalEntities;
+
+        long hash_map = hash_map();
+
+        Grug.fnEntities = new HashSet<>();
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
