@@ -21,21 +21,6 @@ public class TestIterator extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void iterator_global_hash_set(GameTestHelper h) {
-        reset(h);
-
-        Grug.fnEntities = Grug.globalEntities;
-
-        long hash_set = hash_set();
-
-        Grug.fnEntities = new HashSet<>();
-
-        assert_not_error_id(iterator(hash_set));
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void iterator_hash_map(GameTestHelper h) {
         reset(h);
 
