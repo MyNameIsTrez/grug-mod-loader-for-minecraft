@@ -878,7 +878,7 @@ class GameFunctions {
         @SuppressWarnings("unchecked")
         Object object = ((Entry<Object, Object>)grugIterator.iterator.next()).getKey();
 
-        long containedId = Grug.addEntity(grugIterator.containedType, object);
+        long containedId = Grug.addEntity(grugIterator.containedKeyType, object);
         Grug.fnEntities.add(containedId);
 
         return containedId;
@@ -905,7 +905,7 @@ class GameFunctions {
         @SuppressWarnings("unchecked")
         Object object = ((Entry<Object, Object>)grugIterator.iterator.next()).getValue();
 
-        long containedId = Grug.addEntity(grugIterator.containedType, object);
+        long containedId = Grug.addEntity(grugIterator.containedValueType, object);
         Grug.fnEntities.add(containedId);
 
         return containedId;
