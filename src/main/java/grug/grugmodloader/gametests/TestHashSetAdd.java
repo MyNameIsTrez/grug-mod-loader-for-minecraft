@@ -122,7 +122,7 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         // TODO: REMOVE!
         long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
-        h.assertTrue(global_hash_set_inner_copy == global_hash_set_inner, "global_hash_set_inner_copy != global_hash_set_inner");
+        h.assertTrue(global_hash_set_inner_copy != global_hash_set_inner, "global_hash_set_inner_copy was not supposed to be equal to global_hash_set_inner");
 
         hash_set_has(global_hash_set_inner_copy, box_i32(1));
 
@@ -130,6 +130,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
+        // TODO: Remove, or change to assertFalse
         // These checks are not possible, as the original global_hash_set_inner ID has become invalid
         // h.assertTrue(hash_set_has(global_hash_set_inner, box_i32(1)), "global_hash_set_inner did not contain boxed_i32");
         // h.assertTrue(hash_set_has(global_hash_set, global_hash_set_inner), "global_hash_set did not contain global_hash_set_inner");
@@ -169,6 +170,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
+        // TODO: Remove, or change to assertFalse
         // These checks are not possible, as the original local_hash_set ID has become invalid
         // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
         // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
@@ -203,6 +205,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
+        // TODO: Remove, or change to assertFalse
         // These checks are not possible, as the original local_hash_set ID has become invalid
         // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
         // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
