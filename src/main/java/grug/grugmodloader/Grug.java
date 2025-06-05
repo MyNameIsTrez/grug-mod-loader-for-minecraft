@@ -363,6 +363,13 @@ public class Grug {
         allHashSetObjects.put(hashSetId, new HashMap<>());
     }
 
+    public static void copyHashSetObjects(long fromHashSetId, long toHashSetId) {
+        GrugModLoader.logger.debug("copyHashSetObjects(fromHashSetId={}, toHashSetId={})", fromHashSetId, toHashSetId);
+        HashMap<Object, Long> fromObjects = allHashSetObjects.get(fromHashSetId);
+        assert fromObjects != null;
+        allHashSetObjects.put(toHashSetId, fromObjects);
+    }
+
     public static HashMap<Object, Long> getHashMapObjects(long hashMapId) throws AssertEntityTypeException {
         GrugModLoader.logger.debug("getHashMapObjects(hashMapId={})", hashMapId);
         assertEntityType(hashMapId, GrugEntityType.HashMap);

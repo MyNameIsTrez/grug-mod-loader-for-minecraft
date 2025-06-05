@@ -822,11 +822,19 @@ public class GameFunctions {
         Object valueObject = GrugModLoader.grug.getObject(valueId);
 
         if (!objects.containsKey(valueObject)) {
-            long newValueId = Grug.addEntity(Grug.getEntityType(valueId), valueObject);
+            GrugEntityType entityType = Grug.getEntityType(valueId);
+
+            long newValueId = Grug.addEntity(entityType, valueObject);
             if (Grug.globalEntities.contains(hashSetId)) {
                 Grug.globalEntities.add(newValueId);
             } else {
                 Grug.fnEntities.add(newValueId);
+            }
+
+            if (entityType == GrugEntityType.HashSet) {
+                Grug.copyHashSetObjects(hashSetId, newValueId);
+            } else if (entityType == GrugEntityType.HashMap) {
+                assert false; // TODO: Support!
             }
 
             hashSet.add(newValueId);
@@ -1119,12 +1127,12 @@ public class GameFunctions {
         Iterator<?> iterator;
         IterableType iterableType;
         try {
-            if (containerType == GrugEntityType.HashMap) {
-                iterator = GrugModLoader.grug.getHashMap(iterableId).entrySet().iterator();
-                iterableType = IterableType.HashMap;
-            } else if (containerType == GrugEntityType.HashSet) {
+            if (containerType == GrugEntityType.HashSet) {
                 iterator = GrugModLoader.grug.getHashSet(iterableId).iterator();
                 iterableType = IterableType.HashSet;
+            } else if (containerType == GrugEntityType.HashMap) {
+                iterator = GrugModLoader.grug.getHashMap(iterableId).entrySet().iterator();
+                iterableType = IterableType.HashMap;
             } else {
                 throw new AssertEntityTypeException(containerType);
             }
