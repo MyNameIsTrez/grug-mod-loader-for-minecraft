@@ -168,6 +168,11 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         long local_hash_set = hash_set();
 
+        // TODO:
+        // The reason this tests fails right now, is because hash_set_add()
+        // uses Grug.globalEntities.contains(hashSetId) to decide whether the value should be added to globalEntities or fnEntities.
+        // This doesn't account for the fact that once local_hash_set is global_hash_set, that the values inside local_hash_set can also be considered global.
+        // I'm not sure if there's a way to resolve this, without recursively descending the values inside local_hash_set, which will require detecting cycles to prevent infinite loops.
         hash_set_add(local_hash_set, box_i32(1));
 
         hash_set_add(global_hash_set, local_hash_set);
@@ -179,6 +184,38 @@ public class TestHashSetAdd extends GameTestsUtils {
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
         h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_to_itself(GameTestHelper h) {
+        reset(h);
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, local_hash_set);
+
+        // This is just testing that this doesn't cause a hang
+        iteration(iterator(local_hash_set));
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_global_hash_set_to_itself(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = Grug.globalEntities;
+
+        long global_hash_set = hash_set();
+
+        Grug.fnEntities = new HashSet<>();
+
+        hash_set_add(global_hash_set, global_hash_set);
+
+        // This is just testing that this doesn't cause a hang
+        iteration(iterator(global_hash_set));
 
         h.succeed();
     }
