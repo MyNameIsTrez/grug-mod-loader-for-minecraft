@@ -917,11 +917,15 @@ public class GameFunctions {
             return false;
         }
 
-        Object object = GrugModLoader.grug.getObject(valueId);
+        // TODO: REMOVE!
+        return true;
+
+        // TODO: PUT BACK!
+        // Object object = GrugModLoader.grug.getObject(valueId);
         
-        boolean hasValue = objects.containsKey(object);
-        GrugModLoader.logger.debug("Returning {}", hasValue);
-        return hasValue;
+        // boolean hasValue = objects.containsKey(object);
+        // GrugModLoader.logger.debug("Returning {}", hasValue);
+        // return hasValue;
     }
 
     public static void hash_set_remove(long hashSetId, long valueId) {

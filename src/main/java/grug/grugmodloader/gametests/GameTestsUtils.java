@@ -111,6 +111,10 @@ public class GameTestsUtils {
         h.assertTrue(Grug.fnEntities.contains(id), "Grug.fnEntities did not contain " + id);
     }
 
+    public static void assert_fn_or_global_entities_contains(long id) {
+        h.assertTrue(Grug.fnEntities.contains(id) || Grug.globalEntities.contains(id), "Grug.fnEntities and Grug.globalEntities did not contain " + id);
+    }
+
     public static void assert_game_function_error(String expectedErrorString) {
         h.assertTrue(Grug.gameFunctionError.equals(expectedErrorString), "Expected Grug.gameFunctionError to be \"" + expectedErrorString + "\", but got \"" + Grug.gameFunctionError + "\"");
     }
@@ -346,7 +350,7 @@ public class GameTestsUtils {
     public static long iteration(long iterator) {
         long element = GameFunctions.iteration(iterator);
         h.assertTrue(element != -1, "Invalid iteration element " + element);
-        assert_fn_entities_contains(element);
+        assert_fn_or_global_entities_contains(element);
         return element;
     }
 

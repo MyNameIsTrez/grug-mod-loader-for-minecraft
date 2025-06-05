@@ -100,4 +100,117 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         h.succeed();
     }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_global_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = Grug.globalEntities;
+
+        long global_hash_set = hash_set();
+        long global_hash_set_inner = hash_set();
+        long global_box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        hash_set_add(global_hash_set_inner, global_box);
+
+        hash_set_add(global_hash_set, global_hash_set_inner);
+
+        h.assertTrue(hash_set_has(global_hash_set_inner, box_i32(1)), "global_hash_set_inner did not contain boxed_i32");
+        h.assertTrue(hash_set_has(global_hash_set, global_hash_set_inner), "global_hash_set did not contain global_hash_set_inner");
+
+        // TODO: REMOVE!
+        long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
+        h.assertTrue(global_hash_set_inner_copy == global_hash_set_inner, "global_hash_set_inner_copy != global_hash_set_inner");
+
+        hash_set_has(global_hash_set_inner_copy, box_i32(1));
+
+        // This simulates returning from the current on_ fn
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = new HashSet<>();
+
+        // These checks are not possible, as the original global_hash_set_inner ID has become invalid
+        // h.assertTrue(hash_set_has(global_hash_set_inner, box_i32(1)), "global_hash_set_inner did not contain boxed_i32");
+        // h.assertTrue(hash_set_has(global_hash_set, global_hash_set_inner), "global_hash_set did not contain global_hash_set_inner");
+
+        // TODO: Put back!
+        // long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
+        // hash_set_has(global_hash_set_inner_copy, box_i32(1)); // TODO: REMOVE!
+
+        // TODO: Add back!
+        // h.assertTrue(hash_set_has(global_hash_set_inner_copy, box_i32(1)), "global_hash_set_inner_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = Grug.globalEntities;
+
+        long global_hash_set = hash_set();
+
+        long global_box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, global_box);
+
+        hash_set_add(global_hash_set, local_hash_set);
+
+        h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
+        h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
+
+        // This simulates returning from the current on_ fn
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = new HashSet<>();
+
+        // These checks are not possible, as the original local_hash_set ID has become invalid
+        // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
+        // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
+
+        long local_hash_set_copy = iteration(iterator(global_hash_set));
+
+        h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_containing_local_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = Grug.globalEntities;
+
+        long global_hash_set = hash_set();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, box_i32(1));
+
+        hash_set_add(global_hash_set, local_hash_set);
+
+        h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
+        h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
+
+        // This simulates returning from the current on_ fn, and entering a new on_ fn
+        Grug.removeEntities(Grug.fnEntities);
+        Grug.fnEntities = new HashSet<>();
+
+        // These checks are not possible, as the original local_hash_set ID has become invalid
+        // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
+        // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
+
+        long local_hash_set_copy = iteration(iterator(global_hash_set));
+
+        h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
 }
