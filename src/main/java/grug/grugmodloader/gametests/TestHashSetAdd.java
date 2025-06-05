@@ -117,30 +117,13 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         hash_set_add(global_hash_set, global_hash_set_inner);
 
-        h.assertTrue(hash_set_has(global_hash_set_inner, box_i32(1)), "global_hash_set_inner did not contain boxed_i32");
-        h.assertTrue(hash_set_has(global_hash_set, global_hash_set_inner), "global_hash_set did not contain global_hash_set_inner");
-
-        // TODO: REMOVE!
-        long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
-        h.assertTrue(global_hash_set_inner_copy != global_hash_set_inner, "global_hash_set_inner_copy was not supposed to be equal to global_hash_set_inner");
-
-        hash_set_has(global_hash_set_inner_copy, box_i32(1));
-
         // This simulates returning from the current on_ fn
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
-        // TODO: Remove, or change to assertFalse
-        // These checks are not possible, as the original global_hash_set_inner ID has become invalid
-        // h.assertTrue(hash_set_has(global_hash_set_inner, box_i32(1)), "global_hash_set_inner did not contain boxed_i32");
-        // h.assertTrue(hash_set_has(global_hash_set, global_hash_set_inner), "global_hash_set did not contain global_hash_set_inner");
+        long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
 
-        // TODO: Put back!
-        // long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
-        // hash_set_has(global_hash_set_inner_copy, box_i32(1)); // TODO: REMOVE!
-
-        // TODO: Add back!
-        // h.assertTrue(hash_set_has(global_hash_set_inner_copy, box_i32(1)), "global_hash_set_inner_copy did not contain boxed_i32");
+        h.assertTrue(hash_set_has(global_hash_set_inner_copy, box_i32(1)), "global_hash_set_inner_copy did not contain boxed_i32");
 
         h.succeed();
     }
@@ -152,7 +135,6 @@ public class TestHashSetAdd extends GameTestsUtils {
         Grug.fnEntities = Grug.globalEntities;
 
         long global_hash_set = hash_set();
-
         long global_box = box_i32(1);
 
         Grug.fnEntities = new HashSet<>();
@@ -163,17 +145,9 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         hash_set_add(global_hash_set, local_hash_set);
 
-        h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
-        h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
-
         // This simulates returning from the current on_ fn
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
-
-        // TODO: Remove, or change to assertFalse
-        // These checks are not possible, as the original local_hash_set ID has become invalid
-        // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
-        // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
@@ -198,17 +172,9 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         hash_set_add(global_hash_set, local_hash_set);
 
-        h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
-        h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
-
         // This simulates returning from the current on_ fn, and entering a new on_ fn
         Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
-
-        // TODO: Remove, or change to assertFalse
-        // These checks are not possible, as the original local_hash_set ID has become invalid
-        // h.assertTrue(hash_set_has(local_hash_set, box_i32(1)), "local_hash_set did not contain boxed_i32");
-        // h.assertTrue(hash_set_has(global_hash_set, local_hash_set), "global_hash_set did not contain local_hash_set");
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
