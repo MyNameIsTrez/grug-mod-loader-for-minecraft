@@ -29,7 +29,10 @@ public class TestGetHashSetString extends GameTestsUtils {
 
         String string = get_hash_set_string(hash_set);
 
-        h.assertTrue(string.equals("[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]"), "hash_set string was not \"[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]\", but \"" + string + "\"");
+        String expected1 = "[{type=BoxedI32, object=1}, {type=BoxedI32, object=2}]";
+        String expected2 = "[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]";
+
+        h.assertTrue(string.equals(expected1) || string.equals(expected2), "hash_set string was neither \"" + expected1 + "\" nor \"" + expected2 + "\", but \"" + string + "\"");
 
         h.succeed();
     }
