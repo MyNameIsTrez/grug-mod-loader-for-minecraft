@@ -33,7 +33,7 @@ public class TestEntrySetValue extends GameTestsUtils {
     public static void entry_set_value_in_global_map(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_map = hash_map();
 

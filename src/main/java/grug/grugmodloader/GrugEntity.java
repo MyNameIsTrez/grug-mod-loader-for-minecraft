@@ -8,5 +8,5 @@ public class GrugEntity {
     public byte[] globals;
     public long onFns;
     public int entitiesIndex;
-    public Set<Long> childEntities = new HashSet<>();
+    public Set<GrugObject> childEntities = new HashSet<>();
 }

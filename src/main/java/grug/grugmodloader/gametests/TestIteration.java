@@ -105,7 +105,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_local_containing_global_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long box = box_i32(1);
 
@@ -129,7 +129,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_global_containing_global_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_set = hash_set();
         long box = box_i32(1);
@@ -152,7 +152,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_global_containing_local_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_set = hash_set();
 

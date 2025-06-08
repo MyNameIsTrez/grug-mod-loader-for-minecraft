@@ -1,15 +1,14 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
-import grug.grugmodloader.AssertEntityTypeException;
 import grug.grugmodloader.FooBlock;
 import grug.grugmodloader.FooBlockEntity;
 import grug.grugmodloader.GrugEntityType;
 import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +25,6 @@ public class GameTestsUtils {
     public static void reset(GameTestHelper helper) {
         Grug.resetVariables();
 
-        Grug.globalEntities = new HashSet<>();
         Grug.fnEntities = new HashSet<>();
 
         h = helper;
@@ -52,7 +50,9 @@ public class GameTestsUtils {
 
         foo_block_entity.onLoad();
 
-        return Grug.addEntity(GrugEntityType.BlockEntity, foo_block_entity);
+        long id = Grug.addEntity(GrugEntityType.BlockEntity, foo_block_entity);
+
+        return id;
     }
 
     public static long get_item_entity() {
@@ -65,18 +65,8 @@ public class GameTestsUtils {
         return Grug.addEntity(GrugEntityType.Level, h.getLevel());
     }
 
-    public static HashMap<Object, Long> get_hash_set_objects(long hashSetId) {
-        try {
-            return Grug.getHashSetObjects(hashSetId);
-        } catch (AssertEntityTypeException assertEntityTypeException) {
-            // Unreachable
-            h.fail(assertEntityTypeException.getMessage());
-        }
-        return null;
-    }
-
-    public static Object get_object(long id) {
-        Object object = GrugModLoader.grug.getObject(id);
+    public static GrugObject get_object(long id) {
+        GrugObject object = Grug.getGrugObject(id);
         h.assertTrue(object != null, "object was not supposed to be null for id " + id);
         return object;
     }
@@ -107,14 +97,6 @@ public class GameTestsUtils {
         h.assertEntityPresent(EntityType.ITEM);
     }
 
-    public static void assert_fn_entities_contains(long id) {
-        h.assertTrue(Grug.fnEntities.contains(id), "Grug.fnEntities did not contain " + id);
-    }
-
-    public static void assert_fn_or_global_entities_contains(long id) {
-        h.assertTrue(Grug.fnEntities.contains(id) || Grug.globalEntities.contains(id), "Grug.fnEntities and Grug.globalEntities did not contain " + id);
-    }
-
     public static void assert_game_function_error(String expectedErrorString) {
         h.assertTrue(Grug.gameFunctionError.equals(expectedErrorString), "Expected Grug.gameFunctionError to be \"" + expectedErrorString + "\", but got \"" + Grug.gameFunctionError + "\"");
     }
@@ -132,7 +114,6 @@ public class GameTestsUtils {
     public static long block(long resourceLocation) {
         long block = GameFunctions.block(resourceLocation);
         h.assertTrue(block != -1, "Invalid block " + block);
-        assert_fn_entities_contains(block);
         return block;
     }
 
@@ -145,14 +126,12 @@ public class GameTestsUtils {
     public static long block_pos(int x, int y, int z) {
         long blockPos = GameFunctions.block_pos(x, y, z);
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
-        assert_fn_entities_contains(blockPos);
         return blockPos;
     }
 
     public static long box_i32(int i32) {
         long box = GameFunctions.box_i32(i32);
         h.assertTrue(box != -1, "Invalid box " + box);
-        assert_fn_entities_contains(box);
         return box;
     }
 
@@ -167,7 +146,6 @@ public class GameTestsUtils {
     public static long entry_key(long iterator) {
         long key = GameFunctions.entry_key(iterator);
         h.assertTrue(key != -1, "Invalid entry_key key " + key);
-        assert_fn_entities_contains(key);
         return key;
     }
 
@@ -178,7 +156,6 @@ public class GameTestsUtils {
     public static long entry_value(long iterator) {
         long value = GameFunctions.entry_value(iterator);
         h.assertTrue(value != -1, "Invalid entry_value value " + value);
-        assert_fn_entities_contains(value);
         return value;
     }
 
@@ -189,7 +166,6 @@ public class GameTestsUtils {
     public static long get_block_pos_of_block_entity(long blockEntity) {
         long blockPos = GameFunctions.get_block_pos_of_block_entity(blockEntity);;
         h.assertTrue(blockPos != -1, "Invalid blockPos " + blockPos);
-        assert_fn_entities_contains(blockPos);
         return blockPos;
     }
 
@@ -224,7 +200,6 @@ public class GameTestsUtils {
     public static long get_default_block_state(long block) {
         long blockState = GameFunctions.get_default_block_state(block);
         h.assertTrue(blockState != -1, "Invalid blockState " + blockState);
-        assert_fn_entities_contains(blockState);
         return blockState;
     }
 
@@ -279,7 +254,6 @@ public class GameTestsUtils {
     public static long hash_map() {
         long hashMap = GameFunctions.hash_map();
         h.assertTrue(hashMap != -1, "Invalid hashMap " + hashMap);
-        assert_fn_entities_contains(hashMap);
         return hashMap;
     }
 
@@ -298,7 +272,6 @@ public class GameTestsUtils {
     public static long hash_set() {
         long hashSet = GameFunctions.hash_set();
         h.assertTrue(hashSet != -1, "Invalid hashSet " + hashSet);
-        assert_fn_entities_contains(hashSet);
         return hashSet;
     }
 
@@ -325,21 +298,18 @@ public class GameTestsUtils {
     public static long item(long resourceLocation) {
         long item = GameFunctions.item(resourceLocation);
         h.assertTrue(item != -1, "Invalid item " + item);
-        assert_fn_entities_contains(item);
         return item;
     }
 
     public static long item_entity(long level, int x, int y, int z, long itemStack) {
         long itemEntity = GameFunctions.item_entity(level, x, y, z, itemStack);
         h.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
-        assert_fn_entities_contains(itemEntity);
         return itemEntity;
     }
 
     public static long item_stack(long item) {
         long itemStack = GameFunctions.item_stack(item);
         h.assertTrue(itemStack != -1, "Invalid itemStack " + itemStack);
-        assert_fn_entities_contains(itemStack);
         return itemStack;
     }
 
@@ -350,14 +320,12 @@ public class GameTestsUtils {
     public static long iteration(long iterator) {
         long element = GameFunctions.iteration(iterator);
         h.assertTrue(element != -1, "Invalid iteration element " + element);
-        assert_fn_or_global_entities_contains(element);
         return element;
     }
 
     public static long iterator(long iterable) {
         long iterator = GameFunctions.iterator(iterable);
         h.assertTrue(iterator != -1, "Invalid iterator " + iterator);
-        assert_fn_entities_contains(iterator);
         return iterator;
     }
 
@@ -396,7 +364,6 @@ public class GameTestsUtils {
     public static long resource_location(String resourceLocationString) {
         long resourceLocation = GameFunctions.resource_location(resourceLocationString);
         h.assertTrue(resourceLocation != -1, "Invalid resourceLocation " + resourceLocation);
-        assert_fn_entities_contains(resourceLocation);
         return resourceLocation;
     }
 
@@ -415,14 +382,12 @@ public class GameTestsUtils {
     public static long vec3(float x, float y, float z) {
         long vec3 = GameFunctions.vec3(x, y, z);
         h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
-        assert_fn_entities_contains(vec3);
         return vec3;
     }
 
     public static long vec3_zero() {
         long vec3 = GameFunctions.vec3_zero();
         h.assertTrue(vec3 != -1, "Invalid vec3 " + vec3);
-        assert_fn_entities_contains(vec3);
         return vec3;
     }
 }

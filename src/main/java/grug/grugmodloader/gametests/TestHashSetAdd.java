@@ -1,10 +1,10 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugObject;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -58,7 +58,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_to_global_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_set = hash_set();
 
@@ -78,25 +78,16 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         h.assertTrue(hash_set_string.equals("[17179869185, 17179869187]"), "Got unexpected hash_set_string value '" + hash_set_string + "'");
 
-        h.assertTrue(Grug.globalEntities.size() == 3, "Grug.globalEntities.size() was expected to be 3, but was " + Grug.globalEntities.size());
+        h.assertTrue(Grug.fnEntities.size() == 2, "Grug.fnEntities.size() was expected to be 2, but was " + Grug.fnEntities.size());
 
-        h.assertTrue(Grug.globalEntities.contains(hash_set), "Grug.globalEntities did not contain hash_set " + hash_set);
+        GrugObject hash_set_object = get_object(hash_set);
+        h.assertFalse(Grug.fnEntities.contains(hash_set_object), "Grug.fnEntities contained hash_set_object " + hash_set_object);
 
-        HashMap<Object, Long> objects = get_hash_set_objects(hash_set);
+        GrugObject box1_object = get_object(box1);
+        h.assertTrue(Grug.fnEntities.contains(box1_object), "Grug.fnEntities did not contain box1_object " + box1_object);
 
-        Object box1_object = get_object(box1);
-
-        Long real_box1 = objects.get(box1_object);
-        h.assertTrue(real_box1 != null, "real_box1 was not supposed to be null");
-
-        h.assertTrue(Grug.globalEntities.contains(real_box1), "Grug.globalEntities did not contain real_box1 " + real_box1);
-
-        Object box2_object = get_object(box2);
-
-        Long real_box2 = objects.get(box2_object);
-        h.assertTrue(real_box2 != null, "real_box2 was not supposed to be null");
-
-        h.assertTrue(Grug.globalEntities.contains(real_box2), "Grug.globalEntities did not contain real_box2 " + real_box2);
+        GrugObject box2_object = get_object(box2);
+        h.assertTrue(Grug.fnEntities.contains(box2_object), "Grug.fnEntities did not contain box2_object " + box2_object);
 
         h.succeed();
     }
@@ -105,7 +96,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long global_hash_set = hash_set();
         long global_hash_set_inner = hash_set();
@@ -118,7 +109,6 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, global_hash_set_inner);
 
         // This simulates returning from the current on_ fn
-        Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
         long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
@@ -132,7 +122,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long global_hash_set = hash_set();
         long global_box = box_i32(1);
@@ -146,7 +136,6 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn
-        Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
@@ -160,7 +149,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_local_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long global_hash_set = hash_set();
 
@@ -168,17 +157,11 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         long local_hash_set = hash_set();
 
-        // TODO:
-        // The reason this tests fails right now, is because hash_set_add()
-        // uses Grug.globalEntities.contains(hashSetId) to decide whether the value should be added to globalEntities or fnEntities.
-        // This doesn't account for the fact that once local_hash_set is global_hash_set, that the values inside local_hash_set can also be considered global.
-        // I'm not sure if there's a way to resolve this, without recursively descending the values inside local_hash_set, which will require detecting cycles to prevent infinite loops.
         hash_set_add(local_hash_set, box_i32(1));
 
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn, and entering a new on_ fn
-        Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = new HashSet<>();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
@@ -206,7 +189,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_to_itself(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long global_hash_set = hash_set();
 
