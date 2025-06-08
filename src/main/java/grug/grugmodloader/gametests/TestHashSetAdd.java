@@ -76,7 +76,10 @@ public class TestHashSetAdd extends GameTestsUtils {
         String hash_set_string = get_hash_set_string(hash_set);
         h.assertFalse(hash_set_string.isEmpty(), "Invalid empty hash_set_string");
 
-        h.assertTrue(hash_set_string.equals("[17179869185, 17179869187]"), "Got unexpected hash_set_string value '" + hash_set_string + "'");
+        String expected1 = "[{type=BoxedI32, object=1}, {type=BoxedI32, object=2}]";
+        String expected2 = "[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]";
+
+        h.assertTrue(hash_set_string.equals(expected1) || hash_set_string.equals(expected2), "hash_set_string was neither \"" + expected1 + "\" nor \"" + expected2 + "\", but \"" + hash_set_string + "\"");
 
         h.assertTrue(Grug.fnEntities.size() == 2, "Grug.fnEntities.size() was expected to be 2, but was " + Grug.fnEntities.size());
 

@@ -157,7 +157,8 @@ public class GameFunctions {
 
         GrugObject value = grugEntry.getValue();
 
-        long valueId = Grug.addEntity(value.type, value);
+        // TODO: This calls `new GrugObject()`, which is unnecessary, as valueObject already exists, so create Grug.addExistingEntity()
+        long valueId = Grug.addEntity(value.type, value.object);
 
         GrugModLoader.logger.debug("Returning {}", valueId);
         return valueId;
@@ -594,7 +595,7 @@ public class GameFunctions {
             return -1;
         }
 
-        // TODO: This calls `new GrugObject()`, which is unnecessary, as valueObject already exists
+        // TODO: This calls `new GrugObject()`, which is unnecessary, as valueObject already exists, so create Grug.addExistingEntity()
         long valueId = Grug.addEntity(valueObject.type, valueObject.object);
 
         GrugModLoader.logger.debug("Returning {}", valueId);
@@ -877,7 +878,8 @@ public class GameFunctions {
             } else {
                 assert grugIterator.iterableType == IterableType.HashSet;
 
-                element = (long)grugIterator.iterator.next();
+                GrugObject grugObject = (GrugObject)grugIterator.iterator.next();
+                element = Grug.addEntity(grugObject.type, grugObject.object);
             }
         } catch (NoSuchElementException err) {
             Grug.gameFunctionErrorHappened("iteration", "Only call iteration() after iterating() returns true");

@@ -3,8 +3,8 @@ package grug.grugmodloader;
 import java.util.Iterator;
 
 public class GrugIterator {
-    Iterator<?> iterator;
-    IterableType iterableType;
+    public final Iterator<?> iterator;
+    public final IterableType iterableType;
 
     public enum IterableType {
         HashMap,
