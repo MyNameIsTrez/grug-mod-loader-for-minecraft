@@ -29,7 +29,7 @@ public class TestGetHashMapString extends GameTestsUtils {
 
         String string = get_hash_map_string(hash_map);
 
-        h.assertTrue(string.equals("{17179869190=17179869191, 17179869186=17179869187}"), "hash_map string was not \"{17179869190=17179869191, 17179869186=17179869187}\", but \"" + string + "\"");
+        h.assertTrue(string.equals("{{type=BoxedI32, object=69}={type=BoxedI32, object=2}, {type=BoxedI32, object=42}={type=BoxedI32, object=1}}"), "hash_map string was not \"{{type=BoxedI32, object=69}={type=BoxedI32, object=2}, {type=BoxedI32, object=42}={type=BoxedI32, object=1}}\", but \"" + string + "\"");
 
         h.succeed();
     }

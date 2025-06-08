@@ -23,4 +23,9 @@ public class GrugObject {
     public int hashCode() {
         return Objects.hash(type, object);
     }
+
+    @Override
+    public String toString() {
+        return "{type=" + type.toString() + ", object=" + object.toString() + "}";
+    }
 }

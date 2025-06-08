@@ -29,7 +29,7 @@ public class TestGetHashSetString extends GameTestsUtils {
 
         String string = get_hash_set_string(hash_set);
 
-        h.assertTrue(string.equals("[17179869185, 17179869187]"), "hash_set string was not \"[17179869185, 17179869187]\", but \"" + string + "\"");
+        h.assertTrue(string.equals("[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]"), "hash_set string was not \"[{type=BoxedI32, object=2}, {type=BoxedI32, object=1}]\", but \"" + string + "\"");
 
         h.succeed();
     }
