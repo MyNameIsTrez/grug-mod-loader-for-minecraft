@@ -257,8 +257,16 @@ public class GameTestsUtils {
         return hashMap;
     }
 
+    public static void hash_map_clear(long hashMap) {
+        GameFunctions.hash_map_clear(hashMap);
+    }
+
     public static long hash_map_get(long hashMap, long key) {
         return GameFunctions.hash_map_get(hashMap, key);
+    }
+
+    public static boolean hash_map_has_key(long hashMap, long key) {
+        return GameFunctions.hash_map_has_key(hashMap, key);
     }
 
     public static void hash_map_put(long hashMap, long key, long value) {
