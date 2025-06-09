@@ -283,6 +283,10 @@ public class GameTestsUtils {
         GameFunctions.hash_set_clear(hashSet);
     }
 
+    public static void hash_set_copy(long hashSetFrom, long hashSetTo) {
+        GameFunctions.hash_set_copy(hashSetFrom, hashSetTo);
+    }
+
     public static boolean hash_set_has(long hashSet, long value) {
         return GameFunctions.hash_set_has(hashSet, value);
     }
