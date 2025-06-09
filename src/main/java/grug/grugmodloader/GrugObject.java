@@ -1,7 +1,9 @@
 package grug.grugmodloader;
 
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,10 +30,10 @@ public class GrugObject {
     }
 
     private static int safeHashCode(Object obj, IdentityHashMap<Object, Boolean> seen) {
-        // Case 0: null values: return 0 hash
+        // Case 0: null values — return 0 hash
         if (obj == null) return 0;
 
-        // Case 1: cycle detection: we've already seen this object, so return 0 to avoid infinite recursion
+        // Case 1: cycle detection — we've already seen this object, so return 0 to avoid infinite recursion
         if (seen.containsKey(obj)) return 0;
 
         // Mark this object as visited to detect future cycles
@@ -54,7 +56,7 @@ public class GrugObject {
         // Case 4: if this is a Map, hash each entry by XORing the key and value hashes
         if (obj instanceof Map<?, ?> map) {
             int h = 0;
-            for (Map.Entry<?, ?> entry : map.entrySet()) {
+            for (Entry<?, ?> entry : map.entrySet()) {
                 int keyHash = safeHashCode(entry.getKey(), seen);
                 int valueHash = safeHashCode(entry.getValue(), seen);
                 h += keyHash ^ valueHash;
@@ -62,12 +64,62 @@ public class GrugObject {
             return h;
         }
 
-        // Case 5: default: non-collection type like Block or BoxedI32
+        // Case 5: default — non-collection type like Block and BoxedI32
         return obj.hashCode();
     }
 
     @Override
     public String toString() {
-        return "GrugObject{type=" + type.toString() + ", object=" + object.getClass().getSimpleName() + "}";
+        return safeToString(this, new IdentityHashMap<>());
+    }
+
+    private static String safeToString(Object obj, IdentityHashMap<Object, Boolean> seen) {
+        // Case 0: null values — return "null"
+        if (obj == null) return "null";
+
+        // Case 1: cycle detection — we've already seen this object, return "[cyclic]"
+        if (seen.containsKey(obj)) return "[cyclic]";
+
+        // Mark this object as visited to detect future cycles
+        seen.put(obj, true);
+
+        // Case 2: if this is a GrugObject, recursively build the string for its fields
+        if (obj instanceof GrugObject go) {
+            return "GrugObject{type=" + go.type + ", object=" + safeToString(go.object, seen) + "}";
+        }
+
+        // Case 3: if this is a Set, represent each element within the Set
+        if (obj instanceof Set<?> set) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            Iterator<?> it = set.iterator();
+            while (it.hasNext()) {
+                sb.append(safeToString(it.next(), seen));
+                if (it.hasNext()) sb.append(", ");
+            }
+            sb.append("}");
+            return sb.toString();
+        }
+
+        // Case 4: if this is a Map, represent each key-value pair
+        if (obj instanceof Map<?, ?> map) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            for (Entry<?, ?> entry : map.entrySet()) {
+                sb.append(safeToString(entry.getKey(), seen))
+                .append("=")
+                .append(safeToString(entry.getValue(), seen));
+                sb.append(", ");
+            }
+            // Remove trailing comma and space if present
+            if (!map.isEmpty()) {
+                sb.setLength(sb.length() - 2);
+            }
+            sb.append("}");
+            return sb.toString();
+        }
+
+        // Case 5: default — for other object types like Block and BoxedI32
+        return obj.toString();
     }
 }
