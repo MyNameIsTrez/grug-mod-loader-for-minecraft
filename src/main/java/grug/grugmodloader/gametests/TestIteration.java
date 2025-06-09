@@ -1,6 +1,9 @@
 package grug.grugmodloader.gametests;
 
+import java.util.HashSet;
+
 import grug.grugmodloader.GameFunctions;
+import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -94,6 +97,77 @@ public class TestIteration extends GameTestsUtils {
         assert_error_id(GameFunctions.iteration(box_i32(1)));
 
         assert_game_function_error("iteration(): Expected iterator, but got boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void iteration_hash_set_local_containing_global_box(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long hash_set = hash_set();
+
+        hash_set_add(hash_set, box);
+
+        long iterator = iterator(hash_set);
+
+        long boxed_i32 = iteration(iterator);
+
+        int value = unbox_i32(boxed_i32);
+        h.assertTrue(value == 1, "Expected boxed_i32 to hold the value 1, but it held " + value);
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void iteration_hash_set_global_containing_global_box(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long hash_set = hash_set();
+        long box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        hash_set_add(hash_set, box);
+
+        long iterator = iterator(hash_set);
+
+        long boxed_i32 = iteration(iterator);
+
+        int value = unbox_i32(boxed_i32);
+        h.assertTrue(value == 1, "Expected boxed_i32 to hold the value 1, but it held " + value);
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void iteration_hash_set_global_containing_local_box(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long hash_set = hash_set();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long box = box_i32(1);
+
+        hash_set_add(hash_set, box);
+
+        long iterator = iterator(hash_set);
+
+        long boxed_i32 = iteration(iterator);
+
+        int value = unbox_i32(boxed_i32);
+        h.assertTrue(value == 1, "Expected boxed_i32 to hold the value 1, but it held " + value);
 
         h.succeed();
     }

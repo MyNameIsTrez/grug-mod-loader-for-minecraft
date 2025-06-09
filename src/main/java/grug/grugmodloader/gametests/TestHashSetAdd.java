@@ -1,10 +1,10 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugObject;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -58,7 +58,7 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_to_global_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_set = hash_set();
 
@@ -76,27 +76,144 @@ public class TestHashSetAdd extends GameTestsUtils {
         String hash_set_string = get_hash_set_string(hash_set);
         h.assertFalse(hash_set_string.isEmpty(), "Invalid empty hash_set_string");
 
-        h.assertTrue(hash_set_string.equals("[17179869185, 17179869187]"), "Got unexpected hash_set_string value '" + hash_set_string + "'");
+        String expected1 = "[GrugObject{type=BoxedI32, object=1}, GrugObject{type=BoxedI32, object=2}]";
+        String expected2 = "[GrugObject{type=BoxedI32, object=2}, GrugObject{type=BoxedI32, object=1}]";
 
-        h.assertTrue(Grug.globalEntities.size() == 3, "Grug.globalEntities.size() was expected to be 3, but was " + Grug.globalEntities.size());
+        h.assertTrue(hash_set_string.equals(expected1) || hash_set_string.equals(expected2), "Expected hash_set_string to be \"" + expected1 + "\" or \"" + expected2 + "\", but got \"" + hash_set_string + "\"");
 
-        h.assertTrue(Grug.globalEntities.contains(hash_set), "Grug.globalEntities did not contain hash_set " + hash_set);
+        h.assertTrue(Grug.fnEntities.size() == 2, "Grug.fnEntities.size() was expected to be 2, but was " + Grug.fnEntities.size());
 
-        HashMap<Object, Long> objects = get_hash_set_objects(hash_set);
+        GrugObject hash_set_object = get_object(hash_set);
+        h.assertFalse(Grug.fnEntities.contains(hash_set_object), "Grug.fnEntities contained hash_set_object " + hash_set_object);
 
-        Object box1_object = get_object(box1);
+        GrugObject box1_object = get_object(box1);
+        h.assertTrue(Grug.fnEntities.contains(box1_object), "Grug.fnEntities did not contain box1_object " + box1_object);
 
-        Long real_box1 = objects.get(box1_object);
-        h.assertTrue(real_box1 != null, "real_box1 was not supposed to be null");
+        GrugObject box2_object = get_object(box2);
+        h.assertTrue(Grug.fnEntities.contains(box2_object), "Grug.fnEntities did not contain box2_object " + box2_object);
 
-        h.assertTrue(Grug.globalEntities.contains(real_box1), "Grug.globalEntities did not contain real_box1 " + real_box1);
+        h.succeed();
+    }
 
-        Object box2_object = get_object(box2);
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_global_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
 
-        Long real_box2 = objects.get(box2_object);
-        h.assertTrue(real_box2 != null, "real_box2 was not supposed to be null");
+        Grug.fnEntities = new HashSet<>();
 
-        h.assertTrue(Grug.globalEntities.contains(real_box2), "Grug.globalEntities did not contain real_box2 " + real_box2);
+        long global_hash_set = hash_set();
+        long global_hash_set_inner = hash_set();
+        long global_box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        hash_set_add(global_hash_set_inner, global_box);
+
+        hash_set_add(global_hash_set, global_hash_set_inner);
+
+        // This simulates returning from the current on_ fn
+        Grug.fnEntities = new HashSet<>();
+
+        long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
+
+        h.assertTrue(hash_set_has(global_hash_set_inner_copy, box_i32(1)), "global_hash_set_inner_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long global_hash_set = hash_set();
+        long global_box = box_i32(1);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, global_box);
+
+        hash_set_add(global_hash_set, local_hash_set);
+
+        // This simulates returning from the current on_ fn
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set_copy = iteration(iterator(global_hash_set));
+
+        h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_containing_local_box_to_global_hash_set(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long global_hash_set = hash_set();
+
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, box_i32(1));
+
+        hash_set_add(global_hash_set, local_hash_set);
+
+        // This simulates returning from the current on_ fn, and entering a new on_ fn
+        Grug.fnEntities = new HashSet<>();
+
+        long local_hash_set_copy = iteration(iterator(global_hash_set));
+
+        h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_local_hash_set_to_itself(GameTestHelper h) {
+        reset(h);
+
+        long local_hash_set = hash_set();
+
+        hash_set_add(local_hash_set, local_hash_set);
+
+        String expected = "[GrugObject{type=HashSet, object={[cyclic]}}]";
+
+        String hash_set_string = get_hash_set_string(local_hash_set);
+
+        h.assertTrue(hash_set_string.equals(expected), "Expected hash_set_string to be \"" + expected + "\", but got \"" + hash_set_string + "\"");
+
+        // This is just testing that this doesn't cause a hang
+        iteration(iterator(local_hash_set));
+
+        h.succeed();
+    }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_add_global_hash_set_to_itself(GameTestHelper h) {
+        reset(h);
+
+        Grug.fnEntities = new HashSet<>();
+
+        long global_hash_set = hash_set();
+
+        Grug.fnEntities = new HashSet<>();
+
+        hash_set_add(global_hash_set, global_hash_set);
+
+        String expected = "[GrugObject{type=HashSet, object={[cyclic]}}]";
+
+        String hash_set_string = get_hash_set_string(global_hash_set);
+
+        h.assertTrue(hash_set_string.equals(expected), "Expected hash_set_string to be \"" + expected + "\", but got \"" + hash_set_string + "\"");
+
+        // This is just testing that this doesn't cause a hang
+        iteration(iterator(global_hash_set));
 
         h.succeed();
     }

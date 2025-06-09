@@ -1,7 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.GrugEntityType;
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -30,9 +28,7 @@ public class TestRemoveBlock extends GameTestsUtils {
 
         long block_pos_id = block_pos(x, y, z);
 
-        long level = Grug.addEntity(GrugEntityType.Level, h.getLevel());
-
-        remove_block(block_pos_id, level);
+        remove_block(block_pos_id, get_level());
 
         h.assertBlockNotPresent(block, relative);
         assert_item_entity_not_present();

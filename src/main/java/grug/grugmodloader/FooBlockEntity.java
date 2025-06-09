@@ -28,6 +28,9 @@ public class FooBlockEntity extends BlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
+        Set<GrugObject> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = grugEntity.childEntities;
+
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
         GrugFile file = new GrugFile();
@@ -35,14 +38,8 @@ public class FooBlockEntity extends BlockEntity {
 
         grugEntity.globals = new byte[file.globalsSize];
 
-        Set<Long> oldGlobalEntities = Grug.globalEntities;
-        Grug.globalEntities = grugEntity.childEntities;
-        Set<Long> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = grugEntity.childEntities;
-
         GrugModLoader.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
-        Grug.globalEntities = oldGlobalEntities;
         Grug.fnEntities = oldFnEntities;
 
         grugEntity.onFns = file.onFns;
@@ -53,9 +50,6 @@ public class FooBlockEntity extends BlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-
-        Grug.removeEntity(grugEntity.id);
-        Grug.removeEntities(grugEntity.childEntities);
 
         // Swap-remove itself from Grug.entities
         List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:foo_block_entity");
@@ -78,15 +72,11 @@ public class FooBlockEntity extends BlockEntity {
             return;
         }
 
-        Set<Long> oldGlobalEntities = Grug.globalEntities;
-        Grug.globalEntities = grugEntity.childEntities;
-        Set<Long> oldFnEntities = Grug.fnEntities;
+        Set<GrugObject> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
         GrugModLoader.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
-        Grug.globalEntities = oldGlobalEntities;
-        Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
 
@@ -95,15 +85,11 @@ public class FooBlockEntity extends BlockEntity {
             return;
         }
 
-        Set<Long> oldGlobalEntities = Grug.globalEntities;
-        Grug.globalEntities = grugEntity.childEntities;
-        Set<Long> oldFnEntities = Grug.fnEntities;
+        Set<GrugObject> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new HashSet<>();
 
         GrugModLoader.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
-        Grug.globalEntities = oldGlobalEntities;
-        Grug.removeEntities(Grug.fnEntities);
         Grug.fnEntities = oldFnEntities;
     }
 }

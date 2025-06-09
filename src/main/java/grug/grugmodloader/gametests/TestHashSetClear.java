@@ -42,7 +42,7 @@ public class TestHashSetClear extends GameTestsUtils {
     public static void hash_set_clear_global(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = Grug.globalEntities;
+        Grug.fnEntities = new HashSet<>();
 
         long hash_set = hash_set();
 

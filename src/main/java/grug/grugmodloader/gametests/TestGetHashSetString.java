@@ -29,7 +29,10 @@ public class TestGetHashSetString extends GameTestsUtils {
 
         String string = get_hash_set_string(hash_set);
 
-        h.assertTrue(string.equals("[17179869185, 17179869187]"), "hash_set string was not \"[17179869185, 17179869187]\", but \"" + string + "\"");
+        String expected1 = "[GrugObject{type=BoxedI32, object=1}, GrugObject{type=BoxedI32, object=2}]";
+        String expected2 = "[GrugObject{type=BoxedI32, object=2}, GrugObject{type=BoxedI32, object=1}]";
+
+        h.assertTrue(string.equals(expected1) || string.equals(expected2), "Expected hash_set string to be \"" + expected1 + "\" or \"" + expected2 + "\", but got \"" + string + "\"");
 
         h.succeed();
     }
