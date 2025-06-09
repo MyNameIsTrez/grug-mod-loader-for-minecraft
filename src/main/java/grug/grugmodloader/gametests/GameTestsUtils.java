@@ -261,6 +261,10 @@ public class GameTestsUtils {
         GameFunctions.hash_map_clear(hashMap);
     }
 
+    public static void hash_map_copy(long hashMapFrom, long hashMapTo) {
+        GameFunctions.hash_map_copy(hashMapFrom, hashMapTo);
+    }
+
     public static long hash_map_get(long hashMap, long key) {
         return GameFunctions.hash_map_get(hashMap, key);
     }
