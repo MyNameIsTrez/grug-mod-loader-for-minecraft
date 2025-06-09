@@ -1008,7 +1008,7 @@ public class GameFunctions {
         try {
             resourceLocation = new ResourceLocation(resourceLocationString);
         } catch (ResourceLocationException resourceLocationException) {
-            Grug.gameFunctionErrorHappened("resource_location", "Invalid resource_location_string");
+            Grug.gameFunctionErrorHappened("resource_location", "Invalid resource_location_string \"" + resourceLocationString + "\"");
             return -1;
         }
 

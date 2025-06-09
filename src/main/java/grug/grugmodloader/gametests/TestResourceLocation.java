@@ -32,7 +32,7 @@ public class TestResourceLocation extends GameTestsUtils {
 
         assert_error_id(GameFunctions.resource_location("@"));
 
-        assert_game_function_error("resource_location(): Invalid resource_location_string");
+        assert_game_function_error("resource_location(): Invalid resource_location_string \"@\"");
 
         h.succeed();
     }
