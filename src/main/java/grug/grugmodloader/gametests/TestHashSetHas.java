@@ -48,4 +48,23 @@ public class TestHashSetHas extends GameTestsUtils {
 
         h.succeed();
     }
+
+    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    public static void hash_set_has_nested(GameTestHelper h) {
+        reset(h);
+
+        long hash_set_inner_1 = hash_set();
+        hash_set_add(hash_set_inner_1, box_i32(1));
+
+        // Identical to hash_set_inner_1
+        long hash_set_inner_2 = hash_set();
+        hash_set_add(hash_set_inner_2, box_i32(1));
+
+        long hash_set_outer = hash_set();
+        hash_set_add(hash_set_outer, hash_set_inner_1);
+
+        h.assertTrue(hash_set_has(hash_set_outer, hash_set_inner_2), "hash_set_outer did not contain hash_set_inner_2");
+
+        h.succeed();
+    }
 }
