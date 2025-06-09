@@ -29,10 +29,9 @@ public class TestGetHashMapString extends GameTestsUtils {
 
         String string = get_hash_map_string(hash_map);
 
-        String expected1 = "{{type=BoxedI32, object=42}={type=BoxedI32, object=1}, {type=BoxedI32, object=69}={type=BoxedI32, object=2}}";
-        String expected2 = "{{type=BoxedI32, object=69}={type=BoxedI32, object=2}, {type=BoxedI32, object=42}={type=BoxedI32, object=1}}";
+        String expected = "{GrugObject{type=BoxedI32, object=Integer}=GrugObject{type=BoxedI32, object=Integer}, GrugObject{type=BoxedI32, object=Integer}=GrugObject{type=BoxedI32, object=Integer}}";
 
-        h.assertTrue(string.equals(expected1) || string.equals(expected2), "hash_map string was neither \"" + expected1 + "\" nor \"" + expected2 + "\", but \"" + string + "\"");
+        h.assertTrue(string.equals(expected), "Expected hash_map string to be \"" + expected + "\", but got \"" + string + "\"");
 
         h.succeed();
     }
