@@ -291,6 +291,10 @@ public class GameTestsUtils {
         return GameFunctions.hash_set_has(hashSet, value);
     }
 
+    public static void hash_set_remove(long hashSet, long value) {
+        GameFunctions.hash_set_remove(hashSet, value);
+    }
+
     public static boolean is_air(long blockState) {
         return GameFunctions.is_air(blockState);
     }
