@@ -28,6 +28,8 @@ If you get `Exception in thread "main" java.lang.reflect.InvocationTargetExcepti
 
 If you get `exception in phase 'semantic analysis' in source unit '_BuildScript_' Unsupported class file major version 68`, you'll need to update `gradle/wrapper/gradle-wrapper.properties` its `distributionUrl`, using the table from [this Stack Overflow answer](https://stackoverflow.com/a/75117113/13279557) based on what `java --version` prints for you.
 
+If you get `Error getting artifact: net.minecraftforge:forge:1.20.6-50.1.0_mapped_official_1.20.6:null@jar from  MinecraftUserRepo`, you should try recloning this repository.
+
 ## Running the tests
 
 Run `./gradlew jacocoTestReport`.
