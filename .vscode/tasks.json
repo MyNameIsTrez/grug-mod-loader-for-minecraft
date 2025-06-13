@@ -82,8 +82,10 @@
         "-Wshadow",
         "-Wfatal-errors",
         "-g",
-        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
-        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
+        "-I/usr/lib/jvm/java-24-openjdk/include",
+        "-I/usr/lib/jvm/java-24-openjdk/include/linux"
+        // "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
+        // "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
       ],
       "hide": true
     },
@@ -117,8 +119,10 @@
         "-Wshadow",
         "-Wfatal-errors",
         "-g",
-        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
-        "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
+        "-I/usr/lib/jvm/java-24-openjdk/include",
+        "-I/usr/lib/jvm/java-24-openjdk/include/linux"
+        // "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include",
+        // "-I/usr/lib/jvm/jdk-23.0.1-oracle-x64/include/linux"
       ],
       "hide": true
     }

@@ -22,10 +22,16 @@ See [ubuntu.com its guide](https://ubuntu.com/tutorials/install-jre) for install
 
 See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
 
+### Troubleshooting
+
 If you get `Exception in thread "main" java.lang.reflect.InvocationTargetException`, with `Caused by: com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}` when using `F5` to launch the game, you'll need to run `./gradlew runClient` instead. (Make sure to run `cd ..` if you are in the `run` directory.)
+
+If you get `exception in phase 'semantic analysis' in source unit '_BuildScript_' Unsupported class file major version 68`, you'll need to update `gradle/wrapper/gradle-wrapper.properties` its `distributionUrl`, using the table from [this Stack Overflow answer](https://stackoverflow.com/a/75117113/13279557) based on what `java --version` prints for you.
 
 ## Running the tests
 
 Run `./gradlew jacocoTestReport`.
 
 You can view the coverage results in your browser by opening the `build/reports/jacoco/test/html/index.html` file it generates.
+
+If the coverage results are not updating, you can fix that by deleting the `build/jacoco/test.exec` file that gets generated.
