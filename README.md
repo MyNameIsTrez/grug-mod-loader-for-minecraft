@@ -17,14 +17,11 @@ See [ubuntu.com its guide](https://ubuntu.com/tutorials/install-jre) for install
 
 1. Run `git submodule update --init` to clone the subrepositories.
 2. Press `Ctrl+Shift+B` to open the task menu, and select `Recompile`.
-3. Run `./gradlew runClient` to initialize the `run/` directory, and launch the game.
-4. From now on you can use `F5` to launch the game.
+3. Run `./gradlew runClient` to launch the game, or press `F5` if you want to also attach VS Code's debugger.
 
 See the [Getting Started with Forge](https://docs.minecraftforge.net/en/latest/gettingstarted/) page from Forge's website for more information.
 
 ### Troubleshooting
-
-If you get `Exception in thread "main" java.lang.reflect.InvocationTargetException`, with `Caused by: com.electronwill.nightconfig.core.io.ParsingException: Invalid bare key: ${mod_id}` when using `F5` to launch the game, you'll need to run `./gradlew runClient` instead. (Make sure to run `cd ..` if you are in the `run` directory.)
 
 If you get `exception in phase 'semantic analysis' in source unit '_BuildScript_' Unsupported class file major version 68`, you'll need to update `gradle/wrapper/gradle-wrapper.properties` its `distributionUrl`, using the table from [this Stack Overflow answer](https://stackoverflow.com/a/75117113/13279557) based on what `java --version` prints for you.
 
