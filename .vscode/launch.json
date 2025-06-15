@@ -8,7 +8,7 @@
       "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
       "projectName": "grug-mod-loader-for-minecraft",
       "cwd": "${workspaceFolder}/run",
-      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -Dforge.enabledGameTestNamespaces=grugmodloader -Dforge.enableGameTest=true -Djava.net.preferIPv6Addresses=system",
+      "vmArgs": "-Xcheck:jni -Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -Dforge.enabledGameTestNamespaces=grugmodloader -Dforge.enableGameTest=true -Djava.net.preferIPv6Addresses=system -enableassertions",
       "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 16 --assetsDir /home/trez/.gradle/caches/forge_gradle/assets --gameDir .",
       "env": {
         "MOD_CLASSES": "${workspaceFolder}/build/sourcesSets/main",
