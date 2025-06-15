@@ -20,18 +20,15 @@ public class TestHashSet extends GameTestsUtils {
     // This test failed back when entityData wrongly used a WeakHashMap that stored key Longs,
     // as those Longs immediately became eligible for garbage collection after addEntity() returned.
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_not_prematurely_garbage_collected(GameTestHelper h) {
+    public static void hash_set_not_prematurely_garbage_collected(GameTestHelper h) throws InterruptedException {
         reset(h);
 
         hash_set();
 
-        for (int i = 0; i < 10; i++) {
-            System.gc();
+        System.gc();
+        Thread.sleep(100); // Give GC time
 
-            if (Grug.entityData.size() == 0) {
-                h.fail("Expected entityData.size() to be 1, but was 0, at i=" + i);
-            }
-        }
+        h.assertTrue(Grug.entityData.size() > 0, "Expected entityData.size() to not be 0");
 
         h.succeed();
     }

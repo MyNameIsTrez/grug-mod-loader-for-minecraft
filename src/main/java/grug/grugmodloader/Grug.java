@@ -76,7 +76,7 @@ public class Grug {
     // TODO: This does not recycle indices of despawned entities,
     // TODO: which means this will eventually wrap around back to 0
     private static Map<GrugEntityType, Integer> nextEntityIndices = new HashMap<>();
-    public static WeakHashMap<Long, GrugObject> entityData = new WeakHashMap<>();
+    public static WeakGrugValueMap entityData = new WeakGrugValueMap();
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
@@ -288,9 +288,9 @@ public class Grug {
 
         long id = getEntityID(grugObject.type, entityIndex);
 
-        entityData.put(id, grugObject);
-
         Grug.fnEntities.add(grugObject);
+
+        entityData.put(id, grugObject);
 
         GrugModLoader.logger.debug("Returning {}", id);
         return id;
