@@ -1,7 +1,7 @@
 # grug mod loader for Minecraft
 
-[![Coverage](.github/badges/jacoco.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
-[![Branches](.github/badges/branches.svg)](https://github.com/MyNameIsTrez/grug-toys/actions/workflows/build.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/MyNameIsTrez/grug-mod-loader-for-minecraft/actions/workflows/build.yml)
+[![Branches](.github/badges/branches.svg)](https://github.com/MyNameIsTrez/grug-mod-loader-for-minecraft/actions/workflows/build.yml)
 
 This is the grug mod loader for Minecraft.
 
