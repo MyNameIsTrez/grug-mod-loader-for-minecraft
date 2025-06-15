@@ -6,23 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WeakGrugValueMap {
-    // The actual map from ID to WeakValue of the object
+    // The actual map from an ID, to the WeakValue wrapping the GrugObject
     private final Map<Long, WeakValue> map = new HashMap<>();
 
     // ReferenceQueue to track garbage-collected values
     private final ReferenceQueue<GrugObject> queue = new ReferenceQueue<>();
 
-    // Add an object with a long ID
     public void put(long id, GrugObject value) {
         cleanup(); // Clean up any stale references first
         map.put(id, new WeakValue(id, value, queue));
     }
 
-    // Get the object by ID
     public GrugObject get(long id) {
-        cleanup();
+        cleanup(); // Clean up any stale references first
         WeakValue ref = map.get(id);
-        return ref != null ? ref.get() : null;
+        assert ref != null;
+        return ref.get();
     }
 
     // Clean up the map by removing entries whose values were GC'd
@@ -43,13 +42,11 @@ public class WeakGrugValueMap {
     }
 
     public int size() {
-        // Ensure stale entries are removed
-        cleanup();
-
+        cleanup(); // Clean up any stale references first
         return map.size();
     }
 
-    // A WeakReference subclass that knows its ID
+    // A WeakReference subclass that tracks its ID for cleanup()
     private static class WeakValue extends WeakReference<GrugObject> {
         final long id;
 
