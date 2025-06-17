@@ -1,6 +1,6 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
@@ -58,11 +58,11 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_to_global_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long hash_set = hash_set();
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long box1 = box_i32(1);
         hash_set_add(hash_set, box1);
@@ -99,20 +99,20 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long global_hash_set = hash_set();
         long global_hash_set_inner = hash_set();
         long global_box = box_i32(1);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         hash_set_add(global_hash_set_inner, global_box);
 
         hash_set_add(global_hash_set, global_hash_set_inner);
 
         // This simulates returning from the current on_ fn
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
 
@@ -125,12 +125,12 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long global_hash_set = hash_set();
         long global_box = box_i32(1);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long local_hash_set = hash_set();
 
@@ -139,7 +139,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
@@ -152,11 +152,11 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_local_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long global_hash_set = hash_set();
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long local_hash_set = hash_set();
 
@@ -165,7 +165,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn, and entering a new on_ fn
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
@@ -198,11 +198,11 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_to_itself(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long global_hash_set = hash_set();
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         hash_set_add(global_hash_set, global_hash_set);
 

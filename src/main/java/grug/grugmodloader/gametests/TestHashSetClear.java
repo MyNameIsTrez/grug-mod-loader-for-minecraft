@@ -1,6 +1,6 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
@@ -42,11 +42,11 @@ public class TestHashSetClear extends GameTestsUtils {
     public static void hash_set_clear_global(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         long hash_set = hash_set();
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         hash_set_add(hash_set, box_i32(1));
 

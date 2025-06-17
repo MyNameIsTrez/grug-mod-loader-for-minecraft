@@ -6,13 +6,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.WeakHashMap;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -81,9 +80,9 @@ public class Grug {
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
     // This is deliberately not initialized.
-    // This variable gets assigned an entity's HashSet of child GrugObjects before init_globals() is called,
-    // and it gets assigned a new HashSet<GrugObject> of on_ fn entities, before an on_ function is called.
-    public static Set<GrugObject> fnEntities;
+    // This variable gets assigned an entity's ArrayList of child GrugObjects before init_globals() is called,
+    // and it gets assigned a new ArrayList<GrugObject> of on_ fn entities, before an on_ function is called.
+    public static List<GrugObject> fnEntities;
 
     // These are read by grug's game tests.
     public static String gameFunctionError = null;
@@ -125,8 +124,8 @@ public class Grug {
         }
     }
 
-    // This function was written for the tests in GameTests.java.
-    // The reason that GameTests.java doesn't just recreate the Grug class for every test,
+    // This function was written for the game tests in the gametests directory.
+    // The reason that the game tests don't just recreate the Grug class for every test,
     // where all of the static variables in the Grug class could be made non-static,
     // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
     public static void resetVariables() {
@@ -244,7 +243,7 @@ public class Grug {
                     continue;
                 }
 
-                fnEntities = new HashSet<>();
+                fnEntities = new ArrayList<>();
 
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
             }
@@ -288,7 +287,7 @@ public class Grug {
 
         long id = getEntityID(grugObject.type, entityIndex);
 
-        Grug.fnEntities.add(grugObject);
+        fnEntities.add(grugObject);
 
         entityData.put(id, grugObject);
 
@@ -306,10 +305,10 @@ public class Grug {
         return GrugEntityType.get((int)(id >> 32));
     }
 
-    // private int getEntityIndex(long id) {
-    //     GrugModLoader.logger.debug("getEntityIndex(id={})", id);
-    //     return (int)(id & 0xffffffff);
-    // }
+    private static int getEntityIndex(long id) {
+        GrugModLoader.logger.debug("getEntityIndex(id={})", id);
+        return (int)(id & 0xffffffff);
+    }
 
     // TODO: I'm sure this can be done cleaner
     public static boolean isEntityTypeInstanceOf(GrugEntityType derived, GrugEntityType base) {

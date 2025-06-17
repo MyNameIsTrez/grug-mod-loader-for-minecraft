@@ -1,9 +1,7 @@
 package grug.grugmodloader;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -30,7 +28,7 @@ public class GameOfLifeBlockEntity extends BlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        Set<GrugObject> oldFnEntities = Grug.fnEntities;
+        List<GrugObject> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = grugEntity.childEntities;
 
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
@@ -74,8 +72,8 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        Set<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new HashSet<>();
+        List<GrugObject> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<>();
 
         GrugModLoader.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
@@ -87,8 +85,8 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        Set<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new HashSet<>();
+        List<GrugObject> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<>();
 
         GrugModLoader.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
@@ -100,8 +98,8 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        Set<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new HashSet<>();
+        List<GrugObject> oldFnEntities = Grug.fnEntities;
+        Grug.fnEntities = new ArrayList<>();
 
         long blockStateId = Grug.addEntity(GrugEntityType.BlockState, blockState);
         long levelId = Grug.addEntity(GrugEntityType.Level, level);

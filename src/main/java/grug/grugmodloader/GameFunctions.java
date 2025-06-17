@@ -1047,7 +1047,7 @@ public class GameFunctions {
             return;
         }
 
-        levelInstance.addFreshEntity(entityInstance);
+        assert levelInstance.addFreshEntity(entityInstance);
     }
 
     public static int unbox_i32(long box) {

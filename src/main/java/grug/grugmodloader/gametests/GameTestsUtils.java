@@ -1,6 +1,6 @@
 package grug.grugmodloader.gametests;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import grug.grugmodloader.FooBlock;
 import grug.grugmodloader.FooBlockEntity;
@@ -25,7 +25,7 @@ public class GameTestsUtils {
     public static void reset(GameTestHelper helper) {
         Grug.resetVariables();
 
-        Grug.fnEntities = new HashSet<>();
+        Grug.fnEntities = new ArrayList<>();
 
         h = helper;
     }
