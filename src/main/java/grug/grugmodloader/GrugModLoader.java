@@ -76,7 +76,7 @@ public class GrugModLoader
 
     public GrugModLoader()
     {
-        LogUtils.configureRootLoggingLevel(Level.DEBUG);
+        LogUtils.configureRootLoggingLevel(Level.INFO);
 
         logger.info("HELLO FROM CONSTRUCTOR");
 

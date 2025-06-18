@@ -581,7 +581,7 @@
 			]
 		},
 		"item_stack": {
-			"description": "Creates a new item_stack.",
+			"description": "Creates a new item_stack. Keep in mind that when two item stacks get close enough to each other, they merge, turning the original item stacks and entities into Air. So if you call spawn_entity() to spawn an item stack, make sure that the item stack isn't reused later on to spawn more entities.",
 			"return_type": "id",
 			"arguments": [
 				{
@@ -732,7 +732,7 @@
 			]
 		},
 		"spawn_entity": {
-			"description": "Spawns a new entity.",
+			"description": "Spawns a new entity. Spawning the same entity twice is an error.",
 			"arguments": [
 				{
 					"name": "entity",

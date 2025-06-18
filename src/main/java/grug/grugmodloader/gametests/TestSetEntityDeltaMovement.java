@@ -1,6 +1,7 @@
 package grug.grugmodloader.gametests;
 
 import grug.grugmodloader.AssertEntityTypeException;
+import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -20,7 +21,7 @@ public class TestSetEntityDeltaMovement extends GameTestsUtils {
 
         ItemEntity item_entity;
         try {
-            item_entity = GrugModLoader.grug.getItemEntity(item_entity_id);
+            item_entity = Grug.getItemEntity(item_entity_id);
         } catch (AssertEntityTypeException assertEntityTypeException) {
             h.fail("Failed to cast to ItemEntity");
             return;

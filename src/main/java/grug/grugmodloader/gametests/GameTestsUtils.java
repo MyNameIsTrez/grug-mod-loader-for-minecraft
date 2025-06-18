@@ -32,6 +32,16 @@ public class GameTestsUtils {
 
     // Utils
 
+    public static void gc() {
+        System.gc();
+
+        try {
+            Thread.sleep(100); // Give GC time
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Block get_block(String resourceLocationString) {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(resourceLocationString));
     }

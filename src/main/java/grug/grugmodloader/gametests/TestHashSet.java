@@ -20,13 +20,12 @@ public class TestHashSet extends GameTestsUtils {
     // This test failed back when Grug.entityData wrongly used a WeakHashMap that stored key Longs,
     // as those Longs immediately became eligible for garbage collection after addEntity() returned.
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_not_prematurely_garbage_collected(GameTestHelper h) throws InterruptedException {
+    public static void hash_set_not_prematurely_garbage_collected(GameTestHelper h) {
         reset(h);
 
         hash_set();
 
-        System.gc();
-        Thread.sleep(100); // Give GC time
+        gc();
 
         h.assertTrue(Grug.entityData.size() > 0, "Expected entityData.size() to not be 0");
 
@@ -38,7 +37,7 @@ public class TestHashSet extends GameTestsUtils {
     // This caused `Grug.fnEntities(hashSetGrugObject1)` followed by `Grug.fnEntities(hashSetGrugObject2)`
     // to overwrite each other.
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_equal_fn_entities_dont_overwrite_each_other(GameTestHelper h) throws InterruptedException {
+    public static void hash_set_equal_fn_entities_dont_overwrite_each_other(GameTestHelper h) {
         reset(h);
 
         hash_set();

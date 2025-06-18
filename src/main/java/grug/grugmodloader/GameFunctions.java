@@ -1047,7 +1047,11 @@ public class GameFunctions {
             return;
         }
 
-        assert levelInstance.addFreshEntity(entityInstance);
+        boolean spawned = levelInstance.addFreshEntity(entityInstance);
+
+        if (!spawned) {
+            Grug.gameFunctionErrorHappened("spawn_entity", "Failed to spawn");
+        }
     }
 
     public static int unbox_i32(long box) {

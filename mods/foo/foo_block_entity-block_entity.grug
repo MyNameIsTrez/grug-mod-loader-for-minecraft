@@ -16,9 +16,6 @@ x: f32 = get_vec3_x(center)
 y: f32 = get_vec3_y(center)
 z: f32 = get_vec3_z(center)
 
-# Create a diamond item stack
-item_stack: id = item_stack(item)
-
 # How often on_tick() has been called
 tick: i32 = 0
 
@@ -29,6 +26,9 @@ on_tick() {
         return
     }
     tick = 0
+
+    # Create a diamond item stack
+    item_stack: id = item_stack(item)
 
     # Create a diamond item entity
     item_entity: id = item_entity(level, x, y, z, item_stack)
