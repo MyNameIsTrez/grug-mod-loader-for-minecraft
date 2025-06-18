@@ -230,11 +230,17 @@ public class Grug {
             }
 
             for (GrugEntity grugEntity : grugEntities) {
-                grugEntity.childEntities.clear();
+                fnEntities = grugEntity.childEntities;
+
+                // Every GrugEntity's own GrugObject is always at index 0 of its childEntities.
+                GrugObject self = fnEntities.get(0);
+                // Clear all other GrugObjects from childEntities.
+                fnEntities.clear();
+                // Put self back.
+                fnEntities.add(self);
 
                 grugEntity.globals = new byte[file.globalsSize];
 
-                fnEntities = grugEntity.childEntities;
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
                 grugEntity.onFns = file.onFns;
