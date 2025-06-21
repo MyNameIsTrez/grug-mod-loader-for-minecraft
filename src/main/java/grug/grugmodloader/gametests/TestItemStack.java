@@ -32,13 +32,13 @@ public class TestItemStack extends GameTestsUtils {
     }
 
     // When two item stacks merge, the original item stacks and entities are turned to Air.
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
+    @GameTest(template = GrugModLoader.MODID+":floor")
     public static void item_stack_item_stacking(GameTestHelper h) {
         reset(h);
 
         // We need to spawn the item in the bounding box of the structure's bounds,
         // as assertEntityPresent() only checks for items within the bounds.
-        BlockPos relative = new BlockPos(0, 1, 0);
+        BlockPos relative = new BlockPos(1, 2, 1);
         BlockPos absolute = h.absolutePos(relative);
 
         int x = absolute.getX();
