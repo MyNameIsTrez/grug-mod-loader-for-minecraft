@@ -113,7 +113,7 @@ helper_spawn_border() {
     z: i32 = min_z
     while z <= max_z {
         # Left edge
-        pos = block_pos(min_x - 1, start_y, z)
+        pos: id = block_pos(min_x - 1, start_y, z)
         place_block(gray_concrete, pos, flag, g_level)
 
         # Right edge
