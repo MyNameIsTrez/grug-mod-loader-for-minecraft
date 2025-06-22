@@ -111,7 +111,9 @@ public class GameTestsUtils {
     }
 
     public static void assert_message(String expectedMessage) {
-        h.assertTrue(Grug.sentMessage.equals(expectedMessage), "Expected Grug.sentMessage to be \"" + expectedMessage + "\", but got \"" + Grug.sentMessage + "\"");
+        String sentMessage = GrugState.get().getSentMessage();
+
+        h.assertTrue(sentMessage.equals(expectedMessage), "Expected sentMessage to be \"" + expectedMessage + "\", but got \"" + sentMessage + "\"");
     }
 
     public static void assert_no_error() {

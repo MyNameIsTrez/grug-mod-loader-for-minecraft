@@ -70,9 +70,7 @@ public class Grug {
 
     private ReloadData reloadData = new ReloadData();
 
-    // These are read by grug's game tests.
     public static String gameFunctionError = null;
-    public static String sentMessage = null;
 
     public Grug() {
         try {
@@ -113,7 +111,6 @@ public class Grug {
     public static void resetVariables() {
         // TODO: MOVE TO GrugState!
         gameFunctionError = null;
-        sentMessage = null;
 
         GrugState.reset();
     }
@@ -244,8 +241,8 @@ public class Grug {
     public static void sendMessageToEveryone(Component message) {
         GrugModLoader.logger.debug("sendMessageToEveryone(message={})", message);
 
-        // Used by game tests.
-        sentMessage = message.getString();
+        // This is here so GameTests can assert the message.
+        GrugState.get().setSentMessage(message.getString());
 
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 

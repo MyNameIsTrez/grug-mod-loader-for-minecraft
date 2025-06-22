@@ -24,6 +24,10 @@ public class GrugState {
     // The sole purpose of this List is to allow Grug.reloadModifiedEntities() to loop over all entities.
     private final Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
+    // This is read by grug's game tests.
+    // This is deliberately not initialized with a String, and not marked final.
+    private String sentMessage = null;
+
     public static void reset() {
         INSTANCES.forEach((group, state) -> resetState(state));
     }
@@ -36,6 +40,8 @@ public class GrugState {
         state.grugObjects.clear();
 
         state.grugEntitiesMap.clear();
+
+        state.sentMessage = null;
     }
 
     public static GrugState get() {
@@ -118,5 +124,13 @@ public class GrugState {
 
     public void putEntities(String entity, List<GrugEntity> entities) {
         grugEntitiesMap.put(entity, entities);
+    }
+
+    public void setSentMessage(String newSentMessage) {
+        sentMessage = newSentMessage;
+    }
+
+    public String getSentMessage() {
+        return sentMessage;
     }
 }
