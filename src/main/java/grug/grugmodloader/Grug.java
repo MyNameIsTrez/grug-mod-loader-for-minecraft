@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.ChatFormatting;
@@ -71,8 +70,6 @@ public class Grug {
 
     private ReloadData reloadData = new ReloadData();
 
-    public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
-
     // These are read by grug's game tests.
     public static String gameFunctionError = null;
     public static String sentMessage = null;
@@ -115,7 +112,6 @@ public class Grug {
     // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
     public static void resetVariables() {
         // TODO: MOVE TO GrugState!
-        grugEntitiesMap.clear();
         gameFunctionError = null;
         sentMessage = null;
 
@@ -202,19 +198,19 @@ public class Grug {
     public void reloadModifiedEntities() {
         int reloadsSize = getGrugReloadsSize();
 
+        GrugState state = GrugState.get();
+
         for (int reloadIndex = 0; reloadIndex < reloadsSize; reloadIndex++) {
             fillReloadData(reloadData, reloadIndex);
 
             GrugFile file = reloadData.file;
 
-            List<GrugEntity> grugEntities = grugEntitiesMap.get(file.entity);
+            List<GrugEntity> grugEntities = state.getGrugEntities(file.entity);
             if (grugEntities == null) {
                 continue;
             }
 
             for (GrugEntity grugEntity : grugEntities) {
-                GrugState state = GrugState.get();
-
                 List<GrugObject> childEntities = grugEntity.childEntities;
 
                 // Every GrugEntity's own GrugObject is always at index 0 of its childEntities.

@@ -16,21 +16,26 @@ public class GrugState {
     private List<GrugObject> fnEntities = null;
 
     // TODO: This does not recycle indices of despawned entities,
-    //       which means this will eventually wrap around back to 0
-    private Map<GrugEntityType, Integer> nextEntityIndices = new HashMap<>();
+    //       which means this will eventually wrap around back to 0.
+    private final Map<GrugEntityType, Integer> nextEntityIndices = new HashMap<>();
 
-    private WeakGrugValueMap grugObjects = new WeakGrugValueMap();
+    private final WeakGrugValueMap grugObjects = new WeakGrugValueMap();
+
+    // The sole purpose of this List is to allow Grug.reloadModifiedEntities() to loop over all entities.
+    private final Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
     public static void reset() {
         INSTANCES.forEach((group, state) -> resetState(state));
     }
 
     private static void resetState(GrugState state) {
+        state.fnEntities = null;
+
         state.resetNextEntityIndices();
 
         state.grugObjects.clear();
 
-        state.fnEntities = null;
+        state.grugEntitiesMap.clear();
     }
 
     public static GrugState get() {
@@ -88,5 +93,30 @@ public class GrugState {
 
     public int getGrugObjectsSize() {
         return grugObjects.size();
+    }
+
+    public List<GrugEntity> getGrugEntities(String entity) {
+        return grugEntitiesMap.get(entity);
+    }
+
+    // Swap-removes an entity from grugEntitiesMap.
+    public void removeEntity(String entity, int entitiesIndex) {
+        List<GrugEntity> grugEntities = grugEntitiesMap.get(entity);
+
+        assert grugEntities != null;
+
+        GrugEntity lastEntity = grugEntities.removeLast();
+
+        // This check prevents the .set() from throwing
+        // when entitiesIndex == grugEntities.size()
+        if (entitiesIndex < grugEntities.size()) {
+            grugEntities.set(entitiesIndex, lastEntity);
+
+            lastEntity.entitiesIndex = entitiesIndex;
+        }
+    }
+
+    public void putEntities(String entity, List<GrugEntity> entities) {
+        grugEntitiesMap.put(entity, entities);
     }
 }

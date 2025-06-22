@@ -20,15 +20,16 @@ public class GameOfLifeBlockEntity extends BlockEntity {
     public void onLoad() {
         super.onLoad();
 
-        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:game_of_life_block_entity");
+        GrugState state = GrugState.get();
+
+        List<GrugEntity> grugEntities = state.getGrugEntities("foo:game_of_life_block_entity");
         if (grugEntities == null) {
             grugEntities = new ArrayList<GrugEntity>();
-            Grug.grugEntitiesMap.put("foo:game_of_life_block_entity", grugEntities);
+            state.putEntities("foo:game_of_life_block_entity", grugEntities);
         }
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        GrugState state = GrugState.get();
         List<GrugObject> oldFnEntities = state.getFnEntities();
         state.setFnEntities(grugEntity.childEntities);
 
@@ -51,21 +52,7 @@ public class GameOfLifeBlockEntity extends BlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-
-        // Swap-remove itself from Grug.entities
-        List<GrugEntity> grugEntities = Grug.grugEntitiesMap.get("foo:game_of_life_block_entity");
-
-        assert grugEntities != null;
-
-        GrugEntity lastEntity = grugEntities.removeLast();
-
-        // This check prevents the .set() from throwing
-        // when grugEntity.entitiesIndex == grugEntities.size()
-        if (grugEntity.entitiesIndex < grugEntities.size()) {
-            grugEntities.set(grugEntity.entitiesIndex, lastEntity);
-
-            lastEntity.entitiesIndex = grugEntity.entitiesIndex;
-        }
+        GrugState.get().removeEntity("foo:game_of_life_block_entity", grugEntity.entitiesIndex);
     }
 
     public void spawn() {
