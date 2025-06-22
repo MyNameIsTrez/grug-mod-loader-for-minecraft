@@ -24,7 +24,11 @@ public class GrugState {
     // The sole purpose of this List is to allow Grug.reloadModifiedEntities() to loop over all entities.
     private final Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
-    // This is read by grug's game tests.
+    // The sole purpose of this String is to allow GameTests to assert the game function error.
+    // This is deliberately not initialized with a String, and not marked final.
+    private String gameFunctionError = null;
+
+    // The sole purpose of this String is to allow GameTests to assert the sent message.
     // This is deliberately not initialized with a String, and not marked final.
     private String sentMessage = null;
 
@@ -40,6 +44,8 @@ public class GrugState {
         state.grugObjects.clear();
 
         state.grugEntitiesMap.clear();
+
+        state.gameFunctionError = null;
 
         state.sentMessage = null;
     }
@@ -132,5 +138,13 @@ public class GrugState {
 
     public String getSentMessage() {
         return sentMessage;
+    }
+
+    public void setGameFunctionError(String newGameFunctionError) {
+        gameFunctionError = newGameFunctionError;
+    }
+
+    public String getGameFunctionError() {
+        return gameFunctionError;
     }
 }

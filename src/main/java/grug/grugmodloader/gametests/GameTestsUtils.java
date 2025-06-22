@@ -22,7 +22,7 @@ public class GameTestsUtils {
     private static GameTestHelper h;
 
     public static void reset(GameTestHelper helper) {
-        Grug.resetVariables();
+        GrugState.reset();
 
         GrugState.get().newFnEntities();
 
@@ -107,7 +107,9 @@ public class GameTestsUtils {
     }
 
     public static void assert_game_function_error(String expectedErrorString) {
-        h.assertTrue(Grug.gameFunctionError.equals(expectedErrorString), "Expected Grug.gameFunctionError to be \"" + expectedErrorString + "\", but got \"" + Grug.gameFunctionError + "\"");
+        String gameFunctionError = GrugState.get().getGameFunctionError();
+
+        h.assertTrue(gameFunctionError.equals(expectedErrorString), "Expected gameFunctionError to be \"" + expectedErrorString + "\", but got \"" + gameFunctionError + "\"");
     }
 
     public static void assert_message(String expectedMessage) {
@@ -117,7 +119,9 @@ public class GameTestsUtils {
     }
 
     public static void assert_no_error() {
-        h.assertTrue(Grug.gameFunctionError == null, "Expected Grug.gameFunctionError to be null, but got \"" + Grug.gameFunctionError + "\"");
+        String gameFunctionError = GrugState.get().getGameFunctionError();
+
+        h.assertTrue(gameFunctionError == null, "Expected gameFunctionError to be null, but got \"" + gameFunctionError + "\"");
     }
 
     // Game function wrappers

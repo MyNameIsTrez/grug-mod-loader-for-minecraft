@@ -70,8 +70,6 @@ public class Grug {
 
     private ReloadData reloadData = new ReloadData();
 
-    public static String gameFunctionError = null;
-
     public Grug() {
         try {
             extractAndLoadNativeLibrary("libglobal_library_loader.so");
@@ -102,17 +100,6 @@ public class Grug {
                 throw new RuntimeException("grug loading error: " + errorMsg() + "\nDetected by grug.c:" + errorGrugCLineNumber());
             }
         }
-    }
-
-    // This function was written for the game tests in the gametests directory.
-    // The reason that the game tests don't just recreate the Grug class for every test,
-    // where all of the static variables in the Grug class could be made non-static,
-    // is because that would cause the constructor to call grugInit() a second time, which grug.c does not allow.
-    public static void resetVariables() {
-        // TODO: MOVE TO GrugState!
-        gameFunctionError = null;
-
-        GrugState.reset();
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -258,7 +245,9 @@ public class Grug {
     }
 
     public static void gameFunctionErrorHappened(String gameFunctionName, String message) {
-        gameFunctionError = gameFunctionName + "(): " + message;
+        String gameFunctionError = gameFunctionName + "(): " + message;
+
+        GrugState.get().setGameFunctionError(gameFunctionError);
 
         GrugModLoader.grug.gameFunctionErrorHappened(gameFunctionError);
     }
