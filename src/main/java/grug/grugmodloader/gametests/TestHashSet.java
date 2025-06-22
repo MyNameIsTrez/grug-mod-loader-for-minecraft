@@ -1,6 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
@@ -18,7 +17,7 @@ public class TestHashSet extends GameTestsUtils {
         h.succeed();
     }
 
-    // This test failed back when Grug.entityData wrongly used a WeakHashMap that stored key Longs,
+    // This test failed back when Grug.grugObjects wrongly used a WeakHashMap that stored key Longs,
     // as those Longs immediately became eligible for garbage collection after addEntity() returned.
     @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_not_prematurely_garbage_collected(GameTestHelper h) {
@@ -28,7 +27,7 @@ public class TestHashSet extends GameTestsUtils {
 
         gc();
 
-        h.assertTrue(Grug.entityData.size() > 0, "Expected entityData.size() to not be 0");
+        h.assertTrue(GrugState.get().getGrugObjectsSize() > 0, "Expected GrugState.get().getGrugObjectsSize() to not be 0");
 
         h.succeed();
     }

@@ -1,7 +1,9 @@
 package grug.grugmodloader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 public class GrugState {
@@ -13,15 +15,21 @@ public class GrugState {
     // and it gets assigned a new ArrayList<GrugObject> of on_ fn entities, before an on_ function is called.
     private List<GrugObject> fnEntities = null;
 
-    // TODO: Move all other `static` variables here!
+    // TODO: This does not recycle indices of despawned entities,
+    //       which means this will eventually wrap around back to 0
+    private Map<GrugEntityType, Integer> nextEntityIndices = new HashMap<>();
 
-    // TODO: Make sure that Grug.resetVariables() isn't resetting any statics anymore
+    private WeakGrugValueMap grugObjects = new WeakGrugValueMap();
 
     public static void reset() {
         INSTANCES.forEach((group, state) -> resetState(state));
     }
 
     private static void resetState(GrugState state) {
+        state.resetNextEntityIndices();
+
+        state.grugObjects.clear();
+
         state.fnEntities = null;
     }
 
@@ -33,7 +41,11 @@ public class GrugState {
         //
         // The below line gives such a "main" thread its own GrugState,
         // rather than sharing it with the client or server thread.
-        return INSTANCES.computeIfAbsent(group, g -> new GrugState());
+        return INSTANCES.computeIfAbsent(group, g -> {
+            GrugState state = new GrugState();
+            state.resetNextEntityIndices();
+            return state;
+        });
     }
 
     public List<GrugObject> getFnEntities() {
@@ -50,5 +62,31 @@ public class GrugState {
 
     public void addFnEntity(GrugObject grugObject) {
         fnEntities.add(grugObject);
+    }
+
+    public void resetNextEntityIndices() {
+        for (GrugEntityType entityType : GrugEntityType.values()) {
+            nextEntityIndices.put(entityType, 0);
+        }
+    }
+
+    public int getNextEntityIndex(GrugEntityType type) {
+        return nextEntityIndices.get(type);
+    }
+
+    public void putNextEntityIndex(GrugEntityType type, int entityIndex) {
+        nextEntityIndices.put(type, entityIndex);
+    }
+
+    public GrugObject getGrugObject(long id) {
+        return grugObjects.get(id);
+    }
+
+    public void putGrugObject(long id, GrugObject grugObject) {
+        grugObjects.put(id, grugObject);
+    }
+
+    public int getGrugObjectsSize() {
+        return grugObjects.size();
     }
 }
