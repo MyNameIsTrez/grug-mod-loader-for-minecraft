@@ -1,9 +1,7 @@
 package grug.grugmodloader.gametests;
 
-import java.util.ArrayList;
-
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -42,11 +40,13 @@ public class TestHashSetClear extends GameTestsUtils {
     public static void hash_set_clear_global(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long hash_set = hash_set();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         hash_set_add(hash_set, box_i32(1));
 

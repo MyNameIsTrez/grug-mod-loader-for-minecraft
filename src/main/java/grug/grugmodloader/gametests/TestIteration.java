@@ -1,10 +1,8 @@
 package grug.grugmodloader.gametests;
 
-import java.util.ArrayList;
-
 import grug.grugmodloader.GameFunctions;
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -105,11 +103,13 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_local_containing_global_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long box = box_i32(1);
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long hash_set = hash_set();
 
@@ -129,12 +129,14 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_global_containing_global_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long hash_set = hash_set();
         long box = box_i32(1);
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         hash_set_add(hash_set, box);
 
@@ -152,11 +154,13 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_global_containing_local_box(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long hash_set = hash_set();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long box = box_i32(1);
 

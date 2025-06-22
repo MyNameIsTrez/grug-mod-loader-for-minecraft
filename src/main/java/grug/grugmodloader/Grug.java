@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,11 +78,6 @@ public class Grug {
 
     public static Map<String, List<GrugEntity>> grugEntitiesMap = new HashMap<String, List<GrugEntity>>();
 
-    // This is deliberately not initialized.
-    // This variable gets assigned an entity's ArrayList of child GrugObjects before init_globals() is called,
-    // and it gets assigned a new ArrayList<GrugObject> of on_ fn entities, before an on_ function is called.
-    public static List<GrugObject> fnEntities;
-
     // These are read by grug's game tests.
     public static String gameFunctionError = null;
     public static String sentMessage = null;
@@ -132,11 +126,13 @@ public class Grug {
         for (GrugEntityType entityType : nextEntityIndices.keySet()) {
             nextEntityIndices.put(entityType, 0);
         }
+
         entityData.clear();
         grugEntitiesMap.clear();
-        fnEntities = null;
         gameFunctionError = null;
         sentMessage = null;
+
+        GrugState.reset();
     }
 
     private void extractAndLoadNativeLibrary(String libraryName) throws IOException {
@@ -230,16 +226,22 @@ public class Grug {
             }
 
             for (GrugEntity grugEntity : grugEntities) {
-                fnEntities = grugEntity.childEntities;
+                GrugState state = GrugState.get();
+
+                List<GrugObject> childEntities = grugEntity.childEntities;
 
                 // Every GrugEntity's own GrugObject is always at index 0 of its childEntities.
-                GrugObject self = fnEntities.get(0);
+                GrugObject self = childEntities.get(0);
+
                 // Clear all other GrugObjects from childEntities.
-                fnEntities.clear();
+                childEntities.clear();
+
                 // Put self back.
-                fnEntities.add(self);
+                childEntities.add(self);
 
                 grugEntity.globals = new byte[file.globalsSize];
+
+                state.setFnEntities(childEntities);
 
                 callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
@@ -249,7 +251,7 @@ public class Grug {
                     continue;
                 }
 
-                fnEntities = new ArrayList<>();
+                state.newFnEntities();
 
                 block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
             }
@@ -293,7 +295,7 @@ public class Grug {
 
         long id = getEntityID(grugObject.type, entityIndex);
 
-        fnEntities.add(grugObject);
+        GrugState.get().addFnEntity(grugObject);
 
         entityData.put(id, grugObject);
 

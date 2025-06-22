@@ -28,8 +28,9 @@ public class GameOfLifeBlockEntity extends BlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = grugEntity.childEntities;
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.setFnEntities(grugEntity.childEntities);
 
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
@@ -40,7 +41,7 @@ public class GameOfLifeBlockEntity extends BlockEntity {
 
         GrugModLoader.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
 
         grugEntity.onFns = file.onFns;
 
@@ -72,12 +73,13 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.newFnEntities();
 
         GrugModLoader.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
     }
 
     public void tick() {
@@ -85,12 +87,13 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.newFnEntities();
 
         GrugModLoader.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
     }
 
     protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block blockIn, BlockPos fromBlockPos, boolean isMoving) {
@@ -98,8 +101,9 @@ public class GameOfLifeBlockEntity extends BlockEntity {
             return;
         }
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.newFnEntities();
 
         long blockStateId = Grug.addEntity(GrugEntityType.BlockState, blockState);
         long levelId = Grug.addEntity(GrugEntityType.Level, level);
@@ -109,6 +113,6 @@ public class GameOfLifeBlockEntity extends BlockEntity {
 
         GrugModLoader.grug.block_entity_on_neighbor_changed(grugEntity.onFns, grugEntity.globals, blockStateId, levelId, blockPosId, blockInId, fromBlockPosId, isMoving);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
     }
 }

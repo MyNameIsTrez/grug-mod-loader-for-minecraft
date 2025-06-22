@@ -1,7 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import java.util.ArrayList;
-
 import grug.grugmodloader.FooBlock;
 import grug.grugmodloader.FooBlockEntity;
 import grug.grugmodloader.GrugEntityType;
@@ -9,6 +7,7 @@ import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import grug.grugmodloader.GrugObject;
+import grug.grugmodloader.GrugState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +24,7 @@ public class GameTestsUtils {
     public static void reset(GameTestHelper helper) {
         Grug.resetVariables();
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState.get().newFnEntities();
 
         h = helper;
     }

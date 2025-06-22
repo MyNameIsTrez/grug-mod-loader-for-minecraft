@@ -1,9 +1,7 @@
 package grug.grugmodloader.gametests;
 
-import java.util.ArrayList;
-
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -33,11 +31,13 @@ public class TestEntrySetValue extends GameTestsUtils {
     public static void entry_set_value_in_global_map(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long hash_map = hash_map();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 

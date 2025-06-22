@@ -2,6 +2,7 @@ package grug.grugmodloader.gametests;
 
 import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
+import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -43,7 +44,9 @@ public class TestHashSet extends GameTestsUtils {
         hash_set();
         hash_set();
 
-        int size = Grug.fnEntities.size();
+        GrugState state = GrugState.get();
+
+        int size = state.getFnEntities().size();
         h.assertTrue(size == 2, "Expected fnEntities.size() to be 2, but got " + size);
 
         h.succeed();

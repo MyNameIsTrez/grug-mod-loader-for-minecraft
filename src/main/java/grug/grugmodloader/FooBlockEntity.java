@@ -26,8 +26,9 @@ public class FooBlockEntity extends BlockEntity {
         grugEntity.entitiesIndex = grugEntities.size();
         grugEntities.add(grugEntity);
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = grugEntity.childEntities;
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.setFnEntities(grugEntity.childEntities);
 
         grugEntity.id = Grug.addEntity(GrugEntityType.BlockEntity, this);
 
@@ -38,7 +39,7 @@ public class FooBlockEntity extends BlockEntity {
 
         GrugModLoader.grug.callInitGlobals(file.initGlobalsFn, grugEntity.globals, grugEntity.id);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
 
         grugEntity.onFns = file.onFns;
 
@@ -70,12 +71,13 @@ public class FooBlockEntity extends BlockEntity {
             return;
         }
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.newFnEntities();
 
         GrugModLoader.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
     }
 
     public void tick() {
@@ -83,11 +85,12 @@ public class FooBlockEntity extends BlockEntity {
             return;
         }
 
-        List<GrugObject> oldFnEntities = Grug.fnEntities;
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+        List<GrugObject> oldFnEntities = state.getFnEntities();
+        state.newFnEntities();
 
         GrugModLoader.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
 
-        Grug.fnEntities = oldFnEntities;
+        state.setFnEntities(oldFnEntities);
     }
 }

@@ -1,10 +1,8 @@
 package grug.grugmodloader.gametests;
 
-import java.util.ArrayList;
-
-import grug.grugmodloader.Grug;
 import grug.grugmodloader.GrugModLoader;
 import grug.grugmodloader.GrugObject;
+import grug.grugmodloader.GrugState;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -58,11 +56,13 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_to_global_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long hash_set = hash_set();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long box1 = box_i32(1);
         hash_set_add(hash_set, box1);
@@ -81,16 +81,16 @@ public class TestHashSetAdd extends GameTestsUtils {
 
         h.assertTrue(hash_set_string.equals(expected1) || hash_set_string.equals(expected2), "Expected hash_set_string to be \"" + expected1 + "\" or \"" + expected2 + "\", but got \"" + hash_set_string + "\"");
 
-        h.assertTrue(Grug.fnEntities.size() == 2, "Grug.fnEntities.size() was expected to be 2, but was " + Grug.fnEntities.size());
+        h.assertTrue(state.getFnEntities().size() == 2, "state.getFnEntities().size() was expected to be 2, but was " + state.getFnEntities().size());
 
         GrugObject hash_set_object = get_object(hash_set);
-        h.assertFalse(Grug.fnEntities.contains(hash_set_object), "Grug.fnEntities contained hash_set_object " + hash_set_object);
+        h.assertFalse(state.getFnEntities().contains(hash_set_object), "Grug.fnEntities contained hash_set_object " + hash_set_object);
 
         GrugObject box1_object = get_object(box1);
-        h.assertTrue(Grug.fnEntities.contains(box1_object), "Grug.fnEntities did not contain box1_object " + box1_object);
+        h.assertTrue(state.getFnEntities().contains(box1_object), "Grug.fnEntities did not contain box1_object " + box1_object);
 
         GrugObject box2_object = get_object(box2);
-        h.assertTrue(Grug.fnEntities.contains(box2_object), "Grug.fnEntities did not contain box2_object " + box2_object);
+        h.assertTrue(state.getFnEntities().contains(box2_object), "Grug.fnEntities did not contain box2_object " + box2_object);
 
         h.succeed();
     }
@@ -99,20 +99,22 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long global_hash_set = hash_set();
         long global_hash_set_inner = hash_set();
         long global_box = box_i32(1);
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         hash_set_add(global_hash_set_inner, global_box);
 
         hash_set_add(global_hash_set, global_hash_set_inner);
 
         // This simulates returning from the current on_ fn
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
 
@@ -125,12 +127,14 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_global_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long global_hash_set = hash_set();
         long global_box = box_i32(1);
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long local_hash_set = hash_set();
 
@@ -139,7 +143,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
@@ -152,11 +156,13 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_local_hash_set_containing_local_box_to_global_hash_set(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long global_hash_set = hash_set();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long local_hash_set = hash_set();
 
@@ -165,7 +171,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         hash_set_add(global_hash_set, local_hash_set);
 
         // This simulates returning from the current on_ fn, and entering a new on_ fn
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         long local_hash_set_copy = iteration(iterator(global_hash_set));
 
@@ -198,11 +204,13 @@ public class TestHashSetAdd extends GameTestsUtils {
     public static void hash_set_add_global_hash_set_to_itself(GameTestHelper h) {
         reset(h);
 
-        Grug.fnEntities = new ArrayList<>();
+        GrugState state = GrugState.get();
+
+        state.newFnEntities();
 
         long global_hash_set = hash_set();
 
-        Grug.fnEntities = new ArrayList<>();
+        state.newFnEntities();
 
         hash_set_add(global_hash_set, global_hash_set);
 
