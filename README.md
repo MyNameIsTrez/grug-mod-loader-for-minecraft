@@ -34,3 +34,12 @@ Run `./gradlew jacocoTestReport`.
 You can view the coverage results in your browser by opening the `build/reports/jacoco/test/html/index.html` file it generates.
 
 If the coverage results are not updating, you can fix that by deleting the `build/jacoco/test.exec` file that gets generated.
+
+## Running a local server
+
+1. Edit `run/server.properties`, and change the `online-mode=false` to `online-mode=true`.
+2. Edit `run/eula.txt` its `eula=false` to `eula=true`, making sure you read the eula.
+3. In terminal 1, run `./gradlew runServer`.
+4. In terminal 2, run `./gradlew runClient`.
+5. In the client, click the `Multiplayer` button in the main menu, and use the `Add Server` button to add a server with `Server Address` value `127.0.0.1` (using `localhost` *does not* work).
+6. Join the server.
