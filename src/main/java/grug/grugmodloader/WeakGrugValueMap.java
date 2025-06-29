@@ -20,6 +20,9 @@ public class WeakGrugValueMap {
     public GrugObject get(long id) {
         cleanup(); // Clean up any stale references first
         WeakValue ref = map.get(id);
+        if (ref == null) { // TODO: REMOVE ONCE THIS CRASH DOESN'T SPORADICALLY HAPPEN ANYMORE!
+            assert false;
+        }
         assert ref != null;
         return ref.get();
     }
