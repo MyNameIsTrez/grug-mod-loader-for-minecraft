@@ -19,7 +19,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_set_add(hash_set, box_i32(1));
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         long boxed_i32 = iteration(iterator);
 
@@ -33,7 +33,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_set_empty(GameTestHelper h) {
         reset(h);
 
-        long iterator = iterator(hash_set());
+        long iterator = iterator_hash_set(hash_set());
 
         assert_error_id(GameFunctions.iteration(iterator));
 
@@ -50,7 +50,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator(hash_map);
+        long iterator = iterator_hash_set(hash_map);
 
         assert_not_error_id(iteration(iterator));
 
@@ -61,7 +61,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_map_empty(GameTestHelper h) {
         reset(h);
 
-        long iterator = iterator(hash_map());
+        long iterator = iterator_hash_set(hash_map());
 
         assert_error_id(GameFunctions.iteration(iterator));
 
@@ -78,7 +78,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator(hash_map);
+        long iterator = iterator_hash_set(hash_map);
 
         hash_map_remove_key(hash_map, box_i32(1));
         assert_no_error();
@@ -115,7 +115,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_set_add(hash_set, box);
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         long boxed_i32 = iteration(iterator);
 
@@ -138,7 +138,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_set_add(hash_set, box);
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         long boxed_i32 = iteration(iterator);
 
@@ -162,7 +162,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_set_add(hash_set, box);
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         long boxed_i32 = iteration(iterator);
 

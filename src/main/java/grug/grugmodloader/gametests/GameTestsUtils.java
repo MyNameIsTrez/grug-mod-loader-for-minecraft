@@ -353,8 +353,14 @@ public class GameTestsUtils {
         return element;
     }
 
-    public static long iterator(long iterable) {
-        long iterator = GameFunctions.iterator(iterable);
+    public static long iterator_hash_map(long iterable) {
+        long iterator = GameFunctions.iterator_hash_map(iterable);
+        h.assertTrue(iterator != -1, "Invalid iterator " + iterator);
+        return iterator;
+    }
+
+    public static long iterator_hash_set(long iterable) {
+        long iterator = GameFunctions.iterator_hash_set(iterable);
         h.assertTrue(iterator != -1, "Invalid iterator " + iterator);
         return iterator;
     }

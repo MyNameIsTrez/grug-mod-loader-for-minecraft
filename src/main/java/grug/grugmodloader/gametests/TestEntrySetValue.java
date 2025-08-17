@@ -18,7 +18,7 @@ public class TestEntrySetValue extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        entry_set_value(iteration(iterator(hash_map)), box_i32(3));
+        entry_set_value(iteration(iterator_hash_map(hash_map)), box_i32(3));
 
         int got = unbox_i32(hash_map_get(hash_map, box_i32(1)));
         h.assertTrue(got == 3, "Expected hash_map[1] to be 3, but it was " + got);
@@ -41,7 +41,7 @@ public class TestEntrySetValue extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        entry_set_value(iteration(iterator(hash_map)), box_i32(3));
+        entry_set_value(iteration(iterator_hash_map(hash_map)), box_i32(3));
 
         int got = unbox_i32(hash_map_get(hash_map, box_i32(1)));
         h.assertTrue(got == 3, "Expected hash_map[1] to be 3, but it was " + got);
@@ -71,7 +71,7 @@ public class TestEntrySetValue extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long entry = iteration(iterator(hash_map));
+        long entry = iteration(iterator_hash_map(hash_map));
 
         hash_map_remove_key(hash_map, box_i32(1));
         assert_no_error();
@@ -102,7 +102,7 @@ public class TestEntrySetValue extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator(hash_map);
+        long iterator = iterator_hash_map(hash_map);
 
         long entry = iteration(iterator);
 

@@ -15,7 +15,7 @@ public class TestIteratorRemove extends GameTestsUtils {
 
         hash_set_add(hash_set, box_i32(1));
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         iteration(iterator);
 
@@ -35,7 +35,7 @@ public class TestIteratorRemove extends GameTestsUtils {
     public static void iterator_remove_before_iteration(GameTestHelper h) {
         reset(h);
 
-        long iterator = iterator(hash_set());
+        long iterator = iterator_hash_set(hash_set());
 
         iterator_remove(iterator);
 
@@ -63,7 +63,7 @@ public class TestIteratorRemove extends GameTestsUtils {
 
         hash_set_add(hash_set, box_i32(1));
 
-        long iterator = iterator(hash_set);
+        long iterator = iterator_hash_set(hash_set);
 
         iteration(iterator);
 

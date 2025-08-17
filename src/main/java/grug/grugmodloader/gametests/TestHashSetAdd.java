@@ -114,7 +114,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         // This simulates returning from the current on_ fn
         Grug.fnEntities = new ArrayList<>();
 
-        long global_hash_set_inner_copy = iteration(iterator(global_hash_set));
+        long global_hash_set_inner_copy = iteration(iterator_hash_set(global_hash_set));
 
         h.assertTrue(hash_set_has(global_hash_set_inner_copy, box_i32(1)), "global_hash_set_inner_copy did not contain boxed_i32");
 
@@ -141,7 +141,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         // This simulates returning from the current on_ fn
         Grug.fnEntities = new ArrayList<>();
 
-        long local_hash_set_copy = iteration(iterator(global_hash_set));
+        long local_hash_set_copy = iteration(iterator_hash_set(global_hash_set));
 
         h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
 
@@ -167,7 +167,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         // This simulates returning from the current on_ fn, and entering a new on_ fn
         Grug.fnEntities = new ArrayList<>();
 
-        long local_hash_set_copy = iteration(iterator(global_hash_set));
+        long local_hash_set_copy = iteration(iterator_hash_set(global_hash_set));
 
         h.assertTrue(hash_set_has(local_hash_set_copy, box_i32(1)), "local_hash_set_copy did not contain boxed_i32");
 
@@ -189,7 +189,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         h.assertTrue(hash_set_string.equals(expected), "Expected hash_set_string to be \"" + expected + "\", but got \"" + hash_set_string + "\"");
 
         // This is just testing that this doesn't cause a hang
-        iteration(iterator(local_hash_set));
+        iteration(iterator_hash_set(local_hash_set));
 
         h.succeed();
     }
@@ -213,7 +213,7 @@ public class TestHashSetAdd extends GameTestsUtils {
         h.assertTrue(hash_set_string.equals(expected), "Expected hash_set_string to be \"" + expected + "\", but got \"" + hash_set_string + "\"");
 
         // This is just testing that this doesn't cause a hang
-        iteration(iterator(global_hash_set));
+        iteration(iterator_hash_set(global_hash_set));
 
         h.succeed();
     }

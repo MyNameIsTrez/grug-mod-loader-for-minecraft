@@ -8,8 +8,8 @@ To get the full signature, copy the method to a new `foo.java` file:
 
 ```java
 public class foo {
-    public native boolean block_entity_has_on_tick(long onFns);
-    public native void block_entity_on_tick(long onFns, byte[] globals);
+    public native boolean BlockEntity_has_on_tick(long onFns);
+    public native void BlockEntity_on_tick(long onFns, byte[] globals);
 }
 ```
 
@@ -27,7 +27,7 @@ extern "C" {
 #endif
 /*
  * Class:     foo
- * Method:    block_entity_has_on_tick
+ * Method:    BlockEntity_has_on_tick
  * Signature: (J)Z
  */
 JNIEXPORT jboolean JNICALL Java_foo_block_1entity_1has_1on_1tick
@@ -35,7 +35,7 @@ JNIEXPORT jboolean JNICALL Java_foo_block_1entity_1has_1on_1tick
 
 /*
  * Class:     foo
- * Method:    block_entity_on_tick
+ * Method:    BlockEntity_on_tick
  * Signature: (J[B)V
  */
 JNIEXPORT void JNICALL Java_foo_block_1entity_1on_1tick

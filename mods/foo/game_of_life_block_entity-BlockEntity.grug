@@ -1,23 +1,23 @@
-start_pos: id = get_block_pos_of_block_entity(me)
+start_pos: BlockPos = get_block_pos_of_block_entity(me)
 start_x: i32 = get_block_pos_x(start_pos)
 start_y: i32 = get_block_pos_y(start_pos) - 2
 start_z: i32 = get_block_pos_z(start_pos)
 
-g_level: id = get_block_entity_level(me)
+g_level: Level = get_block_entity_level(me)
 
-white_concrete: id = get_default_block_state(block(resource_location("white_concrete")))
-gray_concrete: id = get_default_block_state(block(resource_location("gray_concrete")))
-red_concrete: id = get_default_block_state(block(resource_location("red_concrete")))
-orange_concrete: id = get_default_block_state(block(resource_location("orange_concrete")))
-yellow_concrete: id = get_default_block_state(block(resource_location("yellow_concrete")))
-lime_concrete: id = get_default_block_state(block(resource_location("lime_concrete")))
-green_concrete: id = get_default_block_state(block(resource_location("green_concrete")))
-cyan_concrete: id = get_default_block_state(block(resource_location("cyan_concrete")))
-light_blue_concrete: id = get_default_block_state(block(resource_location("light_blue_concrete")))
-blue_concrete: id = get_default_block_state(block(resource_location("blue_concrete")))
-purple_concrete: id = get_default_block_state(block(resource_location("purple_concrete")))
-magenta_concrete: id = get_default_block_state(block(resource_location("magenta_concrete")))
-pink_concrete: id = get_default_block_state(block(resource_location("pink_concrete")))
+white_concrete: BlockState = get_default_block_state(block(resource_location("white_concrete")))
+gray_concrete: BlockState = get_default_block_state(block(resource_location("gray_concrete")))
+red_concrete: BlockState = get_default_block_state(block(resource_location("red_concrete")))
+orange_concrete: BlockState = get_default_block_state(block(resource_location("orange_concrete")))
+yellow_concrete: BlockState = get_default_block_state(block(resource_location("yellow_concrete")))
+lime_concrete: BlockState = get_default_block_state(block(resource_location("lime_concrete")))
+green_concrete: BlockState = get_default_block_state(block(resource_location("green_concrete")))
+cyan_concrete: BlockState = get_default_block_state(block(resource_location("cyan_concrete")))
+light_blue_concrete: BlockState = get_default_block_state(block(resource_location("light_blue_concrete")))
+blue_concrete: BlockState = get_default_block_state(block(resource_location("blue_concrete")))
+purple_concrete: BlockState = get_default_block_state(block(resource_location("purple_concrete")))
+magenta_concrete: BlockState = get_default_block_state(block(resource_location("magenta_concrete")))
+pink_concrete: BlockState = get_default_block_state(block(resource_location("pink_concrete")))
 
 max_age: i32 = 11
 
@@ -29,20 +29,18 @@ max_x: i32 = start_x + radius
 min_z: i32 = start_z - radius
 max_z: i32 = start_z + radius
 
-current: id = hash_set()
-scanned: id = hash_set()
-next: id = hash_set()
+current: HashSet = hash_set()
+scanned: HashSet = hash_set()
+next: HashSet = hash_set()
 
-blocks: id = hash_map()
+blocks: HashMap = hash_map()
 
 running: bool = true
-# ticks: i32 = 0
 
 on_spawn() {
     helper_clear_area()
     helper_spawn_border()
 
-    # helper_spawn_glider()
     helper_spawn_r_pentomino()
 }
 
@@ -51,14 +49,6 @@ on_tick() {
         return
     }
 
-    # ticks = ticks + 1
-    # if ticks > 20 {
-    #     return
-    # }
-    # if ticks % 40 != 0 {
-    #     return
-    # }
-
     update: i32 = 0
     while update < 1 {
         helper_update()
@@ -66,7 +56,7 @@ on_tick() {
     }
 }
 
-on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, from_block_pos: id, is_moving: bool) {
+on_neighbor_changed(block_state: BlockState, level: Level, block_pos: BlockPos, block_in: Block, from_block_pos: BlockPos, is_moving: bool) {
     running = not running
 
     if running {
@@ -76,10 +66,7 @@ on_neighbor_changed(block_state: id, level: id, block_pos: id, block_in: id, fro
         helper_clear_area()
         helper_spawn_border()
 
-        # helper_spawn_glider()
         helper_spawn_r_pentomino()
-
-        # ticks = 0
     }
 }
 
@@ -88,8 +75,7 @@ helper_clear_area() {
     while x <= max_x {
         z: i32 = min_z
         while z <= max_z {
-            pos: id = block_pos(x, start_y, z)
-            remove_block(pos, g_level)
+            remove_block(block_pos(x, start_y, z), g_level)
             z = z + 1
         }
         x = x + 1
@@ -100,7 +86,7 @@ helper_spawn_border() {
     x: i32 = min_x - 1
     while x <= max_x + 1 {
         # Top edge
-        pos: id = block_pos(x, start_y, min_z - 1)
+        pos: BlockPos = block_pos(x, start_y, min_z - 1)
         place_block(gray_concrete, pos, flag, g_level)
 
         # Bottom edge
@@ -113,7 +99,7 @@ helper_spawn_border() {
     z: i32 = min_z
     while z <= max_z {
         # Left edge
-        pos: id = block_pos(min_x - 1, start_y, z)
+        pos: BlockPos = block_pos(min_x - 1, start_y, z)
         place_block(gray_concrete, pos, flag, g_level)
 
         # Right edge
@@ -123,19 +109,6 @@ helper_spawn_border() {
         z = z + 1
     }
 }
-
-# Spawns the glider pattern of blocks:
-#  @
-#   @
-# @@@
-# helper_spawn_glider() {
-#     helper_place_offset_block(0, -1)
-#     helper_place_offset_block(1, 0)
-#     helper_place_offset_block(1, 1)
-#     helper_place_offset_block(0, 1)
-#     helper_place_offset_block(-1, 1)
-#     helper_place_blocks()
-# }
 
 # Spawns the R-pentonimo pattern of blocks:
 #  @@
@@ -151,18 +124,18 @@ helper_spawn_r_pentomino() {
 }
 
 helper_place_offset_block(x: i32, z: i32) {
-    pos: id = block_pos(start_x + x, start_y, start_z + z)
+    pos: BlockPos = block_pos(start_x + x, start_y, start_z + z)
     place_block(white_concrete, pos, flag, g_level)
     hash_set_add(current, pos)
     hash_map_put(blocks, pos, box_i32(0))
 }
 
 helper_place_blocks() {
-    iter: id = iterator(blocks)
+    iter: Iterator = iterator_hash_map(blocks)
     while iterating(iter) {
-        entry: id = iteration(iter)
-        pos: id = entry_key(entry)
-        age: i32 = unbox_i32(entry_value(entry))
+        entry: Iteration = iteration(iter)
+        pos: BlockPos = id_to_block_pos(entry_key(entry))
+        age: i32 = unbox_i32(id_to_boxed_i32(entry_value(entry)))
 
         if age <= max_age {
             entry_set_value(entry, box_i32(age + 1))
@@ -174,7 +147,7 @@ helper_place_blocks() {
     }
 }
 
-helper_get_block(age: i32) id {
+helper_get_block(age: i32) BlockState {
     if age == 0 {
         return white_concrete
     } else if age == 1 {
@@ -211,14 +184,14 @@ helper_update() {
 helper_scan() {
     hash_set_clear(scanned)
 
-    iter: id = iterator(current)
+    iter: Iterator = iterator_hash_set(current)
     while iterating(iter) {
-        pos: id = iteration(iter)
+        pos: BlockPos = id_to_block_pos(iteration(iter))
         helper_add_scanned(pos)
     }
 }
 
-helper_add_scanned(pos: id) {
+helper_add_scanned(pos: BlockPos) {
     x: i32 = -1
     while x <= 1 {
         z: i32 = -1
@@ -233,9 +206,9 @@ helper_add_scanned(pos: id) {
 helper_update_next() {
     hash_set_clear(next)
 
-    iter: id = iterator(scanned)
+    iter: Iterator = iterator_hash_set(scanned)
     while iterating(iter) {
-        pos: id = iteration(iter)
+        pos: BlockPos = id_to_block_pos(iteration(iter))
 
         count: i32 = helper_count_neighbors(pos)
 
@@ -246,7 +219,7 @@ helper_update_next() {
     }
 }
 
-helper_count_neighbors(pos: id) i32 {
+helper_count_neighbors(pos: BlockPos) i32 {
     count: i32 = 0
 
     x: i32 = -1
@@ -266,7 +239,7 @@ helper_count_neighbors(pos: id) i32 {
     return count
 }
 
-helper_get_pos(pos: id, x: i32, z: i32) id {
+helper_get_pos(pos: BlockPos, x: i32, z: i32) BlockPos {
     x = get_block_pos_x(pos) + x
     z = get_block_pos_z(pos) + z
 

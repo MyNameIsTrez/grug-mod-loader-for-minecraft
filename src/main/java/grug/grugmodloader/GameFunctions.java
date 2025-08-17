@@ -27,20 +27,14 @@ public class GameFunctions {
     public static long block(long resourceLocation) {
         GrugModLoader.logger.debug("block(resourceLocation={})", resourceLocation);
 
-        Block block;
-        try {
-            ResourceLocation resourceLocationInstance = Grug.getResourceLocation(resourceLocation);
+        ResourceLocation resourceLocationInstance = Grug.getResourceLocation(resourceLocation);
 
-            if (!ForgeRegistries.BLOCKS.containsKey(resourceLocationInstance)) {
-                Grug.gameFunctionErrorHappened("block", "Invalid resource_location");
-                return -1;
-            }
-
-            block = ForgeRegistries.BLOCKS.getValue(resourceLocationInstance);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("block", e.getMessage());
+        if (!ForgeRegistries.BLOCKS.containsKey(resourceLocationInstance)) {
+            Grug.gameFunctionErrorHappened("block", "Invalid resource_location");
             return -1;
         }
+
+        Block block = ForgeRegistries.BLOCKS.getValue(resourceLocationInstance);
 
         long blockId = Grug.addEntity(GrugEntityType.Block, block);
 
@@ -80,15 +74,8 @@ public class GameFunctions {
     public static void destroy_and_drop_block(long blockPosId, long levelId) {
         GrugModLoader.logger.debug("destroy_and_drop_block(blockPosId={}, levelId={})", blockPosId, levelId);
 
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = Grug.getBlockPos(blockPosId);
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("destroy_and_drop_block", e.getMessage());
-            return;
-        }
+        BlockPos blockPos = Grug.getBlockPos(blockPosId);
+        Level level = Grug.getLevel(levelId);
 
         level.destroyBlock(blockPos, true);
     }
@@ -96,15 +83,8 @@ public class GameFunctions {
     public static void destroy_block(long blockPosId, long levelId) {
         GrugModLoader.logger.debug("destroy_block(blockPosId={}, levelId={})", blockPosId, levelId);
 
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = Grug.getBlockPos(blockPosId);
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("destroy_block", e.getMessage());
-            return;
-        }
+        BlockPos blockPos = Grug.getBlockPos(blockPosId);
+        Level level = Grug.getLevel(levelId);
 
         level.destroyBlock(blockPos, false);
     }
@@ -112,13 +92,7 @@ public class GameFunctions {
     public static long entry_key(long entryId) {
         GrugModLoader.logger.debug("entry_key(entryId={})", entryId);
 
-        Entry<GrugObject, GrugObject> grugEntry;
-        try {
-            grugEntry = Grug.getEntry(entryId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("entry_key", e.getMessage());
-            return -1;
-        }
+        Entry<GrugObject, GrugObject> grugEntry = Grug.getEntry(entryId);
 
         GrugObject key = grugEntry.getKey();
 
@@ -130,13 +104,7 @@ public class GameFunctions {
     public static void entry_set_value(long entryId, long valueId) {
         GrugModLoader.logger.debug("entry_set_value(entryId={}, valueId={})", entryId, valueId);
 
-        Entry<GrugObject, GrugObject> grugEntry;
-        try {
-            grugEntry = Grug.getEntry(entryId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("entry_set_value", e.getMessage());
-            return;
-        }
+        Entry<GrugObject, GrugObject> grugEntry = Grug.getEntry(entryId);
 
         GrugObject valueObject = Grug.getGrugObject(valueId);
 
@@ -147,13 +115,7 @@ public class GameFunctions {
     public static long entry_value(long entryId) {
         GrugModLoader.logger.debug("entry_value(entryId={})", entryId);
 
-        Entry<GrugObject, GrugObject> grugEntry;
-        try {
-            grugEntry = Grug.getEntry(entryId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("entry_value", e.getMessage());
-            return -1;
-        }
+        Entry<GrugObject, GrugObject> grugEntry = Grug.getEntry(entryId);
 
         GrugObject value = grugEntry.getValue();
 
@@ -167,14 +129,8 @@ public class GameFunctions {
     public static long get_block_entity_level(long blockEntityId) {
         GrugModLoader.logger.debug("get_block_entity_level(blockEntityId={})", blockEntityId);
 
-        Level level;
-        try {
-            level = Grug.getBlockEntity(blockEntityId).getLevel();
-            assert level != null; // null when game tests forget to call .setLevel() on a BlockEntity
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_entity_level", e.getMessage());
-            return -1;
-        }
+        Level level = Grug.getBlockEntity(blockEntityId).getLevel();
+        assert level != null; // null when game tests forget to call .setLevel() on a BlockEntity
 
         long levelId = Grug.addEntity(GrugEntityType.Level, level);
 
@@ -185,14 +141,8 @@ public class GameFunctions {
     public static long get_block_pos_above(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_above(blockPosId={})", blockPosId);
 
-        BlockPos above;
-        try {
-            // The .above() call allocates a new BlockPos
-            above = Grug.getBlockPos(blockPosId).above();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_above", e.getMessage());
-            return -1;
-        }
+        // The .above() call allocates a new BlockPos
+        BlockPos above = Grug.getBlockPos(blockPosId).above();
 
         long aboveId = Grug.addEntity(GrugEntityType.BlockPos, above);
 
@@ -203,14 +153,8 @@ public class GameFunctions {
     public static long get_block_pos_above_n(long blockPosId, int n) {
         GrugModLoader.logger.debug("get_block_pos_above_n(blockPosId={}, n={})", blockPosId, n);
 
-        BlockPos above;
-        try {
-            // The .above() call allocates a new BlockPos
-            above = Grug.getBlockPos(blockPosId).above(n);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_above_n", e.getMessage());
-            return -1;
-        }
+        // The .above() call allocates a new BlockPos
+        BlockPos above = Grug.getBlockPos(blockPosId).above(n);
 
         long aboveId = Grug.addEntity(GrugEntityType.BlockPos, above);
 
@@ -221,14 +165,8 @@ public class GameFunctions {
     public static long get_block_pos_center(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_center(blockPosId={})", blockPosId);
 
-        Vec3 center;
-        try {
-            // The .getCenter() call allocates a new Vec3
-            center = Grug.getBlockPos(blockPosId).getCenter();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_center", e.getMessage());
-            return -1;
-        }
+        // The .getCenter() call allocates a new Vec3
+        Vec3 center = Grug.getBlockPos(blockPosId).getCenter();
 
         long centerId = Grug.addEntity(GrugEntityType.Vec3, center);
 
@@ -239,13 +177,7 @@ public class GameFunctions {
     public static long get_block_pos_of_block_entity(long blockEntityId) {
         GrugModLoader.logger.debug("get_block_pos_of_block_entity(blockEntityId={})", blockEntityId);
 
-        BlockEntity blockEntity;
-        try {
-            blockEntity = Grug.getBlockEntity(blockEntityId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_of_block_entity", e.getMessage());
-            return -1;
-        }
+        BlockEntity blockEntity = Grug.getBlockEntity(blockEntityId);
 
         long blockPosId = Grug.addEntity(GrugEntityType.BlockPos, blockEntity.getBlockPos());
 
@@ -256,13 +188,7 @@ public class GameFunctions {
     public static int get_block_pos_x(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_x(blockPosId={})", blockPosId);
 
-        int x;
-        try {
-            x = Grug.getBlockPos(blockPosId).getX();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_x", e.getMessage());
-            return -1;
-        }
+        int x = Grug.getBlockPos(blockPosId).getX();
 
         GrugModLoader.logger.debug("Returning {}", x);
         return x;
@@ -271,13 +197,7 @@ public class GameFunctions {
     public static int get_block_pos_y(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_y(blockPosId={})", blockPosId);
 
-        int y;
-        try {
-            y = Grug.getBlockPos(blockPosId).getY();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_y", e.getMessage());
-            return -1;
-        }
+        int y = Grug.getBlockPos(blockPosId).getY();
 
         GrugModLoader.logger.debug("Returning {}", y);
         return y;
@@ -286,13 +206,7 @@ public class GameFunctions {
     public static int get_block_pos_z(long blockPosId) {
         GrugModLoader.logger.debug("get_block_pos_z(blockPosId={})", blockPosId);
 
-        int z;
-        try {
-            z = Grug.getBlockPos(blockPosId).getZ();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_pos_z", e.getMessage());
-            return -1;
-        }
+        int z = Grug.getBlockPos(blockPosId).getZ();
 
         GrugModLoader.logger.debug("Returning {}", z);
         return z;
@@ -301,15 +215,8 @@ public class GameFunctions {
     public static long get_block_state(long blockPosId, long levelId) {
         GrugModLoader.logger.debug("get_block_state(blockPosId={}, levelId={})", blockPosId, levelId);
 
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = Grug.getBlockPos(blockPosId);
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_block_state", e.getMessage());
-            return -1;
-        }
+        BlockPos blockPos = Grug.getBlockPos(blockPosId);
+        Level level = Grug.getLevel(levelId);
 
         BlockState blockState = level.getBlockState(blockPos);
 
@@ -322,13 +229,7 @@ public class GameFunctions {
     public static long get_default_block_state(long blockId) {
         GrugModLoader.logger.debug("get_default_block_state(blockId={})", blockId);
 
-        Block block;
-        try {
-            block = Grug.getBlock(blockId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_default_block_state", e.getMessage());
-            return -1;
-        }
+        Block block = Grug.getBlock(blockId);
 
         BlockState blockState = block.defaultBlockState();
 
@@ -341,13 +242,7 @@ public class GameFunctions {
     public static int get_hash_map_size(long hashMapId) {
         GrugModLoader.logger.debug("get_hash_map_size(hashMapId={})", hashMapId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_hash_map_size", e.getMessage());
-            return -1;
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         int size = hashMap.size();
         GrugModLoader.logger.debug("Returning {}", size);
@@ -357,13 +252,7 @@ public class GameFunctions {
     public static String get_hash_map_string(long hashMapId) {
         GrugModLoader.logger.debug("get_hash_map_string(hashMapId={})", hashMapId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_hash_map_string", e.getMessage());
-            return "";
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         String str = hashMap.toString();
         GrugModLoader.logger.debug("Returning {}", str);
@@ -373,13 +262,7 @@ public class GameFunctions {
     public static int get_hash_set_size(long hashSetId) {
         GrugModLoader.logger.debug("get_hash_set_size(hashSetId={})", hashSetId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_hash_set_size", e.getMessage());
-            return -1;
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         int size = hashSet.size();
         GrugModLoader.logger.debug("Returning {}", size);
@@ -389,13 +272,7 @@ public class GameFunctions {
     public static String get_hash_set_string(long hashSetId) {
         GrugModLoader.logger.debug("get_hash_set_string(hashSetId={})", hashSetId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_hash_set_string", e.getMessage());
-            return "";
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         String str = hashSet.toString();
         GrugModLoader.logger.debug("Returning {}", str);
@@ -405,13 +282,7 @@ public class GameFunctions {
     public static String get_item_name(long itemId) {
         GrugModLoader.logger.debug("get_item_name(itemId={})", itemId);
 
-        Item item;
-        try {
-            item = Grug.getItem(itemId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_item_name", e.getMessage());
-            return "";
-        }
+        Item item = Grug.getItem(itemId);
 
         String name = item.getName(new ItemStack(item)).getString();
         GrugModLoader.logger.debug("Returning {}", name);
@@ -421,13 +292,7 @@ public class GameFunctions {
     public static String get_item_entity_name(long itemEntityId) {
         GrugModLoader.logger.debug("get_item_entity_name(itemEntityId={})", itemEntityId);
 
-        String name;
-        try {
-            name = Grug.getItemEntity(itemEntityId).getName().getString();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_item_entity_name", e.getMessage());
-            return "";
-        }
+        String name = Grug.getItemEntity(itemEntityId).getName().getString();
 
         GrugModLoader.logger.debug("Returning {}", name);
         return name;
@@ -436,13 +301,7 @@ public class GameFunctions {
     public static String get_item_stack_name(long itemStackId) {
         GrugModLoader.logger.debug("get_item_stack_name(itemStackId={})", itemStackId);
 
-        ItemStack itemStack;
-        try {
-            itemStack = Grug.getItemStack(itemStackId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_item_stack_name", e.getMessage());
-            return "";
-        }
+        ItemStack itemStack = Grug.getItemStack(itemStackId);
 
         // String name = itemStack.toString(); // "1 diamond"
         // String name = itemStack.getHoverName().getString(); // "Diamond"
@@ -456,13 +315,7 @@ public class GameFunctions {
     public static String get_level_name(long levelId) {
         GrugModLoader.logger.debug("get_level_name(levelId={})", levelId);
 
-        Level level;
-        try {
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_level_name", e.getMessage());
-            return "";
-        }
+        Level level = Grug.getLevel(levelId);
 
         String name = level.dimensionTypeRegistration().getRegisteredName();
         GrugModLoader.logger.debug("Returning {}", name);
@@ -472,13 +325,7 @@ public class GameFunctions {
     public static String get_resource_location_string(long resourceLocationId) {
         GrugModLoader.logger.debug("get_resource_location_string(resourceLocationId={})", resourceLocationId);
 
-        ResourceLocation resourceLocation;
-        try {
-            resourceLocation = Grug.getResourceLocation(resourceLocationId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_resource_location_string", e.getMessage());
-            return "";
-        }
+        ResourceLocation resourceLocation = Grug.getResourceLocation(resourceLocationId);
 
         String str = resourceLocation.toString();
         GrugModLoader.logger.debug("Returning {}", str);
@@ -488,13 +335,7 @@ public class GameFunctions {
     public static float get_vec3_x(long vec3Id) {
         GrugModLoader.logger.debug("get_vec3_x(vec3Id={})", vec3Id);
 
-        float x;
-        try {
-            x = (float)Grug.getVec3(vec3Id).x();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_vec3_x", e.getMessage());
-            return -1;
-        }
+        float x = (float)Grug.getVec3(vec3Id).x();
 
         GrugModLoader.logger.debug("Returning {}", x);
         return x;
@@ -503,13 +344,7 @@ public class GameFunctions {
     public static float get_vec3_y(long vec3Id) {
         GrugModLoader.logger.debug("get_vec3_y(vec3Id={})", vec3Id);
 
-        float y;
-        try {
-            y = (float)Grug.getVec3(vec3Id).y();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_vec3_y", e.getMessage());
-            return -1;
-        }
+        float y = (float)Grug.getVec3(vec3Id).y();
 
         GrugModLoader.logger.debug("Returning {}", y);
         return y;
@@ -518,13 +353,7 @@ public class GameFunctions {
     public static float get_vec3_z(long vec3Id) {
         GrugModLoader.logger.debug("get_vec3_z(vec3Id={})", vec3Id);
 
-        float z;
-        try {
-            z = (float)Grug.getVec3(vec3Id).z();
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("get_vec3_z", e.getMessage());
-            return -1;
-        }
+        float z = (float)Grug.getVec3(vec3Id).z();
 
         GrugModLoader.logger.debug("Returning {}", z);
         return z;
@@ -544,13 +373,7 @@ public class GameFunctions {
     public static void hash_map_clear(long hashMapId) {
         GrugModLoader.logger.debug("hash_map_clear(hashMapId={})", hashMapId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_clear", e.getMessage());
-            return;
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         hashMap.clear();
     }
@@ -558,15 +381,8 @@ public class GameFunctions {
     public static void hash_map_copy(long hashMapFromId, long hashMapToId) {
         GrugModLoader.logger.debug("hash_map_copy(hashMapFromId={}, hashMapToId={})", hashMapFromId, hashMapToId);
 
-        HashMap<GrugObject, GrugObject> hashMapFrom;
-        HashMap<GrugObject, GrugObject> hashMapTo;
-        try {
-            hashMapFrom = Grug.getHashMap(hashMapFromId);
-            hashMapTo = Grug.getHashMap(hashMapToId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_copy", e.getMessage());
-            return;
-        }
+        HashMap<GrugObject, GrugObject> hashMapFrom = Grug.getHashMap(hashMapFromId);
+        HashMap<GrugObject, GrugObject> hashMapTo = Grug.getHashMap(hashMapToId);
 
         hashMapTo.clear();
 
@@ -578,13 +394,7 @@ public class GameFunctions {
     public static long hash_map_get(long hashMapId, long keyId) {
         GrugModLoader.logger.debug("hash_map_get(hashMapId={}, keyId={})", hashMapId, keyId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_get", e.getMessage());
-            return -1;
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         GrugObject keyObject = Grug.getGrugObject(keyId);
         assert keyObject != null;
@@ -605,13 +415,7 @@ public class GameFunctions {
     public static boolean hash_map_has_key(long hashMapId, long keyId) {
         GrugModLoader.logger.debug("hash_map_has_key(hashMapId={}, keyId={})", hashMapId, keyId);
 
-        HashMap<GrugObject, GrugObject> objects;
-        try {
-            objects = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_has_key", e.getMessage());
-            return false;
-        }
+        HashMap<GrugObject, GrugObject> objects = Grug.getHashMap(hashMapId);
 
         GrugObject object = Grug.getGrugObject(keyId);
 
@@ -623,13 +427,7 @@ public class GameFunctions {
     public static void hash_map_put(long hashMapId, long keyId, long valueId) {
         GrugModLoader.logger.debug("hash_map_put(hashMapId={}, keyId={}, valueId={})", hashMapId, keyId, valueId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_put", e.getMessage());
-            return;
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         GrugObject keyObject = Grug.getGrugObject(keyId);
 
@@ -641,13 +439,7 @@ public class GameFunctions {
     public static void hash_map_remove_key(long hashMapId, long keyId) {
         GrugModLoader.logger.debug("hash_map_remove_key(hashMapId={}, keyId={})", hashMapId, keyId);
 
-        HashMap<GrugObject, GrugObject> hashMap;
-        try {
-            hashMap = Grug.getHashMap(hashMapId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_map_remove_key", e.getMessage());
-            return;
-        }
+        HashMap<GrugObject, GrugObject> hashMap = Grug.getHashMap(hashMapId);
 
         hashMap.remove(Grug.getGrugObject(keyId));
     }
@@ -666,13 +458,7 @@ public class GameFunctions {
     public static void hash_set_add(long hashSetId, long valueId) {
         GrugModLoader.logger.debug("hash_set_add(hashSetId={}, valueId={})", hashSetId, valueId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_set_add", e.getMessage());
-            return;
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         hashSet.add(Grug.getGrugObject(valueId));
     }
@@ -680,13 +466,7 @@ public class GameFunctions {
     public static void hash_set_clear(long hashSetId) {
         GrugModLoader.logger.debug("hash_set_clear(hashSetId={})", hashSetId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_set_clear", e.getMessage());
-            return;
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         hashSet.clear();
     }
@@ -694,15 +474,8 @@ public class GameFunctions {
     public static void hash_set_copy(long hashSetFromId, long hashSetToId) {
         GrugModLoader.logger.debug("hash_set_copy(hashSetFromId={}, hashSetToId={})", hashSetFromId, hashSetToId);
 
-        HashSet<GrugObject> hashSetFrom;
-        HashSet<GrugObject> hashSetTo;
-        try {
-            hashSetFrom = Grug.getHashSet(hashSetFromId);
-            hashSetTo = Grug.getHashSet(hashSetToId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_set_copy", e.getMessage());
-            return;
-        }
+        HashSet<GrugObject> hashSetFrom = Grug.getHashSet(hashSetFromId);
+        HashSet<GrugObject> hashSetTo = Grug.getHashSet(hashSetToId);
 
         hashSetTo.clear();
 
@@ -714,13 +487,7 @@ public class GameFunctions {
     public static boolean hash_set_has(long hashSetId, long valueId) {
         GrugModLoader.logger.debug("hash_set_has(hashSetId={}, valueId={})", hashSetId, valueId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_set_has", e.getMessage());
-            return false;
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         GrugObject object = Grug.getGrugObject(valueId);
 
@@ -732,27 +499,43 @@ public class GameFunctions {
     public static void hash_set_remove(long hashSetId, long valueId) {
         GrugModLoader.logger.debug("hash_set_remove(hashSetId={}, valueId={})", hashSetId, valueId);
 
-        HashSet<GrugObject> hashSet;
-        try {
-            hashSet = Grug.getHashSet(hashSetId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("hash_set_remove", e.getMessage());
-            return;
-        }
+        HashSet<GrugObject> hashSet = Grug.getHashSet(hashSetId);
 
         hashSet.remove(Grug.getGrugObject(valueId));
+    }
+
+    public static long id_to_block_pos(long id) {
+        GrugModLoader.logger.debug("id_to_block_pos(id={})", id);
+
+        try {
+            Grug.assertEntityType(id, GrugEntityType.BlockPos);
+        } catch (AssertEntityTypeException e) {
+            Grug.gameFunctionErrorHappened("id_to_block_pos", e.getMessage());
+            return -1;
+        }
+
+        GrugModLoader.logger.debug("Returning {}", id);
+        return id;
+    }
+
+    public static long id_to_boxed_i32(long id) {
+        GrugModLoader.logger.debug("id_to_boxed_i32(id={})", id);
+
+        try {
+            Grug.assertEntityType(id, GrugEntityType.BoxedI32);
+        } catch (AssertEntityTypeException e) {
+            Grug.gameFunctionErrorHappened("id_to_boxed_i32", e.getMessage());
+            return -1;
+        }
+
+        GrugModLoader.logger.debug("Returning {}", id);
+        return id;
     }
 
     public static boolean is_air(long blockStateId) {
         GrugModLoader.logger.debug("is_air(blockStateId={})", blockStateId);
 
-        BlockState blockState;
-        try {
-            blockState = Grug.getBlockState(blockStateId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("is_air", e.getMessage());
-            return false;
-        }
+        BlockState blockState = Grug.getBlockState(blockStateId);
 
         boolean isAir = blockState.isAir();
         GrugModLoader.logger.debug("Returning {}", isAir);
@@ -762,13 +545,7 @@ public class GameFunctions {
     public static boolean is_client_side(long levelId) {
         GrugModLoader.logger.debug("is_client_side(levelId={})", levelId);
 
-        Level level;
-        try {
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("is_client_side", e.getMessage());
-            return false;
-        }
+        Level level = Grug.getLevel(levelId);
 
         boolean isClientSide = level.isClientSide();
         GrugModLoader.logger.debug("Returning {}", isClientSide);
@@ -778,20 +555,14 @@ public class GameFunctions {
     public static long item(long resourceLocation) {
         GrugModLoader.logger.debug("item(resourceLocation={})", resourceLocation);
 
-        Item item;
-        try {
-            ResourceLocation resourceLocationInstance = Grug.getResourceLocation(resourceLocation);
+        ResourceLocation resourceLocationInstance = Grug.getResourceLocation(resourceLocation);
 
-            if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
-                Grug.gameFunctionErrorHappened("item", "Invalid resource_location");
-                return -1;
-            }
-
-            item = ForgeRegistries.ITEMS.getValue(resourceLocationInstance);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("item", e.getMessage());
+        if (!ForgeRegistries.ITEMS.containsKey(resourceLocationInstance)) {
+            Grug.gameFunctionErrorHappened("item", "Invalid resource_location");
             return -1;
         }
+
+        Item item = ForgeRegistries.ITEMS.getValue(resourceLocationInstance);
 
         long itemId = Grug.addEntity(GrugEntityType.Item, item);
 
@@ -802,13 +573,7 @@ public class GameFunctions {
     public static long item_entity(long level, float x, float y, float z, long itemStack) {
         GrugModLoader.logger.debug("item_entity(level={}, x={}, y={}, z={}, itemStack={})", level, x, y, z, itemStack);
 
-        ItemEntity itemEntity;
-        try {
-            itemEntity = new ItemEntity(Grug.getLevel(level), x, y, z, Grug.getItemStack(itemStack));
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("item_entity", e.getMessage());
-            return -1;
-        }
+        ItemEntity itemEntity = new ItemEntity(Grug.getLevel(level), x, y, z, Grug.getItemStack(itemStack));
 
         long itemEntityId = Grug.addEntity(GrugEntityType.ItemEntity, itemEntity);
 
@@ -816,16 +581,23 @@ public class GameFunctions {
         return itemEntityId;
     }
 
+    // TODO: Remove this function, once inheritance is handled by mod_api.json!
+    public static long item_entity_to_entity(long itemEntity) {
+        GrugModLoader.logger.debug("item_entity_to_entity(itemEntity={})", itemEntity);
+
+        // TODO: Should this return a new instance?
+        Entity entity = Grug.getItemEntity(itemEntity);
+
+        long entityId = Grug.addEntity(GrugEntityType.Entity, entity);
+
+        GrugModLoader.logger.debug("Returning {}", entityId);
+        return entityId;
+    }
+
     public static long item_stack(long item) {
         GrugModLoader.logger.debug("item_stack(item={})", item);
 
-        ItemStack itemStack;
-        try {
-            itemStack = new ItemStack(Grug.getItem(item));
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("item_stack", e.getMessage());
-            return -1;
-        }
+        ItemStack itemStack = new ItemStack(Grug.getItem(item));
 
         long itemStackId = Grug.addEntity(GrugEntityType.ItemStack, itemStack);
 
@@ -836,13 +608,7 @@ public class GameFunctions {
     public static boolean iterating(long iteratorId) {
         GrugModLoader.logger.debug("iterating(iteratorId={})", iteratorId);
 
-        GrugIterator grugIterator;
-        try {
-            grugIterator = Grug.getIterator(iteratorId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("iterating", e.getMessage());
-            return false;
-        }
+        GrugIterator grugIterator = Grug.getIterator(iteratorId);
 
         boolean hasNext = grugIterator.iterator.hasNext();
         GrugModLoader.logger.debug("Returning {}", hasNext);
@@ -852,13 +618,7 @@ public class GameFunctions {
     public static long iteration(long iteratorId) {
         GrugModLoader.logger.debug("iteration(iteratorId={})", iteratorId);
 
-        GrugIterator grugIterator;
-        try {
-            grugIterator = Grug.getIterator(iteratorId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("iteration", e.getMessage());
-            return -1;
-        }
+        GrugIterator grugIterator = Grug.getIterator(iteratorId);
 
         long element;
 
@@ -890,28 +650,24 @@ public class GameFunctions {
         return element;
     }
 
-    public static long iterator(long iterableId) {
-        GrugModLoader.logger.debug("iterator(iterableId={})", iterableId);
+    public static long iterator_hash_map(long hashMapId) {
+        GrugModLoader.logger.debug("iterator_hash_map(hashMapId={})", hashMapId);
 
-        GrugEntityType containerType = Grug.getEntityType(iterableId);
-        Iterator<?> iterator;
-        IterableType iterableType;
-        try {
-            if (containerType == GrugEntityType.HashSet) {
-                iterator = Grug.getHashSet(iterableId).iterator();
-                iterableType = IterableType.HashSet;
-            } else if (containerType == GrugEntityType.HashMap) {
-                iterator = Grug.getHashMap(iterableId).entrySet().iterator();
-                iterableType = IterableType.HashMap;
-            } else {
-                throw new AssertEntityTypeException(containerType);
-            }
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("iterator", e.getMessage());
-            return -1;
-        }
+        Iterator<?> iterator = Grug.getHashMap(hashMapId).entrySet().iterator();
 
-        GrugIterator grugIterator = new GrugIterator(iterator, iterableType);
+        GrugIterator grugIterator = new GrugIterator(iterator, IterableType.HashMap);
+        long grugIteratorId = Grug.addEntity(GrugEntityType.Iterator, grugIterator);
+
+        GrugModLoader.logger.debug("Returning {}", grugIteratorId);
+        return grugIteratorId;
+    }
+
+    public static long iterator_hash_set(long hashSetId) {
+        GrugModLoader.logger.debug("iterator_hash_set(hashSetId={})", hashSetId);
+
+        Iterator<?> iterator = Grug.getHashSet(hashSetId).iterator();
+
+        GrugIterator grugIterator = new GrugIterator(iterator, IterableType.HashSet);
         long grugIteratorId = Grug.addEntity(GrugEntityType.Iterator, grugIterator);
 
         GrugModLoader.logger.debug("Returning {}", grugIteratorId);
@@ -921,13 +677,7 @@ public class GameFunctions {
     public static void iterator_remove(long iteratorId) {
         GrugModLoader.logger.debug("iterator_remove(iteratorId={})", iteratorId);
 
-        GrugIterator grugIterator;
-        try {
-            grugIterator = Grug.getIterator(iteratorId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("iterator_remove", e.getMessage());
-            return;
-        }
+        GrugIterator grugIterator = Grug.getIterator(iteratorId);
 
         try {
             grugIterator.iterator.remove();
@@ -940,17 +690,9 @@ public class GameFunctions {
     public static void place_block(long blockStateId, long blockPosId, int flags, long levelId) {
         GrugModLoader.logger.debug("place_block(blockStateId={}, blockPosId={}, flags={}, levelId={})", blockStateId, blockPosId, flags, levelId);
 
-        BlockState blockState;
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockState = Grug.getBlockState(blockStateId);
-            blockPos = Grug.getBlockPos(blockPosId);
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("place_block", e.getMessage());
-            return;
-        }
+        BlockState blockState = Grug.getBlockState(blockStateId);
+        BlockPos blockPos = Grug.getBlockPos(blockPosId);
+        Level level = Grug.getLevel(levelId);
 
         level.setBlock(blockPos, blockState, flags);
     }
@@ -988,15 +730,8 @@ public class GameFunctions {
     public static void remove_block(long blockPosId, long levelId) {
         GrugModLoader.logger.debug("remove_block(blockPosId={}, levelId={})", blockPosId, levelId);
 
-        BlockPos blockPos;
-        Level level;
-        try {
-            blockPos = Grug.getBlockPos(blockPosId);
-            level = Grug.getLevel(levelId);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("remove_block", e.getMessage());
-            return;
-        }
+        BlockPos blockPos = Grug.getBlockPos(blockPosId);
+        Level level = Grug.getLevel(levelId);
 
         level.removeBlock(blockPos, false);
     }
@@ -1021,15 +756,8 @@ public class GameFunctions {
     public static void set_entity_delta_movement(long entity, long vec3) {
         GrugModLoader.logger.debug("set_entity_delta_movement(entity={}, vec3={})", entity, vec3);
 
-        Entity entityInstance;
-        Vec3 vec3Instance;
-        try {
-            entityInstance = Grug.getEntity(entity);
-            vec3Instance = Grug.getVec3(vec3);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("set_entity_delta_movement", e.getMessage());
-            return;
-        }
+        Entity entityInstance = Grug.getEntity(entity);
+        Vec3 vec3Instance = Grug.getVec3(vec3);
 
         entityInstance.setDeltaMovement(vec3Instance);
     }
@@ -1037,15 +765,8 @@ public class GameFunctions {
     public static void spawn_entity(long entity, long level) {
         GrugModLoader.logger.debug("spawn_entity(entity={}, level={})", entity, level);
 
-        Entity entityInstance;
-        Level levelInstance;
-        try {
-            entityInstance = Grug.getEntity(entity);
-            levelInstance = Grug.getLevel(level);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("spawn_entity", e.getMessage());
-            return;
-        }
+        Entity entityInstance = Grug.getEntity(entity);
+        Level levelInstance = Grug.getLevel(level);
 
         boolean spawned = levelInstance.addFreshEntity(entityInstance);
 
@@ -1057,13 +778,7 @@ public class GameFunctions {
     public static int unbox_i32(long box) {
         GrugModLoader.logger.debug("unbox_i32(box={})", box);
 
-        int unboxedI32;
-        try {
-            unboxedI32 = Grug.getBoxedI32(box);
-        } catch (AssertEntityTypeException e) {
-            Grug.gameFunctionErrorHappened("unbox_i32", e.getMessage());
-            return -1;
-        }
+        int unboxedI32 = Grug.getBoxedI32(box);
 
         GrugModLoader.logger.debug("Returning {}", unboxedI32);
         return unboxedI32;

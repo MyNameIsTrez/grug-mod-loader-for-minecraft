@@ -66,27 +66,27 @@ public class FooBlockEntity extends BlockEntity {
     }
 
     public void spawn() {
-        if (!GrugModLoader.grug.block_entity_has_on_spawn(grugEntity.onFns)) {
+        if (!GrugModLoader.grug.BlockEntity_has_on_spawn(grugEntity.onFns)) {
             return;
         }
 
         List<GrugObject> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new ArrayList<>();
 
-        GrugModLoader.grug.block_entity_on_spawn(grugEntity.onFns, grugEntity.globals);
+        GrugModLoader.grug.BlockEntity_on_spawn(grugEntity.onFns, grugEntity.globals);
 
         Grug.fnEntities = oldFnEntities;
     }
 
     public void tick() {
-        if (!GrugModLoader.grug.block_entity_has_on_tick(grugEntity.onFns)) {
+        if (!GrugModLoader.grug.BlockEntity_has_on_tick(grugEntity.onFns)) {
             return;
         }
 
         List<GrugObject> oldFnEntities = Grug.fnEntities;
         Grug.fnEntities = new ArrayList<>();
 
-        GrugModLoader.grug.block_entity_on_tick(grugEntity.onFns, grugEntity.globals);
+        GrugModLoader.grug.BlockEntity_on_tick(grugEntity.onFns, grugEntity.globals);
 
         Grug.fnEntities = oldFnEntities;
     }

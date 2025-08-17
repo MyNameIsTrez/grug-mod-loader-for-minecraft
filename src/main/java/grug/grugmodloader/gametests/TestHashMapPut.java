@@ -63,7 +63,7 @@ public class TestHashMapPut extends GameTestsUtils {
         long hash_map_outer = hash_map();
         hash_map_put(hash_map_outer, box_i32(3), hash_map_inner);
 
-        long hash_map_inner_copy = entry_value(iteration(iterator(hash_map_outer)));
+        long hash_map_inner_copy = entry_value(iteration(iterator_hash_map(hash_map_outer)));
 
         h.assertTrue(hash_map_has_key(hash_map_inner_copy, box_i32(1)), "hash_map_inner_copy did not contain key box_i32(1)");
 
@@ -85,7 +85,7 @@ public class TestHashMapPut extends GameTestsUtils {
         h.assertTrue(hash_map_string.equals(expected), "Expected hash_map_string to be \"" + expected + "\", but got \"" + hash_map_string + "\"");
 
         // This is just testing that this doesn't cause a hang
-        entry_value(iteration(iterator(local_hash_map)));
+        entry_value(iteration(iterator_hash_map(local_hash_map)));
 
         h.succeed();
     }

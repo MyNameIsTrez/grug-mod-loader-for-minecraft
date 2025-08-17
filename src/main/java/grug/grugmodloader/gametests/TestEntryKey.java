@@ -16,7 +16,7 @@ public class TestEntryKey extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator(hash_map);
+        long iterator = iterator_hash_map(hash_map);
 
         long entry = iteration(iterator);
 

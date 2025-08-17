@@ -1,9 +1,9 @@
 {
 	"entities": {
-		"block": {
+		"Block": {
 			"description": "A block."
 		},
-		"block_entity": {
+		"BlockEntity": {
 			"description": "A block entity.",
             "on_functions": {
                 "on_spawn": {
@@ -17,23 +17,23 @@
 					"arguments": [
 						{
 							"name": "block_state",
-							"type": "id"
+							"type": "BlockState"
 						},
 						{
 							"name": "level",
-							"type": "id"
+							"type": "Level"
 						},
 						{
 							"name": "block_pos",
-							"type": "id"
+							"type": "BlockPos"
 						},
 						{
 							"name": "block_in",
-							"type": "id"
+							"type": "Block"
 						},
 						{
 							"name": "from_block_pos",
-							"type": "id"
+							"type": "BlockPos"
 						},
 						{
 							"name": "is_moving",
@@ -46,18 +46,18 @@
 	},
 	"game_functions": {
 		"block": {
-			"description": "Creates a new block.",
-			"return_type": "id",
+			"description": "Creates a new Block.",
+			"return_type": "Block",
 			"arguments": [
 				{
 					"name": "resource_location",
-					"type": "id"
+					"type": "ResourceLocation"
 				}
 			]
 		},
 		"block_pos": {
-			"description": "Creates a new block_pos.",
-			"return_type": "id",
+			"description": "Creates a new BlockPos.",
+			"return_type": "BlockPos",
 			"arguments": [
 				{
 					"name": "x",
@@ -74,12 +74,12 @@
 			]
 		},
 		"block_flag_update_all": {
-			"description": "Passed to game functions like place_block(), to notify all neighboring blocks. Consider using one of the other flags that isn't as slow.",
+			"description": "Passed to game functions like place_block(), to notify all neighboring blocks. Consider using one of the other flags that won't cause as much lag.",
 			"return_type": "i32"
 		},
 		"box_i32": {
-			"description": "Wraps an i32 in an object, and returns the object's id. Use this if you need to store i32s in for example a hash_set.",
-			"return_type": "id",
+			"description": "Wraps an i32 in a BoxedI32 object, and returns it. Use this if you need to store i32s in for example a HashSet.",
+			"return_type": "BoxedI32",
 			"arguments": [
 				{
 					"name": "i32",
@@ -92,11 +92,11 @@
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
@@ -105,30 +105,30 @@
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"entry_key": {
-			"description": "Gets the key of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's key.",
+			"description": "Gets the key of the current Iteration entry, gotten by calling iteration(). So for a HashMap of BlockPos, this returns the current loop's key.",
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "iteration",
-					"type": "id"
+					"name": "entry",
+					"type": "Iteration"
 				}
 			]
 		},
 		"entry_set_value": {
-			"description": "Sets the value of an entry. This function can't be called after iterator_remove().",
+			"description": "Sets the value of an Iteration entry. This function can't be called after iterator_remove().",
 			"arguments": [
 				{
 					"name": "entry",
-					"type": "id"
+					"type": "Iteration"
 				},
 				{
 					"name": "value",
@@ -137,42 +137,42 @@
 			]
 		},
 		"entry_value": {
-			"description": "Gets the value of the current entry, gotten by calling iteration(). So for a hash_map of block_pos, this returns the current loop's value.",
+			"description": "Gets the value of the current Iteration entry, gotten by calling iteration(). So for a HashMap of BlockPos, this returns the current loop's value.",
 			"return_type": "id",
 			"arguments": [
 				{
-					"name": "iteration",
-					"type": "id"
+					"name": "entry",
+					"type": "Iteration"
 				}
 			]
 		},
 		"get_block_entity_level": {
-			"description": "Gets the level (dimension) a block entity is in.",
-			"return_type": "id",
+			"description": "Gets the Level (dimension) a BlockEntity is in.",
+			"return_type": "Level",
 			"arguments": [
 				{
 					"name": "block_entity",
-					"type": "id"
+					"type": "BlockEntity"
 				}
 			]
 		},
 		"get_block_pos_above": {
-			"description": "Gets the block position one block up.",
-			"return_type": "id",
+			"description": "Gets the BlockPosition one block up.",
+			"return_type": "BlockPos",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				}
 			]
 		},
 		"get_block_pos_above_n": {
-			"description": "Gets the block position N blocks up.",
-			"return_type": "id",
+			"description": "Gets the BlockPosition N blocks up.",
+			"return_type": "BlockPos",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "n",
@@ -181,116 +181,116 @@
 			]
 		},
 		"get_block_pos_center": {
-			"description": "Gets the center of a block position.",
-			"return_type": "id",
+			"description": "Gets the center of a BlockPosition.",
+			"return_type": "Vec3",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				}
 			]
 		},
 		"get_block_pos_of_block_entity": {
-			"description": "Gets the world position of a block_entity.",
-			"return_type": "id",
+			"description": "Gets the world position of a BlockEntity.",
+			"return_type": "BlockPos",
 			"arguments": [
 				{
 					"name": "block_entity",
-					"type": "id"
+					"type": "BlockEntity"
 				}
 			]
 		},
 		"get_block_pos_x": {
-			"description": "Gets the X coordinate of a block_pos.",
+			"description": "Gets the X coordinate of a BlockPos.",
 			"return_type": "i32",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				}
 			]
 		},
 		"get_block_pos_y": {
-			"description": "Gets the Y coordinate of a block_pos.",
+			"description": "Gets the Y coordinate of a BlockPos.",
 			"return_type": "i32",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				}
 			]
 		},
 		"get_block_pos_z": {
-			"description": "Gets the Z coordinate of a block_pos.",
+			"description": "Gets the Z coordinate of a BlockPos.",
 			"return_type": "i32",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				}
 			]
 		},
 		"get_block_state": {
-			"description": "Gets a block_pos its state.",
-			"return_type": "id",
+			"description": "Gets a BlockPos its state.",
+			"return_type": "BlockPosState",
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"get_default_block_state": {
-			"description": "Gets the default block_state of a block.",
-			"return_type": "id",
+			"description": "Gets the default BlockState of a block.",
+			"return_type": "BlockState",
 			"arguments": [
 				{
 					"name": "block",
-					"type": "id"
+					"type": "Block"
 				}
 			]
 		},
 		"get_hash_map_size": {
-			"description": "Returns the number of ids in the hash_map.",
+			"description": "Returns the number of ids in the HashMap.",
 			"return_type": "i32",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				}
 			]
 		},
 		"get_hash_map_string": {
-			"description": "Returns the string representation of the hash_map.",
+			"description": "Returns the string representation of the HashMap.",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				}
 			]
 		},
 		"get_hash_set_size": {
-			"description": "Returns the number of ids in the hash_set.",
+			"description": "Returns the number of ids in the HashSet.",
 			"return_type": "i32",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				}
 			]
 		},
 		"get_hash_set_string": {
-			"description": "Returns the string representation of the hash_set.",
+			"description": "Returns the string representation of the HashSet.",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				}
 			]
 		},
@@ -300,113 +300,113 @@
 			"arguments": [
 				{
 					"name": "item",
-					"type": "id"
+					"type": "Item"
 				}
 			]
 		},
 		"get_item_entity_name": {
-			"description": "Gets the name of an item_entity.",
+			"description": "Gets the name of an ItemEntity.",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "item_entity",
-					"type": "id"
+					"type": "ItemEntity"
 				}
 			]
 		},
 		"get_item_stack_name": {
-			"description": "Gets the name of an item_stack.",
+			"description": "Gets the name of an ItemStack.",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "item_stack",
-					"type": "id"
+					"type": "ItemStack"
 				}
 			]
 		},
 		"get_level_name": {
-			"description": "Gets the name of a level (dimension).",
+			"description": "Gets the name of a Level (dimension).",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"get_resource_location_string": {
-			"description": "Gets a resource_location as a string.",
+			"description": "Gets a ResourceLocation as a string.",
 			"return_type": "string",
 			"arguments": [
 				{
 					"name": "resource_location",
-					"type": "id"
+					"type": "ResourceLocation"
 				}
 			]
 		},
 		"get_vec3_x": {
-			"description": "Gets the X coordinate of a vec3.",
+			"description": "Gets the X coordinate of a Vec3.",
 			"return_type": "f32",
 			"arguments": [
 				{
 					"name": "vec3",
-					"type": "id"
+					"type": "Vec3"
 				}
 			]
 		},
 		"get_vec3_y": {
-			"description": "Gets the Y coordinate of a vec3.",
+			"description": "Gets the Y coordinate of a Vec3.",
 			"return_type": "f32",
 			"arguments": [
 				{
 					"name": "vec3",
-					"type": "id"
+					"type": "Vec3"
 				}
 			]
 		},
 		"get_vec3_z": {
-			"description": "Gets the Z coordinate of a vec3.",
+			"description": "Gets the Z coordinate of a Vec3.",
 			"return_type": "f32",
 			"arguments": [
 				{
 					"name": "vec3",
-					"type": "id"
+					"type": "Vec3"
 				}
 			]
 		},
 		"hash_map": {
-			"description": "Creates a new hash_map, containing id keys and id values.",
-			"return_type": "id"
+			"description": "Creates a new HashMap, containing id keys and id values.",
+			"return_type": "HashMap"
 		},
 		"hash_map_clear": {
-			"description": "Clears the hash_map.",
+			"description": "Clears the HashMap.",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				}
 			]
 		},
 		"hash_map_copy": {
-			"description": "Copies the contents of one hash_map to another.",
+			"description": "Copies the contents of one HashMap to another.",
 			"arguments": [
 				{
 					"name": "hash_map_from",
-					"type": "id"
+					"type": "HashMap"
 				},
 				{
 					"name": "hash_map_to",
-					"type": "id"
+					"type": "HashMap"
 				}
 			]
 		},
 		"hash_map_get": {
-			"description": "Returns the value that is associated with a key in the hash_map.",
+			"description": "Returns the value that is associated with a key in the HashMap.",
 			"return_type": "id",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				},
 				{
 					"name": "key",
@@ -415,12 +415,12 @@
 			]
 		},
 		"hash_map_has_key": {
-			"description": "Returns whether the hash_map contains a specific key.",
+			"description": "Returns whether the HashMap contains a specific key.",
 			"return_type": "bool",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				},
 				{
 					"name": "key",
@@ -429,11 +429,11 @@
 			]
 		},
 		"hash_map_put": {
-			"description": "Assigns a value to a key in the hash_map.",
+			"description": "Assigns a value to a key in the HashMap.",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				},
 				{
 					"name": "key",
@@ -446,11 +446,11 @@
 			]
 		},
 		"hash_map_remove_key": {
-			"description": "Removes a key from the hash_map, if the id is in there.",
+			"description": "Removes a key from the HashMap, if the id is in there.",
 			"arguments": [
 				{
 					"name": "hash_map",
-					"type": "id"
+					"type": "HashMap"
 				},
 				{
 					"name": "key",
@@ -459,15 +459,15 @@
 			]
 		},
 		"hash_set": {
-			"description": "Creates a new hash_set of ids.",
-			"return_type": "id"
+			"description": "Creates a new HashSet of ids.",
+			"return_type": "HashSet"
 		},
 		"hash_set_add": {
-			"description": "Adds an id to the hash_set, if the id is not already in there.",
+			"description": "Adds an id to the HashSet, if the id is not already in there.",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				},
 				{
 					"name": "value",
@@ -476,34 +476,34 @@
 			]
 		},
 		"hash_set_clear": {
-			"description": "Clears the hash_set.",
+			"description": "Clears the HashSet.",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				}
 			]
 		},
 		"hash_set_copy": {
-			"description": "Copies the contents of one hash_set to another.",
+			"description": "Copies the contents of one HashSet to another.",
 			"arguments": [
 				{
 					"name": "hash_set_from",
-					"type": "id"
+					"type": "HashSet"
 				},
 				{
 					"name": "hash_set_to",
-					"type": "id"
+					"type": "HashSet"
 				}
 			]
 		},
 		"hash_set_has": {
-			"description": "Returns whether the hash_set contains a specific id.",
+			"description": "Returns whether the HashSet contains a specific id.",
 			"return_type": "bool",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				},
 				{
 					"name": "value",
@@ -512,11 +512,11 @@
 			]
 		},
 		"hash_set_remove": {
-			"description": "Removes an id from the hash_set, if the id is in there.",
+			"description": "Removes an id from the HashSet, if the id is in there.",
 			"arguments": [
 				{
 					"name": "hash_set",
-					"type": "id"
+					"type": "HashSet"
 				},
 				{
 					"name": "value",
@@ -524,43 +524,63 @@
 				}
 			]
 		},
-		"is_air": {
-			"description": "Returns whether the block_state is air.",
-			"return_type": "bool",
+		"id_to_block_pos": {
+			"description": "Asserts that id is a BlockPos, and then returns it as a BlockPos. If it is not a BoxedI32, it raises an error.",
+			"return_type": "BlockPos",
 			"arguments": [
 				{
-					"name": "block_state",
+					"name": "id",
 					"type": "id"
 				}
 			]
 		},
+		"id_to_boxed_i32": {
+			"description": "Asserts that id is a BoxedI32, and then returns it as a BoxedI32. If it is not a BoxedI32, it raises an error.",
+			"return_type": "BoxedI32",
+			"arguments": [
+				{
+					"name": "id",
+					"type": "id"
+				}
+			]
+		},
+		"is_air": {
+			"description": "Returns whether the BlockState is air.",
+			"return_type": "bool",
+			"arguments": [
+				{
+					"name": "block_state",
+					"type": "BlockState"
+				}
+			]
+		},
 		"is_client_side": {
-			"description": "Returns whether the code is being ran on the client-side.",
+			"description": "Returns whether the code is being run on the client-side.",
 			"return_type": "bool",
 			"arguments": [
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"item": {
 			"description": "Creates a new item.",
-			"return_type": "id",
+			"return_type": "Item",
 			"arguments": [
 				{
 					"name": "resource_location",
-					"type": "id"
+					"type": "ResourceLocation"
 				}
 			]
 		},
 		"item_entity": {
-			"description": "Creates a new item_entity.",
-			"return_type": "id",
+			"description": "Creates a new ItemEntity.",
+			"return_type": "ItemEntity",
 			"arguments": [
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				},
 				{
 					"name": "x",
@@ -576,56 +596,76 @@
 				},
 				{
 					"name": "item_stack",
-					"type": "id"
+					"type": "ItemStack"
+				}
+			]
+		},
+		"item_entity_to_entity": {
+			"description": "Takes an ItemEntity, and returns it as an Entity.",
+			"return_type": "Entity",
+			"arguments": [
+				{
+					"name": "item_entity",
+					"type": "ItemEntity"
 				}
 			]
 		},
 		"item_stack": {
-			"description": "Creates a new item_stack. Keep in mind that when two item stacks get close enough to each other, they merge, turning the original item stacks and entities into Air. So if you call spawn_entity() to spawn an item stack, make sure that the item stack isn't reused later on to spawn more entities.",
-			"return_type": "id",
+			"description": "Creates a new ItemStack. Keep in mind that when two ItemStacks get close enough to each other, they merge, turning the original ItemStacks and entities into 'Air'. So if you call SpawnEntity() to spawn an ItemStack, make sure that the ItemStack isn't reused later on to spawn more entities.",
+			"return_type": "ItemStack",
 			"arguments": [
 				{
 					"name": "item",
-					"type": "id"
+					"type": "Item"
 				}
 			]
 		},
 		"iterating": {
-			"description": "Returns whether the iterator has more elements to iterate over. So for an array_list of block_pos, whether every block_pos has been looped over.",
+			"description": "Returns whether the Iterator has more elements to iterate over. So for a HashSet of BlockPos, whether every BlockPos has been looped over.",
 			"return_type": "bool",
 			"arguments": [
 				{
 					"name": "iterator",
-					"type": "id"
+					"type": "Iterator"
 				}
 			]
 		},
 		"iteration": {
-			"description": "Gets the current element from the iterator. So for an array_list of block_pos, this returns the current loop's block_pos. If the iterator has keys, like a hash_set, pass the entry id this iteration() function returns to entry_key() and entry_value().",
-			"return_type": "id",
+			"description": "Gets the current element from the Iterator. So for a HashSet of BlockPos, this returns the current loop's BlockPos. If the Iterator has keys, like a HashMap, pass the Iteration entry this function returns to entry_key() and entry_value().",
+			"return_type": "Iteration",
 			"arguments": [
 				{
 					"name": "iterator",
-					"type": "id"
+					"type": "Iterator"
 				}
 			]
 		},
-		"iterator": {
-			"description": "Creates a new iterator. Used to loop over something that is iterable, like an array_list, or a hash_set.",
-			"return_type": "id",
+		"iterator_hash_map": {
+			"description": "Creates a new Iterator for a HashMap.",
+			"return_type": "Iterator",
 			"arguments": [
 				{
-					"name": "iterable",
-					"type": "id"
+					"name": "hash_map",
+					"type": "HashMap"
+				}
+			]
+		},
+		"iterator_hash_set": {
+			"description": "Creates a new Iterator for a HashSet.",
+			"return_type": "Iterator",
+			"arguments": [
+				{
+					"name": "hash_set",
+					"type": "HashSet"
 				}
 			]
 		},
 		"iterator_remove": {
-			"description": "Removes the element of this iteration from the iterable. This function can only be called once per iteration.",
+			"description": "Removes the element of the current iteration from the iterable. This function can only be called once per iteration.",
 			"arguments": [
 				{
 					"name": "iterator",
-					"type": "id"
+					"type": "Iterator"
 				}
 			]
 		},
@@ -634,11 +674,11 @@
 			"arguments": [
 				{
 					"name": "block_state",
-					"type": "id"
+					"type": "BlockState"
 				},
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "flags",
@@ -646,7 +686,7 @@
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
@@ -700,17 +740,17 @@
 			"arguments": [
 				{
 					"name": "block_pos",
-					"type": "id"
+					"type": "BlockPos"
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"resource_location": {
-			"description": "Creates a new resource_location.",
-			"return_type": "id",
+			"description": "Creates a new ResourceLocation.",
+			"return_type": "ResourceLocation",
 			"arguments": [
 				{
 					"name": "resource_location_string",
@@ -719,15 +759,15 @@
 			]
 		},
 		"set_entity_delta_movement": {
-			"description": "Sets an entity's delta movement.",
+			"description": "Sets an Entity's delta movement.",
 			"arguments": [
 				{
 					"name": "entity",
-					"type": "id"
+					"type": "Entity"
 				},
 				{
 					"name": "vec3",
-					"type": "id"
+					"type": "Vec3"
 				}
 			]
 		},
@@ -736,27 +776,27 @@
 			"arguments": [
 				{
 					"name": "entity",
-					"type": "id"
+					"type": "Entity"
 				},
 				{
 					"name": "level",
-					"type": "id"
+					"type": "Level"
 				}
 			]
 		},
 		"unbox_i32": {
-			"description": "Unwraps an i32 object created by box_i32(), and returns the i32 that it wrapped.",
+			"description": "Unwraps a BoxedI32 object created by box_i32(), and returns the i32 that it wrapped.",
 			"return_type": "i32",
 			"arguments": [
 				{
-					"name": "box",
-					"type": "id"
+					"name": "boxed_i32",
+					"type": "BoxedI32"
 				}
 			]
 		},
 		"vec3": {
-			"description": "Creates a new vec3.",
-			"return_type": "id",
+			"description": "Creates a new Vec3.",
+			"return_type": "Vec3",
 			"arguments": [
 				{
 					"name": "x",
@@ -773,8 +813,8 @@
 			]
 		},
 		"vec3_zero": {
-			"description": "Creates a new vec3, initialized with all zeros.",
-			"return_type": "id"
+			"description": "Creates a new Vec3, initialized with all zeros.",
+			"return_type": "Vec3"
 		}
 	}
 }

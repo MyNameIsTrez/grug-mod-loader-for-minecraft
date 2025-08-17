@@ -12,7 +12,7 @@ public class TestIterator extends GameTestsUtils {
     public static void iterator_hash_set(GameTestHelper h) {
         reset(h);
 
-        assert_not_error_id(iterator(hash_set()));
+        assert_not_error_id(iterator_hash_set(hash_set()));
 
         h.succeed();
     }
@@ -21,7 +21,7 @@ public class TestIterator extends GameTestsUtils {
     public static void iterator_hash_map(GameTestHelper h) {
         reset(h);
 
-        assert_not_error_id(iterator(hash_map()));
+        assert_not_error_id(iterator_hash_map(hash_map()));
 
         h.succeed();
     }
@@ -30,7 +30,7 @@ public class TestIterator extends GameTestsUtils {
     public static void iterator_expected_iterable(GameTestHelper h) {
         reset(h);
 
-        assert_error_id(GameFunctions.iterator(box_i32(1)));
+        assert_error_id(GameFunctions.iterator_hash_map(box_i32(1)));
 
         assert_game_function_error("iterator(): Expected iterable, but got boxed_i32");
 
