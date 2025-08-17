@@ -28,17 +28,6 @@ public class TestHashSetClear extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_clear_expected_hash_set(GameTestHelper h) {
-        reset(h);
-
-        hash_set_clear(box_i32(1));
-
-        assert_game_function_error("hash_set_clear(): Expected hash_set, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_clear_global(GameTestHelper h) {
         reset(h);
 

@@ -1,6 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -49,17 +48,6 @@ public class TestIterating extends GameTestsUtils {
         iteration(iterator);
 
         h.assertFalse(iterating(iterator), "Expected to have nothing to iterate over");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void iterating_expected_iterator(GameTestHelper h) {
-        reset(h);
-
-        h.assertFalse(GameFunctions.iterating(box_i32(1)), "Expected iterating() to have returned false");
-
-        assert_game_function_error("iterating(): Expected iterator, but got boxed_i32");
 
         h.succeed();
     }

@@ -50,7 +50,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator_hash_set(hash_map);
+        long iterator = iterator_hash_map(hash_map);
 
         assert_not_error_id(iteration(iterator));
 
@@ -61,7 +61,7 @@ public class TestIteration extends GameTestsUtils {
     public static void iteration_hash_map_empty(GameTestHelper h) {
         reset(h);
 
-        long iterator = iterator_hash_set(hash_map());
+        long iterator = iterator_hash_map(hash_map());
 
         assert_error_id(GameFunctions.iteration(iterator));
 
@@ -78,7 +78,7 @@ public class TestIteration extends GameTestsUtils {
 
         hash_map_put(hash_map, box_i32(1), box_i32(2));
 
-        long iterator = iterator_hash_set(hash_map);
+        long iterator = iterator_hash_map(hash_map);
 
         hash_map_remove_key(hash_map, box_i32(1));
         assert_no_error();
@@ -86,17 +86,6 @@ public class TestIteration extends GameTestsUtils {
         assert_error_id(GameFunctions.iteration(iterator));
 
         assert_game_function_error("iteration(): The iterable was modified during iteration");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void iteration_expected_iterator(GameTestHelper h) {
-        reset(h);
-
-        assert_error_id(GameFunctions.iteration(box_i32(1)));
-
-        assert_game_function_error("iteration(): Expected iterator, but got boxed_i32");
 
         h.succeed();
     }

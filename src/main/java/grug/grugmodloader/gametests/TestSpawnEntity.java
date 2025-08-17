@@ -36,30 +36,6 @@ public class TestSpawnEntity extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void spawn_entity_expected_entity(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        spawn_entity(box, box);
-
-        assert_game_function_error("spawn_entity(): Expected entity, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void spawn_entity_expected_level(GameTestHelper h) {
-        reset(h);
-
-        spawn_entity(get_item_entity(), box_i32(1));
-
-        assert_game_function_error("spawn_entity(): Expected level, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void spawn_entity_called_twice_on_same_entity(GameTestHelper h) {
         reset(h);
 

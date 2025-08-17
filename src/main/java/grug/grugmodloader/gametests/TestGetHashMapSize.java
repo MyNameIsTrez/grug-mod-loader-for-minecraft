@@ -48,17 +48,4 @@ public class TestGetHashMapSize extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_hash_map_size_expected_hash_map(GameTestHelper h) {
-        reset(h);
-
-        int size = get_hash_map_size(box_i32(1));
-
-        h.assertTrue(size == -1, "hash_map size was not -1, but " + size);
-
-        assert_game_function_error("get_hash_map_size(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
 }

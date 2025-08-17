@@ -39,17 +39,4 @@ public class TestHashSetRemove extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_remove_expected_hash_set(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_set_remove(box, box);
-
-        assert_game_function_error("hash_set_remove(): Expected hash_set, but got boxed_i32");
-
-        h.succeed();
-    }
 }

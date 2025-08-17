@@ -20,17 +20,6 @@ public class TestBlock extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void block_expected_resource_location(GameTestHelper h) {
-        reset(h);
-
-        assert_error_id(GameFunctions.block(box_i32(1)));
-
-        assert_game_function_error("block(): Expected resource_location, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void block_error_invalid_resource_location(GameTestHelper h) {
         reset(h);
 

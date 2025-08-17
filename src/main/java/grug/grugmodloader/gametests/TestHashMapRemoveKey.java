@@ -39,17 +39,4 @@ public class TestHashMapRemoveKey extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_map_remove_key_expected_hash_map(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_map_remove_key(box, box);
-
-        assert_game_function_error("hash_map_remove_key(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
 }

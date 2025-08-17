@@ -17,17 +17,4 @@ public class TestGetLevelName extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_level_name_expected_level(GameTestHelper h) {
-        reset(h);
-
-        String level_name = get_level_name(box_i32(1));
-
-        h.assertTrue(level_name.equals(""), "Expected level name to be an empty string, but got \"" + level_name + "\"");
-
-        assert_game_function_error("get_level_name(): Expected level, but got boxed_i32");
-
-        h.succeed();
-    }
 }

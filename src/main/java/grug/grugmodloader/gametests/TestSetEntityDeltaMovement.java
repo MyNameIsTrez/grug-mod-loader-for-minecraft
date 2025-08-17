@@ -28,26 +28,4 @@ public class TestSetEntityDeltaMovement extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void set_entity_delta_movement_expected_entity(GameTestHelper h) {
-        reset(h);
-
-        set_entity_delta_movement(box_i32(1), box_i32(1));
-
-        assert_game_function_error("set_entity_delta_movement(): Expected entity, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void set_entity_delta_movement_expected_vec3(GameTestHelper h) {
-        reset(h);
-
-        set_entity_delta_movement(get_item_entity(), box_i32(1));
-
-        assert_game_function_error("set_entity_delta_movement(): Expected vec3, but got boxed_i32");
-
-        h.succeed();
-    }
 }

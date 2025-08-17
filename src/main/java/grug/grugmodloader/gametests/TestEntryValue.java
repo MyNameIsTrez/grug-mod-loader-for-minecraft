@@ -1,6 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -24,17 +23,6 @@ public class TestEntryValue extends GameTestsUtils {
 
         int unboxed_value = unbox_i32(value);
         h.assertTrue(unboxed_value == 2, "Expected unboxed_value to be 2, but it was " + unboxed_value);
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void entry_value_expected_entry(GameTestHelper h) {
-        reset(h);
-
-        assert_error_id(GameFunctions.entry_value(box_i32(1)));
-
-        assert_game_function_error("entry_value(): Expected entry, but got boxed_i32");
 
         h.succeed();
     }

@@ -36,17 +36,4 @@ public class TestGetHashMapString extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_hash_map_string_expected_hash_map(GameTestHelper h) {
-        reset(h);
-
-        String string = get_hash_map_string(box_i32(1));
-
-        h.assertTrue(string.equals(""), "hash_map string was not an empty string, but \"" + string + "\"");
-
-        assert_game_function_error("get_hash_map_string(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
 }

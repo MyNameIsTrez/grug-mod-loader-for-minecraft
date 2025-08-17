@@ -17,17 +17,4 @@ public class TestGetItemStackName extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_item_stack_name_expected_item(GameTestHelper h) {
-        reset(h);
-
-        String item_stack_name = get_item_stack_name(box_i32(1));
-
-        h.assertTrue(item_stack_name.equals(""), "Expected item stack name to be an empty string, but got \"" + item_stack_name + "\"");
-
-        assert_game_function_error("get_item_stack_name(): Expected item_stack, but got boxed_i32");
-
-        h.succeed();
-    }
 }

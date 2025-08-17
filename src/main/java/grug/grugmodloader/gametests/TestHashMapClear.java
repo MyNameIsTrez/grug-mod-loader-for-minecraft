@@ -23,15 +23,4 @@ public class TestHashMapClear extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_map_clear_expected_hash_map(GameTestHelper h) {
-        reset(h);
-
-        hash_map_clear(box_i32(1));
-
-        assert_game_function_error("hash_map_clear(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
 }

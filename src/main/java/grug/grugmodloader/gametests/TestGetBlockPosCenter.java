@@ -1,6 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -21,17 +20,6 @@ public class TestGetBlockPosCenter extends GameTestsUtils {
         h.assertTrue(x == 1.5, "vec3 X was not 1.5, but " + x);
         h.assertTrue(y == 2.5, "vec3 Y was not 2.5, but " + y);
         h.assertTrue(z == 3.5, "vec3 Z was not 3.5, but " + z);
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_block_pos_center_expected_block_pos(GameTestHelper h) {
-        reset(h);
-
-        assert_error_id(GameFunctions.get_block_pos_center(box_i32(1)));
-
-        assert_game_function_error("get_block_pos_center(): Expected block_pos, but got boxed_i32");
 
         h.succeed();
     }

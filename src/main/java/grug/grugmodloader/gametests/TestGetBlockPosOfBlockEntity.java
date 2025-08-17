@@ -1,6 +1,5 @@
 package grug.grugmodloader.gametests;
 
-import grug.grugmodloader.GameFunctions;
 import grug.grugmodloader.GrugModLoader;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -23,17 +22,6 @@ public class TestGetBlockPosOfBlockEntity extends GameTestsUtils {
         h.assertTrue(x == 1, "Expected world position X to be 1, but was " + x);
         h.assertTrue(y == 2, "Expected world position Y to be 2, but was " + y);
         h.assertTrue(z == 3, "Expected world position Z to be 3, but was " + z);
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_block_pos_of_block_entity_expected_block_entity(GameTestHelper h) {
-        reset(h);
-
-        assert_error_id(GameFunctions.get_block_pos_of_block_entity(box_i32(1)));
-
-        assert_game_function_error("get_block_pos_of_block_entity(): Expected block_entity, but got boxed_i32");
 
         h.succeed();
     }

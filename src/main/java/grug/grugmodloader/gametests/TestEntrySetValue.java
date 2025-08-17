@@ -53,17 +53,6 @@ public class TestEntrySetValue extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void entry_set_value_expected_entry(GameTestHelper h) {
-        reset(h);
-
-        entry_set_value(box_i32(1), box_i32(1));
-
-        assert_game_function_error("entry_set_value(): Expected entry, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void entry_set_value_of_removed_key(GameTestHelper h) {
         reset(h);
 

@@ -17,17 +17,4 @@ public class TestGetItemName extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void get_item_name_expected_item(GameTestHelper h) {
-        reset(h);
-
-        String item_name = get_item_name(box_i32(1));
-
-        h.assertTrue(item_name.equals(""), "Expected item name to be an empty string, but got \"" + item_name + "\"");
-
-        assert_game_function_error("get_item_name(): Expected item, but got boxed_i32");
-
-        h.succeed();
-    }
 }

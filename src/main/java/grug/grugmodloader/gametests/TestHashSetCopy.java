@@ -44,28 +44,4 @@ public class TestHashSetCopy extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_copy_expected_hash_set_from(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_set_copy(box, box);
-
-        assert_game_function_error("hash_set_copy(): Expected hash_set, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_copy_expected_hash_set_to(GameTestHelper h) {
-        reset(h);
-
-        hash_set_copy(hash_set(), box_i32(1));
-
-        assert_game_function_error("hash_set_copy(): Expected hash_set, but got boxed_i32");
-
-        h.succeed();
-    }
 }

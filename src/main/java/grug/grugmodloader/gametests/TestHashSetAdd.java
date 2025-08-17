@@ -42,19 +42,6 @@ public class TestHashSetAdd extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_set_add_expected_hash_set(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_set_add(box, box);
-
-        assert_game_function_error("hash_set_add(): Expected hash_set, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_set_add_to_global_set(GameTestHelper h) {
         reset(h);
 

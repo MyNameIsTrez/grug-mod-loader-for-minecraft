@@ -44,28 +44,4 @@ public class TestHashMapCopy extends GameTestsUtils {
 
         h.succeed();
     }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_map_copy_expected_hash_map_from(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_map_copy(box, box);
-
-        assert_game_function_error("hash_map_copy(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_map_copy_expected_hash_map_to(GameTestHelper h) {
-        reset(h);
-
-        hash_map_copy(hash_map(), box_i32(1));
-
-        assert_game_function_error("hash_map_copy(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
 }

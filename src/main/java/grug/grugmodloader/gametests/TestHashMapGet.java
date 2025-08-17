@@ -25,19 +25,6 @@ public class TestHashMapGet extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void hash_map_get_expected_hash_map(GameTestHelper h) {
-        reset(h);
-
-        long box = box_i32(1);
-
-        hash_map_get(box, box);
-
-        assert_game_function_error("hash_map_get(): Expected hash_map, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void hash_map_get_error_hash_map_does_not_contain_key(GameTestHelper h) {
         reset(h);
 

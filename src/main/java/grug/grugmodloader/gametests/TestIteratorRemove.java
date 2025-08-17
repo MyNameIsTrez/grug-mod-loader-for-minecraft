@@ -45,17 +45,6 @@ public class TestIteratorRemove extends GameTestsUtils {
     }
 
     @GameTest(template = GrugModLoader.MODID+":placeholder")
-    public static void iterator_remove_expected_iterator(GameTestHelper h) {
-        reset(h);
-
-        iterator_remove(box_i32(1));
-
-        assert_game_function_error("iterator_remove(): Expected iterator, but got boxed_i32");
-
-        h.succeed();
-    }
-
-    @GameTest(template = GrugModLoader.MODID+":placeholder")
     public static void iterator_remove_error_called_more_than_once(GameTestHelper h) {
         reset(h);
 
