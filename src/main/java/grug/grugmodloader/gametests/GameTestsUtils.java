@@ -317,6 +317,14 @@ public class GameTestsUtils {
         GameFunctions.hash_set_remove(hashSet, value);
     }
 
+    public static long id_to_block_pos(long id) {
+        return GameFunctions.id_to_block_pos(id);
+    }
+
+    public static long id_to_boxed_i32(long id) {
+        return GameFunctions.id_to_boxed_i32(id);
+    }
+
     public static boolean is_air(long blockState) {
         return GameFunctions.is_air(blockState);
     }
@@ -335,6 +343,12 @@ public class GameTestsUtils {
         long itemEntity = GameFunctions.item_entity(level, x, y, z, itemStack);
         h.assertTrue(itemEntity != -1, "Invalid itemEntity " + itemEntity);
         return itemEntity;
+    }
+
+    public static long item_entity_to_entity(long itemEntity) {
+        long e = GameFunctions.item_entity_to_entity(itemEntity);
+        h.assertTrue(e != -1, "Invalid entity " + e);
+        return e;
     }
 
     public static long item_stack(long item) {

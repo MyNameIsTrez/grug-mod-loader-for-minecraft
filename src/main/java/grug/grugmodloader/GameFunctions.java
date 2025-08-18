@@ -586,9 +586,9 @@ public class GameFunctions {
         GrugModLoader.logger.debug("item_entity_to_entity(itemEntity={})", itemEntity);
 
         // TODO: Should this return a new instance?
-        Entity entity = Grug.getItemEntity(itemEntity);
-
-        long entityId = Grug.addEntity(GrugEntityType.Entity, entity);
+        // Entity entity = Grug.getItemEntity(itemEntity);
+        // long entityId = Grug.addEntity(GrugEntityType.Entity, entity);
+        long entityId = itemEntity;
 
         GrugModLoader.logger.debug("Returning {}", entityId);
         return entityId;
